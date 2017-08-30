@@ -7,7 +7,7 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 #define DEBUG	  /* Runs all code but debugging it */
 
 /* How many millisecs module is off between cycles - based on Timer+RC circuit */
-#define INTRA_CYCLE_DOWNTIME_SECS 3*60 //3*60 secs
+#define INTRA_CYCLE_DOWNTIME 3UL*60*1000 //3*60 secs
 
 //One-time initialization module ID
 #ifdef INITIALISE_MODULE
@@ -19,6 +19,10 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 	#define IS_GSM_MOCK 1
 	#define IS_TIMING_MOCK 1
 	#define OUTPUT_DEBUG 0 //Write print statements
+	
+	//Set FONA module to be debug too
+	#define ADAFRUIT_FONA_DEBUG
+
 #else //Either LIVE or SYSTEM_TEST
 	#define IS_GSM_MOCK 0
 	#define IS_TIMING_MOCK 0
@@ -32,11 +36,6 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
   #define LOOP_DELAY 300
 #else
   #define LOOP_DELAY 3000
-#endif
-
-//Set FONA module to be debug too
-#ifdef DEBUG
-	#define ADAFRUIT_FONA_DEBUG
 #endif
 
 //GPS not in this revision
@@ -58,11 +57,12 @@ the commented section below at the end of the setup() function.
 // this is a large buffer for replies - TODO: Kill
 char replybuffer[255];
 SYS_STATE _currSystemState = SysState_Initialising;
+uint32_t readingTime=10*1000; //10 secs for readings - MATCH-R-TIME
 
 //C++ instances
 RmMemManager mem;
 GsmManager gsm(IS_GSM_MOCK);
-Timing timer(IS_TIMING_MOCK, INTRA_CYCLE_DOWNTIME_SECS);
+Timing timer(IS_TIMING_MOCK, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 
 DailyCycleData _dailyCycleData;// = NULL;
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
@@ -507,13 +507,16 @@ void execTransmitReadings(DailyCycleData& ret) {
 	//Even if no ret.NoOfReadings == 0, still get signal etc data and store/send
 	
 	//char buffer
-  	uint16_t DATA_BUFFER_LEN = 256;
+	//TODO: Test correctness with increasing buffer sizes to get optimal
+  	uint16_t DATA_BUFFER_LEN = 100;
   	char strBuffer[DATA_BUFFER_LEN]=""; //TODO: MAX?
 
   	ret.GsmMessageLength =
 		prepareDataForGPRS(dszReadings, actLoadCount, moduleId, ret.BootNo,
 						ret.NetworkStatus, ret.RSSI, batPct, strBuffer, DATA_BUFFER_LEN);
 
+
+volatile int test = strlen(strBuffer);
 	//Send via GPRS - on failure, try SMS
 	ret.GsmFailureCode = sendViaGprs(strBuffer);
 
@@ -533,9 +536,10 @@ void execTransmitReadings(DailyCycleData& ret) {
 	
 	//Only update sent-to flag if actually changed
 	if (ret.NoOfReadings > 0 &&
-	   (ret.GsmFailureCode == 0 || ret.SmsFailureCode == 0)) {
-			mem.markDataSent(loadedUpTo);
-	}
+	   (ret.GsmFailureCode == 0 || ret.SmsFailureCode == 0))
+	{
+		mem.markDataSent(loadedUpTo);
+ 	}
 }
 
 uint8_t sendViaSms(char* data){
@@ -773,7 +777,7 @@ uint16_t prepareDataForGPRS(SensorData* readings, unsigned int noOfReadings,
 		}
 	}
 	
-	*strBuffer++='\0'; //Terminate string
+	*strBuffer='\0'; //Terminate string
 	
 	return strBuffer-origiBufferStart; //TODO: Test !!
 }
@@ -840,7 +844,8 @@ void assert(unsigned long expected, unsigned long actual, char* msg = NULL)
 
 void assertCharStringsIdentical(const char* expected, const char* actualRaw, int len_TODO=-1)
 {
-	unsigned volatile int res = strcmp(expected, actualRaw)==0;
+	unsigned volatile int cmp = strcmp(expected, actualRaw);
+	unsigned volatile int res = cmp==0;
 	
 	assertTrue(res);
 }
@@ -853,10 +858,10 @@ void assertStringsIdentical(const String& expected, const char* actualRaw, int l
 	assertTrue(res);
 }
 
-void assertRealStringsIdentical(const String& expected, const String& actual)
-{
-	return assertStringsIdentical(expected, actual.c_str());
-}
+//void assertRealStringsIdentical(const String& expected, const String& actual)
+//{
+	//return assertStringsIdentical(expected, actual.c_str());
+//}
 
 void assertReadingsIdentical(SensorData expected, SensorData r1)
 {
@@ -1050,7 +1055,6 @@ void runPadTest()
 
 void runSendTest()
 {
-	
 	//Check numbers save and load OK in correct endian order
 	unsigned long testCases[7] = {0, 1, 100, 262144, 2048, 4+32+128+1024+2048,4};
 	unsigned long bufferTest[7];
@@ -1130,9 +1134,9 @@ void runSendTest()
 	execTransmitReadings(_dailyCycleData);
 	
 	//First check data sent is as expected
-	String actualStr = gsm.MOCK_DATA_SENT_GPRS;
-	String expectedStr = "5-343-7-21-99-1088043310450308,7456178589431866";
-	assertRealStringsIdentical(expectedStr, actualStr);
+	char* actualStr = gsm.MOCK_DATA_SENT_GPRS;
+	char expectedStr[100] = "5-343-7-21-99-1088043310450308,7456178589431866";
+	assertCharStringsIdentical(expectedStr, actualStr);
 
 volatile int fake=1;
 	//Ensure sent-to flag updated
@@ -1143,7 +1147,7 @@ volatile int fake=1;
 	_dailyCycleData = reset;
 	gsm.MOCK_DATA_SENT_GPRS = (""); //reset mock
 	execTransmitReadings(_dailyCycleData);
-	assertRealStringsIdentical("5-343-7-21-99", gsm.MOCK_DATA_SENT_GPRS);
+	assertCharStringsIdentical("5-343-7-21-99", gsm.MOCK_DATA_SENT_GPRS);
 	assert(5+2, mem.getLongFromMemory(MEMLOC_SENT_UPTO)); //unchanged
 	
 	//Add a new reading and ONLY that reading should've been sent
@@ -1153,6 +1157,13 @@ volatile int fake=1;
 	volatile int len = strlen(gsm.MOCK_DATA_SENT_GPRS);
 	assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS) < 35); //Could also check for commas
 	assert(5+3, mem.getLongFromMemory(MEMLOC_SENT_UPTO)); //unchanged
+	
+	
+		
+	assertTrue(!gsm.MOCK_DATA_SENT_GPRS || strlen(gsm.MOCK_DATA_SENT_GPRS)==0); //Nothing sent yet
+	assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0); //Readings sent now
+		
+	//volatile long millis = testTimer.getMillis();
 }
 	
 //TODO: Test timing flags
@@ -1199,9 +1210,9 @@ boolean runFullCycleTest()
 
 #endif //End define UNIT_TESTS
 
-boolean runTimerTest(){
+boolean runIntraCycleTimerTests(){
 	
-	Timing testTimer(true, 3*60); //say module wakes every 3 minutes
+	Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 	
 	testTimer.MOCK_ADVANCE_TIME(9*1000);  //not early
 	testTimer.onCycleLoop();
@@ -1214,11 +1225,45 @@ boolean runTimerTest(){
 	testTimer.MOCK_ADVANCE_TIME(12*1000); //only once
 	testTimer.onCycleLoop();
 	assert(false, testTimer._at10Secs);
+}
+
+boolean runInterCycleTimerTests(){
 	
+	Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 	
-	//testTimer.isDailyCycle()
+	//Move forward and check daily-cycle flag set
+	volatile uint32_t oneCycleTime = (INTRA_CYCLE_DOWNTIME+readingTime+LOOP_DELAY)/1000;
+	volatile uint32_t cyclesInOneDay = (24UL*60*60)/oneCycleTime;
 	
-	//volatile long millis = testTimer.getMillis();
+	Timing t2(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
+	testTimer = t2;//new Timing(true, 1, 3*60); //say module wakes every 3 minutes
+	testTimer.onCycleLoop();
+	
+	//The first is daily exactly once
+	int32_t currTestCycle=0;
+	for(;currTestCycle<cyclesInOneDay;currTestCycle++)
+		assert(false, testTimer.isDailyCycle(currTestCycle));
+
+	assert(true, testTimer.isDailyCycle(currTestCycle)); //at ~23:59:59
+	
+	//The next cycle occurs when the time is closest to the 48th hour
+	while(( (24UL*2*3600)
+			  -
+			 (++currTestCycle*oneCycleTime)
+			) > oneCycleTime)
+		assert(false, testTimer.isDailyCycle(currTestCycle));
+
+	assert(true, testTimer.isDailyCycle(currTestCycle)); //at T+1~23:59:59
+	
+	//And 3rd cycle
+	while(( (24UL*3*3600)
+			  -
+			(++currTestCycle*oneCycleTime)
+			) > oneCycleTime)
+	assert(false, testTimer.isDailyCycle(currTestCycle));
+		
+	assert(true, testTimer.isDailyCycle(currTestCycle)); //at T+2~23:59:59
+	assert(false, testTimer.isDailyCycle(++currTestCycle)); //at T+3~00:00:01
 }
 
 bool runAllTests()
@@ -1227,10 +1272,7 @@ bool runAllTests()
 
 	//Non-looping run-once tests
 	if (_isAtCycleStart)
-	{
-		initialiseModulePristine(1);
-		runTimerTest();
-		
+	{		
 		initialiseModulePristine(1);
 		runSendTest();
 	
@@ -1241,8 +1283,13 @@ bool runAllTests()
 		runLoadTest();
 
 		initialiseModulePristine(1);
+		runIntraCycleTimerTests();
+
+		initialiseModulePristine(1);
+		runInterCycleTimerTests();
+		
+		initialiseModulePristine(1);
 	}
-	
 	
 	//custom initialise timing()
 	

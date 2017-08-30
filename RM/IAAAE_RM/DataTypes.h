@@ -111,7 +111,7 @@ struct GpsData{
 //The number of entries stored so far. 0=> no entries. -1 to get the idx of an entry.
 #define MEMLOC_READING_ENTRY_COUNT 100 /* Long - 4 bytes */
 #define MEMADDR_READING_DATA_START  104 /* Long - 4 bytes */
-#define MEMADDR_READING_END 30*1000 /* ROM is 32K  - but do we want to cycle back and lose that important historical data? Circular should be limited to 1K @ end?*/
+#define MEMADDR_READING_END 30L*1000 /* ROM is 32K  - but do we want to cycle back and lose that important historical data? Circular should be limited to 1K @ end?*/
 //#define BAND_READING_CYCLE_START 28*1000 /* Will start cycling from here after it reaches the _END memory location above */
 
 

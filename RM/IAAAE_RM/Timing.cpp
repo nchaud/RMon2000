@@ -4,8 +4,10 @@
 #include "Adafruit_FONA.h"
 #include "Timing.h"
 
-Timing::Timing(uint8_t isMock, unsigned long intercycleDownTime)
+Timing::Timing(uint8_t isMock, volatile uint32_t readingTime, volatile uint32_t loopDelay, volatile uint32_t intercycleDownTime)
 {
+	_loopDelay = loopDelay;
+	_readingTime = readingTime;
 	_intercycleDownTime = intercycleDownTime;
 	_isMock = isMock;
 }
@@ -24,7 +26,7 @@ void Timing::onCycleLoop(){
 		_currCycleStartTime = currentMillis;
 	
 	//How long has this cycle been running for ?
-	unsigned long currCycleDuration = currentMillis - _currCycleStartTime;
+	volatile unsigned long currCycleDuration = currentMillis - _currCycleStartTime;
 	//RM_LOG2(F("CurrCycleDuration"), currCycleDuration);
 		
 	//Some don't latch, so reset them
@@ -34,9 +36,9 @@ void Timing::onCycleLoop(){
 	_at2Mins = false;
 	_at30SecInterval = false;
 	_at1SecInterval = false;
-	__is10SecsTriggered = false;
-	__is1MinTriggered = false;
-	__is2MinTriggered = false;
+	//__is10SecsTriggered = false;
+	//__is1MinTriggered = false;
+	//__is2MinTriggered = false;
 
 
 	//10 seconds
@@ -124,7 +126,7 @@ unsigned long Timing::getMillis()
 	if (_isMock)
 	{
 		//Speed up time in DEBUG mode ! // Each second=>x minutes
-		unsigned long currentMillis = millis();
+		volatile unsigned long currentMillis = millis();
 		currentMillis += _MOCK_ADVANCED_BY;
 		return currentMillis;
 		//unsigned long secsFromStart = currentMillis/1000;
@@ -139,17 +141,17 @@ unsigned long Timing::getMillis()
 
 boolean Timing::isDailyCycle(unsigned long currCycleNumber)
 {
-	//Calc approximate time (in ms) between cycles.
-	unsigned long durationPerCycleInSecs =
-		_intercycleDownTime + 10; //10 secs for readings - MATCH-R-TIME
+	//Calc approximate time between cycles. Divide by 1000 to prevent overflow when multiplied later.
+	volatile uint32_t durationPerCycleInSecs =
+		(_intercycleDownTime + _readingTime + _loopDelay)/1000;
 	//- todo: if kept up by battery? whilst sending? add a EEPROM entry when cycle finishes?
-		
+	
 	//Calc current time since module was installed
-	long totalDurationHrs = (currCycleNumber*durationPerCycleInSecs)/(60*60);
-		
+	volatile uint32_t totalDurationHrs = (currCycleNumber*durationPerCycleInSecs)/(60*60);
+	
 	//Check if 1 hour is almost up by looking at totalDuration of next cycle
-	long nextDurationHrs = ((currCycleNumber+1)*durationPerCycleInSecs)/(60*60);
-		
+	volatile uint32_t nextDurationHrs = ((currCycleNumber+1)*durationPerCycleInSecs)/(60*60);
+	
 	//Check if it's a daily/weekly cycle by seeing if next cycle will rollover
 	if ((int)totalDurationHrs/HOURS_IN_DAY < (int)nextDurationHrs/HOURS_IN_DAY)
 		return true;

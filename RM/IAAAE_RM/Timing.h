@@ -7,7 +7,9 @@ class Timing
 {
 //variables
 public:
-	unsigned long _intercycleDownTime;
+	volatile uint32_t _intercycleDownTime=0;
+	volatile uint32_t _loopDelay=0;
+	volatile uint32_t _readingTime=0;
 
 	
 	boolean _at10Secs;		  //Called exactly once at 10 secs
@@ -27,18 +29,18 @@ public:
 protected:
 private:
 	uint8_t _isMock;
-	unsigned long _MOCK_ADVANCED_BY = 0;
-	unsigned long _currCycleStartTime = 0; //Milliseconds when this cycle started
+	volatile uint32_t _MOCK_ADVANCED_BY = 0;
+	volatile uint32_t _currCycleStartTime = 0; //Milliseconds when this cycle started
 
 	boolean __is1MinTriggered,__is1Min30SecsTriggered, __is2MinTriggered, __is10SecsTriggered;
-	unsigned long __last1SecInterval;
-	unsigned long __last30SecInterval;
+	uint32_t __last1SecInterval;
+	uint32_t __last30SecInterval;
 
 	
 	
 //functions
 public:
-	Timing(uint8_t isMock, unsigned long intercycleDownTime);
+	Timing(uint8_t isMock, uint32_t readingTime, uint32_t loopDelay, uint32_t intercycleDownTime);
 	~Timing();
 	
 	//Milliseconds since this module was last booted up
