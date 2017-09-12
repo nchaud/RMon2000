@@ -4,7 +4,11 @@
 #include "Adafruit_FONA.h"
 #include "Timing.h"
 
-Timing::Timing(uint8_t isMock, volatile uint32_t readingTime, volatile uint32_t loopDelay, volatile uint32_t intercycleDownTime)
+Timing::Timing(
+				uint8_t isMock, 
+				volatile uint32_t readingTime, 
+				volatile uint32_t loopDelay, 
+				volatile uint32_t intercycleDownTime)
 {
 	_loopDelay = loopDelay;
 	_readingTime = readingTime;
@@ -14,8 +18,54 @@ Timing::Timing(uint8_t isMock, volatile uint32_t readingTime, volatile uint32_t 
 
 Timing::~Timing() {}
 
-void Timing::MOCK_ADVANCE_TIME(unsigned long milliseconds){
+#ifdef UNIT_TESTS
+void Timing::MOCK_ADVANCE_TIME(uint32_t milliseconds){
 	_MOCK_ADVANCED_BY += milliseconds;
+}
+#endif
+
+void Timing::reset(){
+	
+	_at10Secs =
+	_at1Min =
+	_at1Min30Secs =
+	_at2Mins =
+	_at1SecInterval =
+	_at30SecInterval =
+	_has1MinElapsed =
+	_has1Min30SecsElapsed =
+	_has5MinElapsed =
+	_has2MinElapsed =
+	_has10SecsElapsed =
+	_has15MinElapsed =
+	
+	_currCycleStartTime =
+	
+	__is1MinTriggered = 
+	__is1Min30SecsTriggered = 
+	__is2MinTriggered =
+	__is10SecsTriggered = 
+	
+	__last1SecInterval =
+	__last30SecInterval = 
+	
+	0;
+	
+	#ifdef UNIT_TESTS	
+	_MOCK_ADVANCED_BY = 0;
+	#endif
+}
+
+
+uint32_t Timing::getTimePerCycleInMs(){
+	uint32_t oneCycleTime = _loopDelay+_readingTime+_intercycleDownTime;
+	return oneCycleTime;
+}
+
+uint32_t Timing::getCyclesInOneDay(){
+	uint32_t oneCycleTime = getTimePerCycleInMs()/1000;
+	uint32_t cyclesInOneDay = (24UL*60*60)/oneCycleTime;
+	return cyclesInOneDay;
 }
 
 void Timing::onCycleLoop(){
@@ -127,7 +177,11 @@ unsigned long Timing::getMillis()
 	{
 		//Speed up time in DEBUG mode ! // Each second=>x minutes
 		volatile unsigned long currentMillis = millis();
+
+		#ifdef UNIT_TESTS
 		currentMillis += _MOCK_ADVANCED_BY;
+		#endif
+		
 		return currentMillis;
 		//unsigned long secsFromStart = currentMillis/1000;
 		//currentMillis = 1L*40*60*1000*secsFromStart;
@@ -137,6 +191,12 @@ unsigned long Timing::getMillis()
 	{
 		return millis();
 	}
+}
+
+boolean Timing::isStartOfHourCycle(unsigned long currCycleNumber){
+	
+	//If so, persist data (taking into account previous readings or don't read at all?)
+	return false;
 }
 
 boolean Timing::isDailyCycle(unsigned long currCycleNumber)

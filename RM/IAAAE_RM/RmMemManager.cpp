@@ -4,8 +4,22 @@
 
 #include "RmMemManager.h"
 
-RmMemManager::RmMemManager(){}
-RmMemManager::~RmMemManager(){}
+//Their current state - true=>high
+boolean _ledBottomPinRed=false, _ledBottomPinGreen=false,
+_ledTopPinRed=false, _ledTopPinGreen=false;
+LED_STATE _ledBottomState = All_Clear;
+LED_STATE _ledTopState = All_Clear;
+uint8_t _flashCallCount=0;
+
+RmMemManager::RmMemManager(boolean isMock){
+	_isMock=isMock;
+}
+
+void RmMemManager::reset(){
+	_flashCallCount=0;
+	toggleLED(Bottom, All_Clear);
+	toggleLED(Top, All_Clear);
+}
 
 unsigned long RmMemManager::getLongFromMemory(unsigned int address)
 {
@@ -65,6 +79,8 @@ unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxN
 {
 	uint8_t readingSz = sizeof(SensorData);
 	
+	//TODO: This only takes the last few, change to average/compress?
+	
 	volatile unsigned long entryCount = getLongFromMemory(MEMLOC_READING_ENTRY_COUNT);
 	volatile unsigned long alreadySentTo = getLongFromMemory(MEMLOC_SENT_UPTO);
 	
@@ -73,7 +89,7 @@ unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxN
 	if (numOfLastReadings == 0)
 	{
 		*loadedUpTo = alreadySentTo; /* Nothing more */
-		return 0; //Nothing to send
+		return 0UL; //Nothing to send
 	}
 	
 	//Get read idx => 2 readings if 10 entry count => @ idx 8 offset
@@ -93,6 +109,9 @@ unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxN
 			*(rPtr+currBufferOffset) = EEPROM.read(currReadAddress);
 		}
 	
+	
+	
+	
 	*loadedUpTo = entryCount; //Gets passed to markDataSent() if sent successfully
 	return numOfLastReadings;
 }
@@ -105,6 +124,11 @@ void RmMemManager::markDataSent(unsigned long sentUpTo)
 void RmMemManager::appendDailyEntry(DailyCycleData* r)
 {
 	//TODO
+}
+
+void RmMemManager::replaceLastSensorEntry(SensorData* r)
+{
+	
 }
 
 void RmMemManager::appendSensorEntry(SensorData* r)
@@ -190,12 +214,6 @@ void internalFlash(
 	//	digitalWrite(redPinNo, nextState);
 }
 
-//Their current state - true=>high
-boolean _ledBottomPinRed=false, _ledBottomPinGreen=false,
-		_ledTopPinRed=false, _ledTopPinGreen=false;
-LED_STATE _ledBottomState = All_Clear;
-LED_STATE _ledTopState = All_Clear;
-uint8_t _flashCallCount=0;
 
 //Called at regular intervals at a fast-rate to toggle LEDs between off-on
 void RmMemManager::flashLED()
@@ -231,5 +249,30 @@ void RmMemManager::toggleLED(LED_SEL led_num, LED_STATE state)
 	//TODO: prioritise instead?
 	//TODO: Could have a hierarchy where if solid is cleared, maybe slow-flashing
 	//still required?
+}
+
+//Returns (analog_reading * vcc)
+//TODO: Doesn't really belong in memory manager class :|
+float RmMemManager::takeSampleAnalog(int pinNo)	{
+	if (_isMock)
+		return 5;
+		
+	int batt = analogRead(pinNo); 
+	float vcc = readVcc();
+	batt *= vcc;
+	return batt;
+}
+
+float RmMemManager::readVcc() {
+  long result;
+  // Read 1.1V reference against AVcc - TODO: does this even work ?!
+  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  delay(2); // Wait for Vref to settle
+  ADCSRA |= _BV(ADSC); // Convert
+  while (bit_is_set(ADCSRA,ADSC));
+  result = ADCL;
+  result |= ADCH<<8;
+  result = 1125300L / result; // Back-calculate AVcc in mV
+  return result / 1000;
 }
 

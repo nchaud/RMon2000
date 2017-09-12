@@ -10,18 +10,22 @@ GsmManager::GsmManager(uint8_t isMock)
 	_isMock = isMock;
 }
 
-GsmManager::~GsmManager()
-{
+GsmManager::~GsmManager(){}
+
+void GsmManager::reset(){
+	
+	#ifdef UNIT_TESTS
+	MOCK_DATA_SENT_GPRS = NULL;
+	MOCK_DATA_SENT_SMS  = NULL;
+	#endif
 }
 
 bool GsmManager::begin(){
 
 	if (_isMock)
 		return true;
-		
-	SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
-	fonaSerial = &fonaSS;
-	
+
+	fonaSerial = new SoftwareSerial(FONA_TX, FONA_RX);
 	fonaSerial->begin(4800);
 	return fona.begin(*fonaSerial);
 }

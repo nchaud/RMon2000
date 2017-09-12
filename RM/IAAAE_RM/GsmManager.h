@@ -9,12 +9,15 @@ class GsmManager
 {
 //variables
 public:
+
+#ifdef UNIT_TESTS
 	char* MOCK_DATA_SENT_GPRS; /* Last data sent via GPRS */
 	char* MOCK_DATA_SENT_SMS;  /* Last data sent via SMS */
+#endif
 
 protected:
 private:
-	uint8_t _isMock;
+	volatile uint8_t _isMock;
 	Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 	SoftwareSerial* fonaSerial;
 
@@ -22,6 +25,8 @@ private:
 public:
 	GsmManager(uint8_t isMock);
 	~GsmManager();
+
+	void reset();
 	
 	//Initializes the FONA CPP module and GSM module
 	boolean begin();

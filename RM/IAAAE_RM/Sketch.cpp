@@ -1,13 +1,10 @@
 ﻿//Either none of exactly 1 of the below should be left in. Live is all commented out
-#define UNIT_TESTS	  /* Running unit tests */
+//#define UNIT_TESTS	  /* Running unit tests - done in compiler symbols */
 //#define INITIALISE_MODULE /* Initializes module with static data and vars */
 bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 
 //Independent of above
 #define DEBUG	  /* Runs all code but debugging it */
-
-/* How many millisecs module is off between cycles - based on Timer+RC circuit */
-#define INTRA_CYCLE_DOWNTIME 3UL*60*1000 //3*60 secs
 
 //One-time initialization module ID
 #ifdef INITIALISE_MODULE
@@ -17,6 +14,7 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 //Mock GSM
 #ifdef DEBUG
 	#define IS_GSM_MOCK 1
+	#define IS_SENSOR_MOCK 1
 	#define IS_TIMING_MOCK 1
 	#define OUTPUT_DEBUG 0 //Write print statements
 	
@@ -25,6 +23,7 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 
 #else //Either LIVE or SYSTEM_TEST
 	#define IS_GSM_MOCK 0
+	#define IS_SENSOR_MOCK 0
 	#define IS_TIMING_MOCK 0
 	#define OUTPUT_DEBUG 0
 #endif
@@ -32,10 +31,10 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 //Set delay between cycles
 #ifdef UNIT_TESTS
   #define LOOP_DELAY 1
-#elif defined(DEBUG)
-  #define LOOP_DELAY 300
+  #define INTRA_CYCLE_DOWNTIME 60UL*60*1000 //60 mins /* #ms module is off inter-cycle - based on Timer+RC circuit */
 #else
   #define LOOP_DELAY 3000
+  #define INTRA_CYCLE_DOWNTIME 3UL*60*1000 //3 mins /* #ms module is off inter-cycle - based on Timer+RC circuit */
 #endif
 
 //GPS not in this revision
@@ -60,11 +59,12 @@ SYS_STATE _currSystemState = SysState_Initialising;
 uint32_t readingTime=10*1000; //10 secs for readings - MATCH-R-TIME
 
 //C++ instances
-RmMemManager mem;
+RmMemManager mem(IS_SENSOR_MOCK);
 GsmManager gsm(IS_GSM_MOCK);
-Timing timer(IS_TIMING_MOCK, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
+Timing timer(IS_TIMING_MOCK, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME); //TODO: But loop delay will be many times in a given cycle so cycleTime() won't be accurate!
 
-DailyCycleData _dailyCycleData;// = NULL;
+SensorData _currSensorData; //Always this instance
+DailyCycleData* _dailyCycleData=NULL;
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
 //Beginning of Auto generated function prototypes by Atmel Studio
@@ -72,12 +72,10 @@ int get_free_memory();
 boolean loopCycle();
 void shutdown();
 void execTransmitGps();
-void execTransmitReadings(DailyCycleData& data);
+void execTransmitReadings(DailyCycleData* data);
 void readSensorsAsync();
 void resetAtCycleStart();
 void resetSensorData();
-float takeSampleAnalog(int pinNo);
-float readVcc();
 bool ensureBatteryLevel();
 void triggerGpsRefreshAsync();
 void initialiseModulePristine(unsigned int moduleId);
@@ -104,6 +102,7 @@ void onGpsComplete();
 
 
 /*********************/
+#ifdef DEBUG
 extern int __bss_end;
 extern void *__brkval;
 int get_free_memory()
@@ -115,16 +114,42 @@ int get_free_memory()
     free_memory = ((int)&free_memory) - ((int)__brkval);
   return free_memory;
 }
+#endif
 /*********************/
 
-
+boolean _isEndOfDayCycle; //True on the last cycle for each day
+boolean _isStartOfHourCycle; //True on the first each for each hour
+//boolean _isWeeklyCycle;
+boolean _moduleHasShutdown;
+unsigned long _currCycleNumber = 0;
 boolean _isAtCycleStart;  //Will be true ONLY once at the 1st loop of every cycle
+
+void resetOnNewCycle(){
+	
+	_isEndOfDayCycle=false;
+	_isStartOfHourCycle=false;
+	_moduleHasShutdown=false;
+	_currCycleNumber = false;
+	
+	//Important to let loop() function know it's at start so can do initialisation
+	_isAtCycleStart = true;
+
+	if (!gsm.begin()) {
+		//FONA library did not begin - store in ROM, terminate and don't consume power(TODO: Why would this ever happen?)
+		shutdown();
+	}	
+
+	//Reset all
+	mem.reset();
+	gsm.reset();
+	timer.reset();
+}
+
+
 void setup() {
  
    unsigned char ResetSrc = MCUSR;   // TODO: save reset reason if not 0
-  
    unsigned volatile int px=9;
-
    MCUSR = 0x00;  // cleared for next reset detection
 
 
@@ -148,50 +173,42 @@ void setup() {
 	#endif	
 
 	//Mark all the outputs pins as such
-	pinMode(PIN_TIMER_SHUTDOWN, OUTPUT);
-	pinMode(PIN_LED_BOTTOM_GREEN, OUTPUT);
-	pinMode(PIN_LED_BOTTOM_RED, OUTPUT);
-	pinMode(PIN_LED_TOP_GREEN, OUTPUT);
-	pinMode(PIN_LED_TOP_RED, OUTPUT);
+ 	pinMode(PIN_TIMER_SHUTDOWN, OUTPUT);
+ 	pinMode(PIN_LED_BOTTOM_GREEN, OUTPUT);
+ 	pinMode(PIN_LED_BOTTOM_RED, OUTPUT);
+ 	pinMode(PIN_LED_TOP_GREEN, OUTPUT);
+ 	pinMode(PIN_LED_TOP_RED, OUTPUT);
 	
-	//Important to let loop() function know it's at start so can do initialisation
-	_isAtCycleStart = true;
-  
-	if (!gsm.begin()) {
-		
-		//FONA library did not begin - store in ROM, terminate and don't consume power(TODO: Why would this ever happen?)
-		shutdown();
-	}
+	resetOnNewCycle();
 }
+
+
 
 #ifdef GPS
 GpsData gpsData;
 #endif
-
-boolean _isDailyCycle;    //Will be true ONLY once in 1 particular loop in 1 particular cycle
-//boolean _isWeeklyCycle;   //Will be true ONLY once in 1 particular loop in 1 particular cycle
-
-boolean _moduleHasShutdown;
-unsigned long _currCycleNumber = 0;
 
 void loop() {
 
 	if (_moduleHasShutdown)
 		return;
 
+volatile int free = get_free_memory();
+
 	volatile unsigned long currentMillis = timer.getMillis();
 
-	//If board being powered up for the first time, start timer before running 1st cycle
+	//If board b eing powered up for the first time, start timer before running 1st cycle
 	if (_isAtCycleStart) {
 				
 		//Update bootcount
 		_currCycleNumber = 1 + mem.getLongFromMemory(MEMLOC_BOOTCOUNT);
 		mem.setLongToMemory(MEMLOC_BOOTCOUNT, _currCycleNumber);
 					
-		_isDailyCycle = timer.isDailyCycle(_currCycleNumber);
+		_isEndOfDayCycle= timer.isDailyCycle(_currCycleNumber);
+		_isStartOfHourCycle = timer.isStartOfHourCycle(_currCycleNumber);
 		
 		//Reset all data before new cycle begins
-		//Strictly not necessary as it gets re-booted each time
+		//Strictly not necessary as it gets re-booted each time (but req'd for unit-tests)
 		resetAtCycleStart();
 	}
 
@@ -200,9 +217,15 @@ void loop() {
 	//Run the cycle !
 	boolean doContinue = false;
 	
+	
+	
 	//Toggle LED flash first to show any error conditions etc. incase next loop errors out
 	//and we can't call flash
-	mem.flashLED();
+	//mem.flashLED();
+	
+	
+	
+	
 	
 	#ifdef UNIT_TESTS
 		doContinue = runAllTests();
@@ -312,10 +335,10 @@ boolean _chargingInProgress;
 //	Cycle runs (about every 3 minutes)
 //		setup() called
 //		loop() called every INTERVAL_DELAY += x ms
-//			loop() keeps track of timings and @ each loop, calls loopCycle()
+//			timer keeps track of timings and @ each loop, loopCycle() called
 //				loopCycle() checks what time it is now and does work
 //					Take continuous running-avg readings for 10 seconds
-//					Persist after 1 second
+//					Persist at 10 seconds
 //					If EOD, transmit readings
 //					If Battery low, keep system up to charge it
 //			loop() shuts down module when loopCycles says not to wait any more
@@ -334,26 +357,25 @@ boolean loopCycle() {
 	  doContinueCycle |= true;
   }
 
-  //At the 10 sec mark, save readings down once
-  if (timer._at10Secs) { //MATCH-R-TIME	  
+  //At the 10 sec mark, save readings down once if 'better'
+  if (timer._at10Secs) { //MATCH-R-TIME
 													RM_LOG(F("Persisting sensor data..."));
 	  toggleSystemState(~SysState_TakingReadings);
 	  persistSensorData();
   }
   
-
   //Once a day, send sensor data
-  if (_isDailyCycle) {
+  if (_isEndOfDayCycle) {
                                                     RM_LOG(F("In Daily Cycle..."));
 	//Initialize GPRS module so it can load whilst readings are collected
+	//Note: All reads and writes to global _dailyCycleData are done here to prevent global state use
 	if (_isAtCycleStart)
 	{
-		DailyCycleData reset;
-		_dailyCycleData = reset;//new DailyCycleData();
+		_dailyCycleData = new DailyCycleData();
 
 		if (!toggleGPRS(true))
 		{
-			_dailyCycleData.GPRSToggleFailure = true;
+			_dailyCycleData->GPRSToggleFailure = true;
 			
 			//Even if GPRS did not turn on, we continue because
 			//1) we can persist this failure along with generally useful data including readings, network etc.
@@ -364,7 +386,7 @@ boolean loopCycle() {
 	
 	//Wait a minute to acquire signal before sending the data
 	if (timer._at1Min) {
-		
+		//We try and send even if GPRS didn't toggle on above incase toggle was a false -ve
 		execTransmitReadings(_dailyCycleData);
 	}
 		
@@ -372,15 +394,15 @@ boolean loopCycle() {
 	if (timer._at1Min30Secs)
 	{
 		//Store a record of SystemStates on this daily transmit cycle
-		_dailyCycleData.SystemState = _currSystemState; //TODO: Necessary?
-		mem.appendDailyEntry(&_dailyCycleData);
+		_dailyCycleData->SystemState = _currSystemState; //TODO: Necessary?
+		mem.appendDailyEntry(_dailyCycleData);
 		
 		//Done sending - shut down GPRS
 		toggleGPRS(false); //Ignore failure
 	}
 		
 	doContinueCycle |= !timer._has1Min30SecsElapsed;
-  }
+  } //End is-daily-cycle
 
   //Check battery level at start of a cycle
   if (_isAtCycleStart) {
@@ -480,28 +502,28 @@ bool toggleGPRS(boolean onOff){
 	return ret;
 }
 
-void execTransmitReadings(DailyCycleData& ret) {
+void execTransmitReadings(DailyCycleData* ret) {
 
-	ret.BootNo = _currCycleNumber;
+	ret->BootNo = _currCycleNumber;
 		
 	//Load the readings to be sent into memory  
-	byte requestedLoadCount = 2;
+	byte requestedLoadCount = 2; //TODO: Should be 24, which we stream over GPRS !!
 	unsigned long loadedUpTo = 0;
   	SensorData dszReadings[requestedLoadCount];
   	unsigned actLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedUpTo);
 
-	ret.NoOfReadings = actLoadCount;
+	ret->NoOfReadings = actLoadCount;
 		
 	unsigned long moduleId = mem.getLongFromMemory(MEMLOC_MODULE_ID);
-	ret.RSSI = gsm.getRSSI();
-	ret.NetworkStatus = gsm.getNetworkStatus();
+	ret->RSSI = gsm.getRSSI();
+	ret->NetworkStatus = gsm.getNetworkStatus();
 	
 	//Get battery pct
 	uint16_t batPct=0;
 	if (!gsm.getBattPercent(&batPct))
-		ret.GetBatteryFailure = true;
+		ret->GetBatteryFailure = true;
 	else
-		ret.BattPct = batPct;
+		ret->BattPct = batPct;
 
 	//TODO: Make all data types consistent
 	//Even if no ret.NoOfReadings == 0, still get signal etc data and store/send
@@ -511,32 +533,32 @@ void execTransmitReadings(DailyCycleData& ret) {
   	uint16_t DATA_BUFFER_LEN = 100;
   	char strBuffer[DATA_BUFFER_LEN]=""; //TODO: MAX?
 
-  	ret.GsmMessageLength =
-		prepareDataForGPRS(dszReadings, actLoadCount, moduleId, ret.BootNo,
-						ret.NetworkStatus, ret.RSSI, batPct, strBuffer, DATA_BUFFER_LEN);
+  	ret->GsmMessageLength =
+		prepareDataForGPRS(dszReadings, actLoadCount, moduleId, ret->BootNo,
+						ret->NetworkStatus, ret->RSSI, batPct, strBuffer, DATA_BUFFER_LEN);
 
 
 volatile int test = strlen(strBuffer);
 	//Send via GPRS - on failure, try SMS
-	ret.GsmFailureCode = sendViaGprs(strBuffer);
+	ret->GsmFailureCode = sendViaGprs(strBuffer);
 
-	if (ret.GsmFailureCode > 0) {
-														RM_LOG2(F("GPRS Failed-Trying SMS..."),ret.GsmFailureCode);
+	if (ret->GsmFailureCode > 0) {
+														RM_LOG2(F("GPRS Failed-Trying SMS..."),ret->GsmFailureCode);
 		memset(strBuffer, 0, DATA_BUFFER_LEN); //TODO: TEST
 		const uint8_t SMS_LIMIT = 140;
 
 		prepareDataForSMS(dszReadings, actLoadCount, strBuffer, SMS_LIMIT);
 														RM_LOG2(F("Sending Sensors Cmpt"),strBuffer);
-		ret.SmsFailureCode = sendViaSms(strBuffer);
-		if (ret.SmsFailureCode > 0) {
-														RM_LOG2(F("SMS Send Failed !!"), ret.SmsFailureCode);
+		ret->SmsFailureCode = sendViaSms(strBuffer);
+		if (ret->SmsFailureCode > 0) {
+														RM_LOG2(F("SMS Send Failed !!"), ret->SmsFailureCode);
 			//If even SMS is failing, can't do much
 		}
 	}
 	
 	//Only update sent-to flag if actually changed
-	if (ret.NoOfReadings > 0 &&
-	   (ret.GsmFailureCode == 0 || ret.SmsFailureCode == 0))
+	if (ret->NoOfReadings > 0 &&
+	   (ret->GsmFailureCode == 0 || ret->SmsFailureCode == 0))
 	{
 		mem.markDataSent(loadedUpTo);
  	}
@@ -577,7 +599,7 @@ uint16_t sendViaGprs(char* data){
 /********************************************************/
 
 uint8_t noBattReadings = 0,noPVReadings = 0,nocurrReadings = 0,noTempReadings = 0;
-SensorData* currSensorData = NULL;
+
 
 void resetSensorData(){
 	
@@ -589,14 +611,40 @@ void resetSensorData(){
 	noPVReadings=0;
 	nocurrReadings=0;
 	noTempReadings=0;
-	
-	SensorData newSensorEntry;
-	currSensorData = &(newSensorEntry);
+
+	//Just clear global instance instead of new to prevent fragmentation
+	_currSensorData.BattVoltage=0;
+	_currSensorData.Current=0;
+	_currSensorData.PVVoltage=0;
+	_currSensorData.Temperature=0;
 }
 
 void persistSensorData() {
 	
-	mem.appendSensorEntry(currSensorData);
+	//If it's a new hour, create a new entry, otherwise compare to previous entry
+	//So we get the 'best' entry every hour
+	if (_isStartOfHourCycle) {
+		mem.appendSensorEntry(&_currSensorData);
+	}
+	else{
+		unsigned long loadedTo;
+		SensorData lastData;
+		unsigned long actLoad = mem.loadSensorData(&lastData, 1, &loadedTo);
+		
+		if (actLoad == 0) {
+			//Don't expect this to happen! But if it does, append the reading.
+			mem.appendSensorEntry(&_currSensorData);
+		}
+		else{
+			//If there is more usage in this cycle, prefer to record that so we get 
+			//max usage per hour
+			//TODO: Test max is indeed saved
+			if (_currSensorData.Current > lastData.Current){
+				mem.replaceLastSensorEntry(&_currSensorData);
+			}
+			//else leave previous higher reading
+		}
+	}
 }
 
 void readSensorsAsync() {
@@ -604,16 +652,16 @@ void readSensorsAsync() {
 	//TODO: Should this be RMS instead?
 
                                                       RM_LOG(F("Reading Sensors"));
-    float pvRaw   = takeSampleAnalog(PIN_PV_VOLTAGE);
+    float pvRaw   = mem.takeSampleAnalog(PIN_PV_VOLTAGE);
     float pvAct = (pvRaw/1024.0) * 15.70589;
     
-    float battRaw = takeSampleAnalog(PIN_BATT_VOLTAGE);
+    float battRaw = mem.takeSampleAnalog(PIN_BATT_VOLTAGE);
     float battAct = (battRaw/1024.0) * 6.0; //6=28/4.6666
     
-    float currentRaw = takeSampleAnalog(PIN_CURRENT);
+    float currentRaw = mem.takeSampleAnalog(PIN_CURRENT);
     float currentAct = (battRaw/1024.0) * 1.0; //TODO: Not sure about current calibration yet !
 
-    float tempRaw = takeSampleAnalog(PIN_TEMP);
+    float tempRaw = mem.takeSampleAnalog(PIN_TEMP);
     float tempAct = (tempRaw/1024.0);
     tempAct -= 0.5;
     tempAct = tempAct / 0.01;
@@ -632,66 +680,37 @@ void readSensorsAsync() {
     //Incremental average
     if (battRaw > 0) {
       
-      long currReading = currSensorData->BattVoltage * noBattReadings;
+      volatile long currReading = _currSensorData.BattVoltage * noBattReadings;
+	  volatile int px=9;
       noBattReadings++;
-      currSensorData->BattVoltage = (currReading + battRaw)/noBattReadings; //Will be >0 denom because of above
+      _currSensorData.BattVoltage = (currReading + battRaw)/noBattReadings; //Will be >0 denom because of above
     }
     
     if (pvRaw > 0) {
       
-      long currReading = currSensorData->PVVoltage * noPVReadings;
+      long currReading = _currSensorData.PVVoltage * noPVReadings;
       noPVReadings++;
-      currSensorData->PVVoltage = (currReading + pvRaw)/noPVReadings; //Will be >0 denom because of above
+      _currSensorData.PVVoltage = (currReading + pvRaw)/noPVReadings; //Will be >0 denom because of above
     }
     
     if (currentRaw > 0) {
       
-      long currReading = currSensorData->Current * nocurrReadings;
+      long currReading = _currSensorData.Current * nocurrReadings;
       nocurrReadings++;
-      currSensorData->Current = (currReading + currentRaw)/nocurrReadings; //Will be >0 denom because of above
+      _currSensorData.Current = (currReading + currentRaw)/nocurrReadings; //Will be >0 denom because of above
     }
     
     if (tempRaw > 0) {
       
-      long currReading = currSensorData->Temperature * noTempReadings;
+      long currReading = _currSensorData.Temperature * noTempReadings;
       noTempReadings++;
-      currSensorData->Temperature = (currReading + tempRaw)/noTempReadings; //Will be >0 denom because of above
+      _currSensorData.Temperature = (currReading + tempRaw)/noTempReadings; //Will be >0 denom because of above
     }
                                                      // RM_LOG2(F("Sensors-Curr"), cData.Current);
 
 	//TODO: If any above are 0, record it as an error ("no of 0s")
-//
-//#ifdef UNIT_TESTS
-    //currSensorData->BattVoltage=currCycleNo;
-    //currSensorData->PVVoltage=currCycleNo+1;
-    //currSensorData->Current=currCycleNo+2;
-    //currSensorData->Temperature=currCycleNo+3;
-//#endif
-
 }
 
-
-//Returns (analog_reading * vcc)
-float takeSampleAnalog(int pinNo) {
-  
-    int batt = analogRead(pinNo); 
-    float vcc = readVcc();
-    batt *= vcc;
-    return batt;
-}
-
-float readVcc() {
-  long result;
-  // Read 1.1V reference against AVcc - TODO: does this even work ?!
-  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
-  delay(2); // Wait for Vref to settle
-  ADCSRA |= _BV(ADSC); // Convert
-  while (bit_is_set(ADCSRA,ADSC));
-  result = ADCL;
-  result |= ADCH<<8;
-  result = 1125300L / result; // Back-calculate AVcc in mV
-  return result / 1000;
-}
 
 void prepareDataForSMS(SensorData* readings, unsigned int noOfReadings, 
 					   char* strBuffer, unsigned int maxStrBuffer) {
@@ -779,7 +798,7 @@ uint16_t prepareDataForGPRS(SensorData* readings, unsigned int noOfReadings,
 	
 	*strBuffer='\0'; //Terminate string
 	
-	return strBuffer-origiBufferStart; //TODO: Test !!
+	return strBuffer-origiBufferStart;
 }
 
 
@@ -794,11 +813,9 @@ bool ensureBatteryLevel() {
      uint16_t vbat;
      if (!gsm.getBattPercent(&vbat)) {
                                                     RM_LOG(F("BatteryLevel Failed"));
-
         return false; //Don't keep up module if can't get battery level.
     } else {
                                                     RM_LOG2(F("BatteryLevel Retrieved"), vbat);
-
         //Require charging if less than threshold
         return vbat <= 80;
     }
@@ -828,17 +845,13 @@ void assertTrue(bool val)
 	}
 }
 
-void assertInt(unsigned int expected, unsigned int actual, char* msg = NULL)
+void assertInt(volatile unsigned int expected, volatile unsigned int actual, char* msg = NULL)
 {
-	volatile unsigned int stp=expected;
-	
 	assertTrue(expected == actual);
 }
 
-void assert(unsigned long expected, unsigned long actual, char* msg = NULL)
+void assert(volatile unsigned long expected, volatile unsigned long actual, char* msg = NULL)
 {
-	volatile unsigned long stp=expected;
-	
 	assertTrue(expected == actual);
 }
 
@@ -871,6 +884,7 @@ void assertReadingsIdentical(SensorData expected, SensorData r1)
 	assert(expected.Temperature, r1.Temperature, "temp");
 	//assert(expected.ErrorChar, r1.ErrorChar, "errorCode");
 }
+
 
 int _mockNo = 0;
 SensorData createMockReading(bool append = true, char errorChar = 0)
@@ -1138,13 +1152,11 @@ void runSendTest()
 	char expectedStr[100] = "5-343-7-21-99-1088043310450308,7456178589431866";
 	assertCharStringsIdentical(expectedStr, actualStr);
 
-volatile int fake=1;
 	//Ensure sent-to flag updated
 	assert(5+2, mem.getLongFromMemory(MEMLOC_SENT_UPTO));
 	
 	//Send again. No data but still expect to receive base-level data.
-	DailyCycleData reset;
-	_dailyCycleData = reset;
+	_dailyCycleData = new DailyCycleData();
 	gsm.MOCK_DATA_SENT_GPRS = (""); //reset mock
 	execTransmitReadings(_dailyCycleData);
 	assertCharStringsIdentical("5-343-7-21-99", gsm.MOCK_DATA_SENT_GPRS);
@@ -1157,29 +1169,63 @@ volatile int fake=1;
 	volatile int len = strlen(gsm.MOCK_DATA_SENT_GPRS);
 	assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS) < 35); //Could also check for commas
 	assert(5+3, mem.getLongFromMemory(MEMLOC_SENT_UPTO)); //unchanged
-	
-	
-		
-	assertTrue(!gsm.MOCK_DATA_SENT_GPRS || strlen(gsm.MOCK_DATA_SENT_GPRS)==0); //Nothing sent yet
-	assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0); //Readings sent now
-		
-	//volatile long millis = testTimer.getMillis();
 }
 	
-//TODO: Test timing flags
+//TODO: Test timing flags - runSingleCycleTimingTest()
+//TODO: Test module status sent back (?)
 
 uint16_t _testFullCycleLoopCount=0;
 boolean runFullCycleTest()
 {	
-	//TODO: Calculate time per cycle
+	//We simulate cycles for 24 hours then ensure data got sent. Repeat for a month(years?)
+	volatile uint32_t cyclesInDay = timer.getCyclesInOneDay();
+
+	uint32_t loadedTo;
 	
-	if(++_testFullCycleLoopCount < 10) {
-	
-		//Call normal looping function
-		boolean doContinue = loopCycle();
-		return true;
+	volatile int count = get_free_memory();
+
+	//# of readings required per day ?!
+	//TODO: How will it store 454 ?!?!
+
+	 unsigned int requestedLoadCount = 7;
+	 unsigned long loadedUpTo = 0;
+	 SensorData dszReadings[requestedLoadCount];
+	 
+	//In the beginning, check no of readings in memory already
+	volatile uint32_t initLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
+	memset(dszReadings, 0, sizeof(SensorData)*requestedLoadCount);
+
+	//Call normal looping function
+	boolean doContinue = loopCycle();
+		
+	//Simulate time advanced by readingTime/3 so we get 3 readings
+	timer.MOCK_ADVANCE_TIME(readingTime/3);
+		
+	if (doContinue)
+		return true; //This cycle is still running, doing work
+		
+	_testFullCycleLoopCount++;
+		
+	//Cycle is done, let's check we have 1 more reading saved in memory
+	volatile uint32_t newLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
+	assert(initLoadCount+1, newLoadCount);
+
+	if (_testFullCycleLoopCount < cyclesInDay) {
+		assert(0, _isEndOfDayCycle);
+		assertTrue(_dailyCycleData==NULL); //This should not be set during the day
 	}
 		
+	//TODO: Check values are averaged correctly
+		
+	//Simulate next cycle (typically after a few minutes)
+	resetOnNewCycle();
+	if (_testFullCycleLoopCount < cyclesInDay)
+		return true;
+	
+	//TODO: Check memory has 1 daily reading stored now and is transmitted
+		
+	assert(1, _isEndOfDayCycle);
+	assertTrue(_dailyCycleData != NULL);
 	boolean ret = true;
 	
 	//Let's do a 100 days of readings
@@ -1191,12 +1237,12 @@ boolean runFullCycleTest()
 			loopCycle();
 			assert(0, strlen(gsm.MOCK_DATA_SENT_GPRS));
 			assert(0, strlen(gsm.MOCK_DATA_SENT_SMS));
-			assertTrue(!_isDailyCycle);
+			assertTrue(!_isEndOfDayCycle);
 		}
 		
 		//EOD loop - after 1 day, should've transmitted
 		loopCycle();
-		assertTrue(_isDailyCycle);
+		assertTrue(_isEndOfDayCycle);
 		assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0);
 		assertTrue(strlen(gsm.MOCK_DATA_SENT_SMS)==0);
 
@@ -1208,7 +1254,6 @@ boolean runFullCycleTest()
 	return ret;
 }
 
-#endif //End define UNIT_TESTS
 
 boolean runIntraCycleTimerTests(){
 	
@@ -1227,13 +1272,13 @@ boolean runIntraCycleTimerTests(){
 	assert(false, testTimer._at10Secs);
 }
 
-boolean runInterCycleTimerTests(){
+boolean runInterCycleTimerTests(){ //i.e. check the IsDaily flag
 	
 	Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 	
 	//Move forward and check daily-cycle flag set
-	volatile uint32_t oneCycleTime = (INTRA_CYCLE_DOWNTIME+readingTime+LOOP_DELAY)/1000;
-	volatile uint32_t cyclesInOneDay = (24UL*60*60)/oneCycleTime;
+	volatile uint32_t oneCycleTime = testTimer.getTimePerCycleInMs()/1000;
+	volatile uint32_t cyclesInOneDay = testTimer.getCyclesInOneDay();
 	
 	Timing t2(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 	testTimer = t2;//new Timing(true, 1, 3*60); //say module wakes every 3 minutes
@@ -1261,18 +1306,33 @@ boolean runInterCycleTimerTests(){
 			(++currTestCycle*oneCycleTime)
 			) > oneCycleTime)
 	assert(false, testTimer.isDailyCycle(currTestCycle));
-		
+
 	assert(true, testTimer.isDailyCycle(currTestCycle)); //at T+2~23:59:59
 	assert(false, testTimer.isDailyCycle(++currTestCycle)); //at T+3~00:00:01
 }
+#endif //End define UNIT_TESTS
 
 bool runAllTests()
 {
+	bool doContinue = true;
+	
 #ifdef UNIT_TESTS
+
+	if (_isAtCycleStart) initialiseModulePristine(1);
+
+
+
+volatile int count = get_free_memory();
+
+	//Subsequent tests require looping callbacks
+	doContinue = runFullCycleTest();
+	return doContinue;
+
+
 
 	//Non-looping run-once tests
 	if (_isAtCycleStart)
-	{		
+	{
 		initialiseModulePristine(1);
 		runSendTest();
 	
@@ -1291,13 +1351,10 @@ bool runAllTests()
 		initialiseModulePristine(1);
 	}
 	
-	//custom initialise timing()
-	
-	//Looping test
-	bool doContinue = runFullCycleTest();
-	
-
+	//Subsequent tests require looping callbacks
+	doContinue = runFullCycleTest();
 #endif
+
 	//TODO: Test cycling, averaging etc. after reached end of band
 		//reset() and fast-forward time and run the loop() to manually get above values
 	//TODO: Run the loop()

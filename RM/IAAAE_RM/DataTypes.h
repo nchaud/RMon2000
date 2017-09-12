@@ -115,18 +115,6 @@ struct GpsData{
 //#define BAND_READING_CYCLE_START 28*1000 /* Will start cycling from here after it reaches the _END memory location above */
 
 
-//TODO: All these to be uint16_t ?
-
-typedef struct SensorData{
-	
-	unsigned int   BattVoltage	= 0;
-	unsigned int   Current		= 0;
-	unsigned int   PVVoltage	= 0;
-	unsigned int   Temperature	= 0;
-	//char		   ErrorChar	= 0; /* not unsigned else will get treated like int by string ctor */
-	//bool           HasBeenSent	= false;
-} SensorData;
-
 /* Stored at start of ROM. */
 typedef struct ModuleData{
 
@@ -139,19 +127,33 @@ typedef struct ModuleData{
 	unsigned int FreeStartAddress = 0; /* Address where current readings are stored at - cyclic buffer */
 } ModuleData;
 
-/* Stored in ROM after each attempted send once a day */
+
+//TODO: All these to be uint16_t ?
+
+typedef struct SensorData{
+	
+	unsigned int   BattVoltage	= 0;
+	unsigned int   Current		= 0;
+	unsigned int   PVVoltage	= 0;
+	unsigned int   Temperature	= 0;
+	//char		   ErrorChar	= 0; /* not unsigned else will get treated like int by string ctor */
+	//bool           HasBeenSent	= false;
+} SensorData;
+
+
+/* Stored in ROM and attempted to be sent every day along with readings */
 typedef struct DailyCycleData {
 	//TODO: AttemptedSend ?
 	unsigned long BootNo		  = 0;
 	boolean GPRSToggleFailure	  = false;
 	boolean GetBatteryFailure	  = false;
-	uint8_t NoOfReadings	  = 0; /* NoOfReadings in this transmission */
-	uint16_t GsmMessageLength = 0; /* Length of string that was attempted to send */
-	uint16_t GsmFailureCode   = 0;
-	uint8_t SmsFailureCode   = 0;
-	uint8_t	 BattPct		  = 0;
-	uint8_t NetworkStatus    = 0;
-	uint8_t RSSI			  = 0;
+	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
+	uint16_t GsmMessageLength	  = 0; /* Length of string that was attempted to send */
+	uint16_t GsmFailureCode		  = 0;
+	uint8_t SmsFailureCode		  = 0;
+	uint8_t	BattPct				  = 0;
+	uint8_t NetworkStatus		  = 0;
+	uint8_t RSSI				  = 0;
 	SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
 	
 } DailyCycleData;

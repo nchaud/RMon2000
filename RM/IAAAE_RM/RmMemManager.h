@@ -9,15 +9,16 @@ class RmMemManager
 public:
 protected:
 private:
+boolean _isMock;
 
 //functions
 public:
-	RmMemManager();
-	~RmMemManager();
+	RmMemManager(boolean isMock);
+	
+	void reset();
 	
 	//unsigned int getUIntFromMemory(unsigned int address);
 	//void setUIntToMemory(unsigned int address, unsigned int value);
-	
 	
 	unsigned long getLongFromMemory(unsigned int address);
 	void setLongToMemory(unsigned int address, unsigned long value);
@@ -38,11 +39,11 @@ public:
 	//Request to change the state of an LED
 	void toggleLED(LED_SEL led_num, LED_STATE state);
 	
+	float takeSampleAnalog(int pinNo);
 protected:
 private:
-	RmMemManager( const RmMemManager &c );
-	RmMemManager& operator=( const RmMemManager &c );
 
+	float readVcc();
 }; //RmMemManager
 
 #endif //__RMMEMMANAGER_H__
