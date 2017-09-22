@@ -56,7 +56,7 @@ void Timing::reset(){
 	#endif
 }
 
-
+//- todo: if kept up by battery? whilst sending? add a EEPROM entry when cycle finishes?
 uint32_t Timing::getTimePerCycleInMs(){
 	uint32_t oneCycleTime = _loopDelay+_readingTime+_intercycleDownTime;
 	return oneCycleTime;
@@ -196,16 +196,26 @@ unsigned long Timing::getMillis()
 boolean Timing::isStartOfHourCycle(unsigned long currCycleNumber){
 	
 	//If so, persist data (taking into account previous readings or don't read at all?)
-	return false;
+	if (currCycleNumber == FIRST_CYCLE_NO)
+		return true;
+		
+	volatile long test=currCycleNumber;
+		
+	uint32_t durationPerCycleInSecs = getDurationPerCycleInSecs();
+		
+	volatile uint32_t prevDurationMins = ((currCycleNumber-1)*durationPerCycleInSecs)/(60);
+	volatile uint32_t currDurationMins = (currCycleNumber*durationPerCycleInSecs)/(60);
+	
+	if ((int)prevDurationMins/MINS_IN_HOURS < ((int)currDurationMins/MINS_IN_HOURS))
+		return true;
+	else
+		return false;
 }
 
 boolean Timing::isDailyCycle(unsigned long currCycleNumber)
 {
-	//Calc approximate time between cycles. Divide by 1000 to prevent overflow when multiplied later.
-	volatile uint32_t durationPerCycleInSecs =
-		(_intercycleDownTime + _readingTime + _loopDelay)/1000;
-	//- todo: if kept up by battery? whilst sending? add a EEPROM entry when cycle finishes?
-	
+	volatile uint32_t durationPerCycleInSecs = getTimePerCycleInMs()/1000;
+
 	//Calc current time since module was installed
 	volatile uint32_t totalDurationHrs = (currCycleNumber*durationPerCycleInSecs)/(60*60);
 	

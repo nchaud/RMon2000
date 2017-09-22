@@ -40,6 +40,8 @@ private:
 	volatile uint32_t _MOCK_ADVANCED_BY = 0;
 	#endif
 	
+	uint32_t getDurationPerCycleInSecs();
+	
 //functions
 public:
 	Timing(
@@ -55,6 +57,8 @@ public:
 	uint32_t getMillis();
 	
 	boolean isDailyCycle(uint32_t currentCycleNo);
+	
+	boolean isStartOfHourCycle(unsigned long currCycleNumber);
 	
 	uint32_t getCyclesInOneDay();
 	

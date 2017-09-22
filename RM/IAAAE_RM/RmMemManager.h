@@ -33,6 +33,8 @@ public:
 
 	void appendDailyEntry(DailyCycleData* r);
 	
+	void replaceLastSensorEntry(SensorData* r);
+	
 	//Called at regular intervals at a fast-rate to toggle LEDs between off-on
 	void flashLED();
 

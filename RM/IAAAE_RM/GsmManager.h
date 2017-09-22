@@ -10,10 +10,8 @@ class GsmManager
 //variables
 public:
 
-#ifdef UNIT_TESTS
 	char* MOCK_DATA_SENT_GPRS; /* Last data sent via GPRS */
 	char* MOCK_DATA_SENT_SMS;  /* Last data sent via SMS */
-#endif
 
 protected:
 private:

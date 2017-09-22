@@ -31,7 +31,7 @@ bool _isSystemTest=true; /* Instead of live operation - triggered by switch */
 //Set delay between cycles
 #ifdef UNIT_TESTS
   #define LOOP_DELAY 1
-  #define INTRA_CYCLE_DOWNTIME 60UL*60*1000 //60 mins /* #ms module is off inter-cycle - based on Timer+RC circuit */
+  #define INTRA_CYCLE_DOWNTIME 45UL*60*1000 //45 mins /* #ms module is off inter-cycle - based on Timer+RC circuit */
 #else
   #define LOOP_DELAY 3000
   #define INTRA_CYCLE_DOWNTIME 3UL*60*1000 //3 mins /* #ms module is off inter-cycle - based on Timer+RC circuit */
@@ -74,14 +74,19 @@ void shutdown();
 void execTransmitGps();
 void execTransmitReadings(DailyCycleData* data);
 void readSensorsAsync();
-void resetAtCycleStart();
 void resetSensorData();
 bool ensureBatteryLevel();
 void triggerGpsRefreshAsync();
 void initialiseModulePristine(unsigned int moduleId);
+
 bool runAllTests();
+void runPreLoopForTest();
 bool loopSystemTest();
+
 void persistSensorData();
+void preLoop();
+void execLoop();
+void postLoop();
 boolean toggleGPRS(boolean onOff);
 uint16_t prepareDataForGPRS(SensorData* readings, unsigned int noOfReadings,
 		long moduleId, long bootCount, uint8_t networkStatus,
@@ -98,7 +103,9 @@ uint16_t sendViaGprs(char* data); /* 0 => success */
 void loadDataForGps(char buffer, int maxSize);
 GpsData getGpsSensorData();
 void onGpsComplete();
+GpsData gpsData;
 #endif
+
 
 
 /*********************/
@@ -117,22 +124,20 @@ int get_free_memory()
 #endif
 /*********************/
 
+boolean _isAtCycleStart;  //Will be true ONLY once at the 1st loop of every cycle
 boolean _isEndOfDayCycle; //True on the last cycle for each day
 boolean _isStartOfHourCycle; //True on the first each for each hour
 //boolean _isWeeklyCycle;
 boolean _moduleHasShutdown;
-unsigned long _currCycleNumber = 0;
-boolean _isAtCycleStart;  //Will be true ONLY once at the 1st loop of every cycle
+volatile unsigned long _currCycleNumber = 0UL;
 
-void resetOnNewCycle(){
+void setupOnNewCycle(){
 	
 	_isEndOfDayCycle=false;
 	_isStartOfHourCycle=false;
 	_moduleHasShutdown=false;
-	_currCycleNumber = false;
-	
-	//Important to let loop() function know it's at start so can do initialisation
-	_isAtCycleStart = true;
+	_isAtCycleStart = false;
+	_currCycleNumber = 0UL;
 
 	if (!gsm.begin()) {
 		//FONA library did not begin - store in ROM, terminate and don't consume power(TODO: Why would this ever happen?)
@@ -151,7 +156,6 @@ void setup() {
    unsigned char ResetSrc = MCUSR;   // TODO: save reset reason if not 0
    unsigned volatile int px=9;
    MCUSR = 0x00;  // cleared for next reset detection
-
 
 	// Optionally configure a GPRS APN, username, and password.
 	// You might need to do this to access your network's GPRS/data
@@ -179,52 +183,48 @@ void setup() {
  	pinMode(PIN_LED_TOP_GREEN, OUTPUT);
  	pinMode(PIN_LED_TOP_RED, OUTPUT);
 	
-	resetOnNewCycle();
+	setupOnNewCycle();
 }
 
-
-
-#ifdef GPS
-GpsData gpsData;
-#endif
-
 void loop() {
+	preLoop();
+	execLoop();
+	postLoop();
+}
+
+void execLoop() {
 
 	if (_moduleHasShutdown)
 		return;
 
-volatile int free = get_free_memory();
-
 	volatile unsigned long currentMillis = timer.getMillis();
 
-	//If board b eing powered up for the first time, start timer before running 1st cycle
+	//If board being powered up for the first time, start timer before running 1st cycle
+	_isAtCycleStart = _currCycleNumber == 0; //Not initialised so must be at start
 	if (_isAtCycleStart) {
-				
+
 		//Update bootcount
-		_currCycleNumber = 1 + mem.getLongFromMemory(MEMLOC_BOOTCOUNT);
+		_currCycleNumber = mem.getLongFromMemory(MEMLOC_BOOTCOUNT);
+		_currCycleNumber = _currCycleNumber + 1UL;
 		mem.setLongToMemory(MEMLOC_BOOTCOUNT, _currCycleNumber);
-					
-		_isEndOfDayCycle= timer.isDailyCycle(_currCycleNumber);
+
+		_isEndOfDayCycle = timer.isDailyCycle(_currCycleNumber);
 		_isStartOfHourCycle = timer.isStartOfHourCycle(_currCycleNumber);
 		
-		//Reset all data before new cycle begins
+		//Reset all in-memory data when a new cycle begins
 		//Strictly not necessary as it gets re-booted each time (but req'd for unit-tests)
-		resetAtCycleStart();
+		resetSensorData();
 	}
 
 	timer.onCycleLoop();
 	
 	//Run the cycle !
 	boolean doContinue = false;
-	
-	
+
 	
 	//Toggle LED flash first to show any error conditions etc. incase next loop errors out
 	//and we can't call flash
 	//mem.flashLED();
-	
-	
-	
 	
 	
 	#ifdef UNIT_TESTS
@@ -237,8 +237,6 @@ volatile int free = get_free_memory();
 		else
 			doContinue = loopCycle();
 	#endif
-	
-	_isAtCycleStart = false;
 
 	//If all work done, shut down
 	if (!doContinue) {
@@ -455,10 +453,6 @@ void setErrorByFlag(long memLoc, uint8_t errCode, SYS_STATE systemState = SysSta
 	//Store for each boot-no?
 }
 
-void resetAtCycleStart(){
-
-	resetSensorData();	
-}
 
 /* Called once to initalise module - for first time in it's life only */
 void initialiseModulePristine(unsigned int moduleId){
@@ -468,7 +462,7 @@ void initialiseModulePristine(unsigned int moduleId){
 	toggleSystemState(SysState_OneTimeInit);
 	
 	mem.setLongToMemory(MEMLOC_MODULE_ID, moduleId);
-	mem.setLongToMemory(MEMLOC_BOOTCOUNT, 0);
+	mem.setLongToMemory(MEMLOC_BOOTCOUNT, FIRST_CYCLE_NO-1); //i.e. 0 !
 	mem.setLongToMemory(MEMLOC_READING_ENTRY_COUNT, 0);
 	mem.setLongToMemory(MEMLOC_SENT_UPTO, 0);
 	
@@ -647,6 +641,8 @@ void persistSensorData() {
 	}
 }
 
+
+
 void readSensorsAsync() {
 	//Collect sensor data for x minutes, calc average, remove outliers
 	//TODO: Should this be RMS instead?
@@ -667,10 +663,10 @@ void readSensorsAsync() {
     tempAct = tempAct / 0.01;
 
                                                     //TODO: Use calibrated 
-                                                    RM_LOG2(F("Battery Voltage(Raw):"), battRaw);
-                                                    RM_LOG2(F("Battery Voltage(Act):"), battAct);
-                                                    RM_LOG2(F("PV Voltage(Raw):"), pvRaw);
-                                                    RM_LOG2(F("PV Voltage(Act):"), pvAct);
+                                                    //RM_LOG2(F("Battery Voltage(Raw):"), battRaw);
+                                                    //RM_LOG2(F("Battery Voltage(Act):"), battAct);
+                                                    //RM_LOG2(F("PV Voltage(Raw):"), pvRaw);
+                                                    //RM_LOG2(F("PV Voltage(Act):"), pvAct);
                                                     //RM_LOG2(F("Temp (Raw):"), temp);
                                                     //RM_LOG2(F("Temp (Act):"), tempAct);
 
@@ -831,6 +827,13 @@ bool ensureBatteryLevel() {
 
 
 
+void preLoop(){
+#ifdef UNIT_TESTS
+	runPreLoopForTest();
+#endif
+}
+void postLoop(){}
+
 
 
 
@@ -841,7 +844,7 @@ bool ensureBatteryLevel() {
 void assertTrue(bool val)
 {
 	if (!val){
-		volatile int failure=10/0;
+		volatile int failure=10/0; //Main Assert
 	}
 }
 
@@ -902,8 +905,25 @@ SensorData createMockReading(bool append = true, char errorChar = 0)
 	return r2;
 }
 
-void runLoadTest()
+boolean _doInitializeModule = true; //Any test can call this to reset module
+boolean _doSimulateFreshBoot = true; //Any test can call this
+void runPreLoopForTest(){
+	if (_doInitializeModule)
+		initialiseModulePristine(1); //Reset module
+	
+	if (_doSimulateFreshBoot)
+		setupOnNewCycle(); //Simulate a fresh boot of system
+	
+	_doInitializeModule=false;
+	_doSimulateFreshBoot=false;
+}
+
+#endif
+
+
+boolean runLoadTest()
 {
+#ifdef EXTRA_TESTS
 	//Load some fake readings
 	SensorData 
 		r0=createMockReading(),
@@ -974,10 +994,14 @@ void runLoadTest()
 	assert(0, mem.loadSensorData(buffer, 5, &loadedTo));
 	assert(0, loadedTo);
 	assert(0, buffer[0].BattVoltage); //Sanity check - no others populated
+#endif	
+
+	return false;
 }
 
-void runPadTest()
+boolean runPadTest()
 {
+#if EXTRA_TESTS	
 	byte buffSz=16;
 	char buff[buffSz];
 
@@ -1065,10 +1089,14 @@ void runPadTest()
 	assert(13, writeCharArrWithPad(buff, "Serious Error", 2));
 	assertCharStringsIdentical("Serious Error", buff);
 	memset(buff, 0, buffSz);
+
+#endif
+	return false;
 }
 
-void runSendTest()
+boolean runSendTest()
 {
+#if EXTRA_TESTS
 	//Check numbers save and load OK in correct endian order
 	unsigned long testCases[7] = {0, 1, 100, 262144, 2048, 4+32+128+1024+2048,4};
 	unsigned long bufferTest[7];
@@ -1169,94 +1197,14 @@ void runSendTest()
 	volatile int len = strlen(gsm.MOCK_DATA_SENT_GPRS);
 	assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS) < 35); //Could also check for commas
 	assert(5+3, mem.getLongFromMemory(MEMLOC_SENT_UPTO)); //unchanged
+
+#endif
+	return false;
 }
-	
-//TODO: Test timing flags - runSingleCycleTimingTest()
-//TODO: Test module status sent back (?)
-
-uint16_t _testFullCycleLoopCount=0;
-boolean runFullCycleTest()
-{	
-	//We simulate cycles for 24 hours then ensure data got sent. Repeat for a month(years?)
-	volatile uint32_t cyclesInDay = timer.getCyclesInOneDay();
-
-	uint32_t loadedTo;
-	
-	volatile int count = get_free_memory();
-
-	//# of readings required per day ?!
-	//TODO: How will it store 454 ?!?!
-
-	 unsigned int requestedLoadCount = 7;
-	 unsigned long loadedUpTo = 0;
-	 SensorData dszReadings[requestedLoadCount];
-	 
-	//In the beginning, check no of readings in memory already
-	volatile uint32_t initLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
-	memset(dszReadings, 0, sizeof(SensorData)*requestedLoadCount);
-
-	//Call normal looping function
-	boolean doContinue = loopCycle();
-		
-	//Simulate time advanced by readingTime/3 so we get 3 readings
-	timer.MOCK_ADVANCE_TIME(readingTime/3);
-		
-	if (doContinue)
-		return true; //This cycle is still running, doing work
-		
-	_testFullCycleLoopCount++;
-		
-	//Cycle is done, let's check we have 1 more reading saved in memory
-	volatile uint32_t newLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
-	assert(initLoadCount+1, newLoadCount);
-
-	if (_testFullCycleLoopCount < cyclesInDay) {
-		assert(0, _isEndOfDayCycle);
-		assertTrue(_dailyCycleData==NULL); //This should not be set during the day
-	}
-		
-	//TODO: Check values are averaged correctly
-		
-	//Simulate next cycle (typically after a few minutes)
-	resetOnNewCycle();
-	if (_testFullCycleLoopCount < cyclesInDay)
-		return true;
-	
-	//TODO: Check memory has 1 daily reading stored now and is transmitted
-		
-	assert(1, _isEndOfDayCycle);
-	assertTrue(_dailyCycleData != NULL);
-	boolean ret = true;
-	
-	//Let's do a 100 days of readings
-	for(int dayCtr=0;dayCtr<100; dayCtr++)
-	{
-		//Let 23 hours pass, should end up with ?? readings
-		for(int hrCtr=0;hrCtr<23;hrCtr++)
-		{
-			loopCycle();
-			assert(0, strlen(gsm.MOCK_DATA_SENT_GPRS));
-			assert(0, strlen(gsm.MOCK_DATA_SENT_SMS));
-			assertTrue(!_isEndOfDayCycle);
-		}
-		
-		//EOD loop - after 1 day, should've transmitted
-		loopCycle();
-		assertTrue(_isEndOfDayCycle);
-		assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0);
-		assertTrue(strlen(gsm.MOCK_DATA_SENT_SMS)==0);
-
-		//Reset
-		gsm.MOCK_DATA_SENT_GPRS = "";
-		gsm.MOCK_DATA_SENT_SMS = "";
-	}
-	
-	return ret;
-}
-
 
 boolean runIntraCycleTimerTests(){
-	
+
+#ifdef EXTRA_TESTS
 	Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 	
 	testTimer.MOCK_ADVANCE_TIME(9*1000);  //not early
@@ -1270,89 +1218,227 @@ boolean runIntraCycleTimerTests(){
 	testTimer.MOCK_ADVANCE_TIME(12*1000); //only once
 	testTimer.onCycleLoop();
 	assert(false, testTimer._at10Secs);
+
+#endif
+	return false;
 }
 
-boolean runInterCycleTimerTests(){ //i.e. check the IsDaily flag
-	
-	Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
-	
-	//Move forward and check daily-cycle flag set
-	volatile uint32_t oneCycleTime = testTimer.getTimePerCycleInMs()/1000;
-	volatile uint32_t cyclesInOneDay = testTimer.getCyclesInOneDay();
-	
-	Timing t2(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
-	testTimer = t2;//new Timing(true, 1, 3*60); //say module wakes every 3 minutes
-	testTimer.onCycleLoop();
-	
-	//The first is daily exactly once
-	int32_t currTestCycle=0;
-	for(;currTestCycle<cyclesInOneDay;currTestCycle++)
-		assert(false, testTimer.isDailyCycle(currTestCycle));
+boolean runInterCycleTimerTests(){ //i.e. check the IsHourly and IsDaily flags
 
-	assert(true, testTimer.isDailyCycle(currTestCycle)); //at ~23:59:59
-	
-	//The next cycle occurs when the time is closest to the 48th hour
-	while(( (24UL*2*3600)
-			  -
-			 (++currTestCycle*oneCycleTime)
-			) > oneCycleTime)
-		assert(false, testTimer.isDailyCycle(currTestCycle));
-
-	assert(true, testTimer.isDailyCycle(currTestCycle)); //at T+1~23:59:59
-	
-	//And 3rd cycle
-	while(( (24UL*3*3600)
-			  -
-			(++currTestCycle*oneCycleTime)
-			) > oneCycleTime)
-	assert(false, testTimer.isDailyCycle(currTestCycle));
-
-	assert(true, testTimer.isDailyCycle(currTestCycle)); //at T+2~23:59:59
-	assert(false, testTimer.isDailyCycle(++currTestCycle)); //at T+3~00:00:01
-}
-#endif //End define UNIT_TESTS
-
-bool runAllTests()
-{
-	bool doContinue = true;
-	
 #ifdef UNIT_TESTS
+	//Timing testTimer(true, readingTime, LOOP_DELAY, INTRA_CYCLE_DOWNTIME);
 
-	if (_isAtCycleStart) initialiseModulePristine(1);
+	//Move forward and check daily-cycle flag set
+	volatile uint32_t oneCycleTime = timer.getTimePerCycleInMs()/1000;
+	//volatile uint32_t cyclesInOneDay = testTimer.getCyclesInOneDay();
 
+	volatile uint32_t prevHour=(int)((_currCycleNumber-1)*oneCycleTime)/3600;
+	volatile uint32_t currHour=(int)(_currCycleNumber*oneCycleTime)/3600;
 
+	//As timer is at every 45 mins, we expect this sequence for _isHourlyFlag
+	boolean expected[] = {true/*@45 mins */, true, true, true, false, true, true, true, false, true,true,true,false};
 
-volatile int count = get_free_memory();
-
-	//Subsequent tests require looping callbacks
-	doContinue = runFullCycleTest();
-	return doContinue;
-
-
-
-	//Non-looping run-once tests
-	if (_isAtCycleStart)
-	{
-		initialiseModulePristine(1);
-		runSendTest();
-	
-		initialiseModulePristine(1);
-		runPadTest();
-	
-		initialiseModulePristine(1);
-		runLoadTest();
-
-		initialiseModulePristine(1);
-		runIntraCycleTimerTests();
-
-		initialiseModulePristine(1);
-		runInterCycleTimerTests();
-		
-		initialiseModulePristine(1);
+	if (_currCycleNumber <= 11) { //MUST MATCH ABOVE LENGTH
+		assert(expected[_currCycleNumber-1], _isStartOfHourCycle);
+	}
+	else {
+		if (_currCycleNumber == 31 || _currCycleNumber == 63) { //32nd cycle is exactly 24th hour and considered next day
+			assert(true, _isEndOfDayCycle);
+			timer.getTimePerCycleInMs()
+			assert(31, timer.getCyclesInOneDay()); //Sanity check
+		}
+		else
+			assert(false, _isEndOfDayCycle);
 	}
 	
-	//Subsequent tests require looping callbacks
-	doContinue = runFullCycleTest();
+	//Ensure timer fields are correct
+	
+	//Reset all so as to initiate a new cycle on next loop
+	_doSimulateFreshBoot = true;
+
+	//TODO: Do this for a variety of intervals both < & > 1 hour
+
+	return _currCycleNumber <=70;
+#endif
+}
+
+
+
+
+	
+//TODO: Test module status sent back (?)
+uint16_t _testFullCycleLoopCount=0;
+boolean runFullCycleTest()
+{	
+#ifdef UNIT_TESTS
+		
+	//We simulate cycles for 24 hours then ensure data got sent. Repeat for a month(years?)
+	volatile uint32_t cyclesInDay = timer.getCyclesInOneDay();
+
+	//# of readings required per day ?!
+	unsigned int requestedLoadCount = 5;
+	unsigned long loadedUpTo = 0;
+	uint32_t loadedTo;
+	SensorData dszReadings[requestedLoadCount];
+	 
+	//In the beginning, check no of readings in memory already
+	volatile uint32_t initLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
+	memset(dszReadings, 0, sizeof(SensorData)*requestedLoadCount); //reset
+		
+	//Call normal looping function
+	boolean doContinue = loopCycle();
+		
+	//Simulate time advanced by readingTime/3 so we get 3 readings
+	timer.MOCK_ADVANCE_TIME(readingTime/3);
+		
+	if (doContinue)
+		return true; //This cycle is still running, doing work
+		
+	_testFullCycleLoopCount++;
+	
+	if (_testFullCycleLoopCount == 22){
+		volatile int breakHere=99;
+	}
+		
+	//If hourly cycle is done, let's check we have 1 more reading saved in memory
+	volatile uint32_t newLoadCount = mem.loadSensorData(dszReadings, requestedLoadCount, &loadedTo);
+
+	if (_isStartOfHourCycle) {
+		assert(initLoadCount+1, newLoadCount);
+	}
+	else{
+		assert(initLoadCount, newLoadCount); //unchanged, can be updated though
+	}
+
+	if (!_isEndOfDayCycle) {
+		assertTrue(_dailyCycleData == NULL); //This should not be set during the day
+		assertCharStringsIdentical(NULL, gsm.MOCK_DATA_SENT_GPRS);
+		assertCharStringsIdentical(NULL, gsm.MOCK_DATA_SENT_SMS);
+	}
+	else{
+		//TODO: Check memory has 1 daily reading stored now and is transmitted
+		assert(1, _isEndOfDayCycle);
+		assertTrue(_dailyCycleData != NULL);
+		assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0);
+		assertCharStringsIdentical(NULL, gsm.MOCK_DATA_SENT_SMS);
+	}
+	
+	//As it's a new cycle simulated, run equivalent of setup() first
+	setupOnNewCycle();
+
+	//TODO: Check values are averaged correctly
+		
+	//Prep to simulate the next cycle in the day (typically after a few minutes)
+
+	//TODO: Test a month of readings
+	
+	boolean ret = true;
+	
+	//Let's do a 100 days of readings
+	//for(int dayCtr=0;dayCtr<100; dayCtr++)
+	//{
+		////Let 23 hours pass, should end up with ?? readings
+		//for(int hrCtr=0;hrCtr<23;hrCtr++)
+		//{
+			//loopCycle();
+			//assert(0, strlen(gsm.MOCK_DATA_SENT_GPRS));
+			//assert(0, strlen(gsm.MOCK_DATA_SENT_SMS));
+			//assertTrue(!_isEndOfDayCycle);
+		//}
+		//
+		////EOD loop - after 1 day, should've transmitted
+		//loopCycle();
+		//assertTrue(_isEndOfDayCycle);
+		//assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0);
+		//assertTrue(strlen(gsm.MOCK_DATA_SENT_SMS)==0);
+//
+		////Reset
+		//gsm.MOCK_DATA_SENT_GPRS = "";
+		//gsm.MOCK_DATA_SENT_SMS = "";
+	//}
+	
+	return ret;
+#endif
+}
+
+
+
+uint8_t _currTestStage=0;
+bool runAllTests()
+{
+#ifdef UNIT_TESTS
+
+	//First time it boots cycle no should be 1
+	if (_currTestStage == 0) {
+		assert(FIRST_CYCLE_NO, _currCycleNumber);
+		
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+
+	if (_currTestStage == 1) {
+		if(runFullCycleTest())
+			return true;
+			
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	if (_currTestStage == 2){
+		if (runSendTest())
+			return true;
+			
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	if (_currTestStage == 3){
+		if (runPadTest())
+			return true;
+		
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	if (_currTestStage == 4){
+		if (runLoadTest())
+			return true;
+		
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	if (_currTestStage == 5){
+		if (runIntraCycleTimerTests())
+			return true;
+		
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	if (_currTestStage == 6){
+		if (runInterCycleTimerTests())
+			return true;
+		
+		//Stage complete
+		_currTestStage++;
+		_doSimulateFreshBoot = true;
+		return true;
+	}
+	
+	return false; //All done !
 #endif
 
 	//TODO: Test cycling, averaging etc. after reached end of band
@@ -1366,6 +1452,4 @@ volatile int count = get_free_memory();
 		//TODO:Extensive logging for later diagnostics
 		//TODO: See if memory can store 480+ readings !!
 		//TODO: SMS FALLBACK TEST
-	
-	return doContinue;
 }

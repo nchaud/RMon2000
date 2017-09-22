@@ -19,7 +19,9 @@
 #define PIN_CURRENT A3
 
 #define HOURS_IN_DAY 24
+#define MINS_IN_HOURS 60
 #define HOURS_IN_WEEK 24*7
+#define FIRST_CYCLE_NO 1
 
 enum FAILURE {
 	FAILURE_NONE=0,

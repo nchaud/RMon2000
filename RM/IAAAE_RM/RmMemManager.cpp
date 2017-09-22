@@ -12,7 +12,7 @@ LED_STATE _ledTopState = All_Clear;
 uint8_t _flashCallCount=0;
 
 RmMemManager::RmMemManager(boolean isMock){
-	_isMock=isMock;
+	_isMock = isMock;
 }
 
 void RmMemManager::reset(){
@@ -31,7 +31,7 @@ unsigned long RmMemManager::getLongFromMemory(unsigned int address)
 	//Interpret it exactly as it's stored in memory
 	byte bArr[] = {b1,b2,b3,b4};
 	
-	volatile long derefValue = *(long*)(&bArr);
+	volatile unsigned long derefValue = *(unsigned long*)(&bArr);
 	
 	return derefValue;	
 }
@@ -44,7 +44,7 @@ unsigned int /*RmMemManager::*/getUIntFromMemory(unsigned int address)
 	//Interpret it exactly as it's stored in memory
 	byte bArr[] = {b1,b2};
 		
-	volatile int derefValue = *(int*)(&bArr);
+	volatile unsigned int derefValue = *(unsigned int*)(&bArr);
 		
 	return derefValue;
 }
@@ -126,9 +126,22 @@ void RmMemManager::appendDailyEntry(DailyCycleData* r)
 	//TODO
 }
 
+void internalWriteEntryAtAddress(SensorData* r, unsigned long address){
+	
+	byte* rPtr = (byte*)r;
+
+	for(int i=0;i<sizeof(SensorData);i++)
+		EEPROM.write(address+i, *(rPtr+i));
+}
+
 void RmMemManager::replaceLastSensorEntry(SensorData* r)
 {
+	//Read where last entry is
+	volatile unsigned long entryCount = getLongFromMemory(MEMLOC_READING_ENTRY_COUNT);
+	volatile unsigned long lastEntryOffset = max(0,entryCount-1) * sizeof(SensorData);
+	volatile unsigned long lastEntryAddress = MEMADDR_READING_DATA_START + lastEntryOffset;
 	
+	internalWriteEntryAtAddress(r, lastEntryAddress);
 }
 
 void RmMemManager::appendSensorEntry(SensorData* r)
@@ -142,14 +155,10 @@ void RmMemManager::appendSensorEntry(SensorData* r)
 
 	//TODO: modulo both free address (AND entry count?)
 
-	byte* rPtr = (byte*)r;
-
-	for(int i=0;i<sizeof(SensorData);i++)
-		EEPROM.write(nextFreeAddress+i, *(rPtr+i));
+	internalWriteEntryAtAddress(r, nextFreeAddress);
 
 	//Update entry count
 	setLongToMemory(MEMLOC_READING_ENTRY_COUNT, entryCount+1);
-	volatile int stop=2;
 	
 	/* Can we do this even with writing page limitations ? */
 	
