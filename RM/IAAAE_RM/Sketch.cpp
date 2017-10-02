@@ -1244,14 +1244,14 @@ boolean runInterCycleTimerTests(){ //i.e. check the IsHourly and IsDaily flags
 	else {
 		if (_currCycleNumber == 31 || _currCycleNumber == 63) { //32nd cycle is exactly 24th hour and considered next day
 			assert(true, _isEndOfDayCycle);
-			timer.getTimePerCycleInMs()
-			assert(31, timer.getCyclesInOneDay()); //Sanity check
+			
+			//Timing Sanity check
+			assert(45+LOOP_DELAY+readingTime, timer.getTimePerCycleInMs());
+			assert(31, timer.getCyclesInOneDay());
 		}
 		else
 			assert(false, _isEndOfDayCycle);
 	}
-	
-	//Ensure timer fields are correct
 	
 	//Reset all so as to initiate a new cycle on next loop
 	_doSimulateFreshBoot = true;
@@ -1317,14 +1317,13 @@ boolean runFullCycleTest()
 	}
 	else{
 		//TODO: Check memory has 1 daily reading stored now and is transmitted
-		assert(1, _isEndOfDayCycle);
 		assertTrue(_dailyCycleData != NULL);
 		assertTrue(strlen(gsm.MOCK_DATA_SENT_GPRS)>0);
 		assertCharStringsIdentical(NULL, gsm.MOCK_DATA_SENT_SMS);
 	}
 	
 	//As it's a new cycle simulated, run equivalent of setup() first
-	setupOnNewCycle();
+	_doSimulateFreshBoot = true;
 
 	//TODO: Check values are averaged correctly
 		

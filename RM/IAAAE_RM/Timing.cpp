@@ -201,7 +201,7 @@ boolean Timing::isStartOfHourCycle(unsigned long currCycleNumber){
 		
 	volatile long test=currCycleNumber;
 		
-	uint32_t durationPerCycleInSecs = getDurationPerCycleInSecs();
+	uint32_t durationPerCycleInSecs = getTimePerCycleInMs()/1000;
 		
 	volatile uint32_t prevDurationMins = ((currCycleNumber-1)*durationPerCycleInSecs)/(60);
 	volatile uint32_t currDurationMins = (currCycleNumber*durationPerCycleInSecs)/(60);

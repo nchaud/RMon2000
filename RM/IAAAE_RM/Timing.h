@@ -40,8 +40,6 @@ private:
 	volatile uint32_t _MOCK_ADVANCED_BY = 0;
 	#endif
 	
-	uint32_t getDurationPerCycleInSecs();
-	
 //functions
 public:
 	Timing(
