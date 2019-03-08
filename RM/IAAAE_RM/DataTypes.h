@@ -50,7 +50,7 @@ enum SYS_STATE {
 	SysState_OneTimeInit		=1<<13 //One time initialisation of module-ID etc.
 };
 
-enum LED_SEL:byte {
+enum LED_SEL/*:byte*/ {
 	Top, Bottom
 };
 
@@ -75,7 +75,48 @@ enum LED_STATE {
 	//uint16_t SmsResultCode=0;
 //}
 
-#if GPS
+struct ModuleMeta{
+
+	uint8_t moduleId;
+	uint8_t numReadings = 0;
+};
+
+struct GsmInfo{
+
+
+	//TODO: IS THAT IT?
+	
+	
+	uint8_t errorCode;
+	uint8_t rssi;
+	uint8_t networkStatus;
+};
+
+const byte ERR_GPS_NO_FIX=10;
+const byte ERR_GPS_NO_RESPONSE=11;
+const byte ERR_GPS_BAD_FIELD=12;
+
+struct GpsInfo{
+
+	byte errorCode; //0 implies no error
+	int8_t gpsStatus;
+	
+	float lat;
+	float lon;
+	float speed_kph;
+	float heading;
+	float altitude;
+	char date[15]; //Format yyyyMMddHHmmss with \0
+};
+
+
+struct SingleSession{
+	GsmInfo gsmInfo;
+	GpsInfo gpsInfo;
+};
+
+//TODO: Kill below, mixes gps and gsm data
+#ifdef GPS
 struct GpsData{
 	boolean success=false;
 	boolean is3DFix=false;

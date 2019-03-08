@@ -53,6 +53,10 @@ the commented section below at the end of the setup() function.
 #include "GsmManager.h"
 #include "RmMemManager.h"
 
+
+#include "avr/eeprom.h"
+
+
 // this is a large buffer for replies - TODO: Kill
 char replybuffer[255];
 SYS_STATE _currSystemState = SysState_Initialising;
@@ -150,8 +154,15 @@ void setupOnNewCycle(){
 	timer.reset();
 }
 
+struct ReceptionLoggerMeta{
+	int numReadingsSaved;
+};
+struct ReceptionLoggingItem{
+	uint8_t networkStatus;
+	uint8_t rssi;
+};
 
-void setup() {
+void setup_OLD() {
  
    unsigned char ResetSrc = MCUSR;   // TODO: save reset reason if not 0
    unsigned volatile int px=9;
@@ -168,6 +179,45 @@ void setup() {
 	// Default is not to follow SSL redirects, however if you uncomment
 	// the following line then redirects over SSL will be followed.
 	//fona.setHTTPSRedirect(true);
+
+	//Reset module
+	{
+		ReceptionLoggerMeta meta;
+		meta.numReadingsSaved = 0;
+		eeprom_update_block((void*)&meta,(void*)0,sizeof(ReceptionLoggerMeta));
+	}
+
+	for(int i=0;i<5;i++)
+	{
+		volatile ReceptionLoggerMeta result;
+		eeprom_read_block((void*)&result,(void*)0,sizeof(ReceptionLoggerMeta));
+		volatile uint8_t numRead = result.numReadingsSaved;
+		
+		void* nextAddrPtr = (void*)(numRead*sizeof(ReceptionLoggingItem));
+		ReceptionLoggingItem newItem;
+		newItem.networkStatus = i;
+		newItem.rssi = i*10;
+		eeprom_update_block((void*)&newItem,nextAddrPtr,sizeof(ReceptionLoggerMeta));
+
+		ReceptionLoggerMeta meta;
+		meta.numReadingsSaved += 1;
+		eeprom_update_block((void*)&meta,(void*)0,sizeof(ReceptionLoggerMeta));
+	}
+	
+	{
+		volatile ReceptionLoggerMeta result;
+		eeprom_read_block((void*)&result,(void*)0,sizeof(ReceptionLoggerMeta));
+		volatile uint8_t numRead = result.numReadingsSaved;
+		
+		volatile ReceptionLoggingItem item;
+		eeprom_read_block((void*)&item,(void*)(sizeof(ReceptionLoggingItem)*3),sizeof(ReceptionLoggingItem));
+		volatile uint8_t rssi = item.rssi;
+	
+		volatile int stop=9;
+	}
+	
+
+
 
 	#ifdef DEBUG
 
@@ -186,7 +236,7 @@ void setup() {
 	setupOnNewCycle();
 }
 
-void loop() {
+void loop_OLD() {
 	preLoop();
 	execLoop();
 	postLoop();

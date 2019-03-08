@@ -1,16 +1,18 @@
 #include <Arduino.h>
-#include <SoftwareSerial.h>
-
 #include "Helpers.h"
 #include "Adafruit_FONA.h"
 #include "GsmManager.h"
 
-GsmManager::GsmManager(uint8_t isMock)
+GsmManager::GsmManager(/*const Adafruit_FONA fonaInstance, */uint8_t isMock)
+					 :/*fona(fonaInstance),*/ _isMock(isMock)
 {
-	_isMock = isMock;
 }
 
 GsmManager::~GsmManager(){}
+
+void GsmManager::setFona(Adafruit_FONA& fonaInstance){
+	fona = fonaInstance;
+}
 
 void GsmManager::reset(){
 	
@@ -42,20 +44,26 @@ bool GsmManager::getBattPercent(uint16_t* vbat){
 }
 
 /* Must return 0 ONLY on success */
-uint8_t GsmManager::sendViaSms(char* data) {
+uint8_t GsmManager::sendViaSms(const char* data) {
 
 	if (_isMock)
 	{
-		MOCK_DATA_SENT_SMS = data;
+///		MOCK_DATA_SENT_SMS = data;
 		return 1;
 	}
 
 	char sendto[21]="+447968988149";
-	if (!fona.sendSMS(sendto, data)) {
+	if (!fona.sendSMS(sendto, (char*)data)) {
 		return 1;
 	} else {
 		return 0;
 	}
+}
+
+void GsmManager::getGsmInfo(GsmInfo& info){
+	
+	info.networkStatus = getNetworkStatus(); //?TODO: ERRORS?
+	info.rssi = getRSSI();
 }
 
 uint8_t GsmManager::getNetworkStatus()
@@ -82,12 +90,12 @@ bool GsmManager::enableGPRS(boolean switchOn)
 }
 
 /* Can return any HTTP status code. Must return 0 ONLY  on success. */
-uint16_t GsmManager::sendViaGprs(char* data)
+uint16_t GsmManager::sendViaGprs(const char* data)
 {
 	if (_isMock)
 	{
 		RM_LOG2(F("Mocking GPRS-Send"),data);
-		MOCK_DATA_SENT_GPRS = data;
+		//MOCK_DATA_SENT_GPRS = data;
 		return 0;
 	}
 	
@@ -98,8 +106,8 @@ uint16_t GsmManager::sendViaGprs(char* data)
 	// Post data to website
 	uint16_t statuscode;
 	int16_t length;
-	char* url="http://r.mkacars.org/do.php"; //TODO: should not require https?!
-		                                                      
+	char* url="http://cars.khuddam.org.uk/do.php"; //TODO: check should not require https!
+
 	boolean succ =
 		fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&length);
 		

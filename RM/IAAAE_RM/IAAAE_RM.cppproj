@@ -67,7 +67,21 @@
       </ToolNumber>
       <ToolName>Custom Programming Tool</ToolName>
     </custom>
-    <avrtoolinterface />
+    <avrtoolinterface>
+    </avrtoolinterface>
+    <com_atmel_avrdbg_tool_stk500>
+      <ToolOptions>
+        <InterfaceProperties>
+          <IspClock>125000</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.stk500</ToolType>
+      <ToolNumber>
+      </ToolNumber>
+      <ToolName>STK500</ToolName>
+    </com_atmel_avrdbg_tool_stk500>
+    <avrtoolinterfaceclock>125000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -239,7 +253,6 @@
       <Value>..\include\libraries\EEPROM\src</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
-  <avrgcccpp.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcccpp.compiler.optimization.level>
   <avrgcccpp.compiler.optimization.OtherFlags>-fno-threadsafe-statics</avrgcccpp.compiler.optimization.OtherFlags>
   <avrgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>False</avrgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <avrgcccpp.compiler.optimization.PrepareDataForGarbageCollection>False</avrgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
@@ -267,7 +280,10 @@
     <Compile Include="DataTypes.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="GPS.cpp">
+    <Compile Include="GpsManager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="GpsManager.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="GsmManager.cpp">
@@ -288,13 +304,16 @@
     <Compile Include="include\libraries\Wire\src\Wire.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Main_SignalLogging.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="RmMemManager.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RmMemManager.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sketch.cpp">
+    <Compile Include="Sketch_OLD.cpp.OLD">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\Wire\src\utility\twi.c">

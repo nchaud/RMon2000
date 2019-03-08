@@ -16,12 +16,12 @@ public:
 protected:
 private:
 	volatile uint8_t _isMock;
-	Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+	Adafruit_FONA fona = NULL;
 	SoftwareSerial* fonaSerial;
 
 //functions
 public:
-	GsmManager(uint8_t isMock);
+	GsmManager(/*const Adafruit_FONA fonaInstance, */uint8_t isMock);
 	~GsmManager();
 
 	void reset();
@@ -29,22 +29,26 @@ public:
 	//Initializes the FONA CPP module and GSM module
 	boolean begin();
 	
+	void setFona(Adafruit_FONA& fonaInstance);
+	
 	boolean enableGPRS(boolean switchOn);
 	
 	boolean getBattPercent(uint16_t* vbat);
 		
 	/* Can return any HTTP status code. Must return 0 ONLY  on success. */
-	uint16_t sendViaGprs(char* data);
+	uint16_t sendViaGprs(const char* data);
 	/* Must return 0 ONLY on success */
-	uint8_t sendViaSms(char* data);
+	uint8_t sendViaSms(const char* data);
 	
 	uint8_t getNetworkStatus();
 	uint8_t getRSSI();
 	
+	void getGsmInfo(GsmInfo& info);
+	
 protected:
 private:
-	GsmManager( const GsmManager &c );
-	GsmManager& operator=( const GsmManager &c );
+//	GsmManager( const GsmManager &c );
+//	GsmManager& operator=( const GsmManager &c );
 
 }; //
 
