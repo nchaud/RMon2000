@@ -49,11 +49,11 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../GPS.cpp \
+../GpsManager.cpp \
 ../GsmManager.cpp \
 ../Helpers.cpp \
+../Main_SignalLogging.cpp \
 ../RmMemManager.cpp \
-../Sketch.cpp \
 ../src/libraries/Wire/src/utility/twi.c \
 ../src/libraries/Wire/src/Wire.cpp \
 ../Tester.cpp \
@@ -67,44 +67,44 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-GPS.o \
+GpsManager.o \
 GsmManager.o \
 Helpers.o \
+Main_SignalLogging.o \
 RmMemManager.o \
-Sketch.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
 Tester.o \
 Timing.o
 
 OBJS_AS_ARGS +=  \
-GPS.o \
+GpsManager.o \
 GsmManager.o \
 Helpers.o \
+Main_SignalLogging.o \
 RmMemManager.o \
-Sketch.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
 Tester.o \
 Timing.o
 
 C_DEPS +=  \
-GPS.d \
+GpsManager.d \
 GsmManager.d \
 Helpers.d \
+Main_SignalLogging.d \
 RmMemManager.d \
-Sketch.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
 Tester.d \
 Timing.d
 
 C_DEPS_AS_ARGS +=  \
-GPS.d \
+GpsManager.d \
 GsmManager.d \
 Helpers.d \
+Main_SignalLogging.d \
 RmMemManager.d \
-Sketch.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
 Tester.d \
@@ -147,7 +147,7 @@ LINKER_SCRIPT_DEP+=
 ./%.o: .././%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes\platform" -I"..\\..\ArduinoCore\include\variants\standard" -I"..\include\libraries\Wire\src" -I"..\include\libraries\Wire\src\utility" -I"..\include\libraries\EEPROM\src"  -Og -fno-threadsafe-statics -fshort-enums -g3 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes\platform" -I"..\\..\ArduinoCore\include\variants\standard" -I"..\include\libraries\Wire\src" -I"..\include\libraries\Wire\src\utility" -I"..\include\libraries\EEPROM\src"  -O0 -fno-threadsafe-statics -fshort-enums -g3 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -161,7 +161,7 @@ src/libraries/Wire/src/utility/%.o: ../src/libraries/Wire/src/utility/%.c
 src/libraries/Wire/src/%.o: ../src/libraries/Wire/src/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes\platform" -I"..\\..\ArduinoCore\include\variants\standard" -I"..\include\libraries\Wire\src" -I"..\include\libraries\Wire\src\utility" -I"..\include\libraries\EEPROM\src"  -Og -fno-threadsafe-statics -fshort-enums -g3 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes" -I"..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona\includes\platform" -I"..\\..\ArduinoCore\include\variants\standard" -I"..\include\libraries\Wire\src" -I"..\include\libraries\Wire\src\utility" -I"..\include\libraries\EEPROM\src"  -O0 -fno-threadsafe-statics -fshort-enums -g3 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

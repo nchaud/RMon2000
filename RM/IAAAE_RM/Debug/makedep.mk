@@ -2,15 +2,15 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-GPS.cpp
+GpsManager.cpp
 
 GsmManager.cpp
 
 Helpers.cpp
 
-RmMemManager.cpp
+Main_SignalLogging.cpp
 
-Sketch.cpp
+RmMemManager.cpp
 
 src\libraries\Wire\src\utility\twi.c
 

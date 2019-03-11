@@ -4,8 +4,8 @@
 //TODO: Remove all Volatiles on deploy
 
 /* Amend and run just once at start */
-#define INITIALISE_MODULE 1
-#define INIT_MODULE_ID 5
+//#define INITIALISE_MODULE 1
+//#define INIT_MODULE_ID 5
 
 #define IS_TIMING_MOCK 1
 #define PRINT_DATA 1
@@ -74,60 +74,73 @@ void setup() {
 	// the following line then redirects over SSL will be followed.
 	//fona.setHTTPSRedirect(true);
 
-delay(3000);
-Wire.begin();
-Serial.begin(9600); //Writes to Serial output
-Serial.println(F("Starting..."));
+	delay(3000); //for serial monitor to connect
+	
+	Wire.begin();
+	Serial.begin(9600); //Writes to Serial output
+	Serial.println(F("Starting..."));
 
 	gps.setFona(fona);
 	gsm.setFona(fona);
 
 //	#ifdef DEBUG
 
-
-
 	#ifdef INITIALISE_MODULE
 		initModule(INIT_MODULE_ID);
 	#endif
 
+	initSubsystems();
+	
 	#ifdef PRINT_DATA
 		printData();
-	#else
-		initSubsystems();
 	#endif
 }
 
 void initSubsystems(){
 
-	//if (!gsm.begin()) {
-	//
-		////FONA library did not begin - store in ROM, terminate and don't consume power
-		////(TODO + Why would this ever happen?)
-		//return;
-	//}
+	if (!gsm.begin()) {
 	
-	//if (!gps.toggleGps(true)){
-	//
-		////TODO: store in ROM
-		//return;
-	//}
+		//FONA library did not begin - store in ROM, terminate and don't consume power
+		//(TODO + Why would this ever happen?)
+		return;
+	}
+	
+	if (!gps.toggleGps(true)){
+	
+		//TODO: store in ROM
+		return;
+	}
 }
 
+uint8_t getReadingAddress(uint8_t readingNum){
+	
+	uint8_t writeAddress =
+		sizeof(ModuleMeta) + //Skip metadata area
+		readingNum*sizeof(SingleSession);
+		
+	return writeAddress;
+}
 
 void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes){
 	
 	for(uint8_t i=0;i<numBytes;i++) {
 		
+		uint16_t thisByteAddr = address+i;
+		
 		Wire.beginTransmission(0x50);
-		Wire.write((int)address>>8); // msb
-		Wire.write((int)address&0xFF); // lsb
+		Wire.write((int)thisByteAddr>>8); // msb
+		Wire.write((int)thisByteAddr&0xFF); // lsb
 		Wire.endTransmission();
 		
 		Wire.requestFrom(0x50,1); //Todo: can specify multiple?
 		
-		uint8_t readByte;
+		uint8_t readByte=0xFF;
 		if (Wire.available())
 			readByte = Wire.read();
+		
+		Serial.print(F("Raw byte read:"));
+		Serial.println(readByte);
+		
 		*(data+i) = readByte;
 	}
 
@@ -149,13 +162,15 @@ void writeMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes
 	Serial.println(numBytes);
 	
 	for(uint8_t i=0;i<numBytes;i++) {
-		
+				
+		uint16_t thisByteAddr = address+i;
+				
 		Serial.print(F("Writing byte "));
 		Serial.println(*(data+i));
 		
 		Wire.beginTransmission(0x50);
-		Wire.write((int)address>>8); // msb
-		Wire.write((int)address&0xFF); // lsb
+		Wire.write((int)thisByteAddr>>8); // msb
+		Wire.write((int)thisByteAddr&0xFF); // lsb
 		Wire.write(*(data+i)); //go byte by byte
 		Wire.endTransmission();
 	
@@ -174,13 +189,46 @@ void initModule(uint8_t moduleId){
 
 void printData(){
 
-	Serial.print(F("This is module: "));
-
 	//Get last reading
 	ModuleMeta meta;
 	readMem(0, (uint8_t*)&meta, sizeof(ModuleMeta));
+
+	Serial.print(F("This is module #"));
+	Serial.println(meta.moduleId);
+	Serial.print(F("# Readings in module: "));
+	Serial.println(meta.numReadings);
 	
-	Serial.print(meta.moduleId);
+	for(uint8_t i=0;i<meta.numReadings;i++){
+		
+		Serial.print(F("Reading #"));
+		Serial.println(i);
+		
+		uint8_t readingAddr = getReadingAddress(i);
+		SingleSession session;
+		readMem(readingAddr, (uint8_t*)&session, sizeof(SingleSession));
+		
+		Serial.print(F("Gsm-Status: "));
+		Serial.println(session.gsmInfo.networkStatus);
+		Serial.print(F("Gsm-RSSI: "));
+		Serial.println(session.gsmInfo.rssi);
+		Serial.print(F("Gsm-Error Code: "));
+		Serial.println(session.gsmInfo.errorCode);
+		
+		Serial.print(F("Gps-Status: "));
+		Serial.println(session.gpsInfo.gpsStatus);
+		Serial.print(F("Gps-Error Code: "));
+		Serial.println(session.gpsInfo.errorCode);
+		Serial.print(F("Gps-Lat: "));
+		Serial.println(session.gpsInfo.lat);
+		Serial.print(F("Gps-Lon: "));
+		Serial.println(session.gpsInfo.lon);
+		Serial.print(F("Gps-Date: "));
+		Serial.println(session.gpsInfo.date);
+		Serial.print(F("Gps-Heading: "));
+		Serial.println(session.gpsInfo.heading);
+		Serial.print(F("Gps-Speed: "));
+		Serial.println(session.gpsInfo.speed_kph);
+	}
 }
 
 //void on3MinutesElapsed(){
@@ -199,9 +247,7 @@ void printData(){
 	//Serial.print(F(" with module id "));
 	//Serial.print(meta.moduleId);
 	//
-	//uint8_t writeAddress =
-						//META_SZ + //Skip metadata area
-						//(meta.numReadings)*SESSION_SZ;
+	//uint8_t writeAddress = getReadingAddress(meta.numReadings);
 	//
 	//Serial.print(F("Calculated next address for data to be written to: "));
 	//Serial.println(writeAddress);
@@ -241,10 +287,10 @@ void printData(){
 volatile int _timerCounter = 0;
 void loop() {
 
-	#ifdef DEBUG
-		Serial.println("Looping");
-	#endif
-	
+	//#ifdef DEBUG
+		//Serial.println("Looping");
+	//#endif
+	//
 	//#ifdef IS_TIMING_MOCK
 		//if (_timerCounter==0)
 			//on3MinutesElapsed();
@@ -252,7 +298,7 @@ void loop() {
 		//return; //Run the write only once
 	//#endif
 //
-	delay(1000);
+	//delay(1000);
 //
 	//if (++_timerCounter == 3*60)//Run once per startup, at after 3 mins
 		//on3MinutesElapsed();

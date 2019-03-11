@@ -34,8 +34,7 @@ GsmManager.d GsmManager.o: .././GsmManager.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  ..\\..\ArduinoCore\include\core/Arduino.h \
  ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h \
- ..\\..\ArduinoCore\include\libraries\SoftwareSerial/SoftwareSerial.h \
- ..\\..\ArduinoCore\include\core/Stream.h .././Helpers.h \
+ .././Helpers.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAExtIncludes.h \
@@ -43,7 +42,9 @@ GsmManager.d GsmManager.o: .././GsmManager.cpp \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatform.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/../FONAConfig.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatStd.h \
- .././GsmManager.h .././DataTypes.h
+ .././GsmManager.h \
+ ..\\..\ArduinoCore\include\libraries\SoftwareSerial/SoftwareSerial.h \
+ ..\\..\ArduinoCore\include\core/Stream.h .././DataTypes.h
 
 ..\\..\ArduinoCore\include\core/Arduino.h:
 
@@ -115,10 +116,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h:
 
-..\\..\ArduinoCore\include\libraries\SoftwareSerial/SoftwareSerial.h:
-
-..\\..\ArduinoCore\include\core/Stream.h:
-
 .././Helpers.h:
 
 ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h:
@@ -136,5 +133,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatStd.h:
 
 .././GsmManager.h:
+
+..\\..\ArduinoCore\include\libraries\SoftwareSerial/SoftwareSerial.h:
+
+..\\..\ArduinoCore\include\core/Stream.h:
 
 .././DataTypes.h:
