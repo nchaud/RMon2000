@@ -1,33 +1,24 @@
 #define DEBUG	  /* Runs all code but debugging it */
 
+//Testing
+#define DEBUG 1					//Prints output stsmts - ONLY WITH LAPTOP - to print output statements whilst all below are running
+bool DIAGNOSTIC_TEST = true;	//Run 1st - to smoke test new module's EEPROM
+bool IS_GSM_MOCK = true;		//Without connecting GSM shield
+bool IS_GPS_MOCK = true;		//Without connecting GPS shield
 
-//TODO: Remove all Volatiles on deploy
+//Initialising module
+bool INITIALISE_MODULE = false;
+char INIT_MODULE_ID = 5;
 
-/* Amend and run just once at start */
-//#define INITIALISE_MODULE 1
-//#define INIT_MODULE_ID 5
-
-#define IS_TIMING_MOCK 1
-#define PRINT_DATA 1
-
+//Analysis/Review afterwards - just show the existing data, no writes
+bool ONLY_PRINT_DATA = true;
 
 //Mock GSM
 #ifdef DEBUG
-#define IS_GSM_MOCK 1
-#define IS_GPS_MOCK 1
-//#define IS_SENSOR_MOCK 1
-//#define IS_TIMING_MOCK 1
-#define OUTPUT_DEBUG 0 //Write print statements
 
 //Set FONA module to be debug too
 #define ADAFRUIT_FONA_DEBUG
 
-#else //Either LIVE or SYSTEM_TEST
-#define IS_GSM_MOCK 0
-#define IS_GPS_MOCK 0
-//#define IS_SENSOR_MOCK 0
-//#define IS_TIMING_MOCK 0
-#define OUTPUT_DEBUG 0
 #endif
 
 /*
@@ -45,6 +36,10 @@ the commented section below at the end of the setup() function.
 #include "GpsManager.h"
 #include "avr/eeprom.h"
 
+//Have seen address 0 is typically worn out from testing in EEPROM and gives bogus reads at times 
+//so start higher up on another cell, which is more reliable
+uint16_t MEM_START = 170;
+
 //C++ instances
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 //RmMemManager mem(IS_SENSOR_MOCK);
@@ -52,7 +47,7 @@ GpsManager gps(IS_GPS_MOCK);
 GsmManager gsm(IS_GSM_MOCK);
 
 void initModule(uint8_t moduleId);
-void on3MinutesElapsed();
+void on3MinutesElapsed(bool doWrite);
 void printData();
 void initSubsystems();
 
@@ -74,26 +69,23 @@ void setup() {
 	// the following line then redirects over SSL will be followed.
 	//fona.setHTTPSRedirect(true);
 
-	delay(3000); //for serial monitor to connect
+	delay(3000); //time for hardware peripherals to warm up + for user's serial monitor to connect
 	
 	Wire.begin();
-	Serial.begin(9600); //Writes to Serial output
-	Serial.println(F("Starting..."));
+	
+	#ifdef DEBUG
+		Serial.begin(9600); //Writes to Serial output
+		Serial.println(F("Starting..."));
+	#endif
 
 	gps.setFona(fona);
 	gsm.setFona(fona);
 
-//	#ifdef DEBUG
-
-	#ifdef INITIALISE_MODULE
+	if (INITIALISE_MODULE) {
 		initModule(INIT_MODULE_ID);
-	#endif
+	}
 
 	initSubsystems();
-	
-	#ifdef PRINT_DATA
-		printData();
-	#endif
 }
 
 void initSubsystems(){
@@ -112,9 +104,10 @@ void initSubsystems(){
 	}
 }
 
-uint8_t getReadingAddress(uint8_t readingNum){
+uint16_t getReadingAddress(uint8_t readingNum){
 	
-	uint8_t writeAddress =
+	uint16_t writeAddress =
+		MEM_START +
 		sizeof(ModuleMeta) + //Skip metadata area
 		readingNum*sizeof(SingleSession);
 		
@@ -122,11 +115,27 @@ uint8_t getReadingAddress(uint8_t readingNum){
 }
 
 void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes){
+
+	//Serial.print(F("Reading memory at address "));
+	//Serial.print(address);
+	//Serial.print(F(" to address "));
+	////Serial.print((uint8_t)data);//TODO
+	//Serial.print(F(" of size "));
+	//Serial.println(numBytes);
 	
 	for(uint8_t i=0;i<numBytes;i++) {
 		
 		uint16_t thisByteAddr = address+i;
 		
+		//Serial.print(F("Reading byte at address "));
+		//Serial.print(thisByteAddr);
+		//
+		//Serial.print(F("...with MSB "));
+		//Serial.print((int) (thisByteAddr>>8) );
+		//Serial.print(F(" and LSB "));
+		//Serial.print((int) (thisByteAddr&0xFF) );
+		//Serial.print(F(" : "));
+		//
 		Wire.beginTransmission(0x50);
 		Wire.write((int)thisByteAddr>>8); // msb
 		Wire.write((int)thisByteAddr&0xFF); // lsb
@@ -138,35 +147,35 @@ void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes)
 		if (Wire.available())
 			readByte = Wire.read();
 		
-		Serial.print(F("Raw byte read:"));
-		Serial.println(readByte);
+		//Serial.print(F("Raw byte read:"));
+		//Serial.println(readByte);
 		
 		*(data+i) = readByte;
 	}
-
-	Serial.print(F("Read memory at address "));
-	Serial.print(address);
-	Serial.print(F(" to address "));
-	//Serial.print((uint8_t)data);//TODO
-	Serial.print(F(" of size "));
-	Serial.println(numBytes);	
 }
 
 void writeMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes){
 	
-	Serial.print(F("Writing memory at address "));
-	Serial.print(address);
-	Serial.print(F(" from address "));
-	//Serial.print((uint8_t)data); //TODO
-	Serial.print(F(" of size "));
-	Serial.println(numBytes);
+	//Serial.print(F("Writing memory at address "));
+	//Serial.print(address);
+	//Serial.print(F(" from address "));
+	////Serial.print((uint8_t)data); //TODO
+	//Serial.print(F(" of size "));
+	//Serial.println(numBytes);
 	
 	for(uint8_t i=0;i<numBytes;i++) {
-				
+
 		uint16_t thisByteAddr = address+i;
 				
-		Serial.print(F("Writing byte "));
-		Serial.println(*(data+i));
+		//Serial.print(F("Writing byte at address "));
+		//Serial.print(thisByteAddr);
+		//
+		//Serial.print(F("...with MSB "));
+		//Serial.print((int) (thisByteAddr>>8) );
+		//Serial.print(F(" and LSB "));
+		//Serial.print((int) (thisByteAddr&0xFF) );
+		//Serial.print(F(" : "));
+		//Serial.println(*(data+i));
 		
 		Wire.beginTransmission(0x50);
 		Wire.write((int)thisByteAddr>>8); // msb
@@ -174,7 +183,7 @@ void writeMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes
 		Wire.write(*(data+i)); //go byte by byte
 		Wire.endTransmission();
 	
-		delay(5);
+		delay(20); //Spec says 5 but that causes intermittent random reads at higher temperatures
 	}
 }
 
@@ -184,81 +193,90 @@ void initModule(uint8_t moduleId){
 	ModuleMeta meta;
 	meta.moduleId = moduleId;
 	meta.numReadings = 0;
-	writeMem(0, (uint8_t*)&meta, sizeof(ModuleMeta));
+	writeMem(MEM_START, (uint8_t*)&meta, sizeof(ModuleMeta));
+
+	#ifdef DEBUG
+		Serial.print("Module initialised with id ");
+		Serial.println(moduleId);
+	#endif
 }
 
 void printData(){
 
 	//Get last reading
 	ModuleMeta meta;
-	readMem(0, (uint8_t*)&meta, sizeof(ModuleMeta));
+	readMem(MEM_START, (uint8_t*)&meta, sizeof(ModuleMeta));
 
-	Serial.print(F("This is module #"));
-	Serial.println(meta.moduleId);
-	Serial.print(F("# Readings in module: "));
+	Serial.print(F("Module #"));
+	Serial.print(meta.moduleId);
+	Serial.print(F(", Total #Readings: "));
 	Serial.println(meta.numReadings);
-	
+		
 	for(uint8_t i=0;i<meta.numReadings;i++){
 		
 		Serial.print(F("Reading #"));
 		Serial.println(i);
 		
-		uint8_t readingAddr = getReadingAddress(i);
+		uint16_t readingAddr = getReadingAddress(i);
 		SingleSession session;
 		readMem(readingAddr, (uint8_t*)&session, sizeof(SingleSession));
 		
 		Serial.print(F("Gsm-Status: "));
-		Serial.println(session.gsmInfo.networkStatus);
-		Serial.print(F("Gsm-RSSI: "));
-		Serial.println(session.gsmInfo.rssi);
-		Serial.print(F("Gsm-Error Code: "));
-		Serial.println(session.gsmInfo.errorCode);
+		Serial.print(session.gsmInfo.networkStatus);
+		Serial.print(F(", Gsm-RSSI: "));
+		Serial.print(session.gsmInfo.rssi);
+		Serial.print(F(", Gsm-Error Code: "));
+		Serial.print(session.gsmInfo.errorCode);
 		
-		Serial.print(F("Gps-Status: "));
-		Serial.println(session.gpsInfo.gpsStatus);
-		Serial.print(F("Gps-Error Code: "));
-		Serial.println(session.gpsInfo.errorCode);
-		Serial.print(F("Gps-Lat: "));
-		Serial.println(session.gpsInfo.lat);
-		Serial.print(F("Gps-Lon: "));
-		Serial.println(session.gpsInfo.lon);
-		Serial.print(F("Gps-Date: "));
-		Serial.println(session.gpsInfo.date);
-		Serial.print(F("Gps-Heading: "));
-		Serial.println(session.gpsInfo.heading);
-		Serial.print(F("Gps-Speed: "));
+		Serial.print(F(", Gps-Status: "));
+		Serial.print(session.gpsInfo.gpsStatus);
+		Serial.print(F(", Gps-Error Code: "));
+		Serial.print(session.gpsInfo.errorCode);
+		Serial.print(F(", Gps-Lat: "));
+		Serial.print(session.gpsInfo.lat);
+		Serial.print(F(", Gps-Lon: "));
+		Serial.print(session.gpsInfo.lon);
+		Serial.print(F(", Gps-Date: "));
+		Serial.print(session.gpsInfo.date);
+		Serial.print(F(", Gps-Heading: "));
+		Serial.print(session.gpsInfo.heading);
+		Serial.print(F(", Gps-Speed: "));
 		Serial.println(session.gpsInfo.speed_kph);
 	}
 }
 
-//void on3MinutesElapsed(){
-	//
-	//Serial.println(F("3 minutes elapsed - logging..."));
-	//
-	//byte META_SZ = sizeof(ModuleMeta);
-	//byte SESSION_SZ = sizeof(SingleSession);
-	//
-	////Get last reading
-	//ModuleMeta meta;
-	//readMem(0, (uint8_t*)&meta, META_SZ);
-	//
-	//Serial.print(F("Got number of readings last time as "));
-	//Serial.print(meta.numReadings);
-	//Serial.print(F(" with module id "));
-	//Serial.print(meta.moduleId);
-	//
-	//uint8_t writeAddress = getReadingAddress(meta.numReadings);
-	//
-	//Serial.print(F("Calculated next address for data to be written to: "));
-	//Serial.println(writeAddress);
-	//
-	////Update the number of readings in metadata first so no matter what happens, existing data isnt overwritten
-	//meta.numReadings++;
-	//writeMem(0, (uint8_t*)&meta, META_SZ);
-	//
-	//SingleSession session;
-	////gps.getGpsInfo(session.gpsInfo);
-	//
+void on3MinutesElapsed(bool doWrite){
+
+	#ifdef DEBUG
+		Serial.println(F("3 minutes elapsed - logging..."));
+	#endif	
+	
+	byte META_SZ = sizeof(ModuleMeta);
+	byte SESSION_SZ = sizeof(SingleSession);
+	
+	//Get last reading
+	ModuleMeta meta;
+	readMem(MEM_START, (uint8_t*)&meta, sizeof(ModuleMeta));
+	
+	#ifdef DEBUG
+		Serial.print(F("Module #"));
+		Serial.print(meta.moduleId);
+		Serial.print(F(", Current #Readings: "));
+		Serial.println(meta.numReadings);
+	#endif
+
+	if (!doWrite)
+		return;
+
+	//Update the number of readings in metadata first so no matter what happens, existing data isnt overwritten
+	meta.numReadings++;
+	writeMem(MEM_START, (uint8_t*)&meta, sizeof(ModuleMeta));
+	
+	SingleSession session;
+	gps.getGpsInfo(session.gpsInfo);
+	gsm.getGsmInfo(session.gsmInfo);
+
+	
 	//Serial.print(F("Got GPS info, lat="));
 	//Serial.print(session.gpsInfo.lat);
 	//Serial.print(F(" lon="));
@@ -267,87 +285,55 @@ void printData(){
 	//Serial.print(session.gpsInfo.gpsStatus);
 	//Serial.print(F(" errCode="));
 	//Serial.println(session.gpsInfo.errorCode);
-	//
-	////gsm.getGsmInfo(session.gsmInfo);
-	//
-	//Serial.print(F("Calculated next address for data to be written to: "));
-	//Serial.println(writeAddress);
-	//
-	////Run 2 tests
-	////gsm.setGPRSNetworkSettings
-	//String sm = "";//"Module ID:"+ModuleMeta.moduleId+" transmitting.";
-	//
-	////gsm.sendViaSms(sm.c_str()); //TO: local number !
-	////gsm.sendViaGprs(sm.c_str());
-	//
-	//writeMem(writeAddress, (uint8_t*)&session, SESSION_SZ);
-//}
+	
+
+	
+	uint16_t writeAddress = getReadingAddress(meta.numReadings);
+//	Serial.print(F("Calculated next address for data to be written to: "));
+//	Serial.println(writeAddress);
+	
+	//Run 2 tests
+	//gsm.setGPRSNetworkSettings
+	String sm = "";//"Module ID:"+ModuleMeta.moduleId+" transmitting.";
+	
+	//gsm.sendViaSms(sm.c_str()); //TO: local number !
+	//gsm.sendViaGprs(sm.c_str());
+	
+	writeMem(writeAddress, (uint8_t*)&session, SESSION_SZ);
+}
 
 
 volatile int _timerCounter = 0;
 void loop() {
 
-	//#ifdef DEBUG
-		//Serial.println("Looping");
-	//#endif
-	//
-	//#ifdef IS_TIMING_MOCK
-		//if (_timerCounter==0)
-			//on3MinutesElapsed();
-//
-		//return; //Run the write only once
-	//#endif
-//
-	//delay(1000);
-//
-	//if (++_timerCounter == 3*60)//Run once per startup, at after 3 mins
-		//on3MinutesElapsed();
+	++_timerCounter;
+		
+	delay(1000);
+	
+	if (ONLY_PRINT_DATA) {
+		
+		if (_timerCounter==1)
+			printData();
+		return; //No writes, informational only
+	}
+	
+	if (INITIALISE_MODULE){
+		
+		return; //Should be initialising the module once and writing to it with amended firmware
+	}
+	
+	#ifdef DEBUG
+		Serial.println("Looping");
+	#endif
+	
+	if (DIAGNOSTIC_TEST) {
+	
+		//Write and print every second
+		on3MinutesElapsed(true);
+		printData();
+		return;
+	}
+
+	if (_timerCounter == 3*60)//Run once per startup, at after 3 mins
+		on3MinutesElapsed(true);
 }
-
-
-
-
-//Reset module
-//{
-	//ReceptionLoggerMeta meta;
-	//meta.numReadingsSaved = 0;
-	//eeprom_update_block((void*)&meta,(void*)0,sizeof(ReceptionLoggerMeta));
-//}
-//
-//for(int i=0;i<5;i++)
-//{
-	//volatile ReceptionLoggerMeta result;
-	//eeprom_read_block((void*)&result,(void*)0,sizeof(ReceptionLoggerMeta));
-	//volatile uint8_t numRead = result.numReadingsSaved;
-	//
-	//void* nextAddrPtr = (void*)(numRead*sizeof(ReceptionLoggingItem));
-	//ReceptionLoggingItem newItem;
-	//newItem.networkStatus = i;
-	//newItem.rssi = i*10;
-	//eeprom_update_block((void*)&newItem,nextAddrPtr,sizeof(ReceptionLoggerMeta));
-//
-	//ReceptionLoggerMeta meta;
-	//meta.numReadingsSaved += 1;
-	//eeprom_update_block((void*)&meta,(void*)0,sizeof(ReceptionLoggerMeta));
-//}
-//
-//{
-	//volatile ReceptionLoggerMeta result;
-	//eeprom_read_block((void*)&result,(void*)0,sizeof(ReceptionLoggerMeta));
-	//volatile uint8_t numRead = result.numReadingsSaved;
-	//
-	//volatile ReceptionLoggingItem item;
-	//eeprom_read_block((void*)&item,(void*)(sizeof(ReceptionLoggingItem)*3),sizeof(ReceptionLoggingItem));
-	//volatile uint8_t rssi = item.rssi;
-	//
-	//volatile int stop=9;
-//}
-//
-//struct ReceptionLoggerMeta{
-	//int numReadingsSaved;
-//};
-//
-//struct ReceptionLoggingItem{
-	//uint8_t networkStatus;
-	//uint8_t rssi;
-//};

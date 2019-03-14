@@ -38,22 +38,21 @@ int8_t GpsManager::gpsStatus(){
 
 void GpsManager::getGpsInfo(GpsInfo& info){
 
-	//if (_isMock)
-	//{
-		//info.altitude = 10;
-		//
-		////TODO
-		////info.date = (char*)"20180301181716";
-		//
-		//
-		//info.gpsStatus = 30;
-		//info.heading = 40;
-		//info.lat = 50;
-		//info.lon = 60;
-		//info.speed_kph = 70;
-		//return;
-	//}
-//
+	if (_isMock)
+	{
+		info.altitude = 10;
+		
+		strcpy(info.date, "20180301181716");
+		//info.date[14]='\0';
+		
+		info.gpsStatus = 30;
+		info.heading = 40;
+		info.lat = 50;
+		info.lon = 60;
+		info.speed_kph = 70;
+		return;
+	}
+
 	//int8_t gpsStatus = fona.GPSstatus();
 	//
 	////Store the status regardless

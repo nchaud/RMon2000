@@ -98,7 +98,7 @@ const byte ERR_GPS_BAD_FIELD=12;
 
 struct GpsInfo{
 
-	byte errorCode; //0 implies no error
+	uint8_t errorCode; //0 implies no error
 	int8_t gpsStatus;
 	
 	float lat;
