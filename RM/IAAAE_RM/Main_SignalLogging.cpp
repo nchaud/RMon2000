@@ -2,7 +2,7 @@
 
 //Testing
 #define DEBUG 1					//Prints output stsmts - ONLY WITH LAPTOP - to print output statements whilst all below are running
-bool DIAGNOSTIC_TEST = true;	//Run 1st - to smoke test new module's EEPROM
+bool DIAGNOSTIC_TEST = false;	//Run 1st - to smoke test new module's EEPROM
 bool IS_GSM_MOCK = true;		//Without connecting GSM shield
 bool IS_GPS_MOCK = true;		//Without connecting GPS shield
 
@@ -116,26 +116,26 @@ uint16_t getReadingAddress(uint8_t readingNum){
 
 void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes){
 
-	//Serial.print(F("Reading memory at address "));
-	//Serial.print(address);
-	//Serial.print(F(" to address "));
-	////Serial.print((uint8_t)data);//TODO
-	//Serial.print(F(" of size "));
-	//Serial.println(numBytes);
+	Serial.print(F("Reading memory at address "));
+	Serial.print(address);
+	Serial.print(F(" to address "));
+	//Serial.print((uint8_t)data);//TODO
+	Serial.print(F(" of size "));
+	Serial.println(numBytes);
 	
 	for(uint8_t i=0;i<numBytes;i++) {
 		
 		uint16_t thisByteAddr = address+i;
 		
-		//Serial.print(F("Reading byte at address "));
-		//Serial.print(thisByteAddr);
-		//
-		//Serial.print(F("...with MSB "));
-		//Serial.print((int) (thisByteAddr>>8) );
-		//Serial.print(F(" and LSB "));
-		//Serial.print((int) (thisByteAddr&0xFF) );
-		//Serial.print(F(" : "));
-		//
+		Serial.print(F("Reading byte at address "));
+		Serial.print(thisByteAddr);
+		
+		Serial.print(F("...with MSB "));
+		Serial.print((int) (thisByteAddr>>8) );
+		Serial.print(F(" and LSB "));
+		Serial.print((int) (thisByteAddr&0xFF) );
+		Serial.print(F(" : "));
+		
 		Wire.beginTransmission(0x50);
 		Wire.write((int)thisByteAddr>>8); // msb
 		Wire.write((int)thisByteAddr&0xFF); // lsb
@@ -147,8 +147,8 @@ void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes)
 		if (Wire.available())
 			readByte = Wire.read();
 		
-		//Serial.print(F("Raw byte read:"));
-		//Serial.println(readByte);
+		Serial.print(F("Raw byte read:"));
+		Serial.println(readByte);
 		
 		*(data+i) = readByte;
 	}
@@ -156,26 +156,26 @@ void readMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes)
 
 void writeMem(volatile int16_t address, uint8_t* data, volatile uint8_t numBytes){
 	
-	//Serial.print(F("Writing memory at address "));
-	//Serial.print(address);
-	//Serial.print(F(" from address "));
-	////Serial.print((uint8_t)data); //TODO
-	//Serial.print(F(" of size "));
-	//Serial.println(numBytes);
+	Serial.print(F("Writing memory at address "));
+	Serial.print(address);
+	Serial.print(F(" from address "));
+	//Serial.print((uint8_t)data); //TODO
+	Serial.print(F(" of size "));
+	Serial.println(numBytes);
 	
 	for(uint8_t i=0;i<numBytes;i++) {
 
 		uint16_t thisByteAddr = address+i;
 				
-		//Serial.print(F("Writing byte at address "));
-		//Serial.print(thisByteAddr);
-		//
-		//Serial.print(F("...with MSB "));
-		//Serial.print((int) (thisByteAddr>>8) );
-		//Serial.print(F(" and LSB "));
-		//Serial.print((int) (thisByteAddr&0xFF) );
-		//Serial.print(F(" : "));
-		//Serial.println(*(data+i));
+		Serial.print(F("Writing byte at address "));
+		Serial.print(thisByteAddr);
+		
+		Serial.print(F("...with MSB "));
+		Serial.print((int) (thisByteAddr>>8) );
+		Serial.print(F(" and LSB "));
+		Serial.print((int) (thisByteAddr&0xFF) );
+		Serial.print(F(" : "));
+		Serial.println(*(data+i));
 		
 		Wire.beginTransmission(0x50);
 		Wire.write((int)thisByteAddr>>8); // msb
@@ -277,14 +277,16 @@ void on3MinutesElapsed(bool doWrite){
 	gsm.getGsmInfo(session.gsmInfo);
 
 	
-	//Serial.print(F("Got GPS info, lat="));
-	//Serial.print(session.gpsInfo.lat);
-	//Serial.print(F(" lon="));
-	//Serial.print(session.gpsInfo.lon);
-	//Serial.print(F(" status="));
-	//Serial.print(session.gpsInfo.gpsStatus);
-	//Serial.print(F(" errCode="));
-	//Serial.println(session.gpsInfo.errorCode);
+	Serial.print(F("Got GPS info, lat="));
+	Serial.print(session.gpsInfo.lat);
+	Serial.print(F(" lon="));
+	Serial.print(session.gpsInfo.lon);
+	Serial.print(F(" date="));
+	Serial.print(session.gpsInfo.date);
+	Serial.print(F(" status="));
+	Serial.print(session.gpsInfo.gpsStatus);
+	Serial.print(F(" errCode="));
+	Serial.println(session.gpsInfo.errorCode);
 	
 
 	
