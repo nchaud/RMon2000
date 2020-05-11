@@ -53,26 +53,26 @@ void GpsManager::getGpsInfo(GpsInfo& info){
 		return;
 	}
 
-	//int8_t gpsStatus = fona.GPSstatus();
-	//
-	////Store the status regardless
-	//info.gpsStatus = gpsStatus;
-	//
-	//// we need at least a 2D fix
-	//if (gpsStatus < 2) {
-		//info.errorCode = ERR_GPS_NO_FIX;
-		//return;
-	//}
-//
-	////We know the date won't be >20 from it's format
-	//boolean success = fona.getGPS(&info.lat, &info.lon, 
-		//&info.speed_kph, &info.heading, &info.altitude, (char*)info.date);
-//
-	//// make sure we have a response
-	//if (!success){
-		//info.errorCode = ERR_GPS_BAD_FIELD;
-		//return;
-	//}
+	int8_t gpsStatus = fona.GPSstatus();
+	
+	//Store the status regardless
+	info.gpsStatus = gpsStatus;
+	
+	// we need at least a 2D fix
+	if (gpsStatus < 2) {
+		info.errorCode = ERR_GPS_NO_FIX;
+		return;
+	}
+
+	//We know the date won't be >20 from it's format
+	boolean success = fona.getGPS(&info.lat, &info.lon, 
+		&info.speed_kph, &info.heading, &info.altitude, (char*)info.date);
+
+	// make sure we have a response
+	if (!success){
+		info.errorCode = ERR_GPS_BAD_FIELD;
+		return;
+	}
 }
 
 

@@ -44,6 +44,7 @@ uint8_t Adafruit_FONA::type(void) {
 }
 
 boolean Adafruit_FONA::begin(Stream &port) {
+
   mySerial = &port;
 
   pinMode(_rstpin, OUTPUT);

@@ -15,13 +15,20 @@ boolean _isMock;
 public:
 	RmMemManager(boolean isMock);
 	
-	void reset();
+	uint8_t getUCharFromMemory(uint16_t address);
+	uint16_t getUShortFromMemory(uint16_t address);
+	uint32_t getUIntFromMemory(uint16_t address);
+	uint64_t getULongFromMemory(uint16_t address);
+	void setUCharToMemory(uint16_t address, uint8_t value);
+	void setUShortToMemory(uint16_t address, uint16_t value);
+	void setUIntToMemory(uint16_t address, uint32_t value);
+	void setULongToMemory(uint16_t address, uint64_t value);
 	
-	//unsigned int getUIntFromMemory(unsigned int address);
-	//void setUIntToMemory(unsigned int address, unsigned int value);
+	void initialiseModule(uint8_t moduleId);
+	void incrementBootCount();
 	
-	unsigned long getLongFromMemory(unsigned int address);
-	void setLongToMemory(unsigned int address, unsigned long value);
+	void printData();
+	uint16_t verifyEepRom();
 	
 	void appendSensorEntry(SensorData* r);
 	unsigned long loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
@@ -29,7 +36,7 @@ public:
 
 	/* Indicates that data up to this value has been sent and need not be 
 	   sent again next time */
-	void markDataSent(unsigned long sentUpTo);
+	void markDataSent(uint64_t sentUpTo);
 
 	void appendDailyEntry(DailyCycleData* r);
 	
@@ -37,9 +44,9 @@ public:
 	
 	//Called at regular intervals at a fast-rate to toggle LEDs between off-on
 	void flashLED();
-
 	//Request to change the state of an LED
 	void toggleLED(LED_SEL led_num, LED_STATE state);
+	void reset();
 	
 	float takeSampleAnalog(int pinNo);
 protected:

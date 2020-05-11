@@ -62,7 +62,7 @@ uint8_t GsmManager::sendViaSms(const char* data) {
 
 void GsmManager::getGsmInfo(GsmInfo& info){
 	
-	info.networkStatus = getNetworkStatus(); //?TODO: ERRORS?
+	info.networkStatus = getNetworkStatus();
 	info.rssi = getRSSI();
 }
 
@@ -106,7 +106,7 @@ uint16_t GsmManager::sendViaGprs(const char* data)
 	// Post data to website
 	uint16_t statuscode;
 	int16_t length;
-	char* url="http://cars.khuddam.org.uk/do.php"; //TODO: check should not require https!
+	char* url="http://cars.khuddam.org.uk/r.php"; //TODO: check should not require https!
 
 	boolean succ =
 		fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&length);

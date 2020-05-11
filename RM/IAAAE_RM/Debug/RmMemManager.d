@@ -35,9 +35,8 @@ RmMemManager.d RmMemManager.o: .././RmMemManager.cpp \
  ..\\..\ArduinoCore\include\core/Arduino.h \
  ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h \
  ..\include\libraries\Wire\src/Wire.h \
- ..\\..\ArduinoCore\include\core/Stream.h \
- ..\include\libraries\EEPROM\src/EEPROM.h .././RmMemManager.h \
- .././DataTypes.h
+ ..\\..\ArduinoCore\include\core/Stream.h .././DataTypes.h \
+ .././RmMemManager.h
 
 ..\\..\ArduinoCore\include\core/Arduino.h:
 
@@ -113,8 +112,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ..\\..\ArduinoCore\include\core/Stream.h:
 
-..\include\libraries\EEPROM\src/EEPROM.h:
+.././DataTypes.h:
 
 .././RmMemManager.h:
-
-.././DataTypes.h:

@@ -1,6 +1,7 @@
 #ifndef __DATATYPES_H__
 #define __DATATYPES_H__
 
+//Fona Pins
 #define FONA_RX 2
 #define FONA_TX 3
 #define FONA_RST 4
@@ -18,10 +19,19 @@
 #define PIN_TEMP A2
 #define PIN_CURRENT A3
 
+//Timing constants
 #define HOURS_IN_DAY 24
 #define MINS_IN_HOURS 60
 #define HOURS_IN_WEEK 24*7
 #define FIRST_CYCLE_NO 1
+
+//Error constants
+#define ERR_GPS_NO_FIX 10
+#define ERR_GPS_NO_RESPONSE 11
+#define ERR_GPS_BAD_FIELD 12
+
+#define DATATYPE_SENSORDATA 1
+#define DATATYPE_SENDDATA 2
 
 enum FAILURE {
 	FAILURE_NONE=0,
@@ -51,7 +61,8 @@ enum SYS_STATE {
 };
 
 enum LED_SEL/*:byte*/ {
-	Top, Bottom
+	Top,
+	Bottom
 };
 
 enum LED_STATE { 
@@ -75,11 +86,62 @@ enum LED_STATE {
 	//uint16_t SmsResultCode=0;
 //}
 
-struct ModuleMeta{
-
-	uint8_t moduleId;
-	uint8_t numReadings = 0;
+//TODO: Kill below, mixes gps and gsm data
+#ifdef GPS
+struct GpsData{
+	boolean success=false;
+	boolean is3DFix=false;
+	uint8_t rawSz = 0;
+	char* raw = NULL;      //Must be set before read
+	char* gsmLoc = NULL;
+	uint8_t gsmLocSz = 0;
+	uint16_t gsmErrCode;
 };
+#endif
+
+#ifdef OUTPUT_DEBUG_MEM
+	#define RM_LOGMEM(x) \
+	Serial.print(x);
+	
+	#define RM_LOGMEMLN(x) \
+	Serial.println(x);
+#else
+	#define RM_LOGMEM(x)
+	#define RM_LOGMEMLN(x)
+#endif
+
+#ifdef OUTPUT_DEBUG
+	#define RM_LOG2(x,y)  \
+	Serial.print (x);\
+	Serial.print (":");\
+	Serial.println (y);
+
+	#define RM_LOG(x) \
+	Serial.print(x);
+
+	#define RM_LOGLONG(x,fmt) \
+	uint64_t lower = x>>32;\
+	Serial.print((uint32_t)lower,HEX);\
+	Serial.print((uint32_t)x,HEX);
+
+	#define RM_LOGFMT(x,fmt) \
+	Serial.print(x,fmt);
+	
+	#define RM_LOGLN(x) \
+	Serial.println(x);
+	
+	#define RM_LOGLNFMT(x,fmt) \
+	Serial.println(x,fmt);
+	
+#else
+	#define RM_LOG2(x,y)
+	#define RM_LOG(x)
+	#define RM_LOGLONG(x,fmt) 
+	#define RM_LOGFMT(x,fmt)
+	#define RM_LOGLN(x)
+	#define RM_LOGLNFMT(x,fmt)
+#endif
+
 
 struct GsmInfo{
 
@@ -91,10 +153,6 @@ struct GsmInfo{
 	uint8_t rssi;
 	uint8_t networkStatus;
 };
-
-const byte ERR_GPS_NO_FIX=10;
-const byte ERR_GPS_NO_RESPONSE=11;
-const byte ERR_GPS_BAD_FIELD=12;
 
 struct GpsInfo{
 
@@ -109,83 +167,60 @@ struct GpsInfo{
 	char date[15]; //Format yyyyMMddHHmmss with \0
 };
 
-
 struct SingleSession{
 	GsmInfo gsmInfo;
 	GpsInfo gpsInfo;
 };
 
-//TODO: Kill below, mixes gps and gsm data
-#ifdef GPS
-struct GpsData{
-	boolean success=false;
-	boolean is3DFix=false;
-	uint8_t rawSz = 0;
-	char* raw = NULL;      //Must be set before read
-	char* gsmLoc = NULL;
-	uint8_t gsmLocSz = 0;
-	uint16_t gsmErrCode;
-};
-#endif
-
-
-#ifdef OUTPUT_DEBUG
-	#define RM_LOG2(x,y)  \
-	Serial.print (x);\
-	Serial.print (":");\
-	Serial.println (y);
-
-	#define RM_LOG(x) \
-	Serial.println(x);
-#else
-	#define RM_LOG2(x,y)
-	#define RM_LOG(x)
-#endif
-
-
-//Memory positions of static metadata
-#define MEMLOC_MODULE_ID 0
-#define MEMLOC_VERSION	 4
-#define MEMLOC_BOOTCOUNT 8 /* Long - 4 bytes */
-#define MEMLOC_SENT_UPTO 12 /* The last Reading NUMBER (not idx) that was successfully sent out */
-
-//The start and end positions in EEPROM of circular buffer reserved for Readings
-//#define BAND_READING_START 100 /* Sizeof module data above + spare */
-//The number of entries stored so far. 0=> no entries. -1 to get the idx of an entry.
-#define MEMLOC_READING_ENTRY_COUNT 100 /* Long - 4 bytes */
-#define MEMADDR_READING_DATA_START  104 /* Long - 4 bytes */
-#define MEMADDR_READING_END 30L*1000 /* ROM is 32K  - but do we want to cycle back and lose that important historical data? Circular should be limited to 1K @ end?*/
-//#define BAND_READING_CYCLE_START 28*1000 /* Will start cycling from here after it reaches the _END memory location above */
-
-
 /* Stored at start of ROM. */
-typedef struct ModuleData{
+struct ModuleMeta{
 
-	unsigned int ModuleId = 0;
-	unsigned int Version  = 0;   /* Software version */
-	unsigned long BootCount = 0; /* No of times module has booted up */
+	uint8_t  moduleId;
 	
-	/* May not be all readings, different segment for other info ? */
-	unsigned int NoOfReadings = 0;
-	unsigned int FreeStartAddress = 0; /* Address where current readings are stored at - cyclic buffer */
-} ModuleData;
+	/* No of times module has booted up incase numReadings cycles/fails */
+	uint16_t bootCount;
+	
+	/* Where the next sensor data or daily cycle data can go */
+	uint16_t nextFreeWriteAddr;
+	
+	/* Dedicated area where testing eeprom will write and read to */
+	uint64_t eepromTestArea;
+	
+	uint16_t spareBuffer[8];
+};
+
+//struct ModuleData{
+//
+	//uint8_t moduleId = 0;
+	//uint8_t version;   /* Software version */
+	//uint32_t bootCount; /* No of times module has booted up */
+	//
+	///* May not be all readings, different segment for other info ? */
+	//int16_t numReadings;
+	//uint16_t freeStartAddress; /* Address where current readings are stored at - cyclic buffer */
+//};
 
 
 //TODO: All these to be uint16_t ?
 
-typedef struct SensorData{
+struct SensorData{
 	
-	unsigned int   BattVoltage	= 0;
-	unsigned int   Current		= 0;
-	unsigned int   PVVoltage	= 0;
-	unsigned int   Temperature	= 0;
-	//char		   ErrorChar	= 0; /* not unsigned else will get treated like int by string ctor */
+	uint8_t  dataType = DATATYPE_SENSORDATA;
+	uint16_t battVoltage;
+	uint16_t current;
+	uint16_t pVVoltage;
+	uint16_t temperature;
+	uint8_t  errorChar;/* TODO: uint16_32 for bitwise errs?*/ /* not unsigned else will get treated like int by string ctor */
 	//bool           HasBeenSent	= false;
-} SensorData;
+};
 
 
 /* Stored in ROM and attempted to be sent every day along with readings */
-typedef struct DailyCycleData {
+struct DailyCycleData {
+	
+	//TODO: BITWISE OF ALL FAILURE CODE, INCLUDING IN FONA?
+	
+	uint8_t  DataType = DATATYPE_SENDDATA;
 	//TODO: AttemptedSend ?
 	unsigned long BootNo		  = 0;
 	boolean GPRSToggleFailure	  = false;
@@ -199,7 +234,7 @@ typedef struct DailyCycleData {
 	uint8_t RSSI				  = 0;
 	SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
 	
-} DailyCycleData;
+};
 
 //typedef struct GsmTransmitData{
 	//
