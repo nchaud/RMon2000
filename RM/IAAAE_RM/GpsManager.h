@@ -12,7 +12,7 @@ private:
 	int8_t gpsStatus();
 	
 public:
-	GpsManager(/*const Adafruit_FONA fonaInstance,*/ uint8_t isMock);
+	GpsManager(uint8_t isMock);
 	~GpsManager();
 	boolean toggleGps(boolean onOff);
 	void getGpsInfo(GpsInfo& info);

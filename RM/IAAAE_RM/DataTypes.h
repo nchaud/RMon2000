@@ -7,7 +7,7 @@
 #define FONA_RST 4
 
 //Digital Pins
-#define PIN_TIMER_SHUTDOWN 2
+#define PIN_SHUTDOWN 5
 #define PIN_LED_BOTTOM_RED 8
 #define PIN_LED_BOTTOM_GREEN 9
 #define PIN_LED_TOP_RED 10
@@ -36,6 +36,13 @@
 enum FAILURE {
 	FAILURE_NONE=0,
 	FAILURE_WARN_NO_DATA_TO_SEND=1
+};
+
+/* What the system should do on this start-up */
+enum SYS_BEHAVIOUR : uint8_t {
+	DoNothing	 = 0,
+	TakeReadings = 1 << 0,
+	SendData	 = 1 << 1
 };
 
 enum SYS_STATE {

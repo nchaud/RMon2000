@@ -12,6 +12,8 @@ Main_SignalLogging.cpp
 
 RmMemManager.cpp
 
+SensorManager.cpp
+
 src\libraries\Wire\src\utility\twi.c
 
 src\libraries\Wire\src\Wire.cpp

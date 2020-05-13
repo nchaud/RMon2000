@@ -9,7 +9,7 @@ class RmMemManager
 public:
 protected:
 private:
-boolean _isMock;
+	boolean _isMock;
 
 //functions
 public:
@@ -25,7 +25,7 @@ public:
 	void setULongToMemory(uint16_t address, uint64_t value);
 	
 	void initialiseModule(uint8_t moduleId);
-	void incrementBootCount();
+	uint16_t incrementBootCount();
 	
 	void printData();
 	uint16_t verifyEepRom();
@@ -48,11 +48,9 @@ public:
 	void toggleLED(LED_SEL led_num, LED_STATE state);
 	void reset();
 	
-	float takeSampleAnalog(int pinNo);
 protected:
 private:
 
-	float readVcc();
 }; //RmMemManager
 
 #endif //__RMMEMMANAGER_H__

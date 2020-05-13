@@ -9,8 +9,8 @@ char INIT_MODULE_ID = 5;
 
 bool INITIALISE_MODULE = false;
 bool IS_MEM_TEST = false;		//Smoke test new module's EEPROM
-bool ONLY_PRINT_DATA = true;	//Analysis/Review afterwards - no writes
-uint8_t WRITE_DATA_UPFRONT = 0;	//How many times to write data quickly
+bool ONLY_PRINT_DATA = false;	//Analysis/Review afterwards - no writes
+//uint8_t TEST_WRITE_CYCLES = 0;	//How many times to write&read data quickly for testing
 
 //Mock GSM
 #ifdef DEBUG
@@ -22,6 +22,7 @@ uint8_t WRITE_DATA_UPFRONT = 0;	//How many times to write data quickly
 // TODO: Do below APN settings !!
 Note that if you need to set a GPRS APN, username, and password scroll down to
 the commented section below at the end of the setup() function.
+// TODO: Keep on for charging battery at times
 */
 
 #include <Arduino.h>
@@ -31,6 +32,7 @@ the commented section below at the end of the setup() function.
 #include "GsmManager.h"
 #include "GpsManager.h"
 #include "RmMemManager.h"
+#include "SensorManager.h"
 
 
 //C++ instances
@@ -38,12 +40,14 @@ Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 RmMemManager mem(false);
 GpsManager gps(IS_GPS_MOCK);
 GsmManager gsm(IS_GSM_MOCK);
+SensorManager sensorMgr(true);
 
 void initModule(uint8_t moduleId);
 void on3MinutesElapsed(bool doWrite);
 void printData();
 void initSubsystems();
 
+uint8_t _behaviour = SYS_BEHAVIOUR::DoNothing;
 
 void setup() {
 	
@@ -63,9 +67,14 @@ void setup() {
 	// the following line then redirects over SSL will be followed.
 	//fona.setHTTPSRedirect(true);
 
+
+	//Must immediately run as this pin in LOW switches off the system
+	pinMode(PIN_SHUTDOWN, OUTPUT);
+	digitalWrite(PIN_SHUTDOWN, HIGH);
+
 	delay(3000); //time for hardware peripherals to warm up + for user's serial monitor to connect
 	
-	//Turn off redundant notification LED controlled by pin 13
+	//Turn off redundant Arduino board notification LED controlled by pin 13
 	pinMode(13, OUTPUT);
 	
 	#ifdef OUTPUT_DEBUG
@@ -73,27 +82,43 @@ void setup() {
 	#endif
 	
 	RM_LOGLN(F("Starting..."));
-
+	
 	initSubsystems();
 
+	uint16_t currBootCount;
 	if (INITIALISE_MODULE) {
 		initModule(INIT_MODULE_ID);
+		currBootCount = 0;
 	} else {
-		mem.incrementBootCount();
+		currBootCount = mem.incrementBootCount();
 	}
 	
-	if (WRITE_DATA_UPFRONT>0) {
+	RM_LOG2(F("Boot Count Is Now"), currBootCount);
+	
+	if (1 < 0) {//TEST_WRITE_CYCLES
 		
 		//TODO !!
 		
+		return;
 	}
 	
 	if (IS_MEM_TEST) {
 		mem.verifyEepRom();
+		return;
 	}
 	
 	if (ONLY_PRINT_DATA) {
 		mem.printData();
+		return;
+	}
+	
+	//Take reading every 5 hours so it's a scattered time reading throughout the week
+	_behaviour |= SYS_BEHAVIOUR::TakeReadings;
+	
+	//Send to HQ every 20 hours so it's 
+	if (currBootCount > 0 && currBootCount%4 == 0) { //TODO: Overflow?
+		
+		_behaviour |= SYS_BEHAVIOUR::SendData;
 	}
 }
 
@@ -121,6 +146,15 @@ void initModule(uint8_t moduleId) {
 	mem.initialiseModule(moduleId);
 
 	RM_LOG2("Initialised with id ", moduleId);
+}
+
+void switchOffSystem() {
+	
+	RM_LOGLN("Switching off...");
+	
+	digitalWrite(PIN_SHUTDOWN, LOW);
+	
+	delay(3000); //To allow serial to purge the shutdown message
 }
 
 void on3MinutesElapsed(bool doWrite) {
@@ -176,22 +210,47 @@ void on3MinutesElapsed(bool doWrite) {
 	//writeMem(writeAddress, (uint8_t*)&session, SESSION_SZ);
 }
 
+boolean takeReadings() {
+	
+	RM_LOGLN("Taking reading...");
+	
+	SensorData sd = sensorMgr.readData();
+	
+	return true;
+}
+
+boolean sendData() {
+	
+	RM_LOGLN("Sending data...");
+	
+	return false;
+}
+
+//Loop-scoped variables
 volatile int _timerCounter = 0;
 void loop() {
 
-	++_timerCounter;
-		
 	delay(1000);
-	
-	if (ONLY_PRINT_DATA) {
-		return;
-	}
-	
-	if (INITIALISE_MODULE) {
-		return;
-	}
+	++_timerCounter;
 
-	RM_LOGLN("Looping");
+	RM_LOG2(F("Behaviour is "), _behaviour);
+	
+	if((_behaviour&SYS_BEHAVIOUR::TakeReadings) != 0) {
+		
+		if (takeReadings())
+			_behaviour &= ~SYS_BEHAVIOUR::TakeReadings;
+	}
+	
+	if ((_behaviour&SYS_BEHAVIOUR::SendData) != 0) {
+		
+		if (sendData())
+			_behaviour &= ~SYS_BEHAVIOUR::SendData;
+	}
+	
+	if (_behaviour == SYS_BEHAVIOUR::DoNothing) {
+		
+		switchOffSystem();
+	}
 	
 	//if (DIAGNOSTIC_TEST) {
 	//
@@ -201,8 +260,6 @@ void loop() {
 		//return;
 	//}
 
-	if (_timerCounter == 3*60)//Run once per startup, at after 3 mins when subsystems toggled&ready
-		on3MinutesElapsed(true);
 }
 
 /** Timer/power-on testing at intervals

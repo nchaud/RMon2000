@@ -182,13 +182,14 @@ void RmMemManager::initialiseModule(uint8_t moduleId){
 	internalWrite(MEMLOC_START, (uint8_t*)&meta, sizeof(ModuleMeta));
 }
 
-void RmMemManager::incrementBootCount(){
+uint16_t RmMemManager::incrementBootCount(){
 	
 	//TODO: Somehow verify Wire is working?
 	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, bootCount);
 	uint16_t currVal = getUShortFromMemory(addr);
 	++currVal;
 	setUShortToMemory(addr, currVal);
+	return currVal;
 }
 
 uint16_t RmMemManager::verifyEepRom(){
@@ -490,29 +491,3 @@ void RmMemManager::toggleLED(LED_SEL led_num, LED_STATE state)
 	//TODO: Could have a hierarchy where if solid is cleared, maybe slow-flashing
 	//still required?
 }
-
-//Returns (analog_reading * vcc)
-//TODO: Doesn't really belong in memory manager class :|
-float RmMemManager::takeSampleAnalog(int pinNo)	{
-	if (_isMock)
-		return 5;
-		
-	int batt = analogRead(pinNo); 
-	float vcc = readVcc();
-	batt *= vcc;
-	return batt;
-}
-
-float RmMemManager::readVcc() {
-  long result;
-  // Read 1.1V reference against AVcc - TODO: does this even work ?!
-  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
-  delay(2); // Wait for Vref to settle
-  ADCSRA |= _BV(ADSC); // Convert
-  while (bit_is_set(ADCSRA,ADSC));
-  result = ADCL;
-  result |= ADCH<<8;
-  result = 1125300L / result; // Back-calculate AVcc in mV
-  return result / 1000;
-}
-
