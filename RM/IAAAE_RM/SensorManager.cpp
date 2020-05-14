@@ -1,5 +1,3 @@
-#define OUTPUT_DEBUG			//For logging general messages to Serial
-
 #include <Arduino.h>
 #include "DataTypes.h"
 #include "SensorManager.h"

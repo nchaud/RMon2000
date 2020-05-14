@@ -1,6 +1,3 @@
-#define OUTPUT_DEBUG			//For logging general messages to Serial
-//#define OUTPUT_DEBUG_MEM		//For logging detailed EEPROM messages to Serial
-
 #include <Arduino.h>
 #include <Wire.h>
 #include "DataTypes.h"
@@ -192,7 +189,7 @@ uint16_t RmMemManager::incrementBootCount(){
 	return currVal;
 }
 
-uint16_t RmMemManager::verifyEepRom(){
+uint16_t RmMemManager::verifyBasicEepRom(){
 	
 	//TODO: Verify of spill over 64-bit boundary what to do
 	//TODO: Roll-over verification

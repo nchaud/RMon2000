@@ -1,6 +1,28 @@
 #ifndef __DATATYPES_H__
 #define __DATATYPES_H__
 
+
+//Configuration
+#define OUTPUT_DEBUG		//For logging to Serial
+//#define OUTPUT_DEBUG_MEM	//For logging detailed EEPROM messages to Serial
+#define DEBUG				//Prints output stmts - ONLY WITH LAPTOP - to print output statements whilst all below are running
+#ifdef DEBUG
+	//Set FONA module to be debug too
+	#define ADAFRUIT_FONA_DEBUG
+#endif
+
+//Testing
+#define IS_GSM_MOCK true		//Without connecting GSM shield
+#define IS_GPS_MOCK true		//Without connecting GPS shield
+
+#define INITIALISE_MODULE_ID	0     //0 implies don't initialise it - module start with id 1
+#define IS_BASIC_MEM_TEST		false //Smoke test new module's EEPROM is physically present and working basics
+#define IS_SIGNALS_MEM_TEST		false //Test reading signals and reading/writing to memory
+#define ONLY_PRINT_DATA			false //Analysis/Review afterwards - no writes
+//uint8_t TEST_WRITE_CYCLES = 0;	 //How many times to write&read data quickly for testing
+
+
+
 //Fona Pins
 #define FONA_RX 2
 #define FONA_TX 3

@@ -28,7 +28,7 @@ public:
 	uint16_t incrementBootCount();
 	
 	void printData();
-	uint16_t verifyEepRom();
+	uint16_t verifyBasicEepRom();
 	
 	void appendSensorEntry(SensorData* r);
 	unsigned long loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,

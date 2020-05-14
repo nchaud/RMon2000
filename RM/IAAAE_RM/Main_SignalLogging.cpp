@@ -1,23 +1,3 @@
-//Testing
-#define OUTPUT_DEBUG			//For logging to Serial
-#define DEBUG					//Prints output stmts - ONLY WITH LAPTOP - to print output statements whilst all below are running
-bool IS_GSM_MOCK = true;		//Without connecting GSM shield
-bool IS_GPS_MOCK = true;		//Without connecting GPS shield
-
-//Initialising module
-char INIT_MODULE_ID = 5;
-
-bool INITIALISE_MODULE = false;
-bool IS_MEM_TEST = false;		//Smoke test new module's EEPROM
-bool ONLY_PRINT_DATA = false;	//Analysis/Review afterwards - no writes
-//uint8_t TEST_WRITE_CYCLES = 0;	//How many times to write&read data quickly for testing
-
-//Mock GSM
-#ifdef DEBUG
-	//Set FONA module to be debug too
-	#define ADAFRUIT_FONA_DEBUG
-#endif
-
 /*
 // TODO: Do below APN settings !!
 Note that if you need to set a GPRS APN, username, and password scroll down to
@@ -26,8 +6,8 @@ the commented section below at the end of the setup() function.
 */
 
 #include <Arduino.h>
-#include "Helpers.h"
 #include "DataTypes.h"
+#include "Helpers.h"
 #include "Timing.h"
 #include "GsmManager.h"
 #include "GpsManager.h"
@@ -84,26 +64,19 @@ void setup() {
 	RM_LOGLN(F("Starting..."));
 	
 	initSubsystems();
-
-	uint16_t currBootCount;
-	if (INITIALISE_MODULE) {
-		initModule(INIT_MODULE_ID);
-		currBootCount = 0;
-	} else {
-		currBootCount = mem.incrementBootCount();
-	}
 	
-	RM_LOG2(F("Boot Count Is Now"), currBootCount);
-	
-	if (1 < 0) {//TEST_WRITE_CYCLES
+	if (IS_SIGNALS_MEM_TEST) {
 		
 		//TODO !!
+		
+		//TODO: Split between those built on board and those only used on PC for testing - 
+		//separate file ExtendedTests.cpp? 
 		
 		return;
 	}
 	
-	if (IS_MEM_TEST) {
-		mem.verifyEepRom();
+	if (IS_BASIC_MEM_TEST) {
+		mem.verifyBasicEepRom();
 		return;
 	}
 	
@@ -111,11 +84,21 @@ void setup() {
 		mem.printData();
 		return;
 	}
+
+	uint16_t currBootCount;
+	if (INITIALISE_MODULE_ID) {
+		initModule(INITIALISE_MODULE_ID);
+		currBootCount = 0;
+	} else {
+		currBootCount = mem.incrementBootCount();
+	}
+	
+	RM_LOG2(F("Boot Count Is Now"), currBootCount);
 	
 	//Take reading every 5 hours so it's a scattered time reading throughout the week
 	_behaviour |= SYS_BEHAVIOUR::TakeReadings;
 	
-	//Send to HQ every 20 hours so it's 
+	//Send to HQ every 20 hours
 	if (currBootCount > 0 && currBootCount%4 == 0) { //TODO: Overflow?
 		
 		_behaviour |= SYS_BEHAVIOUR::SendData;
@@ -212,7 +195,7 @@ void on3MinutesElapsed(bool doWrite) {
 
 boolean takeReadings() {
 	
-	RM_LOGLN("Taking reading...");
+	RM_LOGLN(F("Taking readings..."));
 	
 	SensorData sd = sensorMgr.readData();
 	
@@ -221,7 +204,7 @@ boolean takeReadings() {
 
 boolean sendData() {
 	
-	RM_LOGLN("Sending data...");
+	RM_LOGLN(F("Sending data..."));
 	
 	return false;
 }
@@ -262,7 +245,28 @@ void loop() {
 
 }
 
-/** Timer/power-on testing at intervals
+
+/************************************************************************/
+/*                    Bulk read/write signals test                      */
+/************************************************************************/
+
+void readWriteSignals(){
+	
+	
+}
+
+
+
+
+
+
+
+
+
+/************************************************************************/
+/*             Timer/power-on testing at intervals                      */
+/************************************************************************/
+/*
 void setup(void)
 {
 	//Must immediately run
