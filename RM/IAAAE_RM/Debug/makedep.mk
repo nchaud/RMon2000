@@ -18,7 +18,7 @@ src\libraries\Wire\src\utility\twi.c
 
 src\libraries\Wire\src\Wire.cpp
 
-Tester.cpp
+ExtendedTests.cpp
 
 Timing.cpp
 

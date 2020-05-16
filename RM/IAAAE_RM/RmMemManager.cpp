@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "DataTypes.h"
+#include "Helpers.h"
 #include "RmMemManager.h"
 
 
@@ -29,14 +30,14 @@ LED_STATE _ledBottomState = All_Clear;
 LED_STATE _ledTopState = All_Clear;
 uint8_t _flashCallCount=0;
 
-RmMemManager::RmMemManager(boolean isMock){
+RmMemManager::RmMemManager(boolean isMock) {
 	_isMock = isMock;
 	
 	if (!_isMock)
 		Wire.begin();
 }
 
-void internalWrite(int16_t address, uint8_t* data, uint8_t numBytes){
+void internalWrite(uint16_t address, uint8_t* data, uint8_t numBytes) {
 	
 	RM_LOGMEM(F("Writing memory at address "));
 	RM_LOGMEM(address);
@@ -71,7 +72,7 @@ void internalWrite(int16_t address, uint8_t* data, uint8_t numBytes){
 	}
 }
 
-void internalRead(int16_t address, uint8_t* data, uint8_t numBytes){
+void internalRead(uint16_t address, uint8_t* data, uint8_t numBytes) {
 	
 	RM_LOGMEM(F("Reading memory at address "));
 	RM_LOGMEM(address);
@@ -117,55 +118,57 @@ void internalRead(int16_t address, uint8_t* data, uint8_t numBytes){
 	}
 }
 
-uint8_t RmMemManager::getUCharFromMemory(uint16_t address)
-{
+uint8_t RmMemManager::getUCharFromMemory(uint16_t address) {
+	
 	uint8_t value;
 	internalRead(address, (uint8_t*)&value, sizeof(value));
 	return value;
 }
 
-uint16_t RmMemManager::getUShortFromMemory(uint16_t address)
-{
+uint16_t RmMemManager::getUShortFromMemory(uint16_t address) {
+	
 	uint16_t value;
 	internalRead(address, (uint8_t*)&value, sizeof(value));
 	return value;
 }
 
-uint32_t RmMemManager::getUIntFromMemory(uint16_t address)
-{
+uint32_t RmMemManager::getUIntFromMemory(uint16_t address) {
+	
 	uint32_t value;
 	internalRead(address, (uint8_t*)&value, sizeof(value));
 	return value;
 }
 
-uint64_t RmMemManager::getULongFromMemory(uint16_t address)
-{
+uint64_t RmMemManager::getULongFromMemory(uint16_t address) {
+	
 	uint64_t value;
 	internalRead(address, (uint8_t*)&value, sizeof(value));
 	return value;
 }
 
-void RmMemManager::setUCharToMemory(uint16_t address, uint8_t value)
-{
+void RmMemManager::setUCharToMemory(uint16_t address, uint8_t value) {
+	
 	internalWrite(address, (uint8_t*)&value, sizeof(value));
 }
 
-void RmMemManager::setUShortToMemory(uint16_t address, uint16_t value)
-{
+void RmMemManager::setUShortToMemory(uint16_t address, uint16_t value) {
+	
 	internalWrite(address, (uint8_t*)&value, sizeof(value));
 }
 
-void RmMemManager::setUIntToMemory(uint16_t address, uint32_t value)
-{
+void RmMemManager::setUIntToMemory(uint16_t address, uint32_t value) {
+	
 	internalWrite(address, (uint8_t*)&value, sizeof(value));
 }
 
-void RmMemManager::setULongToMemory(uint16_t address, uint64_t value)
-{
+void RmMemManager::setULongToMemory(uint16_t address, uint64_t value) {
+	
 	internalWrite(address, (uint8_t*)&value, sizeof(value));
 }
 
-void RmMemManager::initialiseModule(uint8_t moduleId){
+void RmMemManager::initialiseModule(uint8_t moduleId) {
+
+	RM_LOG2(F("Init Module"), moduleId);
 
 	ModuleMeta meta;
 	meta.moduleId = moduleId;
@@ -174,12 +177,13 @@ void RmMemManager::initialiseModule(uint8_t moduleId){
 	meta.nextFreeWriteAddr = MEMLOC_START + sizeof(ModuleMeta);
 	memset(meta.spareBuffer, 0, sizeof(meta.spareBuffer));
 	
-	//TODO: Blank out rest of eeprom too?
+	//TODO: Blank out rest of eeprom too!
+	//		Else MEM_TYPE may be set in some places and printData() fails!
 	
 	internalWrite(MEMLOC_START, (uint8_t*)&meta, sizeof(ModuleMeta));
 }
 
-uint16_t RmMemManager::incrementBootCount(){
+uint16_t RmMemManager::incrementBootCount() {
 	
 	//TODO: Somehow verify Wire is working?
 	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, bootCount);
@@ -189,49 +193,47 @@ uint16_t RmMemManager::incrementBootCount(){
 	return currVal;
 }
 
-uint16_t RmMemManager::verifyBasicEepRom(){
+uint16_t RmMemManager::verifyBasicEepRom() {
 	
 	//TODO: Verify of spill over 64-bit boundary what to do
 	//TODO: Roll-over verification
 	//TODO: Don't have strings of messages, return code which translate in a #if NOT_ENCODED_ON_DEVICE block
+	
+	RM_LOG(F("Basic EEPROM Test"));
 	
 	uint16_t MEM_TEST_LOC = offsetof(ModuleMeta, eepromTestArea);
 	
 	//Repeat test multiple times to check for intermittent possible errors
 	uint16_t numFailures;
 	
-	for(uint8_t i=0;i<30;i++)
-	{
+	for(uint8_t i=0;i<30;i++) {
+		
 		//No intersection of values so we'll know straight away if wrong bits picked
 		this->setULongToMemory(MEM_TEST_LOC, 0xA946F7D8C941F9A8);
 		uint64_t val8 = this->getULongFromMemory(MEM_TEST_LOC);
-		if (val8 != 0xA946F7D8C941F9A8)
-		{
-			RM_LOGLN("FAILED LONG");
+		if (val8 != 0xA946F7D8C941F9A8) {
+			RM_LOGLN(F("FAILED LONG"));
 			++numFailures;
 		}
 		
 		this->setUIntToMemory(MEM_TEST_LOC, 0xC911F948);
 		uint32_t val4 = this->getUIntFromMemory(MEM_TEST_LOC);
-		if (val4 != 0xC911F948)
-		{
-			RM_LOGLN("FAILED INT");
+		if (val4 != 0xC911F948) {
+			RM_LOGLN(F("FAILED INT"));
 			++numFailures;
 		}
 		
 		this->setUShortToMemory(MEM_TEST_LOC, 0x5C3A);
 		uint16_t val2 = this->getUShortFromMemory(MEM_TEST_LOC);
-		if (val2 != 0x5C3A)
-		{
-			RM_LOGLN("FAILED SHORT");
+		if (val2 != 0x5C3A) {
+			RM_LOGLN(F("FAILED SHORT"));
 			++numFailures;
 		}
 		
 		this->setUCharToMemory(MEM_TEST_LOC, 0xE1);
 		uint8_t val1 = this->getUCharFromMemory(MEM_TEST_LOC);
-		if (val1 != 0xE1)
-		{
-			RM_LOGLN("FAILED CHAR");
+		if (val1 != 0xE1) {
+			RM_LOGLN(F("FAILED CHAR"));
 			++numFailures;
 		}
 		
@@ -248,16 +250,63 @@ uint16_t RmMemManager::verifyBasicEepRom(){
 	return numFailures;
 }
 
-//TODO: Only in PC_BEHAVIOUR 
-void RmMemManager::printData(){
+void RmMemManager::runExtendedShow100Bytes() {
 
-	//Get last reading
+#if IS_EXTENDED_SHOW_100_BYTES == true
+	
+	RM_LOGLN(F("100 bytes..."));
+	
+	uint8_t raw100[100];
+	internalRead(MEMLOC_START, (uint8_t*)&raw100, sizeof(raw100));
+	
+	for(uint8_t i=0 ; i<sizeof(raw100)/sizeof(uint8_t) ; i++){
+		RM_LOGLN(raw100[i]);
+	}
+	
+#else
+	RM_LOG(F("*** FAIL SHOW 100 ***")); //Sync Broken - inclusion of code should be sync'd with flag
+#endif
+}
+
+void RmMemManager::runExtendedDumpOutput() {
+
+#if IS_EXTENDED_DUMP_OUTPUT == true
+
 	ModuleMeta meta;
 	internalRead(MEMLOC_START, (uint8_t*)&meta, sizeof(ModuleMeta));
 	
 	RM_LOG2(F("Module #"), meta.moduleId);
 	RM_LOG2(F("# Boots"), meta.bootCount);
 	RM_LOG2(F("Next Addr"), meta.nextFreeWriteAddr);
+	
+	//Where data starts
+	uint16_t currAddress = MEMLOC_START + sizeof(ModuleMeta);
+	
+	RM_LOG2(F("Used Up Mem"), meta.nextFreeWriteAddr - currAddress);
+	
+	while(true){
+		MEM_SLOT_TYPE slotType;
+		
+		internalRead(currAddress, (uint8_t*)&slotType, sizeof(MEM_SLOT_TYPE));
+		
+		if (slotType == MEM_SLOT_TYPE::SensorMem) {
+			
+			RM_LOGLN(F("Sensor Data:..."));
+			
+			SensorData sd;
+			internalRead(currAddress, (uint8_t*)&sd, sizeof(SensorData));
+			Helpers::printSensorData(&sd);
+			
+			RM_LOGLN("");
+			
+		} else if (slotType == MEM_SLOT_TYPE::SentMem) {
+			RM_LOG(F("Sent Data:"));
+		} else if (slotType == MEM_SLOT_TYPE::NoMem) {
+			RM_LOG(F("_END_DATA_"));
+		}
+		
+		break;
+	}
 	//
 	//for(uint8_t i=0;i<meta.numReadings;i++){
 	//
@@ -290,12 +339,15 @@ void RmMemManager::printData(){
 	//RM_LOG(F(", Gps-Speed: "));
 	//RM_LOGLN(session.gpsInfo.speed_kph);
 	//}
+#else
+	RM_LOG(F("*** FAIL PRINT ***")); //Sync Broken - inclusion of code should be sync'd with flag
+#endif
 }
 
 /* Returns the number of readings read */
 unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
-										  unsigned long* loadedUpTo)
-{
+										  unsigned long* loadedUpTo) {
+
 	return 1;
 	
 	//uint8_t readingSz = sizeof(SensorData);
@@ -335,17 +387,17 @@ unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxN
 	//return numOfLastReadings;
 }
 
-void RmMemManager::markDataSent(uint64_t sentUpTo)
-{
+void RmMemManager::markDataSent(uint64_t sentUpTo) {
+
 	//this->setULongToMemory(MEMLOC_SENT_UPTO, sentUpTo);
 }
 
-void RmMemManager::appendDailyEntry(DailyCycleData* r)
-{
+void RmMemManager::appendDailyEntry(DailyCycleData* r) {
+
 	//TODO
 }
 
-void internalWriteEntryAtAddress(SensorData* r, unsigned long address){
+void internalWriteEntryAtAddress(SensorData* r, unsigned long address) {
 	
 	//byte* rPtr = (byte*)r;
 //
@@ -353,8 +405,8 @@ void internalWriteEntryAtAddress(SensorData* r, unsigned long address){
 		//EEPROM.write(address+i, *(rPtr+i));
 }
 
-void RmMemManager::replaceLastSensorEntry(SensorData* r)
-{
+void RmMemManager::replaceLastSensorEntry(SensorData* r) {
+
 	//Read where last entry is
 	//volatile unsigned long entryCount = this->getULongFromMemory(MEMLOC_READING_ENTRY_COUNT);
 	//volatile unsigned long lastEntryOffset = max(0,entryCount-1) * sizeof(SensorData);
@@ -363,8 +415,22 @@ void RmMemManager::replaceLastSensorEntry(SensorData* r)
 	//internalWriteEntryAtAddress(r, lastEntryAddress);
 }
 
-void RmMemManager::appendSensorEntry(SensorData* r)
-{
+void RmMemManager::appendSensorEntry(SensorData* r) {
+	
+	uint16_t freeMemAddress = MEMLOC_START + offsetof(ModuleMeta, nextFreeWriteAddr);
+	
+	uint16_t currFreeAddr = getUShortFromMemory(freeMemAddress);
+	
+	RM_LOG2(F("Writing To Addr"), currFreeAddr);
+	internalWrite(currFreeAddr, (uint8_t*)r, sizeof(SensorData));
+	
+	uint16_t nextFreeAddr = currFreeAddr + sizeof(SensorData);
+	RM_LOG2(F("Free Addr Now Is"), nextFreeAddr);
+	
+	setUShortToMemory(freeMemAddress, nextFreeAddr);
+	
+	//TODO: What to do on overflow and not enough memory for next reading?
+	
 	//volatile unsigned int readingSz = sizeof(SensorData); //const
 	//
 	////Read where next entry is free
@@ -399,7 +465,8 @@ void RmMemManager::appendSensorEntry(SensorData* r)
 
 /* LED mgmt - Not strictly memory related */
 
-void RmMemManager::reset(){
+void RmMemManager::reset() {
+	
 	_flashCallCount=0;
 	toggleLED(Bottom, All_Clear);
 	toggleLED(Top, All_Clear);
@@ -409,8 +476,8 @@ void RmMemManager::reset(){
 void internalFlash(
 	boolean& greenPinVal, boolean& redPinVal,
 	LED_STATE currLedState, boolean atSlowInterval
-	)
-{
+	) {
+
 	//Do green LED first
 	//boolean nextState = greenPinVal;//-1=no action, 0=false, 1=true
 	
@@ -454,8 +521,8 @@ void internalFlash(
 
 
 //Called at regular intervals at a fast-rate to toggle LEDs between off-on
-void RmMemManager::flashLED()
-{
+void RmMemManager::flashLED() {
+
 	//Every 3 flashes, do a slow blink
 	_flashCallCount = ++_flashCallCount%3;
 
@@ -477,8 +544,8 @@ void RmMemManager::flashLED()
 }
 
 //Request to change the state of an LED
-void RmMemManager::toggleLED(LED_SEL led_num, LED_STATE state)
-{
+void RmMemManager::toggleLED(LED_SEL led_num, LED_STATE state) {
+
 	if (led_num == Bottom)
 		_ledBottomState = state; //(?) / Clearing? / (state&=IsTemporary)==1?
 	else if (led_num == Top)

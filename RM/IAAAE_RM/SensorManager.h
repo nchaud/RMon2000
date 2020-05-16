@@ -1,6 +1,7 @@
 #ifndef __SENSORMANAGER_H__
 #define __SENSORMANAGER_H__
 
+#include <Arduino.h>
 #include "DataTypes.h"
 
 class SensorManager
@@ -11,7 +12,7 @@ private:
 
 public:
 	SensorManager(boolean isMock);
-	SensorData readData();
+	void readData(SensorData* data);
 	uint16_t takeSampleAnalog(uint8_t pinNo);
 
 };

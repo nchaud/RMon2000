@@ -2,16 +2,23 @@
 #define __RM_HELPERS_H__
 
 #include <Arduino.h>
+#include "DataTypes.h"
 
-byte writeCharArrWithPad(char* buffer, const char* value, byte padLength);
+class Helpers {
 
-byte writeCharWithPad(char* buffer, const char value, byte padLength);
+public:
+	static void printSensorData(SensorData* sd);
+};
 
-byte writeStrWithPad(char* buffer, String str, byte padLength);
-
-byte writeWithPad(char* buffer, unsigned int value, byte padLength);
-
-byte writeByteWithPad(char* buffer, byte value, byte padLength);
+//byte writeCharArrWithPad(char* buffer, const char* value, byte padLength);
+//
+//byte writeCharWithPad(char* buffer, const char value, byte padLength);
+//
+//byte writeStrWithPad(char* buffer, String str, byte padLength);
+//
+//byte writeWithPad(char* buffer, unsigned int value, byte padLength);
+//
+//byte writeByteWithPad(char* buffer, byte value, byte padLength);
 
 //byte writeCharArrToStrWithPad(String str, uint8_t idx, const char* value, byte padLength);
 //byte writeStrToStrWithPad(String str, uint8_t idx, String value, byte padLength);

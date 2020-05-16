@@ -27,8 +27,10 @@ public:
 	void initialiseModule(uint8_t moduleId);
 	uint16_t incrementBootCount();
 	
-	void printData();
 	uint16_t verifyBasicEepRom();
+	
+	void runExtendedDumpOutput();
+	void runExtendedShow100Bytes();
 	
 	void appendSensorEntry(SensorData* r);
 	unsigned long loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,

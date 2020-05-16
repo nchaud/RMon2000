@@ -1,5 +1,5 @@
 #ifndef __DATATYPES_H__
-#define __DATATYPES_H__
+#define __DATATYPES_H__  
 
 
 //Configuration
@@ -11,15 +11,17 @@
 	#define ADAFRUIT_FONA_DEBUG
 #endif
 
-//Testing
-#define IS_GSM_MOCK true		//Without connecting GSM shield
-#define IS_GPS_MOCK true		//Without connecting GPS shield
+//Testing - TODO: should be derived based on below values?
+#define IS_GSM_MOCK					true	//Without connecting GSM shield
+#define IS_GPS_MOCK					true	//Without connecting GPS shield
 
-#define INITIALISE_MODULE_ID	0     //0 implies don't initialise it - module start with id 1
-#define IS_BASIC_MEM_TEST		false //Smoke test new module's EEPROM is physically present and working basics
-#define IS_SIGNALS_MEM_TEST		false //Test reading signals and reading/writing to memory
-#define ONLY_PRINT_DATA			false //Analysis/Review afterwards - no writes
-//uint8_t TEST_WRITE_CYCLES = 0;	 //How many times to write&read data quickly for testing
+#define INITIALISE_MODULE_ID		0		//0 implies don't initialise it - module start with id 1
+#define IS_BASIC_MEM_TEST			false	//Smoke test new module's EEPROM is physically present and working basics
+
+//All these define conditional code only compiled in when set - i.e. only run on the PC
+#define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
+#define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
+#define IS_EXTENDED_MEM_TEST		true	//Test reading signals and reading/writing to memory
 
 
 
@@ -52,12 +54,15 @@
 #define ERR_GPS_NO_RESPONSE 11
 #define ERR_GPS_BAD_FIELD 12
 
-#define DATATYPE_SENSORDATA 1
-#define DATATYPE_SENDDATA 2
-
 enum FAILURE {
 	FAILURE_NONE=0,
 	FAILURE_WARN_NO_DATA_TO_SEND=1
+};
+
+enum MEM_SLOT_TYPE : uint8_t {
+	NoMem		= 0,
+	SensorMem	= 1,
+	SentMem		= 2
 };
 
 /* What the system should do on this start-up */
@@ -215,7 +220,7 @@ struct ModuleMeta{
 	/* Dedicated area where testing eeprom will write and read to */
 	uint64_t eepromTestArea;
 	
-	uint16_t spareBuffer[8];
+	uint8_t spareBuffer[16];
 };
 
 //struct ModuleData{
@@ -232,9 +237,9 @@ struct ModuleMeta{
 
 //TODO: All these to be uint16_t ?
 
-struct SensorData{
+struct SensorData {
 	
-	uint8_t  dataType = DATATYPE_SENSORDATA;
+	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
 	uint16_t battVoltage;
 	uint16_t current;
 	uint16_t pVVoltage;
@@ -249,18 +254,18 @@ struct DailyCycleData {
 	
 	//TODO: BITWISE OF ALL FAILURE CODE, INCLUDING IN FONA?
 	
-	uint8_t  DataType = DATATYPE_SENDDATA;
+	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
 	//TODO: AttemptedSend ?
-	unsigned long BootNo		  = 0;
-	boolean GPRSToggleFailure	  = false;
-	boolean GetBatteryFailure	  = false;
-	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
-	uint16_t GsmMessageLength	  = 0; /* Length of string that was attempted to send */
-	uint16_t GsmFailureCode		  = 0;
-	uint8_t SmsFailureCode		  = 0;
-	uint8_t	BattPct				  = 0;
-	uint8_t NetworkStatus		  = 0;
-	uint8_t RSSI				  = 0;
+	unsigned long BootNo;//		  = 0;
+	boolean GPRSToggleFailure;//	  = false;
+	boolean GetBatteryFailure;//	  = false;
+	uint8_t NoOfReadings;//		  = 0; /* NoOfReadings in this transmission */
+	uint16_t GsmMessageLength;//	  = 0; /* Length of string that was attempted to send */
+	uint16_t GsmFailureCode;//		  = 0;
+	uint8_t SmsFailureCode;//		  = 0;
+	uint8_t	BattPct;//				  = 0;
+	uint8_t NetworkStatus;//		  = 0;
+	uint8_t RSSI;//				  = 0;
 	SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
 	
 };

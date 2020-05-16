@@ -286,6 +286,9 @@
     <Compile Include="DataTypes.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ExtendedTests.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="GpsManager.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -299,6 +302,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Helpers.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Helpers.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\libraries\EEPROM\src\EEPROM.h">
@@ -334,7 +340,7 @@
     <Compile Include="src\libraries\Wire\src\Wire.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Tester.cpp">
+    <Compile Include="ExtendedTests.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Timing.cpp">

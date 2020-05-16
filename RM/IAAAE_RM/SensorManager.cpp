@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "DataTypes.h"
+#include "Helpers.h"
 #include "SensorManager.h"
 
 SensorManager::SensorManager(boolean isMock) {
@@ -35,34 +36,25 @@ uint16_t SensorManager::takeSampleAnalog(uint8_t pinNo)	{
 	return batt;
 }
 
-void printData(SensorData* sd){
-
-	RM_LOG2(F("Batt-V"), sd->battVoltage);
-	RM_LOG2(F("PV-V"), sd->pVVoltage);
-	RM_LOG2(F("Current"), sd->current);
-	RM_LOG2(F("Temp"), sd->temperature);
-}
-
 uint8_t __mockDataCounter;
-SensorData getMockData(){
+void getMockData(SensorData* ret) {
 	
 	++__mockDataCounter; //After 255, will roll back to 0, fine for tests
 	
-	SensorData ret;
-	ret.battVoltage = __mockDataCounter;
-	ret.pVVoltage = __mockDataCounter*10;
-	ret.current = __mockDataCounter%7;
-	ret.temperature = __mockDataCounter*100;
+	ret->battVoltage = __mockDataCounter;
+	ret->pVVoltage = __mockDataCounter*10;
+	ret->current = __mockDataCounter%7;
+	ret->temperature = __mockDataCounter*100;
 	
-	return ret;
+	//return ret;
 }
 
-SensorData SensorManager::readData() {
+void SensorManager::readData(SensorData* ret) {
 	
-	SensorData ret;
+	RM_LOGLN(F("Reading sensors..."));
 	
 	if (_isMock) {
-		ret = getMockData();
+		getMockData(ret);
 	}
 	else {
 		uint16_t pvRaw   = takeSampleAnalog(PIN_PV_VOLTAGE);
@@ -70,15 +62,15 @@ SensorData SensorManager::readData() {
 		uint16_t currentRaw = takeSampleAnalog(PIN_CURRENT);
 		uint16_t tempRaw = takeSampleAnalog(PIN_TEMP);
 
-		ret.battVoltage = battRaw;
-		ret.pVVoltage = pvRaw;
-		ret.current = currentRaw;
-		ret.temperature = tempRaw;
+		ret->battVoltage = battRaw;
+		ret->pVVoltage = pvRaw;
+		ret->current = currentRaw;
+		ret->temperature = tempRaw;
 	}
 	
-	printData(&ret);
+	Helpers::printSensorData(ret);
 	
-	return ret;
+	//return ret;
 }
 
 

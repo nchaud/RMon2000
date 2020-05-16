@@ -34,7 +34,6 @@ GsmManager.d GsmManager.o: .././GsmManager.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  ..\\..\ArduinoCore\include\core/Arduino.h \
  ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h \
- .././Helpers.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h \
  ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAExtIncludes.h \
@@ -115,8 +114,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ..\\..\ArduinoCore\include\core/Arduino.h:
 
 ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h:
-
-.././Helpers.h:
 
 ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h:
 

@@ -13,16 +13,17 @@ the commented section below at the end of the setup() function.
 #include "GpsManager.h"
 #include "RmMemManager.h"
 #include "SensorManager.h"
+#include "ExtendedTests.h"
 
 
 //C++ instances
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-RmMemManager mem(false);
-GpsManager gps(IS_GPS_MOCK);
-GsmManager gsm(IS_GSM_MOCK);
-SensorManager sensorMgr(true);
+RmMemManager mem = RmMemManager(false);
+GpsManager gps = GpsManager(IS_GPS_MOCK);
+GsmManager gsm = GsmManager(IS_GSM_MOCK);
+SensorManager sensorMgr = SensorManager(true);
 
-void initModule(uint8_t moduleId);
+void switchOffSystem();
 void on3MinutesElapsed(bool doWrite);
 void printData();
 void initSubsystems();
@@ -52,7 +53,11 @@ void setup() {
 	pinMode(PIN_SHUTDOWN, OUTPUT);
 	digitalWrite(PIN_SHUTDOWN, HIGH);
 
+
+
 	delay(3000); //time for hardware peripherals to warm up + for user's serial monitor to connect
+	
+	
 	
 	//Turn off redundant Arduino board notification LED controlled by pin 13
 	pinMode(13, OUTPUT);
@@ -65,35 +70,48 @@ void setup() {
 	
 	initSubsystems();
 	
-	if (IS_SIGNALS_MEM_TEST) {
-		
-		//TODO !!
-		
-		//TODO: Split between those built on board and those only used on PC for testing - 
-		//separate file ExtendedTests.cpp? 
-		
-		return;
-	}
-	
 	if (IS_BASIC_MEM_TEST) {
+		
 		mem.verifyBasicEepRom();
+		
+		switchOffSystem();
 		return;
 	}
 	
-	if (ONLY_PRINT_DATA) {
-		mem.printData();
+	if (IS_EXTENDED_MEM_TEST) {
+		
+		ExtendedTests::runExtendedMemTest(mem, sensorMgr);
+		
+		switchOffSystem();
+		return;
+	}
+	
+	if (IS_EXTENDED_SHOW_100_BYTES) {
+		
+		mem.runExtendedShow100Bytes();
+		
+		switchOffSystem();
+		return;
+	}
+	
+	if (IS_EXTENDED_DUMP_OUTPUT) {
+		
+		mem.runExtendedDumpOutput();
+		
+		switchOffSystem();
 		return;
 	}
 
-	uint16_t currBootCount;
 	if (INITIALISE_MODULE_ID) {
-		initModule(INITIALISE_MODULE_ID);
-		currBootCount = 0;
-	} else {
-		currBootCount = mem.incrementBootCount();
+		
+		mem.initialiseModule(INITIALISE_MODULE_ID);
+		
+		switchOffSystem();
+		return;
 	}
-	
-	RM_LOG2(F("Boot Count Is Now"), currBootCount);
+		
+	uint16_t currBootCount = mem.incrementBootCount();
+	RM_LOG2(F("Boot Count"), currBootCount);
 	
 	//Take reading every 5 hours so it's a scattered time reading throughout the week
 	_behaviour |= SYS_BEHAVIOUR::TakeReadings;
@@ -117,19 +135,13 @@ void initSubsystems() {
 		return;
 	}
 	
-	if (!gps.toggleGps(true)){
+	if (!gps.toggleGps(true)) {
 	
 		//TODO: store in ROM
 		return;
 	}
 }
 
-void initModule(uint8_t moduleId) {
-	
-	mem.initialiseModule(moduleId);
-
-	RM_LOG2("Initialised with id ", moduleId);
-}
 
 void switchOffSystem() {
 	
@@ -195,9 +207,8 @@ void on3MinutesElapsed(bool doWrite) {
 
 boolean takeReadings() {
 	
-	RM_LOGLN(F("Taking readings..."));
-	
-	SensorData sd = sensorMgr.readData();
+	SensorData sd;
+	sensorMgr.readData(&sd);
 	
 	return true;
 }
@@ -216,7 +227,7 @@ void loop() {
 	delay(1000);
 	++_timerCounter;
 
-	RM_LOG2(F("Behaviour is "), _behaviour);
+	RM_LOG2(F("Behaviour"), _behaviour);
 	
 	if((_behaviour&SYS_BEHAVIOUR::TakeReadings) != 0) {
 		
@@ -245,15 +256,6 @@ void loop() {
 
 }
 
-
-/************************************************************************/
-/*                    Bulk read/write signals test                      */
-/************************************************************************/
-
-void readWriteSignals(){
-	
-	
-}
 
 
 
