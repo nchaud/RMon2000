@@ -16,12 +16,12 @@
 #define IS_GPS_MOCK					true	//Without connecting GPS shield
 
 #define INITIALISE_MODULE_ID		0		//0 implies don't initialise it - module start with id 1
-#define IS_BASIC_MEM_TEST			false	//Smoke test new module's EEPROM is physically present and working basics
+#define IS_BASIC_MEM_TEST			true	//Smoke test new module's EEPROM is physically present and working basics
 
 //All these define conditional code only compiled in when set - i.e. only run on the PC
 #define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
 #define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
-#define IS_EXTENDED_MEM_TEST		true	//Test reading signals and reading/writing to memory
+#define IS_EXTENDED_MEM_TEST		false	//Test reading signals and reading/writing to memory
 
 
 

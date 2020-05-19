@@ -431,19 +431,6 @@ void RmMemManager::appendSensorEntry(SensorData* r) {
 	
 	//TODO: What to do on overflow and not enough memory for next reading?
 	
-	//volatile unsigned int readingSz = sizeof(SensorData); //const
-	//
-	////Read where next entry is free
-	//volatile unsigned long entryCount = this->getULongFromMemory(MEMLOC_READING_ENTRY_COUNT);
-	//volatile unsigned long nextFreeOffset = entryCount * sizeof(SensorData);
-	//volatile unsigned long nextFreeAddress = MEMADDR_READING_DATA_START + nextFreeOffset;
-
-	//TODO: modulo both free address (AND entry count?)
-
-	//internalWriteEntryAtAddress(r, nextFreeAddress);
-
-	//Update entry count
-	//this->setULongToMemory(MEMLOC_READING_ENTRY_COUNT, entryCount+1);
 	
 	/* Can we do this even with writing page limitations ? */
 	
