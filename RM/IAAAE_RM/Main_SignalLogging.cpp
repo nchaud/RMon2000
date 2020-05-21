@@ -269,33 +269,38 @@ void loop() {
 /*             Timer/power-on testing at intervals                      */
 /************************************************************************/
 /*
-void setup(void)
-{
-	//Must immediately run
+void setup() {
+
+	//Must immediately run - reset pin for timer
 	pinMode(5, OUTPUT);
 	digitalWrite(5, HIGH);
 
-	pinMode(4, OUTPUT);
+	pinMode(4, OUTPUT); //LED
 
-	Serial.begin(9600);
+	pinMode(9, OUTPUT); //buzzer
+	
 }
 
 int counter = 0;
-void loop(){
-	
-	Serial.write("Loop line");
-	
-	if (counter%3==0) {
-		
-		digitalWrite(4, HIGH);
+
+void loop() {
+
+	if (counter <= 3)
+	{
+		tone(9, 1000);
 		delay(1000);
-		digitalWrite(4, LOW);
+		noTone(9);
 	}
 
-	if (counter==10)
-	digitalWrite(5, LOW);
-	
+	digitalWrite(4, HIGH);
+	delay(1000);
+	digitalWrite(4, LOW);
+
+	if (counter==5)
+		digitalWrite(5, LOW);
+
 	delay(1000);
 	++counter;
 }
+
 */
