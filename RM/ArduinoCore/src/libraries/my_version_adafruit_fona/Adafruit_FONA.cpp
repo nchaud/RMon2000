@@ -1,9 +1,5 @@
 /***************************************************
 
-
-  //TODO: TRIM THE FAT OFF THIS
-
-
   This is a library for our Adafruit FONA Cellular Module
 
   Designed specifically to work with the Adafruit FONA
@@ -18,6 +14,9 @@
 
   Written by Limor Fried/Ladyada for Adafruit Industries.
   BSD license, all text above must be included in any redistribution
+  
+  Trimmed for RMonV3 @ 21/5/20
+  
  ****************************************************/
 
 // next line per http://postwarrior.com/arduino-ethershield-error-prog_char-does-not-name-a-type/
@@ -64,6 +63,8 @@ boolean Adafruit_FONA::begin(Stream &port) {
 		DEBUG_PRINTLN(F("Serial was available"));
 		mySerial->read();
 	}
+	
+	//TODO: I believe this is to synchronise the baud rate - https://arduino.stackexchange.com/a/36042
 	
     if (sendCheckReply(F("AT"), ok_reply))
       break;
@@ -137,18 +138,11 @@ boolean Adafruit_FONA::begin(Stream &port) {
       _type = FONA800H;
     }
   }
-
 #if defined(FONA_PREF_SMS_STORAGE)
   sendCheckReply(F("AT+CPMS=\"" FONA_PREF_SMS_STORAGE "\""), ok_reply);
 #endif
 
   return true;
-}
-
-
-/********* Serial port ********************************************/
-boolean Adafruit_FONA::setBaudrate(uint16_t baud) {
-  return sendCheckReply(F("AT+IPREX="), baud, ok_reply);
 }
 
 
@@ -238,6 +232,15 @@ uint8_t Adafruit_FONA::getNetworkStatus(void) {
 }
 
 
+
+
+//TODO: Move file to own project and use proper error codes everywhere and 
+//check #ifdef fona_debug works wrt memory
+//	  : And kill GsmManager.cpp for this instead 
+
+
+
+
 uint8_t Adafruit_FONA::getRSSI(void) {
   uint16_t reply;
 
@@ -258,17 +261,6 @@ boolean Adafruit_FONA::setPWM(uint16_t period, uint8_t duty) {
 
 /********* SMS **********************************************************/
 
-uint8_t Adafruit_FONA::getSMSInterrupt(void) {
-  uint16_t reply;
-
-  if (! sendParseReply(F("AT+CFGRI?"), F("+CFGRI: "), &reply) ) return 0;
-
-  return reply;
-}
-
-boolean Adafruit_FONA::setSMSInterrupt(uint8_t i) {
-  return sendCheckReply(F("AT+CFGRI="), i, ok_reply);
-}
 
 int8_t Adafruit_FONA::getNumSMS(void) {
   uint16_t numsms;
@@ -333,6 +325,14 @@ boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
   *readlen = thelen;
   return true;
 }
+
+
+//TODO: SMS Backup: 
+//"As such, users of SMS rarely if ever get a busy or engaged signal as they can do during peak network usage times"
+
+
+//TODO: Use PDU mode - get it checked from Amir Sb SL
+
 
 // Retrieve the sender of the specified SMS message and copy it as a string to
 // the sender buffer.  Up to senderlen characters of the sender will be copied
@@ -404,6 +404,7 @@ boolean Adafruit_FONA::sendSMS(char *smsaddr, char *smsmsg) {
   return true;
 }
 
+//TODO: Do we get sms messages stored automatically and hence we need to delete-all occasionally?
 
 boolean Adafruit_FONA::deleteSMS(uint8_t i) {
     if (! sendCheckReply(F("AT+CMGF=1"), ok_reply)) return false;
@@ -419,6 +420,8 @@ boolean Adafruit_FONA::deleteSMS(uint8_t i) {
 }
 
 /********* USSD *********************************************************/
+
+//use to get carrier info?
 
 boolean Adafruit_FONA::sendUSSD(char *ussdmsg, char *ussdbuff, uint16_t maxlen, uint16_t *readlen) {
   if (! sendCheckReply(F("AT+CUSD=1"), ok_reply)) return false;
@@ -492,7 +495,6 @@ boolean Adafruit_FONA::enableGPS(boolean onoff) {
   }
   return true;
 }
-
 
 int8_t Adafruit_FONA::GPSstatus(void) {
   //////if (_type == FONA808_V2) {
@@ -869,7 +871,7 @@ boolean Adafruit_FONA::enableGPRS(boolean onoff) {
 
     // set bearer profile! connection type GPRS
     if (! sendCheckReply(F("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\""),
-			   ok_reply, 10000))
+			   ok_reply, 10000)) //Should be 85000 but not supported by this data-type
       return false;
 
     // set bearer profile access point name
@@ -922,11 +924,11 @@ boolean Adafruit_FONA::enableGPRS(boolean onoff) {
     }
 
     // open GPRS context
-    if (! sendCheckReply(F("AT+SAPBR=1,1"), ok_reply, 30000))
+    if (! sendCheckReply(F("AT+SAPBR=1,1"), ok_reply, 65535)) //TODO: Should be 85000 but not supported by this data-type
       return false;
 
     // bring up wireless connection
-    if (! sendCheckReply(F("AT+CIICR"), ok_reply, 10000))
+    if (! sendCheckReply(F("AT+CIICR"), ok_reply, 65535)) //TODO: Should be 85000 but not supported by this data-type
       return false;
 
   } else {
@@ -964,7 +966,7 @@ void Adafruit_FONA::setGPRSNetworkSettings(FONAFlashStringPtr apn,
 
 boolean Adafruit_FONA::getGSMLoc(uint16_t *errorcode, char *buff, uint16_t maxlen) {
 
-  getReply(F("AT+CIPGSMLOC=1,1"), (uint16_t)10000);
+  getReply(F("AT+CIPGSMLOC=1,1"), (uint16_t)60000);
 
   if (! parseReply(F("+CIPGSMLOC: "), errorcode))
     return false;

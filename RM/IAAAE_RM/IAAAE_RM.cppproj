@@ -307,9 +307,6 @@
     <Compile Include="Helpers.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\libraries\EEPROM\src\EEPROM.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="include\libraries\Wire\src\utility\twi.h">
       <SubType>compile</SubType>
     </Compile>
@@ -362,8 +359,6 @@
   <ItemGroup>
     <Folder Include="include\" />
     <Folder Include="include\libraries\" />
-    <Folder Include="include\libraries\EEPROM\" />
-    <Folder Include="include\libraries\EEPROM\src\" />
     <Folder Include="include\libraries\Wire\" />
     <Folder Include="include\libraries\Wire\src\" />
     <Folder Include="include\libraries\Wire\src\utility\" />

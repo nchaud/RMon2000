@@ -35,8 +35,6 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../include/ \
 ../include/libraries/ \
-../include/libraries/EEPROM/ \
-../include/libraries/EEPROM/src/ \
 ../include/libraries/Wire/ \
 ../include/libraries/Wire/src/ \
 ../include/libraries/Wire/src/utility/ \
