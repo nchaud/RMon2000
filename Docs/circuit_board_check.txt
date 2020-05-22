@@ -15,3 +15,5 @@ timing every 4 hours - collect and save every 24hrs. bigger eeprom? slide out ee
 
 no lipo batt connected to sim808 chip!!
 
+expose all eeprom pins through header so can connect from externally
+

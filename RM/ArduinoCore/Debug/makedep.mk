@@ -52,7 +52,5 @@ src\core\WMath.cpp
 
 src\core\WString.cpp
 
-src\libraries\my_version_adafruit_fona\Adafruit_FONA.cpp
-
 src\libraries\SoftwareSerial\SoftwareSerial.cpp
 

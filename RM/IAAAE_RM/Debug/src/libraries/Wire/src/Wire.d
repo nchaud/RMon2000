@@ -6,8 +6,8 @@ src/libraries/Wire/src/Wire.d src/libraries/Wire/src/Wire.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
- ..\include\libraries\Wire\src/utility/twi.h \
- ..\include\libraries\Wire\src/Wire.h \
+ ../include/libraries/Wire/src/utility/twi.h \
+ ../include/libraries/Wire/src/Wire.h \
  ..\\..\ArduinoCore\include\core/Stream.h \
  ..\\..\ArduinoCore\include\core/Print.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
@@ -37,9 +37,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h:
 
-..\include\libraries\Wire\src/utility/twi.h:
+../include/libraries/Wire/src/utility/twi.h:
 
-..\include\libraries\Wire\src/Wire.h:
+../include/libraries/Wire/src/Wire.h:
 
 ..\\..\ArduinoCore\include\core/Stream.h:
 

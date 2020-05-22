@@ -14,6 +14,8 @@ RmMemManager.cpp
 
 SensorManager.cpp
 
+src\libraries\Adafruit_Fona_RMonV3\src\Adafruit_FONA.cpp
+
 src\libraries\Wire\src\utility\twi.c
 
 src\libraries\Wire\src\Wire.cpp

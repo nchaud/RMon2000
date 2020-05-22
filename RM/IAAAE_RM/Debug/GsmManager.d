@@ -34,13 +34,13 @@ GsmManager.d GsmManager.o: .././GsmManager.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  ..\\..\ArduinoCore\include\core/Arduino.h \
  ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAExtIncludes.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatform.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/../FONAConfig.h \
- ..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatStd.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAConfig.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAExtIncludes.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAConfig.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/FONAPlatform.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/../FONAConfig.h \
+ ../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/FONAPlatStd.h \
  .././GsmManager.h \
  ..\\..\ArduinoCore\include\libraries\SoftwareSerial/SoftwareSerial.h \
  ..\\..\ArduinoCore\include\core/Stream.h .././DataTypes.h
@@ -115,19 +115,19 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ..\\..\ArduinoCore\include\variants\standard/pins_arduino.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/Adafruit_FONA.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAConfig.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAExtIncludes.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAExtIncludes.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/FONAConfig.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/FONAConfig.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatform.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/FONAPlatform.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/../FONAConfig.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/../FONAConfig.h:
 
-..\\..\ArduinoCore\include\libraries\my_version_adafruit_fona/includes/platform/FONAPlatStd.h:
+../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/FONAPlatStd.h:
 
 .././GsmManager.h:
 
