@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+Adafruit_FONA.cpp
+
 GpsManager.cpp
 
 GsmManager.cpp
@@ -13,8 +15,6 @@ Main_SignalLogging.cpp
 RmMemManager.cpp
 
 SensorManager.cpp
-
-src\libraries\Adafruit_Fona_RMonV3\src\Adafruit_FONA.cpp
 
 src\libraries\Wire\src\utility\twi.c
 

@@ -11,19 +11,17 @@
 	#define ADAFRUIT_FONA_DEBUG
 #endif
 
-//Testing - TODO: should be derived based on below values?
+//Testing - TODO: should be derived based on below values? TODO: Make behaviour here a bitwise enum?
 #define IS_GSM_MOCK					true	//Without connecting GSM shield
 #define IS_GPS_MOCK					true	//Without connecting GPS shield
 
-#define INITIALISE_MODULE_ID		0		//0 implies don't initialise it - module start with id 1
-#define IS_BASIC_MEM_TEST			true	//Smoke test new module's EEPROM is physically present and working basics
+#define INITIALISE_MODULE_ID		0		//0 implies don't initialise it - modules start with id 1
+#define IS_BASIC_MEM_TEST			false   //Smoke test new module's EEPROM is physically present and working basics
 
 //All these define conditional code only compiled in when set - i.e. only run on the PC
 #define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
 #define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
 #define IS_EXTENDED_MEM_TEST		false	//Test reading signals and reading/writing to memory
-
-
 
 //Fona Pins
 #define FONA_RX 2
@@ -112,6 +110,29 @@ enum LED_STATE {
 	All_Clear	= 128
 	
 	//IsTemp		= 256
+};
+
+enum FONA_STATUS_INIT {
+	
+	SUCCESS=1,
+	WARN_ATEO_FAIL=2,
+	ERR_SERIAL_FAIL=3,
+	ERR_FONA_SIM_MODULE=4
+	
+	//Some can be mutually exclusive, some flag'd
+};
+#define IS_ERR_FSI(x) \
+		(x == FONA_STATUS_INIT::ERR_SERIAL_FAIL || \
+		 x == FONA_STATUS_INIT::ERR_FONA_SIM_MODULE)
+
+enum FONA_STATUS_GSM_INIT {
+	
+	SUCCESS_XX=1
+};
+
+enum FONA_STATUS_GSM_SEND {
+	
+	INIT_SUCCESS=1
 };
 
 //struct TransmitReadingsResult{
@@ -222,17 +243,6 @@ struct ModuleMeta{
 	
 	uint8_t spareBuffer[16];
 };
-
-//struct ModuleData{
-//
-	//uint8_t moduleId = 0;
-	//uint8_t version;   /* Software version */
-	//uint32_t bootCount; /* No of times module has booted up */
-	//
-	///* May not be all readings, different segment for other info ? */
-	//int16_t numReadings;
-	//uint16_t freeStartAddress; /* Address where current readings are stored at - cyclic buffer */
-//};
 
 
 //TODO: All these to be uint16_t ?

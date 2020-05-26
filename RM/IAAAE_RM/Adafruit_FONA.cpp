@@ -1,33 +1,11 @@
-/***************************************************
-
-  This is a library for our Adafruit FONA Cellular Module
-
-  Designed specifically to work with the Adafruit FONA
-  ----> http://www.adafruit.com/products/1946
-  ----> http://www.adafruit.com/products/1963
-
-  These displays use TTL Serial to communicate, 2 pins are required to
-  interface
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  BSD license, all text above must be included in any redistribution
-  
-  Trimmed for RMonV3 @ 21/5/20
-  
- ****************************************************/
-
 // next line per http://postwarrior.com/arduino-ethershield-error-prog_char-does-not-name-a-type/
 
 #include "Adafruit_FONA.h"
 
-
-
-Adafruit_FONA::Adafruit_FONA(int8_t rst)
+Adafruit_FONA::Adafruit_FONA(int8_t rst, boolean isMock)
 {
   _rstpin = rst;
+  _isMock = isMock;
 
   apn = F("FONAnet");
   apnusername = 0;
@@ -42,9 +20,13 @@ uint8_t Adafruit_FONA::type(void) {
   return _type;
 }
 
-boolean Adafruit_FONA::begin(Stream &port) {
+FONA_STATUS_INIT Adafruit_FONA::begin(uint8_t tx, uint8_t rx) { //Stream &port) {
 
-  mySerial = &port;
+  FONA_STATUS_INIT ret = FONA_STATUS_INIT::SUCCESS;
+  
+  SoftwareSerial *fonaSerial = new SoftwareSerial(tx, rx);
+  fonaSerial->begin(4800);
+  mySerial = fonaSerial;
 
   pinMode(_rstpin, OUTPUT);
   digitalWrite(_rstpin, HIGH);
@@ -68,22 +50,29 @@ boolean Adafruit_FONA::begin(Stream &port) {
 	
     if (sendCheckReply(F("AT"), ok_reply))
       break;
-    while (mySerial->available()) mySerial->read();
+	  
+    while (mySerial->available())
+		mySerial->read();
+		
     if (sendCheckReply(F("AT"), F("AT"))) 
       break;
+	  
     delay(500);
     timeout-=500;
   }
 
   if (timeout <= 0) {
-#ifdef ADAFRUIT_FONA_DEBUG
-    DEBUG_PRINTLN(F("Timeout: No response to AT... last ditch attempt."));
-#endif
+	  
     sendCheckReply(F("AT"), ok_reply);
     delay(100);
     sendCheckReply(F("AT"), ok_reply);
     delay(100);
-    sendCheckReply(F("AT"), ok_reply);
+    
+	if (!sendCheckReply(F("AT"), ok_reply)){
+		
+		DEBUG_PRINTLN(F("AT Fail... last ditch attempt."));
+		return FONA_STATUS_INIT::ERR_SERIAL_FAIL;
+	}
     delay(100);
   }
 
@@ -91,58 +80,21 @@ boolean Adafruit_FONA::begin(Stream &port) {
   sendCheckReply(F("ATE0"), ok_reply);
   delay(100);
 
-  if (! sendCheckReply(F("ATE0"), ok_reply)) {
-    return false;
+  if (!sendCheckReply(F("ATE0"), ok_reply)){
+	  
+	  ret = FONA_STATUS_INIT::WARN_ATEO_FAIL;
   }
-
-  // turn on hangupitude
-  sendCheckReply(F("AT+CVHU=0"), ok_reply);
-
   delay(100);
+  
   flushInput();
 
-
-  DEBUG_PRINT(F("\t---> ")); DEBUG_PRINTLN("ATI");
-
-  mySerial->println("ATI");
-  readline(500, true);
-
-  DEBUG_PRINT (F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
-
-
-
-  if (prog_char_strstr(replybuffer, (prog_char *)F("SIM808 R14")) != 0) {
-    _type = FONA808_V2;
-  } else if (prog_char_strstr(replybuffer, (prog_char *)F("SIM808 R13")) != 0) {
-    _type = FONA808_V1;
-  } else if (prog_char_strstr(replybuffer, (prog_char *)F("SIM800 R13")) != 0) {
-    _type = FONA800L;
-  } else if (prog_char_strstr(replybuffer, (prog_char *)F("SIMCOM_SIM5320A")) != 0) {
-    _type = FONA3G_A;
-  } else if (prog_char_strstr(replybuffer, (prog_char *)F("SIMCOM_SIM5320E")) != 0) {
-    _type = FONA3G_E;
+  //Make sure right version of FONA module is connected
+  if (prog_char_strstr(replybuffer, (prog_char *)F("SIM808 R14")) == 0) {
+    
+    return FONA_STATUS_INIT::ERR_FONA_SIM_MODULE;
   }
 
-  if (_type == FONA800L) {
-    // determine if L or H
-
-  DEBUG_PRINT(F("\t---> ")); DEBUG_PRINTLN("AT+GMM");
-
-    mySerial->println("AT+GMM");
-    readline(500, true);
-
-  DEBUG_PRINT (F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
-
-
-    if (prog_char_strstr(replybuffer, (prog_char *)F("SIM800H")) != 0) {
-      _type = FONA800H;
-    }
-  }
-#if defined(FONA_PREF_SMS_STORAGE)
-  sendCheckReply(F("AT+CPMS=\"" FONA_PREF_SMS_STORAGE "\""), ok_reply);
-#endif
-
-  return true;
+  return ret;
 }
 
 
@@ -231,16 +183,6 @@ uint8_t Adafruit_FONA::getNetworkStatus(void) {
   return status;
 }
 
-
-
-
-//TODO: Move file to own project and use proper error codes everywhere and 
-//check #ifdef fona_debug works wrt memory
-//	  : And kill GsmManager.cpp for this instead 
-
-
-
-
 uint8_t Adafruit_FONA::getRSSI(void) {
   uint16_t reply;
 
@@ -326,6 +268,16 @@ boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
   return true;
 }
 
+//TODO:
+//"When you make the first device details API call (where no one made the same call in the last 2 minutes), IC2 will trigger the device to send its status data regularly in the coming 2 minutes. So it takes a little bit longer time to receive the first set of data. After that, the system shall receive the data every 2 to 6 secs. The frequency depends on network latency and the system’s load."
+
+
+//"An update of the RSSI value occurs at the end of each T2 interval. The RSSI value is not valid
+//before the AGC settling phase is finished, indicated by RSSI#4 in Figure 1. After this instant
+//the gain will not likely be further altered and each update of the RSSI value can be
+//considered as valid. The duration from entering RX to the first valid RSSI update is denoted
+//RSSI response time"
+
 
 //TODO: SMS Backup: 
 //"As such, users of SMS rarely if ever get a busy or engaged signal as they can do during peak network usage times"
@@ -382,13 +334,6 @@ boolean Adafruit_FONA::sendSMS(char *smsaddr, char *smsmsg) {
 
   DEBUG_PRINTLN("^Z");
 
-  if ( (_type == FONA3G_A) || (_type == FONA3G_E) ) {
-    // Eat two sets of CRLF
-    readline(200);
-    //DEBUG_PRINT("Line 1: "); DEBUG_PRINTLN(strlen(replybuffer));
-    readline(200);
-    //DEBUG_PRINT("Line 2: "); DEBUG_PRINTLN(strlen(replybuffer));
-  }
   readline(10000); // read the +CMGS reply, wait up to 10 seconds!!!
   //DEBUG_PRINT("Line 3: "); DEBUG_PRINTLN(strlen(replybuffer));
   if (strstr(replybuffer, "+CMGS") == 0) {
@@ -468,36 +413,21 @@ boolean Adafruit_FONA::enableGPS(boolean onoff) {
 
   // first check if its already on or off
 
-  if (_type == FONA808_V2) {
-    if (! sendParseReply(F("AT+CGNSPWR?"), F("+CGNSPWR: "), &state) )
-      return false;
-  } else {
-    if (! sendParseReply(F("AT+CGPSPWR?"), F("+CGPSPWR: "), &state))
-      return false;
-  }
+  if (! sendParseReply(F("AT+CGNSPWR?"), F("+CGNSPWR: "), &state) )
+	return false;
 
   if (onoff && !state) {
-    if (_type == FONA808_V2) {
       if (! sendCheckReply(F("AT+CGNSPWR=1"), ok_reply))  // try GNS command
-	return false;
-    } else {
-      if (! sendCheckReply(F("AT+CGPSPWR=1"), ok_reply))
-	return false;
-    }
+		return false;
   } else if (!onoff && state) {
-    if (_type == FONA808_V2) {
       if (! sendCheckReply(F("AT+CGNSPWR=0"), ok_reply)) // try GNS command
-	return false;
-    } else {
-      if (! sendCheckReply(F("AT+CGPSPWR=0"), ok_reply))
-	return false;
-    }
+		return false;
   }
   return true;
 }
 
 int8_t Adafruit_FONA::GPSstatus(void) {
-  //////if (_type == FONA808_V2) {
+	
     // 808 V2 uses GNS commands and doesn't have an explicit 2D/3D fix status.
     // Instead just look for a fix and if found assume it's a 3D fix.
     getReply(F("AT+CGNSINF"));
@@ -512,43 +442,13 @@ int8_t Adafruit_FONA::GPSstatus(void) {
     // Assume if the fix status is '1' then we have a 3D fix, otherwise no fix.
     if (p[0] == '1') return 3;
     else return 1;
-  //////}
-  //////if (_type == FONA3G_A || _type == FONA3G_E) {
-  //////  // FONA 3G doesn't have an explicit 2D/3D fix status.
-  //////  // Instead just look for a fix and if found assume it's a 3D fix.
-  //////  getReply(F("AT+CGPSINFO"));
-  //////  char *p = prog_char_strstr(replybuffer, (prog_char*)F("+CGPSINFO:"));
-  //////  if (p == 0) return -1;
-  //////  if (p[10] != ',') return 3; // if you get anything, its 3D fix
-  //////  return 0;
-  //////}
-  //////else {
-  //////  // 808 V1 looks for specific 2D or 3D fix state.
-  //////  getReply(F("AT+CGPSSTATUS?"));
-  //////  char *p = prog_char_strstr(replybuffer, (prog_char*)F("SSTATUS: Location "));
-  //////  if (p == 0) return -1;
-  //////  p+=18;
-  //////  readline(); // eat 'OK'
-  //////  //DEBUG_PRINTLN(p);
-  //////  if (p[0] == 'U') return 0;
-  //////  if (p[0] == 'N') return 1;
-  //////  if (p[0] == '2') return 2;
-  //////  if (p[0] == '3') return 3;
-  //////}
-  //////// else
-  //////return 0;
+ 
 }
 
 uint8_t Adafruit_FONA::getGPS(uint8_t arg, char *buffer, uint8_t maxbuff) {
   int32_t x = arg;
 
-  /////*if ( (_type == FONA3G_A) || (_type == FONA3G_E) ) {
-  ////  getReply(F("AT+CGPSINFO"));
-  ////} else if (_type == FONA808_V1) {
-  ////  getReply(F("AT+CGPSINF="), x);
-  ////} else {*/
     getReply(F("AT+CGNSINF"));
-  //////}
 
   char *p = prog_char_strstr(replybuffer, (prog_char*)F("SINF"));
   if (p == 0) {
@@ -584,86 +484,6 @@ boolean Adafruit_FONA::getGPS(
 
 	//								mySerial->print(gpsbuffer);
 
-
-  //////if (_type == FONA3G_A || _type == FONA3G_E) {
-  //////  // Parse 3G respose
-  //////  // +CGPSINFO:4043.000000,N,07400.000000,W,151015,203802.1,-12.0,0.0,0
-  //////  // skip beginning
-  //////  char *tok;
-
-  ////// // grab the latitude
-  //////  char *latp = strtok(gpsbuffer, ",");
-  //////  if (! latp) return false;
-
-  //////  // grab latitude direction
-  //////  char *latdir = strtok(NULL, ",");
-  //////  if (! latdir) return false;
-
-  //////  // grab longitude
-  //////  char *longp = strtok(NULL, ",");
-  //////  if (! longp) return false;
-
-  //////  // grab longitude direction
-  //////  char *longdir = strtok(NULL, ",");
-  //////  if (! longdir) return false;
-
-  //////  // skip date & time
-  //////  tok = strtok(NULL, ",");
-  //////  tok = strtok(NULL, ",");
-
-  ////// // only grab altitude if needed
-  //////  if (altitude != NULL) {
-  //////    // grab altitude
-  //////    char *altp = strtok(NULL, ",");
-  //////    if (! altp) return false;
-  //////    *altitude = atof(altp);
-  //////  }
-
-  //////  // only grab speed if needed
-  //////  if (speed_kph != NULL) {
-  //////    // grab the speed in km/h
-  //////    char *speedp = strtok(NULL, ",");
-  //////    if (! speedp) return false;
-
-  //////    *speed_kph = atof(speedp);
-  //////  }
-
-  //////  // only grab heading if needed
-  //////  if (heading != NULL) {
-
-  //////    // grab the speed in knots
-  //////    char *coursep = strtok(NULL, ",");
-  //////    if (! coursep) return false;
-
-  //////    *heading = atof(coursep);
-  //////  }
-
-  //////  double latitude = atof(latp);
-  //////  double longitude = atof(longp);
-
-  //////  // convert latitude from minutes to decimal
-  //////  float degrees = floor(latitude / 100);
-  //////  double minutes = latitude - (100 * degrees);
-  //////  minutes /= 60;
-  //////  degrees += minutes;
-
-  //////  // turn direction into + or -
-  //////  if (latdir[0] == 'S') degrees *= -1;
-
-  //////  *lat = degrees;
-
-  //////  // convert longitude from minutes to decimal
-  //////  degrees = floor(longitude / 100);
-  //////  minutes = longitude - (100 * degrees);
-  //////  minutes /= 60;
-  //////  degrees += minutes;
-
-  //////  // turn direction into + or -
-  //////  if (longdir[0] == 'W') degrees *= -1;
-
-  //////  *lon = degrees;
-
-  //////} else if (_type == FONA808_V2) {
     // Parse 808 V2 response.  See table 2-3 from here for format:
     // http://www.adafruit.com/datasheets/SIM800%20Series_GNSS_Application%20Note%20V1.00.pdf
 
@@ -719,120 +539,7 @@ boolean Adafruit_FONA::getGPS(
 
       *heading = atof(coursep);
     }
-  //////}
-  //////else {
-  //////  // Parse 808 V1 response.
-
-  //////  // skip mode
-  //////  char *tok = strtok(gpsbuffer, ",");
-  //////  if (! tok) return false;
-
-  //////  // skip date
-  //////  tok = strtok(NULL, ",");
-  //////  if (! tok) return false;
-
-  //////  // skip fix
-  //////  tok = strtok(NULL, ",");
-  //////  if (! tok) return false;
-
-  //////  // grab the latitude
-  //////  char *latp = strtok(NULL, ",");
-  //////  if (! latp) return false;
-
-  //////  // grab latitude direction
-  //////  char *latdir = strtok(NULL, ",");
-  //////  if (! latdir) return false;
-
-  //////  // grab longitude
-  //////  char *longp = strtok(NULL, ",");
-  //////  if (! longp) return false;
-
-  //////  // grab longitude direction
-  //////  char *longdir = strtok(NULL, ",");
-  //////  if (! longdir) return false;
-
-  //////  double latitude = atof(latp);
-  //////  double longitude = atof(longp);
-
-  //////  // convert latitude from minutes to decimal
-  //////  float degrees = floor(latitude / 100);
-  //////  double minutes = latitude - (100 * degrees);
-  //////  minutes /= 60;
-  //////  degrees += minutes;
-
-  //////  // turn direction into + or -
-  //////  if (latdir[0] == 'S') degrees *= -1;
-
-  //////  *lat = degrees;
-
-  //////  // convert longitude from minutes to decimal
-  //////  degrees = floor(longitude / 100);
-  //////  minutes = longitude - (100 * degrees);
-  //////  minutes /= 60;
-  //////  degrees += minutes;
-
-  //////  // turn direction into + or -
-  //////  if (longdir[0] == 'W') degrees *= -1;
-
-  //////  *lon = degrees;
-
-  //////  // only grab speed if needed
-  //////  if (speed_kph != NULL) {
-
-  //////    // grab the speed in knots
-  //////    char *speedp = strtok(NULL, ",");
-  //////    if (! speedp) return false;
-
-  //////    // convert to kph
-  //////    *speed_kph = atof(speedp) * 1.852;
-
-  //////  }
-
-  //////  // only grab heading if needed
-  //////  if (heading != NULL) {
-
-  //////    // grab the speed in knots
-  //////    char *coursep = strtok(NULL, ",");
-  //////    if (! coursep) return false;
-
-  //////    *heading = atof(coursep);
-
-  //////  }
-
-  //////  // no need to continue
-  //////  if (altitude == NULL)
-  //////    return true;
-
-  //////  // we need at least a 3D fix for altitude
-  //////  if (GPSstatus() < 3)
-  //////    return false;
-
-  //////  // grab the mode 0 gps csv from the sim808
-  //////  res_len = getGPS(0, gpsbuffer, 120);
-
-  //////  // make sure we have a response
-  //////  if (res_len == 0)
-  //////    return false;
-
-  //////  // skip mode
-  //////  tok = strtok(gpsbuffer, ",");
-  //////  if (! tok) return false;
-
-  //////  // skip lat
-  //////  tok = strtok(NULL, ",");
-  //////  if (! tok) return false;
-
-  //////  // skip long
-  //////  tok = strtok(NULL, ",");
-  //////  if (! tok) return false;
-
-  //////  // grab altitude
-  //////  char *altp = strtok(NULL, ",");
-  //////  if (! altp) return false;
-
-  //////  *altitude = atof(altp);
-  //////}
-
+ 
   return true;
 
 }
@@ -846,14 +553,10 @@ boolean Adafruit_FONA::enableGPSNMEA(uint8_t i) {
   i %= 10;
   sendbuff[13] = i + '0';
 
-  if (_type == FONA808_V2) {
     if (i)
       return sendCheckReply(F("AT+CGNSTST=1"), ok_reply);
     else
       return sendCheckReply(F("AT+CGNSTST=0"), ok_reply);
-  } else {
-    return sendCheckReply(sendbuff, ok_reply, 2000);
-  }
 }
 
 
@@ -1683,3 +1386,25 @@ boolean Adafruit_FONA::sendParseReply(FONAFlashStringPtr tosend,
 
   return true;
 }
+
+
+/***************************************************
+
+  This is a library for our Adafruit FONA Cellular Module
+
+  Designed specifically to work with the Adafruit FONA
+  ----> http://www.adafruit.com/products/1946
+  ----> http://www.adafruit.com/products/1963
+
+  These displays use TTL Serial to communicate, 2 pins are required to
+  interface
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
+  products from Adafruit!
+
+  Written by Limor Fried/Ladyada for Adafruit Industries.
+  BSD license, all text above must be included in any redistribution
+  
+  Trimmed for RMonV3 @ 21/5/20
+  
+ ****************************************************/

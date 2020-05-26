@@ -5,21 +5,21 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
                               Main_SignalLogging.o (_ZN14HardwareSerial5beginEmh)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                              GsmManager.o (Serial)
+                              Adafruit_FONA.o (Serial)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o (main)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
-                              GsmManager.o (_Znwj)
+                              Adafruit_FONA.o (_Znwj)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (_ZN5Print5writeEPKhj)
+                              Adafruit_FONA.o (_ZN5Print5writeEPKhj)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                              Main_SignalLogging.o (delay)
+                              Adafruit_FONA.o (delay)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
                               SensorManager.o (analogRead)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                              Main_SignalLogging.o (pinMode)
+                              Adafruit_FONA.o (pinMode)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                              GsmManager.o (_ZN14SoftwareSerialC1Ehhb)
+                              Adafruit_FONA.o (_ZN14SoftwareSerialC1Ehhb)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(abi.o)
                               C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o) (__cxa_pure_virtual)
 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
@@ -63,7 +63,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(unordsf2.o)
                               C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o) (__unordsf2)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodqi4.o)
-                              RmMemManager.o (__udivmodqi4)
+                              Adafruit_FONA.o (__udivmodqi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
                               C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o) (__divmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
@@ -75,13 +75,11 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
-                              GpsManager.o (__do_copy_data)
+                              Adafruit_FONA.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
                               Main_SignalLogging.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ctors.o)
                               Main_SignalLogging.o (__do_global_ctors)
-c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
-                              Main_SignalLogging.o (__do_global_dtors)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
                               RmMemManager.o (__lshrdi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
@@ -93,29 +91,27 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(abort.o)
                               C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(abi.o) (abort)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(atof.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (atof)
+                              Adafruit_FONA.o (atof)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(atoi.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (atoi)
+                              Adafruit_FONA.o (atoi)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp_P.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strcmp_P)
+                              Adafruit_FONA.o (strcmp_P)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strlen_P.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (__strlen_P)
+                              Adafruit_FONA.o (__strlen_P)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strstr_P.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strstr_P)
+                              Adafruit_FONA.o (strstr_P)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strtok.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strtok)
+                              Adafruit_FONA.o (strtok)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (memcpy)
+                              Adafruit_FONA.o (memcpy)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strchr.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strchr)
+                              Adafruit_FONA.o (strchr)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strcmp)
-c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcpy.o)
-                              GpsManager.o (strcpy)
+                              Adafruit_FONA.o (strcmp)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strncpy.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strncpy)
+                              Adafruit_FONA.o (strncpy)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strstr.o)
-                              src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o (strstr)
+                              Adafruit_FONA.o (strstr)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strtok_r.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strtok.o) (strtok_r)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(mul10.o)
@@ -150,53 +146,428 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .group         0x00000000        0x8 Adafruit_FONA.o
+ .text          0x00000000        0x0 Adafruit_FONA.o
+ .data          0x00000000        0x0 Adafruit_FONA.o
+ .bss           0x00000000        0x0 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA4typeEv
+                0x00000000        0x6 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA22setGPRSNetworkSettingsEPK19__FlashStringHelperS2_S2_
+                0x00000000       0x18 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12setUserAgentEPK19__FlashStringHelper
+                0x00000000        0xc Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA16setHTTPSRedirectEb
+                0x00000000        0xa Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperb
+                0x00000000       0x7a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7readRawEj
+                0x00000000       0x98 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7TCPsendEPch
+                0x00000000      0x12a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA11expectReplyEPK19__FlashStringHelperj
+                0x00000000       0x48 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA13HTTP_para_endEb
+                0x00000000       0x3c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperPKc
+                0x00000000       0x32 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperS2_
+                0x00000000       0x32 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperl
+                0x00000000       0x42 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_dataEmm
+                0x00000000       0xd4 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8getReplyEPcj
+                0x00000000       0x72 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10getSIMCCIDEPc
+                0x00000000       0x5c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7getIMEIEPc
+                0x00000000       0x4e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9GPSstatusEv
+                0x00000000       0x58 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA6getGPSEhPch
+                0x00000000       0x90 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA6getGPSEPfS0_S0_S0_S0_Pc
+                0x00000000      0x19a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperPcj
+                0x00000000       0x9c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperlj
+                0x00000000       0xb4 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperllj
+                0x00000000      0x104 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14getReplyQuotedEPK19__FlashStringHelperS2_j
+                0x00000000       0xc8 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendCheckReplyEPcS0_j
+                0x00000000       0x34 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14toggleChargingEb
+                0x00000000       0x20 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA13enableGPSNMEAEh
+                0x00000000       0x34 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10TCPconnectEPcj
+                0x00000000      0x14a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8TCPcloseEv
+                0x00000000       0x16 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12TCPconnectedEv
+                0x00000000       0x60 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_initEv
+                0x00000000       0x16 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9HTTP_termEv
+                0x00000000       0x16 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA13HTTP_POST_endEv
+                0x00000000        0x4 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12HTTP_GET_endEv
+                0x00000000        0x4 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendCheckReplyEPcPK19__FlashStringHelperj
+                0x00000000       0x34 Adafruit_FONA.o
+ .rodata        0x00000000       0x4a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9unlockSIMEPc
+                0x00000000       0x72 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7sendSMSEPcS0_
+                0x00000000      0x15a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9deleteSMSEh
+                0x00000000       0xa6 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8sendUSSDEPcS0_jPj
+                0x00000000      0x15e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperPcS2_j
+                0x00000000       0x38 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperlS2_j
+                0x00000000       0x40 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8powerOffEv
+                0x00000000       0x2e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA8HTTP_sslEb
+                0x00000000       0x34 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10HTTP_setupEPc
+                0x00000000       0x98 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperllS2_j
+                0x00000000       0x50 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA6setPWMEjh
+                0x00000000       0x5a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA20sendCheckReplyQuotedEPK19__FlashStringHelperS2_S2_j
+                0x00000000       0x38 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10enableGPRSEb
+                0x00000000      0x2b8 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10parseReplyEPK19__FlashStringHelperPjch
+                0x00000000       0x6a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7readSMSEhPcjPj
+                0x00000000      0x158 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9getGSMLocEPjPcj
+                0x00000000       0x8e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9getGSMLocEPfS0_
+                0x00000000       0xb6 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7TCPreadEPhh
+                0x00000000       0xfc Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12HTTP_readallEPj
+                0x00000000       0x36 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA11HTTP_actionEhPjS0_l
+                0x00000000       0x9e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14HTTP_GET_startEPcPjS1_
+                0x00000000       0xae Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_
+                0x00000000      0x13a Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA10parseReplyEPK19__FlashStringHelperPcch
+                0x00000000       0x96 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA16parseReplyQuotedEPK19__FlashStringHelperPcich
+                0x00000000       0xb8 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12getSMSSenderEhPci
+                0x00000000       0xe0 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14sendParseReplyEPK19__FlashStringHelperS2_Pjch
+                0x00000000       0x58 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14getBattVoltageEPj
+                0x00000000       0x1e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA14getBattPercentEPj
+                0x00000000       0x1e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA13getADCVoltageEPj
+                0x00000000       0x1c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA16getNetworkStatusEv
+                0x00000000       0x3e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA7getRSSIEv
+                0x00000000       0x3c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9getNumSMSEv
+                0x00000000       0x7e Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9enableGPSEb
+                0x00000000       0x82 Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA9GPRSstateEv
+                0x00000000       0x3c Adafruit_FONA.o
+ .text._ZN13Adafruit_FONA12TCPavailableEv
+                0x00000000       0x5c Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getReplyQuotedEPK19__FlashStringHelperS2_jE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getReplyQuotedEPK19__FlashStringHelperS2_jE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperlljE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperlljE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperljE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperljE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperPcjE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperPcjE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPcjE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPcjE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA11expectReplyEPK19__FlashStringHelperjE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_2
+                0x00000000        0x6 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_1
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_0
+                0x00000000        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_E3__c_1
+                0x00000000        0x6 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_E3__c_0
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_E3__c
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14HTTP_GET_startEPcPjS1_E3__c_0
+                0x00000000        0x6 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14HTTP_GET_startEPcPjS1_E3__c
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8HTTP_sslEbE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12HTTP_readallEPjE3__c_0
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12HTTP_readallEPjE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c_1
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c_0
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c
+                0x00000000        0xf Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c_2
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c_1
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c_0
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_3
+                0x00000000        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_2
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_1
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_0
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_termEvE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9HTTP_initEvE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c_2
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c_1
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c_0
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c
+                0x00000000        0xf Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12TCPavailableEvE3__c_1
+                0x00000000       0x11 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12TCPavailableEvE3__c
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12TCPavailableEvE3__c_0
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c_3
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c_2
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c_1
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c_0
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12TCPconnectedEvE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12TCPconnectedEvE3__c
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8TCPcloseEvE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_9
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_8
+                0x00000000        0x2 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_7
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_6
+                0x00000000       0x14 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_5
+                0x00000000        0x2 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_4
+                0x00000000        0x4 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_3
+                0x00000000       0x14 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_2
+                0x00000000        0xe Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_1
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_0
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getGSMLocEPjPcjE3__c_0
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getGSMLocEPjPcjE3__c
+                0x00000000       0x11 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9GPRSstateEvE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9GPRSstateEvE3__c_0
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_14
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_13
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_11
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_12
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_10
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_9
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_8
+                0x00000000       0x14 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_7
+                0x00000000       0x15 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_6
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_5
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_4
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_3
+                0x00000000       0x14 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_2
+                0x00000000       0x1e Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_1
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_0
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA13enableGPSNMEAEhE3__c_0
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA13enableGPSNMEAEhE3__c
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA6getGPSEhPchE3__c_0
+                0x00000000        0x5 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA6getGPSEhPchE3__c
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9GPSstatusEvE3__c_0
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9GPSstatusEvE3__c
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_2
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_1
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c
+                0x00000000        0xc Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_0
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8sendUSSDEPcS0_jPjE3__c_0
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8sendUSSDEPcS0_jPjE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9deleteSMSEhE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7sendSMSEPcS0_E3__c_1
+                0x00000000        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7sendSMSEPcS0_E3__c_0
+                0x00000000        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7sendSMSEPcS0_E3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_3
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_2
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_1
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_0
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_3
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_2
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_1
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_0
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_2
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_3
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_0
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_1
+                0x00000000        0x6 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA6setPWMEjhE3__c
+                0x00000000        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7getRSSIEvE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7getRSSIEvE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA16getNetworkStatusEvE3__c
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA16getNetworkStatusEvE3__c_0
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA7getIMEIEPcE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA10getSIMCCIDEPcE3__c
+                0x00000000        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA13getADCVoltageEPjE3__c
+                0x00000000        0x9 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA13getADCVoltageEPjE3__c_0
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getBattPercentEPjE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getBattPercentEPjE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getBattVoltageEPjE3__c
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14getBattVoltageEPjE3__c_0
+                0x00000000        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14toggleChargingEbE3__c_0
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA14toggleChargingEbE3__c
+                0x00000000        0xd Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8powerOffEvE3__c
+                0x00000000        0xa Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8powerOffEvE3__c_0
+                0x00000000       0x12 Adafruit_FONA.o
  .text          0x00000000        0x0 GpsManager.o
  .data          0x00000000        0x0 GpsManager.o
  .bss           0x00000000        0x0 GpsManager.o
- .text._ZN10GpsManager9gpsStatusEv
-                0x00000000        0x2 GpsManager.o
- .rodata.str1.1
-                0x00000000        0xf GpsManager.o
- .text._ZN10GpsManager10getGpsInfoER7GpsInfo
-                0x00000000       0xe2 GpsManager.o
+ .debug_line    0x00000000        0x0 GpsManager.o
+ .debug_str     0x00000000      0x15a GpsManager.o
+ .comment       0x00000000       0x31 GpsManager.o
  .text          0x00000000        0x0 GsmManager.o
  .data          0x00000000        0x0 GsmManager.o
  .bss           0x00000000        0x0 GsmManager.o
- .text._ZN10GsmManager5resetEv
-                0x00000000        0xc GsmManager.o
- .text._ZN10GsmManager14getBattPercentEPj
-                0x00000000       0x1c GsmManager.o
- .rodata        0x00000000       0x15 GsmManager.o
- .text._ZN10GsmManager10sendViaSmsEPKc
-                0x00000000       0x66 GsmManager.o
- .text._ZN10GsmManager16getNetworkStatusEv
-                0x00000000       0x12 GsmManager.o
- .text._ZN10GsmManager7getRSSIEv
-                0x00000000       0x12 GsmManager.o
- .text._ZN10GsmManager10getGsmInfoER7GsmInfo
-                0x00000000       0x24 GsmManager.o
- .text._ZN10GsmManager10enableGPRSEb
-                0x00000000        0x6 GsmManager.o
- .rodata.str1.1
-                0x00000000       0x23 GsmManager.o
- .text._ZN10GsmManager11sendViaGprsEPKc
-                0x00000000      0x184 GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_6
-                0x00000000        0xd GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_5
-                0x00000000        0xb GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_2
-                0x00000000        0xb GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_3
-                0x00000000        0x1 GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_4
-                0x00000000        0x1 GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_1
-                0x00000000        0xb GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c_0
-                0x00000000       0x1d GsmManager.o
- .progmem.data._ZZN10GsmManager11sendViaGprsEPKcE3__c
-                0x00000000       0x12 GsmManager.o
+ .debug_line    0x00000000        0x0 GsmManager.o
+ .debug_str     0x00000000      0x15a GsmManager.o
+ .comment       0x00000000       0x31 GsmManager.o
  .text          0x00000000        0x0 Helpers.o
  .data          0x00000000        0x0 Helpers.o
  .bss           0x00000000        0x0 Helpers.o
@@ -243,10 +614,16 @@ Discarded input sections
                 0x00000000        0x2 RmMemManager.o
  .text._ZN12RmMemManager16initialiseModuleEh
                 0x00000000       0x8e RmMemManager.o
- .text._ZN12RmMemManager18incrementBootCountEv
-                0x00000000       0x40 RmMemManager.o
+ .text._ZN12RmMemManager18getUCharFromMemoryEj
+                0x00000000       0x22 RmMemManager.o
  .text._ZN12RmMemManager17appendSensorEntryEP10SensorData
                 0x00000000       0x9e RmMemManager.o
+ .text._ZN12RmMemManager17getUIntFromMemoryEj
+                0x00000000       0x30 RmMemManager.o
+ .text._ZN12RmMemManager18getULongFromMemoryEj
+                0x00000000       0x44 RmMemManager.o
+ .text._ZN12RmMemManager17verifyBasicEepRomEv
+                0x00000000      0x254 RmMemManager.o
  .progmem.data._ZZN12RmMemManager17appendSensorEntryEP10SensorDataE3__c_0
                 0x00000000       0x11 RmMemManager.o
  .progmem.data._ZZN12RmMemManager17appendSensorEntryEP10SensorDataE3__c
@@ -255,6 +632,24 @@ Discarded input sections
                 0x00000000       0x13 RmMemManager.o
  .progmem.data._ZZN12RmMemManager23runExtendedShow100BytesEvE3__c
                 0x00000000       0x16 RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_7
+                0x00000000        0x8 RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_6
+                0x00000000        0x9 RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_5
+                0x00000000        0x7 RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_4
+                0x00000000       0x13 RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_3
+                0x00000000        0xc RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_2
+                0x00000000        0xd RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_1
+                0x00000000        0xb RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_0
+                0x00000000        0xc RmMemManager.o
+ .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c
+                0x00000000       0x12 RmMemManager.o
  .progmem.data._ZZN12RmMemManager16initialiseModuleEhE3__c
                 0x00000000        0xc RmMemManager.o
  .bss._flashCallCount
@@ -276,354 +671,6 @@ Discarded input sections
  .bss           0x00000000        0x0 SensorManager.o
  .text._ZN13SensorManager7readVccEv
                 0x00000000       0x66 SensorManager.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .group         0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text          0x00000000        0x0 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .data          0x00000000        0x0 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .bss           0x00000000        0x0 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA4typeEv
-                0x00000000        0x6 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA22setGPRSNetworkSettingsEPK19__FlashStringHelperS2_S2_
-                0x00000000       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12setUserAgentEPK19__FlashStringHelper
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA16setHTTPSRedirectEb
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperb
-                0x00000000       0x4e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7readRawEj
-                0x00000000       0x98 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7TCPsendEPch
-                0x00000000       0x9a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA11expectReplyEPK19__FlashStringHelperj
-                0x00000000       0x32 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA13HTTP_para_endEb
-                0x00000000       0x3c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperPKc
-                0x00000000       0x32 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperS2_
-                0x00000000       0x32 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_paraEPK19__FlashStringHelperl
-                0x00000000       0x42 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_dataEmm
-                0x00000000       0x92 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8getReplyEPcj
-                0x00000000       0x3c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10getSIMCCIDEPc
-                0x00000000       0x5c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7getIMEIEPc
-                0x00000000       0x4e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9GPSstatusEv
-                0x00000000       0x58 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA6getGPSEhPch
-                0x00000000       0x90 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA6getGPSEPfS0_S0_S0_S0_Pc
-                0x00000000      0x19a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperPcj
-                0x00000000       0x5c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperlj
-                0x00000000       0x6e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperllj
-                0x00000000       0xc4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14getReplyQuotedEPK19__FlashStringHelperS2_j
-                0x00000000       0x6c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendCheckReplyEPcS0_j
-                0x00000000       0x34 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14toggleChargingEb
-                0x00000000       0x20 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10TCPconnectEPcj
-                0x00000000      0x10e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8TCPcloseEv
-                0x00000000       0x16 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12TCPconnectedEv
-                0x00000000       0x4a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_initEv
-                0x00000000       0x16 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9HTTP_termEv
-                0x00000000       0x16 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA13HTTP_POST_endEv
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12HTTP_GET_endEv
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendCheckReplyEPcPK19__FlashStringHelperj
-                0x00000000       0x34 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .rodata        0x00000000       0x4a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9unlockSIMEPc
-                0x00000000       0x72 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7sendSMSEPcS0_
-                0x00000000      0x15a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9deleteSMSEh
-                0x00000000       0xa6 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8sendUSSDEPcS0_jPj
-                0x00000000      0x15e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA13enableGPSNMEAEh
-                0x00000000       0x9c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperPcS2_j
-                0x00000000       0x38 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperlS2_j
-                0x00000000       0x40 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8powerOffEv
-                0x00000000       0x2e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA8HTTP_sslEb
-                0x00000000       0x34 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10HTTP_setupEPc
-                0x00000000       0x98 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperllS2_j
-                0x00000000       0x50 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA6setPWMEjh
-                0x00000000       0x5a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA20sendCheckReplyQuotedEPK19__FlashStringHelperS2_S2_j
-                0x00000000       0x38 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10enableGPRSEb
-                0x00000000      0x232 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10parseReplyEPK19__FlashStringHelperPjch
-                0x00000000       0x6a src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7readSMSEhPcjPj
-                0x00000000      0x11e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9getGSMLocEPjPcj
-                0x00000000       0x8e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9getGSMLocEPfS0_
-                0x00000000       0xb6 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7TCPreadEPhh
-                0x00000000       0xa2 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12HTTP_readallEPj
-                0x00000000       0x36 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA11HTTP_actionEhPjS0_l
-                0x00000000       0x9e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14HTTP_GET_startEPcPjS1_
-                0x00000000       0x72 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_
-                0x00000000       0xfa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA10parseReplyEPK19__FlashStringHelperPcch
-                0x00000000       0x96 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA16parseReplyQuotedEPK19__FlashStringHelperPcich
-                0x00000000       0xb8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12getSMSSenderEhPci
-                0x00000000       0xb8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14sendParseReplyEPK19__FlashStringHelperS2_Pjch
-                0x00000000       0x58 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14getBattVoltageEPj
-                0x00000000       0x1e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA14getBattPercentEPj
-                0x00000000       0x1e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA13getADCVoltageEPj
-                0x00000000       0x1c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA16getNetworkStatusEv
-                0x00000000       0x3e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA7getRSSIEv
-                0x00000000       0x3c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9getNumSMSEv
-                0x00000000       0x7e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9enableGPSEb
-                0x00000000       0xb8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA9GPRSstateEv
-                0x00000000       0x3c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .text._ZN13Adafruit_FONA12TCPavailableEv
-                0x00000000       0x40 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_2
-                0x00000000        0x6 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_1
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c_0
-                0x00000000        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10HTTP_setupEPcE3__c
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA15HTTP_POST_startEPcPK19__FlashStringHelperPKhjPjS6_E3__c
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8HTTP_sslEbE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12HTTP_readallEPjE3__c_0
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12HTTP_readallEPjE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c_1
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c_0
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA11HTTP_actionEhPjS0_lE3__c
-                0x00000000        0xf src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c_0
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9HTTP_dataEmmE3__c
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_1
-                0x00000000        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c_0
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA15HTTP_para_startEPK19__FlashStringHelperbE3__c
-                0x00000000        0xe src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9HTTP_termEvE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9HTTP_initEvE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c_0
-                0x00000000        0xe src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7TCPreadEPhhE3__c
-                0x00000000        0xf src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12TCPavailableEvE3__c
-                0x00000000        0xe src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12TCPavailableEvE3__c_0
-                0x00000000        0xe src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7TCPsendEPchE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12TCPconnectedEvE3__c
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8TCPcloseEvE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_6
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_5
-                0x00000000        0x2 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_4
-                0x00000000        0x4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_3
-                0x00000000       0x14 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_2
-                0x00000000        0xe src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_1
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10TCPconnectEPcjE3__c_0
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getGSMLocEPjPcjE3__c_0
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getGSMLocEPjPcjE3__c
-                0x00000000       0x11 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9GPRSstateEvE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9GPRSstateEvE3__c_0
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_12
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_11
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_9
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_10
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_8
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_7
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_6
-                0x00000000       0x14 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_5
-                0x00000000       0x15 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_4
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_3
-                0x00000000       0x14 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_2
-                0x00000000       0x1e src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_1
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10enableGPRSEbE3__c_0
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA13enableGPSNMEAEhE3__c_0
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA13enableGPSNMEAEhE3__c
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA6getGPSEhPchE3__c_0
-                0x00000000        0x5 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA6getGPSEhPchE3__c
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9GPSstatusEvE3__c_0
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9GPSstatusEvE3__c
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_6
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_5
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_4
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_3
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_1
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_2
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c
-                0x00000000        0xc src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9enableGPSEbE3__c_0
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8sendUSSDEPcS0_jPjE3__c_0
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8sendUSSDEPcS0_jPjE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9deleteSMSEhE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7sendSMSEPcS0_E3__c_0
-                0x00000000        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7sendSMSEPcS0_E3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_2
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_1
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c_0
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA12getSMSSenderEhPciE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_2
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_1
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c_0
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7readSMSEhPcjPjE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_2
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_3
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_0
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c_1
-                0x00000000        0x6 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA9getNumSMSEvE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA6setPWMEjhE3__c
-                0x00000000        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7getRSSIEvE3__c
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7getRSSIEvE3__c_0
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA16getNetworkStatusEvE3__c
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA16getNetworkStatusEvE3__c_0
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA7getIMEIEPcE3__c
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA10getSIMCCIDEPcE3__c
-                0x00000000        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA13getADCVoltageEPjE3__c
-                0x00000000        0x9 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA13getADCVoltageEPjE3__c_0
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14getBattPercentEPjE3__c
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14getBattPercentEPjE3__c_0
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14getBattVoltageEPjE3__c
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14getBattVoltageEPjE3__c_0
-                0x00000000        0x7 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14toggleChargingEbE3__c_0
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA14toggleChargingEbE3__c
-                0x00000000        0xd src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8powerOffEvE3__c
-                0x00000000        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA8powerOffEvE3__c_0
-                0x00000000       0x12 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
  .text          0x00000000        0x0 src/libraries/Wire/src/utility/twi.o
  .data          0x00000000        0x0 src/libraries/Wire/src/utility/twi.o
  .bss           0x00000000        0x0 src/libraries/Wire/src/utility/twi.o
@@ -664,8 +711,8 @@ Discarded input sections
                 0x00000000        0xc ExtendedTests.o
  .progmem.data._ZZN13ExtendedTests18runExtendedMemTestE12RmMemManager13SensorManagerE3__c
                 0x00000000       0x11 ExtendedTests.o
- .debug_info    0x00000000      0x909 ExtendedTests.o
- .debug_abbrev  0x00000000      0x25c ExtendedTests.o
+ .debug_info    0x00000000      0x90d ExtendedTests.o
+ .debug_abbrev  0x00000000      0x26b ExtendedTests.o
  .debug_loc     0x00000000       0x26 ExtendedTests.o
  .debug_aranges
                 0x00000000       0x28 ExtendedTests.o
@@ -715,22 +762,14 @@ Discarded input sections
  .bss           0x00000000        0x0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print5printERK6String
                 0x00000000       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .text._ZN5Print5printEc
-                0x00000000        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print5printERK9Printable
                 0x00000000       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print7printlnERK6String
-                0x00000000       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .text._ZN5Print7printlnEc
                 0x00000000       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print7printlnERK9Printable
                 0x00000000       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print7printlnEmi
                 0x00000000       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .text._ZN5Print5printEli
-                0x00000000       0x90 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .text._ZN5Print5printEii
-                0x00000000        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print7printlnEii
                 0x00000000       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .text._ZN5Print7printlnEli
@@ -1021,22 +1060,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ctors.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ctors.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.div
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
- .text.libgcc.fixed
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
@@ -1047,6 +1070,8 @@ Discarded input sections
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
+ .text.libgcc.builtins
+                0x00000000       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.fmul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.fixed
@@ -1129,11 +1154,6 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp.o)
  .text.avr-libc
                 0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcpy.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcpy.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcpy.o)
- .text.avr-libc
-                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcpy.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strncpy.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strncpy.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strncpy.o)
@@ -1262,13 +1282,13 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+LOAD Adafruit_FONA.o
 LOAD GpsManager.o
 LOAD GsmManager.o
 LOAD Helpers.o
 LOAD Main_SignalLogging.o
 LOAD RmMemManager.o
 LOAD SensorManager.o
-LOAD src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
 LOAD src/libraries/Wire/src/utility/twi.o
 LOAD src/libraries/Wire/src/Wire.o
 LOAD ExtendedTests.o
@@ -1385,7 +1405,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x2a04
+.text           0x00000000     0x2530
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -1401,567 +1421,520 @@ END GROUP
  *libprintf_flt.a:*(.progmem.data)
  *libc.a:*(.progmem.data)
  *(.progmem*)
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperjE3__c_0
+                0x00000068        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperjE3__c
+                0x0000006f        0x7 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8readlineEjbE3__c_0
+                0x00000076        0x8 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA8readlineEjbE3__c
+                0x0000007e        0x6 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_10
+                0x00000084        0xb Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_9
+                0x0000008f        0x5 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_8
+                0x00000094        0x5 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_7
+                0x00000099       0x1f Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_6
+                0x000000b8        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_5
+                0x000000bb        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_4
+                0x000000be        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_2
+                0x000000c1        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_3
+                0x000000c4        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_1
+                0x000000c7        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c_0
+                0x000000ca       0x15 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONA5beginEhhE3__c
+                0x000000df       0x21 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONAC4EabE3__c_1
+                0x00000100        0x3 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONAC4EabE3__c_0
+                0x00000103        0x5 Adafruit_FONA.o
+ .progmem.data._ZZN13Adafruit_FONAC4EabE3__c
+                0x00000108        0x8 Adafruit_FONA.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_5
-                0x00000068        0x6 Helpers.o
+                0x00000110        0x6 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_4
-                0x0000006e        0x4 Helpers.o
+                0x00000116        0x4 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_3
-                0x00000072        0x9 Helpers.o
+                0x0000011a        0x9 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_2
-                0x0000007b        0x4 Helpers.o
+                0x00000123        0x4 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_1
-                0x0000007f        0x6 Helpers.o
+                0x00000127        0x6 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c_0
-                0x00000085        0x4 Helpers.o
+                0x0000012d        0x4 Helpers.o
  .progmem.data._ZZN7Helpers15printSensorDataEP10SensorDataE3__c
-                0x00000089        0x8 Helpers.o
+                0x00000131        0x8 Helpers.o
  .progmem.data._ZZ4loopE3__c
-                0x00000091        0xa Main_SignalLogging.o
+                0x00000139        0xa Main_SignalLogging.o
  .progmem.data._ZZ8sendDatavE3__c
-                0x0000009b       0x10 Main_SignalLogging.o
+                0x00000143       0x10 Main_SignalLogging.o
+ .progmem.data._ZZ5setupE3__c_0
+                0x00000153        0xb Main_SignalLogging.o
  .progmem.data._ZZ5setupE3__c
-                0x000000ab        0xc Main_SignalLogging.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_7
-                0x000000b7        0x8 RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_6
-                0x000000bf        0x9 RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_5
-                0x000000c8        0x7 RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_4
-                0x000000cf       0x13 RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_3
-                0x000000e2        0xc RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_2
-                0x000000ee        0xd RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_1
-                0x000000fb        0xb RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c_0
-                0x00000106        0xc RmMemManager.o
- .progmem.data._ZZN12RmMemManager17verifyBasicEepRomEvE3__c
-                0x00000112       0x12 RmMemManager.o
+                0x0000015e        0xc Main_SignalLogging.o
  .progmem.data._ZZN13SensorManager8readDataEP10SensorDataE3__c
-                0x00000124       0x13 SensorManager.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_13
-                0x00000137        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_12
-                0x0000013f       0x10 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_11
-                0x0000014f       0x10 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_10
-                0x0000015f        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_9
-                0x0000016a        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_8
-                0x00000175        0xb src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_7
-                0x00000180        0xa src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_6
-                0x0000018a        0x5 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_5
-                0x0000018f        0x5 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_4
-                0x00000194        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_3
-                0x00000197        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_2
-                0x0000019a        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_0
-                0x0000019d        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c_1
-                0x000001a0        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONA5beginER6StreamE3__c
-                0x000001a3        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONAC4EaE3__c_1
-                0x000001a6        0x3 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONAC4EaE3__c_0
-                0x000001a9        0x5 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .progmem.data._ZZN13Adafruit_FONAC4EaE3__c
-                0x000001ae        0x8 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
+                0x0000016a       0x13 SensorManager.o
  .progmem.data.digital_pin_to_timer_PGM
-                0x000001b6       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x000001b6                digital_pin_to_timer_PGM
+                0x0000017d       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x0000017d                digital_pin_to_timer_PGM
  .progmem.data.digital_pin_to_bit_mask_PGM
-                0x000001ca       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x000001ca                digital_pin_to_bit_mask_PGM
+                0x00000191       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x00000191                digital_pin_to_bit_mask_PGM
  .progmem.data.digital_pin_to_port_PGM
-                0x000001de       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x000001de                digital_pin_to_port_PGM
+                0x000001a5       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x000001a5                digital_pin_to_port_PGM
  .progmem.data.port_to_input_PGM
-                0x000001f2        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x000001f2                port_to_input_PGM
+                0x000001b9        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x000001b9                port_to_input_PGM
  .progmem.data.port_to_output_PGM
-                0x000001fc        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x000001fc                port_to_output_PGM
+                0x000001c3        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x000001c3                port_to_output_PGM
  .progmem.data.port_to_mode_PGM
-                0x00000206        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x00000206                port_to_mode_PGM
-                0x00000210                . = ALIGN (0x2)
+                0x000001cd        0xa C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x000001cd                port_to_mode_PGM
+                0x000001d8                . = ALIGN (0x2)
+ *fill*         0x000001d7        0x1 
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x00000210                __ctors_start = .
+                0x000001d8                __ctors_start = .
  *(.ctors)
- .ctors         0x00000210        0x2 Main_SignalLogging.o
- .ctors         0x00000212        0x2 src/libraries/Wire/src/Wire.o
- .ctors         0x00000214        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                0x00000216                __ctors_end = .
-                0x00000216                __dtors_start = .
+ .ctors         0x000001d8        0x2 Main_SignalLogging.o
+ .ctors         0x000001da        0x2 src/libraries/Wire/src/Wire.o
+ .ctors         0x000001dc        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x000001de                __ctors_end = .
+                0x000001de                __dtors_start = .
  *(.dtors)
- .dtors         0x00000216        0x2 Main_SignalLogging.o
-                0x00000218                __dtors_end = .
+                0x000001de                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000218        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
-                0x00000218                __init
+ .init0         0x000001de        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+                0x000001de                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000218        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init2         0x000001de        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x00000224       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
-                0x00000224                __do_copy_data
- .init4         0x0000023a       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                0x0000023a                __do_clear_bss
+ .init4         0x000001ea       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
+                0x000001ea                __do_copy_data
+ .init4         0x00000200       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
+                0x00000200                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
  *(.init6)
- .init6         0x0000024a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ctors.o)
-                0x0000024a                __do_global_ctors
+ .init6         0x00000210       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ctors.o)
+                0x00000210                __do_global_ctors
  *(.init6)
  *(.init7)
  *(.init7)
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000260        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init9         0x00000226        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init9)
  *(.text)
- .text          0x00000268        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
-                0x00000268                __vector_22
-                0x00000268                __vector_1
-                0x00000268                __vector_12
-                0x00000268                __bad_interrupt
-                0x00000268                __vector_6
-                0x00000268                __vector_23
-                0x00000268                __vector_25
-                0x00000268                __vector_11
-                0x00000268                __vector_13
-                0x00000268                __vector_17
-                0x00000268                __vector_7
-                0x00000268                __vector_9
-                0x00000268                __vector_2
-                0x00000268                __vector_21
-                0x00000268                __vector_15
-                0x00000268                __vector_8
-                0x00000268                __vector_14
-                0x00000268                __vector_10
-                0x00000268                __vector_20
-                0x0000026c                . = ALIGN (0x2)
+ .text          0x0000022e        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+                0x0000022e                __vector_22
+                0x0000022e                __vector_1
+                0x0000022e                __vector_12
+                0x0000022e                __bad_interrupt
+                0x0000022e                __vector_6
+                0x0000022e                __vector_23
+                0x0000022e                __vector_25
+                0x0000022e                __vector_11
+                0x0000022e                __vector_13
+                0x0000022e                __vector_17
+                0x0000022e                __vector_7
+                0x0000022e                __vector_9
+                0x0000022e                __vector_2
+                0x0000022e                __vector_21
+                0x0000022e                __vector_15
+                0x0000022e                __vector_8
+                0x0000022e                __vector_14
+                0x0000022e                __vector_10
+                0x0000022e                __vector_20
+                0x00000232                . = ALIGN (0x2)
  *(.text.*)
- .text._ZN10GpsManagerC2Eh
-                0x0000026c       0x1e GpsManager.o
-                0x0000026c                _ZN10GpsManagerC2Eh
-                0x0000026c                _ZN10GpsManagerC1Eh
- .text._ZN10GpsManagerD2Ev
-                0x0000028a        0x2 GpsManager.o
-                0x0000028a                _ZN10GpsManagerD2Ev
-                0x0000028a                _ZN10GpsManagerD1Ev
- .text._ZN10GpsManager7setFonaER13Adafruit_FONA
-                0x0000028c       0xf6 GpsManager.o
-                0x0000028c                _ZN10GpsManager7setFonaER13Adafruit_FONA
- .text._ZN10GpsManager9toggleGpsEb
-                0x00000382       0x12 GpsManager.o
-                0x00000382                _ZN10GpsManager9toggleGpsEb
- .text._ZN10GsmManagerC2Eh
-                0x00000394        0xc GsmManager.o
-                0x00000394                _ZN10GsmManagerC1Eh
-                0x00000394                _ZN10GsmManagerC2Eh
- .text._ZN10GsmManagerD2Ev
-                0x000003a0        0x2 GsmManager.o
-                0x000003a0                _ZN10GsmManagerD2Ev
-                0x000003a0                _ZN10GsmManagerD1Ev
- .text._ZN10GsmManager7setFonaER13Adafruit_FONA
-                0x000003a2       0xf6 GsmManager.o
-                0x000003a2                _ZN10GsmManager7setFonaER13Adafruit_FONA
- .text._ZN10GsmManager5beginEv
-                0x00000498       0x72 GsmManager.o
-                0x00000498                _ZN10GsmManager5beginEv
- .text._ZN7Helpers15printSensorDataEP10SensorData
-                0x0000050a       0x9e Helpers.o
-                0x0000050a                _ZN7Helpers15printSensorDataEP10SensorData
- .text._Z14initSubsystemsv
-                0x000005a8       0x30 Main_SignalLogging.o
-                0x000005a8                _Z14initSubsystemsv
- .text._Z15switchOffSystemv
-                0x000005d8       0x20 Main_SignalLogging.o
-                0x000005d8                _Z15switchOffSystemv
- .text.setup    0x000005f8       0x52 Main_SignalLogging.o
-                0x000005f8                setup
- .text._Z12takeReadingsv
-                0x0000064a       0x3a Main_SignalLogging.o
-                0x0000064a                _Z12takeReadingsv
- .text._Z8sendDatav
-                0x00000684       0x10 Main_SignalLogging.o
-                0x00000684                _Z8sendDatav
- .text.loop     0x00000694       0x88 Main_SignalLogging.o
-                0x00000694                loop
- .text.startup._GLOBAL__sub_I_fona
-                0x0000071c       0x32 Main_SignalLogging.o
- .text.exit._GLOBAL__sub_D_fona
-                0x0000074e       0x10 Main_SignalLogging.o
- .text._ZN7TwoWire5writeEi
-                0x0000075e        0xe RmMemManager.o
-                0x0000075e                _ZN7TwoWire5writeEi
- .text._ZN12RmMemManagerC2Eb
-                0x0000076c       0x12 RmMemManager.o
-                0x0000076c                _ZN12RmMemManagerC1Eb
-                0x0000076c                _ZN12RmMemManagerC2Eb
- .text._Z13internalWritejPhh
-                0x0000077e       0x72 RmMemManager.o
-                0x0000077e                _Z13internalWritejPhh
- .text._Z12internalReadjPhh
-                0x000007f0       0x86 RmMemManager.o
-                0x000007f0                _Z12internalReadjPhh
- .text._ZN12RmMemManager18getUCharFromMemoryEj
-                0x00000876       0x22 RmMemManager.o
-                0x00000876                _ZN12RmMemManager18getUCharFromMemoryEj
- .text._ZN12RmMemManager19getUShortFromMemoryEj
-                0x00000898       0x26 RmMemManager.o
-                0x00000898                _ZN12RmMemManager19getUShortFromMemoryEj
- .text._ZN12RmMemManager17getUIntFromMemoryEj
-                0x000008be       0x30 RmMemManager.o
-                0x000008be                _ZN12RmMemManager17getUIntFromMemoryEj
- .text._ZN12RmMemManager18getULongFromMemoryEj
-                0x000008ee       0x44 RmMemManager.o
-                0x000008ee                _ZN12RmMemManager18getULongFromMemoryEj
- .text._ZN12RmMemManager17verifyBasicEepRomEv
-                0x00000932      0x254 RmMemManager.o
-                0x00000932                _ZN12RmMemManager17verifyBasicEepRomEv
- .text._ZN13SensorManagerC2Eb
-                0x00000b86        0x6 SensorManager.o
-                0x00000b86                _ZN13SensorManagerC1Eb
-                0x00000b86                _ZN13SensorManagerC2Eb
- .text._ZN13SensorManager16takeSampleAnalogEh
-                0x00000b8c       0x14 SensorManager.o
-                0x00000b8c                _ZN13SensorManager16takeSampleAnalogEh
- .text._Z11getMockDataP10SensorData
-                0x00000ba0       0x40 SensorManager.o
-                0x00000ba0                _Z11getMockDataP10SensorData
- .text._ZN13SensorManager8readDataEP10SensorData
-                0x00000be0       0x84 SensorManager.o
-                0x00000be0                _ZN13SensorManager8readDataEP10SensorData
  .text._ZN13Adafruit_FONA9availableEv
-                0x00000c64       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000c64                _ZN13Adafruit_FONA9availableEv
+                0x00000232       0x18 Adafruit_FONA.o
+                0x00000232                _ZN13Adafruit_FONA9availableEv
  .text._ZN13Adafruit_FONA5writeEh
-                0x00000c7c       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000c7c                _ZN13Adafruit_FONA5writeEh
+                0x0000024a       0x18 Adafruit_FONA.o
+                0x0000024a                _ZN13Adafruit_FONA5writeEh
  .text._ZN13Adafruit_FONA4readEv
-                0x00000c94       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000c94                _ZN13Adafruit_FONA4readEv
+                0x00000262       0x18 Adafruit_FONA.o
+                0x00000262                _ZN13Adafruit_FONA4readEv
  .text._ZN13Adafruit_FONA4peekEv
-                0x00000cac       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000cac                _ZN13Adafruit_FONA4peekEv
+                0x0000027a       0x18 Adafruit_FONA.o
+                0x0000027a                _ZN13Adafruit_FONA4peekEv
  .text._ZN13Adafruit_FONA5flushEv
-                0x00000cc4       0x18 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000cc4                _ZN13Adafruit_FONA5flushEv
- .text._ZN13Adafruit_FONAC2Ea
-                0x00000cdc       0x64 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000cdc                _ZN13Adafruit_FONAC1Ea
-                0x00000cdc                _ZN13Adafruit_FONAC2Ea
+                0x00000292       0x18 Adafruit_FONA.o
+                0x00000292                _ZN13Adafruit_FONA5flushEv
+ .text._ZN13Adafruit_FONAC2Eab
+                0x000002aa       0x6a Adafruit_FONA.o
+                0x000002aa                _ZN13Adafruit_FONAC2Eab
+                0x000002aa                _ZN13Adafruit_FONAC1Eab
  .text._ZN13Adafruit_FONA10flushInputEv
-                0x00000d40       0x58 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000d40                _ZN13Adafruit_FONA10flushInputEv
+                0x00000314       0x58 Adafruit_FONA.o
+                0x00000314                _ZN13Adafruit_FONA10flushInputEv
  .text._ZN13Adafruit_FONA8readlineEjb
-                0x00000d98       0xb4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000d98                _ZN13Adafruit_FONA8readlineEjb
+                0x0000036c       0xfc Adafruit_FONA.o
+                0x0000036c                _ZN13Adafruit_FONA8readlineEjb
  .text._ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperj
-                0x00000e4c       0x3c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000e4c                _ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperj
+                0x00000468       0x72 Adafruit_FONA.o
+                0x00000468                _ZN13Adafruit_FONA8getReplyEPK19__FlashStringHelperj
  .text._ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperS2_j
-                0x00000e88       0x34 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000e88                _ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperS2_j
- .text._ZN13Adafruit_FONA5beginER6Stream
-                0x00000ebc      0x288 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00000ebc                _ZN13Adafruit_FONA5beginER6Stream
+                0x000004da       0x34 Adafruit_FONA.o
+                0x000004da                _ZN13Adafruit_FONA14sendCheckReplyEPK19__FlashStringHelperS2_j
+ .text._ZN13Adafruit_FONA5beginEhh
+                0x0000050e      0x232 Adafruit_FONA.o
+                0x0000050e                _ZN13Adafruit_FONA5beginEhh
+ .text._ZN7Helpers15printSensorDataEP10SensorData
+                0x00000740       0x9e Helpers.o
+                0x00000740                _ZN7Helpers15printSensorDataEP10SensorData
+ .text._Z14initSubsystemsv
+                0x000007de        0xc Main_SignalLogging.o
+                0x000007de                _Z14initSubsystemsv
+ .text.setup    0x000007ea       0x9a Main_SignalLogging.o
+                0x000007ea                setup
+ .text._Z15switchOffSystemv
+                0x00000884       0x20 Main_SignalLogging.o
+                0x00000884                _Z15switchOffSystemv
+ .text._Z12takeReadingsv
+                0x000008a4       0x3a Main_SignalLogging.o
+                0x000008a4                _Z12takeReadingsv
+ .text._Z8sendDatav
+                0x000008de       0x10 Main_SignalLogging.o
+                0x000008de                _Z8sendDatav
+ .text.loop     0x000008ee       0x88 Main_SignalLogging.o
+                0x000008ee                loop
+ .text.startup._GLOBAL__sub_I_fona
+                0x00000976       0x20 Main_SignalLogging.o
+ .text._ZN7TwoWire5writeEi
+                0x00000996        0xe RmMemManager.o
+                0x00000996                _ZN7TwoWire5writeEi
+ .text._ZN12RmMemManagerC2Eb
+                0x000009a4       0x12 RmMemManager.o
+                0x000009a4                _ZN12RmMemManagerC1Eb
+                0x000009a4                _ZN12RmMemManagerC2Eb
+ .text._Z13internalWritejPhh
+                0x000009b6       0x72 RmMemManager.o
+                0x000009b6                _Z13internalWritejPhh
+ .text._Z12internalReadjPhh
+                0x00000a28       0x86 RmMemManager.o
+                0x00000a28                _Z12internalReadjPhh
+ .text._ZN12RmMemManager19getUShortFromMemoryEj
+                0x00000aae       0x26 RmMemManager.o
+                0x00000aae                _ZN12RmMemManager19getUShortFromMemoryEj
+ .text._ZN12RmMemManager18incrementBootCountEv
+                0x00000ad4       0x40 RmMemManager.o
+                0x00000ad4                _ZN12RmMemManager18incrementBootCountEv
+ .text._ZN13SensorManagerC2Eb
+                0x00000b14        0x6 SensorManager.o
+                0x00000b14                _ZN13SensorManagerC1Eb
+                0x00000b14                _ZN13SensorManagerC2Eb
+ .text._ZN13SensorManager16takeSampleAnalogEh
+                0x00000b1a       0x14 SensorManager.o
+                0x00000b1a                _ZN13SensorManager16takeSampleAnalogEh
+ .text._Z11getMockDataP10SensorData
+                0x00000b2e       0x40 SensorManager.o
+                0x00000b2e                _Z11getMockDataP10SensorData
+ .text._ZN13SensorManager8readDataEP10SensorData
+                0x00000b6e       0x84 SensorManager.o
+                0x00000b6e                _ZN13SensorManager8readDataEP10SensorData
  .text.twi_init
-                0x00001144       0x3c src/libraries/Wire/src/utility/twi.o
-                0x00001144                twi_init
+                0x00000bf2       0x3c src/libraries/Wire/src/utility/twi.o
+                0x00000bf2                twi_init
  .text.twi_readFrom
-                0x00001180       0x90 src/libraries/Wire/src/utility/twi.o
-                0x00001180                twi_readFrom
+                0x00000c2e       0x90 src/libraries/Wire/src/utility/twi.o
+                0x00000c2e                twi_readFrom
  .text.twi_writeTo
-                0x00001210       0xac src/libraries/Wire/src/utility/twi.o
-                0x00001210                twi_writeTo
+                0x00000cbe       0xac src/libraries/Wire/src/utility/twi.o
+                0x00000cbe                twi_writeTo
  .text.twi_transmit
-                0x000012bc       0x50 src/libraries/Wire/src/utility/twi.o
-                0x000012bc                twi_transmit
+                0x00000d6a       0x50 src/libraries/Wire/src/utility/twi.o
+                0x00000d6a                twi_transmit
  .text.twi_attachSlaveRxEvent
-                0x0000130c        0xa src/libraries/Wire/src/utility/twi.o
-                0x0000130c                twi_attachSlaveRxEvent
+                0x00000dba        0xa src/libraries/Wire/src/utility/twi.o
+                0x00000dba                twi_attachSlaveRxEvent
  .text.twi_attachSlaveTxEvent
-                0x00001316        0xa src/libraries/Wire/src/utility/twi.o
-                0x00001316                twi_attachSlaveTxEvent
+                0x00000dc4        0xa src/libraries/Wire/src/utility/twi.o
+                0x00000dc4                twi_attachSlaveTxEvent
  .text.twi_stop
-                0x00001320       0x14 src/libraries/Wire/src/utility/twi.o
-                0x00001320                twi_stop
+                0x00000dce       0x14 src/libraries/Wire/src/utility/twi.o
+                0x00000dce                twi_stop
  .text.twi_releaseBus
-                0x00001334        0xc src/libraries/Wire/src/utility/twi.o
-                0x00001334                twi_releaseBus
+                0x00000de2        0xc src/libraries/Wire/src/utility/twi.o
+                0x00000de2                twi_releaseBus
  .text.__vector_24
-                0x00001340      0x25a src/libraries/Wire/src/utility/twi.o
-                0x00001340                __vector_24
+                0x00000dee      0x25a src/libraries/Wire/src/utility/twi.o
+                0x00000dee                __vector_24
  .text._ZN7TwoWire9availableEv
-                0x0000159a       0x10 src/libraries/Wire/src/Wire.o
-                0x0000159a                _ZN7TwoWire9availableEv
+                0x00001048       0x10 src/libraries/Wire/src/Wire.o
+                0x00001048                _ZN7TwoWire9availableEv
  .text._ZN7TwoWire4readEv
-                0x000015aa       0x28 src/libraries/Wire/src/Wire.o
-                0x000015aa                _ZN7TwoWire4readEv
+                0x00001058       0x28 src/libraries/Wire/src/Wire.o
+                0x00001058                _ZN7TwoWire4readEv
  .text._ZN7TwoWire4peekEv
-                0x000015d2       0x1e src/libraries/Wire/src/Wire.o
-                0x000015d2                _ZN7TwoWire4peekEv
+                0x00001080       0x1e src/libraries/Wire/src/Wire.o
+                0x00001080                _ZN7TwoWire4peekEv
  .text._ZN7TwoWire5flushEv
-                0x000015f0        0x2 src/libraries/Wire/src/Wire.o
-                0x000015f0                _ZN7TwoWire5flushEv
+                0x0000109e        0x2 src/libraries/Wire/src/Wire.o
+                0x0000109e                _ZN7TwoWire5flushEv
  .text._ZN7TwoWire16onReceiveServiceEPhi
-                0x000015f2       0x54 src/libraries/Wire/src/Wire.o
-                0x000015f2                _ZN7TwoWire16onReceiveServiceEPhi
+                0x000010a0       0x54 src/libraries/Wire/src/Wire.o
+                0x000010a0                _ZN7TwoWire16onReceiveServiceEPhi
  .text._ZN7TwoWire16onRequestServiceEv
-                0x00001646       0x18 src/libraries/Wire/src/Wire.o
-                0x00001646                _ZN7TwoWire16onRequestServiceEv
+                0x000010f4       0x18 src/libraries/Wire/src/Wire.o
+                0x000010f4                _ZN7TwoWire16onRequestServiceEv
  .text._ZN7TwoWire5writeEPKhj
-                0x0000165e       0x5a src/libraries/Wire/src/Wire.o
-                0x0000165e                _ZN7TwoWire5writeEPKhj
+                0x0000110c       0x5a src/libraries/Wire/src/Wire.o
+                0x0000110c                _ZN7TwoWire5writeEPKhj
  .text._ZN7TwoWire5writeEh
-                0x000016b8       0x5e src/libraries/Wire/src/Wire.o
-                0x000016b8                _ZN7TwoWire5writeEh
+                0x00001166       0x5e src/libraries/Wire/src/Wire.o
+                0x00001166                _ZN7TwoWire5writeEh
  .text._ZN7TwoWireC2Ev
-                0x00001716       0x20 src/libraries/Wire/src/Wire.o
-                0x00001716                _ZN7TwoWireC1Ev
-                0x00001716                _ZN7TwoWireC2Ev
+                0x000011c4       0x20 src/libraries/Wire/src/Wire.o
+                0x000011c4                _ZN7TwoWireC1Ev
+                0x000011c4                _ZN7TwoWireC2Ev
  .text._ZN7TwoWire5beginEv
-                0x00001736       0x24 src/libraries/Wire/src/Wire.o
-                0x00001736                _ZN7TwoWire5beginEv
+                0x000011e4       0x24 src/libraries/Wire/src/Wire.o
+                0x000011e4                _ZN7TwoWire5beginEv
  .text._ZN7TwoWire17beginTransmissionEh
-                0x0000175a       0x14 src/libraries/Wire/src/Wire.o
-                0x0000175a                _ZN7TwoWire17beginTransmissionEh
+                0x00001208       0x14 src/libraries/Wire/src/Wire.o
+                0x00001208                _ZN7TwoWire17beginTransmissionEh
  .text._ZN7TwoWire17beginTransmissionEi
-                0x0000176e        0x4 src/libraries/Wire/src/Wire.o
-                0x0000176e                _ZN7TwoWire17beginTransmissionEi
+                0x0000121c        0x4 src/libraries/Wire/src/Wire.o
+                0x0000121c                _ZN7TwoWire17beginTransmissionEi
  .text._ZN7TwoWire15endTransmissionEh
-                0x00001772       0x26 src/libraries/Wire/src/Wire.o
-                0x00001772                _ZN7TwoWire15endTransmissionEh
+                0x00001220       0x26 src/libraries/Wire/src/Wire.o
+                0x00001220                _ZN7TwoWire15endTransmissionEh
  .text._ZN7TwoWire11requestFromEhhmhh
-                0x00001798       0xa8 src/libraries/Wire/src/Wire.o
-                0x00001798                _ZN7TwoWire11requestFromEhhmhh
+                0x00001246       0xa8 src/libraries/Wire/src/Wire.o
+                0x00001246                _ZN7TwoWire11requestFromEhhmhh
  .text._ZN7TwoWire11requestFromEhhh
-                0x00001840       0x20 src/libraries/Wire/src/Wire.o
-                0x00001840                _ZN7TwoWire11requestFromEhhh
+                0x000012ee       0x20 src/libraries/Wire/src/Wire.o
+                0x000012ee                _ZN7TwoWire11requestFromEhhh
  .text._ZN7TwoWire11requestFromEii
-                0x00001860        0x6 src/libraries/Wire/src/Wire.o
-                0x00001860                _ZN7TwoWire11requestFromEii
+                0x0000130e        0x6 src/libraries/Wire/src/Wire.o
+                0x0000130e                _ZN7TwoWire11requestFromEii
  .text._ZN7TwoWire15endTransmissionEv
-                0x00001866        0x6 src/libraries/Wire/src/Wire.o
-                0x00001866                _ZN7TwoWire15endTransmissionEv
+                0x00001314        0x6 src/libraries/Wire/src/Wire.o
+                0x00001314                _ZN7TwoWire15endTransmissionEv
  .text.startup._GLOBAL__sub_I__ZN7TwoWire8rxBufferE
-                0x0000186c        0x8 src/libraries/Wire/src/Wire.o
+                0x0000131a        0x8 src/libraries/Wire/src/Wire.o
  .text._ZN14HardwareSerial9availableEv
-                0x00001874       0x18 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x00001874                _ZN14HardwareSerial9availableEv
+                0x00001322       0x18 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x00001322                _ZN14HardwareSerial9availableEv
  .text._ZN14HardwareSerial4peekEv
-                0x0000188c       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x0000188c                _ZN14HardwareSerial4peekEv
+                0x0000133a       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x0000133a                _ZN14HardwareSerial4peekEv
  .text._ZN14HardwareSerial4readEv
-                0x000018a8       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x000018a8                _ZN14HardwareSerial4readEv
+                0x00001356       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x00001356                _ZN14HardwareSerial4readEv
  .text._Z14serialEventRunv
-                0x000018d0       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x000018d0                _Z14serialEventRunv
+                0x0000137e       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x0000137e                _Z14serialEventRunv
  .text._ZN14HardwareSerial17_tx_udr_empty_irqEv
-                0x000018ec       0x42 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x000018ec                _ZN14HardwareSerial17_tx_udr_empty_irqEv
+                0x0000139a       0x42 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x0000139a                _ZN14HardwareSerial17_tx_udr_empty_irqEv
  .text._ZN14HardwareSerial5writeEh
-                0x0000192e       0x8e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x0000192e                _ZN14HardwareSerial5writeEh
+                0x000013dc       0x8e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x000013dc                _ZN14HardwareSerial5writeEh
  .text._ZN14HardwareSerial5flushEv
-                0x000019bc       0x44 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x000019bc                _ZN14HardwareSerial5flushEv
+                0x0000146a       0x44 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x0000146a                _ZN14HardwareSerial5flushEv
  .text._ZN14HardwareSerial5beginEmh
-                0x00001a00       0xca C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x00001a00                _ZN14HardwareSerial5beginEmh
+                0x000014ae       0xca C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x000014ae                _ZN14HardwareSerial5beginEmh
  .text.__vector_18
-                0x00001aca       0x64 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                0x00001aca                __vector_18
+                0x00001578       0x64 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x00001578                __vector_18
  .text.__vector_19
-                0x00001b2e       0x4c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                0x00001b2e                __vector_19
+                0x000015dc       0x4c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x000015dc                __vector_19
  .text._Z17Serial0_availablev
-                0x00001b7a       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                0x00001b7a                _Z17Serial0_availablev
+                0x00001628       0x14 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x00001628                _Z17Serial0_availablev
  .text.startup._GLOBAL__sub_I___vector_18
-                0x00001b8e       0x5a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x0000163c       0x5a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
  .text.initVariant
-                0x00001be8        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
-                0x00001be8                initVariant
+                0x00001696        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+                0x00001696                initVariant
  .text.startup.main
-                0x00001bea       0x1e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
-                0x00001bea                main
- .text._Znwj    0x00001c08        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
-                0x00001c08                _Znwj
+                0x00001698       0x1e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+                0x00001698                main
+ .text._Znwj    0x000016b6        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+                0x000016b6                _Znwj
  .text._ZN5Print5writeEPKhj
-                0x00001c0c       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001c0c                _ZN5Print5writeEPKhj
+                0x000016ba       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000016ba                _ZN5Print5writeEPKhj
  .text._ZN5Print5writeEPKc
-                0x00001c60       0x2a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001c60                _ZN5Print5writeEPKc
+                0x0000170e       0x2a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x0000170e                _ZN5Print5writeEPKc
  .text._ZN5Print5printEPK19__FlashStringHelper
-                0x00001c8a       0x48 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001c8a                _ZN5Print5printEPK19__FlashStringHelper
+                0x00001738       0x48 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001738                _ZN5Print5printEPK19__FlashStringHelper
  .text._ZN5Print5printEPKc
-                0x00001cd2        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001cd2                _ZN5Print5printEPKc
+                0x00001780        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001780                _ZN5Print5printEPKc
+ .text._ZN5Print5printEc
+                0x00001784        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001784                _ZN5Print5printEc
  .text._ZN5Print7printlnEv
-                0x00001cd6        0x8 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001cd6                _ZN5Print7printlnEv
+                0x00001792        0x8 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001792                _ZN5Print7printlnEv
  .text._ZN5Print7printlnEPK19__FlashStringHelper
-                0x00001cde       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001cde                _ZN5Print7printlnEPK19__FlashStringHelper
+                0x0000179a       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x0000179a                _ZN5Print7printlnEPK19__FlashStringHelper
  .text._ZN5Print7printlnEPKc
-                0x00001d02       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001d02                _ZN5Print7printlnEPKc
+                0x000017be       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000017be                _ZN5Print7printlnEPKc
+ .text._ZN5Print7printlnEc
+                0x000017e2       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000017e2                _ZN5Print7printlnEc
  .text._ZN5Print11printNumberEmh
-                0x00001d26       0x92 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001d26                _ZN5Print11printNumberEmh
+                0x00001806       0x92 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001806                _ZN5Print11printNumberEmh
  .text._ZN5Print5printEmi
-                0x00001db8       0x1a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001db8                _ZN5Print5printEmi
+                0x00001898       0x1a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001898                _ZN5Print5printEmi
  .text._ZN5Print5printEhi
-                0x00001dd2        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001dd2                _ZN5Print5printEhi
+                0x000018b2        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000018b2                _ZN5Print5printEhi
  .text._ZN5Print7printlnEhi
-                0x00001de0       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001de0                _ZN5Print7printlnEhi
+                0x000018c0       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000018c0                _ZN5Print7printlnEhi
  .text._ZN5Print5printEji
-                0x00001e04        0xc C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001e04                _ZN5Print5printEji
+                0x000018e4        0xc C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000018e4                _ZN5Print5printEji
  .text._ZN5Print7printlnEji
-                0x00001e10       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
-                0x00001e10                _ZN5Print7printlnEji
+                0x000018f0       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000018f0                _ZN5Print7printlnEji
+ .text._ZN5Print5printEli
+                0x00001914       0x90 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x00001914                _ZN5Print5printEli
+ .text._ZN5Print5printEii
+                0x000019a4        0xe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000019a4                _ZN5Print5printEii
  .text.__vector_16
-                0x00001e34       0x94 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00001e34                __vector_16
- .text.micros   0x00001ec8       0x4a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00001ec8                micros
- .text.delay    0x00001f12       0x78 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00001f12                delay
- .text.init     0x00001f8a       0x76 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00001f8a                init
+                0x000019b2       0x94 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x000019b2                __vector_16
+ .text.micros   0x00001a46       0x4a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00001a46                micros
+ .text.delay    0x00001a90       0x78 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00001a90                delay
+ .text.init     0x00001b08       0x76 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00001b08                init
  .text.analogRead
-                0x00002000       0x3a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
-                0x00002000                analogRead
+                0x00001b7e       0x3a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+                0x00001b7e                analogRead
  .text.turnOffPWM
-                0x0000203a       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .text.pinMode  0x0000208c       0x78 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x0000208c                pinMode
+                0x00001bb8       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .text.pinMode  0x00001c0a       0x78 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x00001c0a                pinMode
  .text.digitalWrite
-                0x00002104       0x5e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
-                0x00002104                digitalWrite
+                0x00001c82       0x5e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+                0x00001c82                digitalWrite
  .text._ZN14SoftwareSerial4readEv
-                0x00002162       0x42 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002162                _ZN14SoftwareSerial4readEv
+                0x00001ce0       0x42 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001ce0                _ZN14SoftwareSerial4readEv
  .text._ZN14SoftwareSerial5writeEh
-                0x000021a4       0xa0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x000021a4                _ZN14SoftwareSerial5writeEh
+                0x00001d22       0xa0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001d22                _ZN14SoftwareSerial5writeEh
  .text._ZN14SoftwareSerial5flushEv
-                0x00002244        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002244                _ZN14SoftwareSerial5flushEv
+                0x00001dc2        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001dc2                _ZN14SoftwareSerial5flushEv
  .text._ZN14SoftwareSerial4peekEv
-                0x00002246       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002246                _ZN14SoftwareSerial4peekEv
+                0x00001dc4       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001dc4                _ZN14SoftwareSerial4peekEv
  .text._ZN14SoftwareSerial9availableEv
-                0x00002276       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002276                _ZN14SoftwareSerial9availableEv
+                0x00001df4       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001df4                _ZN14SoftwareSerial9availableEv
  .text._ZN14SoftwareSerial13stopListeningEv
-                0x000022a6       0x2c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x000022a6                _ZN14SoftwareSerial13stopListeningEv
+                0x00001e24       0x2c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001e24                _ZN14SoftwareSerial13stopListeningEv
  .text._ZN14SoftwareSerial6listenEv
-                0x000022d2       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x000022d2                _ZN14SoftwareSerial6listenEv
+                0x00001e50       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001e50                _ZN14SoftwareSerial6listenEv
  .text.__vector_3
-                0x00002324       0xf4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002324                __vector_5
-                0x00002324                __vector_4
-                0x00002324                __vector_3
+                0x00001ea2       0xf4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001ea2                __vector_5
+                0x00001ea2                __vector_4
+                0x00001ea2                __vector_3
  .text._ZN14SoftwareSerial5setTXEh
-                0x00002418       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002418                _ZN14SoftwareSerial5setTXEh
+                0x00001f96       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001f96                _ZN14SoftwareSerial5setTXEh
  .text._ZN14SoftwareSerial5setRXEh
-                0x0000246a       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x0000246a                _ZN14SoftwareSerial5setRXEh
+                0x00001fe8       0x52 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00001fe8                _ZN14SoftwareSerial5setRXEh
  .text._ZN14SoftwareSerialC2Ehhb
-                0x000024bc       0x56 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x000024bc                _ZN14SoftwareSerialC1Ehhb
-                0x000024bc                _ZN14SoftwareSerialC2Ehhb
+                0x0000203a       0x56 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x0000203a                _ZN14SoftwareSerialC1Ehhb
+                0x0000203a                _ZN14SoftwareSerialC2Ehhb
  .text._ZN14SoftwareSerial5beginEl
-                0x00002512      0x11c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x00002512                _ZN14SoftwareSerial5beginEl
- .text.__empty  0x0000262e        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
-                0x0000262e                yield
+                0x00002090      0x11c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00002090                _ZN14SoftwareSerial5beginEl
+ .text.__empty  0x000021ac        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+                0x000021ac                yield
  .text.libgcc.div
-                0x00002630       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodqi4.o)
-                0x00002630                __udivmodqi4
+                0x000021ae       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodqi4.o)
+                0x000021ae                __udivmodqi4
  .text.libgcc.div
-                0x00002648       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
-                0x00002648                _div
-                0x00002648                __divmodhi4
+                0x000021c6       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
+                0x000021c6                _div
+                0x000021c6                __divmodhi4
  .text.libgcc.div
-                0x00002670       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x00002670                __udivmodsi4
+                0x000021ee       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                0x000021ee                __udivmodsi4
  .text.libgcc.div
-                0x000026b4       0x2e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
-                0x000026b4                __divmodsi4
+                0x00002232       0x2e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
+                0x00002232                __divmodsi4
  .text.libgcc.div
-                0x000026e2       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
-                0x000026e2                __negsi2
- .text.libgcc.builtins
-                0x000026f2       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
-                0x000026f2                __ashrdi3
-                0x000026f6                __lshrdi3
+                0x00002260       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
+                0x00002260                __negsi2
  .text.libgcc.div
-                0x0000272e       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000272e                __udivmodhi4
- .text.libgcc   0x00002756        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x00002756                __tablejump2__
+                0x00002270       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+                0x00002270                __udivmodhi4
+ .text.libgcc   0x00002298        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x00002298                __tablejump2__
  .text.avr-libc
-                0x00002762      0x242 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
-                0x00002762                malloc
-                0x00002892                free
+                0x000022a4      0x242 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x000022a4                malloc
+                0x000023d4                free
  .text.avr-libc
-                0x000029a4       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp_P.o)
-                0x000029a4                strcmp_P
+                0x000024e6       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp_P.o)
+                0x000024e6                strcmp_P
  .text.avr-libc
-                0x000029b6       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strstr_P.o)
-                0x000029b6                strstr_P
-                0x000029ea                . = ALIGN (0x2)
+                0x000024f8       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strstr_P.o)
+                0x000024f8                strstr_P
+                0x0000252c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000029ea        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000029ea                _exit
-                0x000029ea                exit
+ .fini9         0x0000252c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x0000252c                _exit
+                0x0000252c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
  *(.fini7)
  *(.fini7)
  *(.fini6)
- .fini6         0x000029ea       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
-                0x000029ea                __do_global_dtors
  *(.fini6)
  *(.fini5)
  *(.fini5)
@@ -1974,11 +1947,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00002a00        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000252c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00002a04                _etext = .
+                0x00002530                _etext = .
 
-.data           0x00800100       0xb6 load address 0x00002a04
+.data           0x00800100       0xa0 load address 0x00002530
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
@@ -1993,153 +1966,148 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800107       0x13 Main_SignalLogging.o
- .rodata.str1.1
-                0x0080011a       0x4c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                                 0x51 (size before relaxing)
+                0x00800107       0x37 Adafruit_FONA.o
+                                 0x3c (size before relaxing)
  .rodata._ZTV13Adafruit_FONA
-                0x00800166       0x10 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                0x00800166                _ZTV13Adafruit_FONA
- .rodata._ZTV7TwoWire
-                0x00800176       0x10 src/libraries/Wire/src/Wire.o
-                0x00800176                _ZTV7TwoWire
- .rodata._ZTV14HardwareSerial
-                0x00800186       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
-                0x00800186                _ZTV14HardwareSerial
+                0x0080013e       0x10 Adafruit_FONA.o
+                0x0080013e                _ZTV13Adafruit_FONA
  .rodata.str1.1
-                0x00800196        0xf C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x0080014e       0x13 Main_SignalLogging.o
+ .rodata._ZTV7TwoWire
+                0x00800161       0x10 src/libraries/Wire/src/Wire.o
+                0x00800161                _ZTV7TwoWire
+ .rodata._ZTV14HardwareSerial
+                0x00800171       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x00800171                _ZTV14HardwareSerial
+ .rodata.str1.1
+                0x00800181        0xf C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
                                  0x11 (size before relaxing)
  .rodata._ZTV14SoftwareSerial
-                0x008001a5       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x008001a5                _ZTV14SoftwareSerial
+                0x00800190       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x00800190                _ZTV14SoftwareSerial
  *(.gnu.linkonce.r*)
-                0x008001b6                . = ALIGN (0x2)
- *fill*         0x008001b5        0x1 
-                0x008001b6                _edata = .
-                0x008001b6                PROVIDE (__data_end, .)
+                0x008001a0                . = ALIGN (0x2)
+                0x008001a0                _edata = .
+                0x008001a0                PROVIDE (__data_end, .)
 
-.bss            0x008001b6      0x50e
-                0x008001b6                PROVIDE (__bss_start, .)
+.bss            0x008001a0      0x2d3
+                0x008001a0                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss._timerCounter
-                0x008001b6        0x2 Main_SignalLogging.o
-                0x008001b6                _timerCounter
+                0x008001a0        0x2 Main_SignalLogging.o
+                0x008001a0                _timerCounter
  .bss._behaviour
-                0x008001b8        0x1 Main_SignalLogging.o
-                0x008001b8                _behaviour
+                0x008001a2        0x1 Main_SignalLogging.o
+                0x008001a2                _behaviour
  .bss.sensorMgr
-                0x008001b9        0x1 Main_SignalLogging.o
-                0x008001b9                sensorMgr
- .bss.gsm       0x008001ba      0x121 Main_SignalLogging.o
-                0x008001ba                gsm
- .bss.gps       0x008002db      0x11b Main_SignalLogging.o
-                0x008002db                gps
- .bss.mem       0x008003f6        0x1 Main_SignalLogging.o
-                0x008003f6                mem
- .bss.fona      0x008003f7      0x11a Main_SignalLogging.o
-                0x008003f7                fona
+                0x008001a3        0x1 Main_SignalLogging.o
+                0x008001a3                sensorMgr
+ .bss.mem       0x008001a4        0x1 Main_SignalLogging.o
+                0x008001a4                mem
+ .bss.fona      0x008001a5      0x11b Main_SignalLogging.o
+                0x008001a5                fona
  .bss.__mockDataCounter
-                0x00800511        0x1 SensorManager.o
-                0x00800511                __mockDataCounter
+                0x008002c0        0x1 SensorManager.o
+                0x008002c0                __mockDataCounter
  .bss.twi_error
-                0x00800512        0x1 src/libraries/Wire/src/utility/twi.o
+                0x008002c1        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_rxBufferIndex
-                0x00800513        0x1 src/libraries/Wire/src/utility/twi.o
+                0x008002c2        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_rxBuffer
-                0x00800514       0x20 src/libraries/Wire/src/utility/twi.o
+                0x008002c3       0x20 src/libraries/Wire/src/utility/twi.o
  .bss.twi_txBufferLength
-                0x00800534        0x1 src/libraries/Wire/src/utility/twi.o
+                0x008002e3        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_txBufferIndex
-                0x00800535        0x1 src/libraries/Wire/src/utility/twi.o
+                0x008002e4        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_txBuffer
-                0x00800536       0x20 src/libraries/Wire/src/utility/twi.o
+                0x008002e5       0x20 src/libraries/Wire/src/utility/twi.o
  .bss.twi_masterBufferLength
-                0x00800556        0x1 src/libraries/Wire/src/utility/twi.o
+                0x00800305        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_masterBufferIndex
-                0x00800557        0x1 src/libraries/Wire/src/utility/twi.o
+                0x00800306        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_masterBuffer
-                0x00800558       0x20 src/libraries/Wire/src/utility/twi.o
+                0x00800307       0x20 src/libraries/Wire/src/utility/twi.o
  .bss.twi_onSlaveReceive
-                0x00800578        0x2 src/libraries/Wire/src/utility/twi.o
+                0x00800327        0x2 src/libraries/Wire/src/utility/twi.o
  .bss.twi_onSlaveTransmit
-                0x0080057a        0x2 src/libraries/Wire/src/utility/twi.o
+                0x00800329        0x2 src/libraries/Wire/src/utility/twi.o
  .bss.twi_inRepStart
-                0x0080057c        0x1 src/libraries/Wire/src/utility/twi.o
+                0x0080032b        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_sendStop
-                0x0080057d        0x1 src/libraries/Wire/src/utility/twi.o
+                0x0080032c        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_slarw
-                0x0080057e        0x1 src/libraries/Wire/src/utility/twi.o
+                0x0080032d        0x1 src/libraries/Wire/src/utility/twi.o
  .bss.twi_state
-                0x0080057f        0x1 src/libraries/Wire/src/utility/twi.o
- .bss.Wire      0x00800580        0xc src/libraries/Wire/src/Wire.o
-                0x00800580                Wire
+                0x0080032e        0x1 src/libraries/Wire/src/utility/twi.o
+ .bss.Wire      0x0080032f        0xc src/libraries/Wire/src/Wire.o
+                0x0080032f                Wire
  .bss._ZN7TwoWire14user_onReceiveE
-                0x0080058c        0x2 src/libraries/Wire/src/Wire.o
-                0x0080058c                _ZN7TwoWire14user_onReceiveE
+                0x0080033b        0x2 src/libraries/Wire/src/Wire.o
+                0x0080033b                _ZN7TwoWire14user_onReceiveE
  .bss._ZN7TwoWire14user_onRequestE
-                0x0080058e        0x2 src/libraries/Wire/src/Wire.o
-                0x0080058e                _ZN7TwoWire14user_onRequestE
+                0x0080033d        0x2 src/libraries/Wire/src/Wire.o
+                0x0080033d                _ZN7TwoWire14user_onRequestE
  .bss._ZN7TwoWire12transmittingE
-                0x00800590        0x1 src/libraries/Wire/src/Wire.o
-                0x00800590                _ZN7TwoWire12transmittingE
+                0x0080033f        0x1 src/libraries/Wire/src/Wire.o
+                0x0080033f                _ZN7TwoWire12transmittingE
  .bss._ZN7TwoWire14txBufferLengthE
-                0x00800591        0x1 src/libraries/Wire/src/Wire.o
-                0x00800591                _ZN7TwoWire14txBufferLengthE
+                0x00800340        0x1 src/libraries/Wire/src/Wire.o
+                0x00800340                _ZN7TwoWire14txBufferLengthE
  .bss._ZN7TwoWire13txBufferIndexE
-                0x00800592        0x1 src/libraries/Wire/src/Wire.o
-                0x00800592                _ZN7TwoWire13txBufferIndexE
+                0x00800341        0x1 src/libraries/Wire/src/Wire.o
+                0x00800341                _ZN7TwoWire13txBufferIndexE
  .bss._ZN7TwoWire8txBufferE
-                0x00800593       0x20 src/libraries/Wire/src/Wire.o
-                0x00800593                _ZN7TwoWire8txBufferE
+                0x00800342       0x20 src/libraries/Wire/src/Wire.o
+                0x00800342                _ZN7TwoWire8txBufferE
  .bss._ZN7TwoWire9txAddressE
-                0x008005b3        0x1 src/libraries/Wire/src/Wire.o
-                0x008005b3                _ZN7TwoWire9txAddressE
+                0x00800362        0x1 src/libraries/Wire/src/Wire.o
+                0x00800362                _ZN7TwoWire9txAddressE
  .bss._ZN7TwoWire14rxBufferLengthE
-                0x008005b4        0x1 src/libraries/Wire/src/Wire.o
-                0x008005b4                _ZN7TwoWire14rxBufferLengthE
+                0x00800363        0x1 src/libraries/Wire/src/Wire.o
+                0x00800363                _ZN7TwoWire14rxBufferLengthE
  .bss._ZN7TwoWire13rxBufferIndexE
-                0x008005b5        0x1 src/libraries/Wire/src/Wire.o
-                0x008005b5                _ZN7TwoWire13rxBufferIndexE
+                0x00800364        0x1 src/libraries/Wire/src/Wire.o
+                0x00800364                _ZN7TwoWire13rxBufferIndexE
  .bss._ZN7TwoWire8rxBufferE
-                0x008005b6       0x20 src/libraries/Wire/src/Wire.o
-                0x008005b6                _ZN7TwoWire8rxBufferE
- .bss.Serial    0x008005d6       0x9d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
-                0x008005d6                Serial
+                0x00800365       0x20 src/libraries/Wire/src/Wire.o
+                0x00800365                _ZN7TwoWire8rxBufferE
+ .bss.Serial    0x00800385       0x9d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x00800385                Serial
  .bss.timer0_fract
-                0x00800673        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00800422        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
  .bss.timer0_millis
-                0x00800674        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00800674                timer0_millis
+                0x00800423        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00800423                timer0_millis
  .bss.timer0_overflow_count
-                0x00800678        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
-                0x00800678                timer0_overflow_count
+                0x00800427        0x4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x00800427                timer0_overflow_count
  .bss._ZN14SoftwareSerial20_receive_buffer_headE
-                0x0080067c        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x0080067c                _ZN14SoftwareSerial20_receive_buffer_headE
+                0x0080042b        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x0080042b                _ZN14SoftwareSerial20_receive_buffer_headE
  .bss._ZN14SoftwareSerial20_receive_buffer_tailE
-                0x0080067d        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x0080067d                _ZN14SoftwareSerial20_receive_buffer_tailE
+                0x0080042c        0x1 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x0080042c                _ZN14SoftwareSerial20_receive_buffer_tailE
  .bss._ZN14SoftwareSerial15_receive_bufferE
-                0x0080067e       0x40 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x0080067e                _ZN14SoftwareSerial15_receive_bufferE
+                0x0080042d       0x40 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x0080042d                _ZN14SoftwareSerial15_receive_bufferE
  .bss._ZN14SoftwareSerial13active_objectE
-                0x008006be        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
-                0x008006be                _ZN14SoftwareSerial13active_objectE
+                0x0080046d        0x2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+                0x0080046d                _ZN14SoftwareSerial13active_objectE
  *(COMMON)
- COMMON         0x008006c0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
-                0x008006c0                __brkval
-                0x008006c2                __flp
-                0x008006c4                PROVIDE (__bss_end, .)
-                0x00002a04                __data_load_start = LOADADDR (.data)
-                0x00002aba                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080046f        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x0080046f                __brkval
+                0x00800471                __flp
+                0x00800473                PROVIDE (__bss_end, .)
+                0x00002530                __data_load_start = LOADADDR (.data)
+                0x000025d0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008006c4        0x0
+.noinit         0x00800473        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008006c4                _end = .
-                0x008006c4                PROVIDE (__heap_start, .)
+                0x00800473                _end = .
+                0x00800473                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -2180,14 +2148,12 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 GpsManager.o
+ .comment       0x00000000       0x30 Adafruit_FONA.o
                                  0x31 (size before relaxing)
- .comment       0x00000030       0x31 GsmManager.o
  .comment       0x00000030       0x31 Helpers.o
  .comment       0x00000030       0x31 Main_SignalLogging.o
  .comment       0x00000030       0x31 RmMemManager.o
  .comment       0x00000030       0x31 SensorManager.o
- .comment       0x00000030       0x31 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
  .comment       0x00000030       0x31 src/libraries/Wire/src/utility/twi.o
  .comment       0x00000030       0x31 src/libraries/Wire/src/Wire.o
  .comment       0x00000030       0x31 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
@@ -2222,202 +2188,184 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x9b0
+.debug_aranges  0x00000000      0x8e8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x48 GpsManager.o
+                0x00000000      0x290 Adafruit_FONA.o
  .debug_aranges
-                0x00000048       0x78 GsmManager.o
+                0x00000290       0x20 Helpers.o
  .debug_aranges
-                0x000000c0       0x20 Helpers.o
+                0x000002b0       0x58 Main_SignalLogging.o
  .debug_aranges
-                0x000000e0       0x60 Main_SignalLogging.o
+                0x00000308       0xe8 RmMemManager.o
  .debug_aranges
-                0x00000140       0xe8 RmMemManager.o
+                0x000003f0       0x40 SensorManager.o
  .debug_aranges
-                0x00000228       0x40 SensorManager.o
+                0x00000430       0x80 src/libraries/Wire/src/utility/twi.o
  .debug_aranges
-                0x00000268      0x290 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
+                0x000004b0       0xe8 src/libraries/Wire/src/Wire.o
  .debug_aranges
-                0x000004f8       0x80 src/libraries/Wire/src/utility/twi.o
+                0x00000598       0x68 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
  .debug_aranges
-                0x00000578       0xe8 src/libraries/Wire/src/Wire.o
+                0x00000600       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
  .debug_aranges
-                0x00000660       0x68 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+                0x00000638       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
  .debug_aranges
-                0x000006c8       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+                0x00000668       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
  .debug_aranges
-                0x00000700       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+                0x00000690       0xf0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
  .debug_aranges
-                0x00000730       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+                0x00000780       0x48 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
  .debug_aranges
-                0x00000758       0xf0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+                0x000007c8       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
  .debug_aranges
-                0x00000848       0x48 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+                0x000007f8       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
  .debug_aranges
-                0x00000890       0x30 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+                0x00000830       0x98 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
  .debug_aranges
-                0x000008c0       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_aranges
-                0x000008f8       0x98 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_aranges
-                0x00000990       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+                0x000008c8       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x1b3e4
+.debug_info     0x00000000    0x17972
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4     0x1cd6 GpsManager.o
- .debug_info    0x000022ca     0x2345 GsmManager.o
- .debug_info    0x0000460f      0x427 Helpers.o
- .debug_info    0x00004a36     0x12d9 Main_SignalLogging.o
- .debug_info    0x00005d0f     0x1bf2 RmMemManager.o
- .debug_info    0x00007901      0x685 SensorManager.o
- .debug_info    0x00007f86     0x7089 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_info    0x0000f00f      0x604 src/libraries/Wire/src/utility/twi.o
- .debug_info    0x0000f613     0x26b3 src/libraries/Wire/src/Wire.o
- .debug_info    0x00011cc6     0x1e25 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_info    0x00013aeb     0x1a19 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_info    0x00015504      0x237 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_info    0x0001573b      0x11c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_info    0x00015857     0x2824 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_info    0x0001807b      0x2cb C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_info    0x00018346      0x26d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_info    0x000185b3      0x5fe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_info    0x00018bb1     0x27f5 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_info    0x0001b3a6       0x3e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_info    0x000005f4     0x7abf Adafruit_FONA.o
+ .debug_info    0x000080b3      0x42a Helpers.o
+ .debug_info    0x000084dd      0xe42 Main_SignalLogging.o
+ .debug_info    0x0000931f     0x1bf6 RmMemManager.o
+ .debug_info    0x0000af15      0x688 SensorManager.o
+ .debug_info    0x0000b59d      0x604 src/libraries/Wire/src/utility/twi.o
+ .debug_info    0x0000bba1     0x26b3 src/libraries/Wire/src/Wire.o
+ .debug_info    0x0000e254     0x1e25 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_info    0x00010079     0x1a19 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_info    0x00011a92      0x237 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_info    0x00011cc9      0x11c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_info    0x00011de5     0x2824 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_info    0x00014609      0x2cb C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_info    0x000148d4      0x26d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_info    0x00014b41      0x5fe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_info    0x0001513f     0x27f5 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_info    0x00017934       0x3e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_abbrev   0x00000000     0x423a
+.debug_abbrev   0x00000000     0x39df
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2      0x42b GpsManager.o
- .debug_abbrev  0x000009cd      0x460 GsmManager.o
- .debug_abbrev  0x00000e2d      0x192 Helpers.o
- .debug_abbrev  0x00000fbf      0x417 Main_SignalLogging.o
- .debug_abbrev  0x000013d6      0x4a4 RmMemManager.o
- .debug_abbrev  0x0000187a      0x2f9 SensorManager.o
- .debug_abbrev  0x00001b73      0x669 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_abbrev  0x000021dc      0x260 src/libraries/Wire/src/utility/twi.o
- .debug_abbrev  0x0000243c      0x583 src/libraries/Wire/src/Wire.o
- .debug_abbrev  0x000029bf      0x432 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_abbrev  0x00002df1      0x3a2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_abbrev  0x00003193      0x12d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_abbrev  0x000032c0       0xce C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_abbrev  0x0000338e      0x469 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_abbrev  0x000037f7      0x146 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_abbrev  0x0000393d      0x16b C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_abbrev  0x00003aa8      0x15b C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_abbrev  0x00003c03      0x60d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_abbrev  0x00004210       0x2a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_abbrev  0x000005a2      0x6b2 Adafruit_FONA.o
+ .debug_abbrev  0x00000c54      0x1a1 Helpers.o
+ .debug_abbrev  0x00000df5      0x3d1 Main_SignalLogging.o
+ .debug_abbrev  0x000011c6      0x4b3 RmMemManager.o
+ .debug_abbrev  0x00001679      0x308 SensorManager.o
+ .debug_abbrev  0x00001981      0x260 src/libraries/Wire/src/utility/twi.o
+ .debug_abbrev  0x00001be1      0x583 src/libraries/Wire/src/Wire.o
+ .debug_abbrev  0x00002164      0x432 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_abbrev  0x00002596      0x3a2 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_abbrev  0x00002938      0x12d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_abbrev  0x00002a65       0xce C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_abbrev  0x00002b33      0x469 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_abbrev  0x00002f9c      0x146 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_abbrev  0x000030e2      0x16b C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_abbrev  0x0000324d      0x15b C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_abbrev  0x000033a8      0x60d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_abbrev  0x000039b5       0x2a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_line     0x00000000     0x5851
+.debug_line     0x00000000     0x5121
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x31b GpsManager.o
- .debug_line    0x0000044e      0x46b GsmManager.o
- .debug_line    0x000008b9      0x202 Helpers.o
- .debug_line    0x00000abb      0x3d0 Main_SignalLogging.o
- .debug_line    0x00000e8b      0x727 RmMemManager.o
- .debug_line    0x000015b2      0x2d4 SensorManager.o
- .debug_line    0x00001886     0x1701 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_line    0x00002f87      0x519 src/libraries/Wire/src/utility/twi.o
- .debug_line    0x000034a0      0x5ad src/libraries/Wire/src/Wire.o
- .debug_line    0x00003a4d      0x426 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_line    0x00003e73      0x257 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_line    0x000040ca      0x165 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_line    0x0000422f      0x12f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_line    0x0000435e      0x62e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_line    0x0000498c      0x299 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_line    0x00004c25      0x20f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_line    0x00004e34      0x252 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_line    0x00005086      0x78a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_line    0x00005810       0x41 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_line    0x00000133     0x17c0 Adafruit_FONA.o
+ .debug_line    0x000018f3      0x202 Helpers.o
+ .debug_line    0x00001af5      0x367 Main_SignalLogging.o
+ .debug_line    0x00001e5c      0x727 RmMemManager.o
+ .debug_line    0x00002583      0x2d4 SensorManager.o
+ .debug_line    0x00002857      0x519 src/libraries/Wire/src/utility/twi.o
+ .debug_line    0x00002d70      0x5ad src/libraries/Wire/src/Wire.o
+ .debug_line    0x0000331d      0x426 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_line    0x00003743      0x257 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_line    0x0000399a      0x165 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_line    0x00003aff      0x12f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_line    0x00003c2e      0x62e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_line    0x0000425c      0x299 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_line    0x000044f5      0x20f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_line    0x00004704      0x252 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_line    0x00004956      0x78a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_line    0x000050e0       0x41 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_frame    0x00000000     0x22f0
+.debug_frame    0x00000000     0x20d4
  *(.debug_frame)
- .debug_frame   0x00000000       0xc4 GpsManager.o
- .debug_frame   0x000000c4      0x168 GsmManager.o
- .debug_frame   0x0000022c       0x30 Helpers.o
- .debug_frame   0x0000025c       0xb4 Main_SignalLogging.o
- .debug_frame   0x00000310      0x350 RmMemManager.o
- .debug_frame   0x00000660       0x98 SensorManager.o
- .debug_frame   0x000006f8      0xef4 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_frame   0x000015ec      0x134 src/libraries/Wire/src/utility/twi.o
- .debug_frame   0x00001720      0x260 src/libraries/Wire/src/Wire.o
- .debug_frame   0x00001980      0x110 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_frame   0x00001a90       0xc0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_frame   0x00001b50       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_frame   0x00001ba4       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_frame   0x00001bf8      0x38c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_frame   0x00001f84       0xc4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_frame   0x00002048       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_frame   0x0000209c       0x7c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_frame   0x00002118      0x1b4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_frame   0x000022cc       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_frame   0x00000000      0xf08 Adafruit_FONA.o
+ .debug_frame   0x00000f08       0x30 Helpers.o
+ .debug_frame   0x00000f38       0xb0 Main_SignalLogging.o
+ .debug_frame   0x00000fe8      0x350 RmMemManager.o
+ .debug_frame   0x00001338       0x98 SensorManager.o
+ .debug_frame   0x000013d0      0x134 src/libraries/Wire/src/utility/twi.o
+ .debug_frame   0x00001504      0x260 src/libraries/Wire/src/Wire.o
+ .debug_frame   0x00001764      0x110 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_frame   0x00001874       0xc0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_frame   0x00001934       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_frame   0x00001988       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_frame   0x000019dc      0x38c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_frame   0x00001d68       0xc4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_frame   0x00001e2c       0x54 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_frame   0x00001e80       0x7c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_frame   0x00001efc      0x1b4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_frame   0x000020b0       0x24 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_str      0x00000000     0x500c
+.debug_str      0x00000000     0x4c69
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208     0x1303 GpsManager.o
-                               0x13f1 (size before relaxing)
- .debug_str     0x0000150b      0x536 GsmManager.o
-                               0x179d (size before relaxing)
- .debug_str     0x00001a41       0xde Helpers.o
+ .debug_str     0x00000208     0x2649 Adafruit_FONA.o
+                               0x27a7 (size before relaxing)
+ .debug_str     0x00002851       0xcb Helpers.o
                                 0x3d0 (size before relaxing)
- .debug_str     0x00001b1f      0xa27 Main_SignalLogging.o
-                               0x1186 (size before relaxing)
- .debug_str     0x00002546      0x38f RmMemManager.o
+ .debug_str     0x0000291c      0x9bc Main_SignalLogging.o
+                                0xe8c (size before relaxing)
+ .debug_str     0x000032d8      0x37c RmMemManager.o
                                 0xf5e (size before relaxing)
- .debug_str     0x000028d5       0xa0 SensorManager.o
+ .debug_str     0x00003654       0xa0 SensorManager.o
                                 0x67f (size before relaxing)
- .debug_str     0x00002975     0x1119 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
-                               0x26d9 (size before relaxing)
- .debug_str     0x00003a8e      0x2bb src/libraries/Wire/src/utility/twi.o
+ .debug_str     0x000036f4      0x2bb src/libraries/Wire/src/utility/twi.o
                                 0x3bc (size before relaxing)
- .debug_str     0x00003d49      0x452 src/libraries/Wire/src/Wire.o
+ .debug_str     0x000039af      0x452 src/libraries/Wire/src/Wire.o
                                0x1819 (size before relaxing)
- .debug_str     0x0000419b      0x3de C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_str     0x00003e01      0x3de C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
                                0x1586 (size before relaxing)
- .debug_str     0x00004579       0x47 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_str     0x000041df       0x47 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
                                0x135f (size before relaxing)
- .debug_str     0x000045c0       0x37 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_str     0x00004226       0x37 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
                                 0x2a5 (size before relaxing)
- .debug_str     0x000045f7       0x50 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_str     0x0000425d       0x50 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
                                 0x1bb (size before relaxing)
- .debug_str     0x00004647      0x272 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_str     0x000042ad      0x25f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
                                0x11a4 (size before relaxing)
- .debug_str     0x000048b9       0x79 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_str     0x0000450c       0x79 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
                                 0x23b (size before relaxing)
- .debug_str     0x00004932       0x6c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_str     0x00004585       0x6c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
                                 0x23f (size before relaxing)
- .debug_str     0x0000499e       0xa4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_str     0x000045f1       0xa4 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
                                 0x2a0 (size before relaxing)
- .debug_str     0x00004a42      0x5ae C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_str     0x00004695      0x5b8 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
                                0x1882 (size before relaxing)
- .debug_str     0x00004ff0       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_str     0x00004c4d       0x1c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
                                 0x130 (size before relaxing)
 
-.debug_loc      0x00000000     0xc006
+.debug_loc      0x00000000     0xb7a5
  *(.debug_loc)
- .debug_loc     0x00000000      0x409 GpsManager.o
- .debug_loc     0x00000409      0x795 GsmManager.o
- .debug_loc     0x00000b9e       0x65 Helpers.o
- .debug_loc     0x00000c03       0x72 Main_SignalLogging.o
- .debug_loc     0x00000c75     0x120d RmMemManager.o
- .debug_loc     0x00001e82      0x28a SensorManager.o
- .debug_loc     0x0000210c     0x568c src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_loc     0x00007798      0x3e6 src/libraries/Wire/src/utility/twi.o
- .debug_loc     0x00007b7e      0xbc0 src/libraries/Wire/src/Wire.o
- .debug_loc     0x0000873e      0x482 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_loc     0x00008bc0      0x18a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_loc     0x00008d4a       0x4c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_loc     0x00008d96     0x1c79 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_loc     0x0000aa0f      0x28d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_loc     0x0000ac9c       0xfe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_loc     0x0000ad9a      0x5fc C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_loc     0x0000b396      0xc70 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_loc     0x00000000     0x5962 Adafruit_FONA.o
+ .debug_loc     0x00005962       0x65 Helpers.o
+ .debug_loc     0x000059c7       0xd9 Main_SignalLogging.o
+ .debug_loc     0x00005aa0     0x120d RmMemManager.o
+ .debug_loc     0x00006cad      0x28a SensorManager.o
+ .debug_loc     0x00006f37      0x3e6 src/libraries/Wire/src/utility/twi.o
+ .debug_loc     0x0000731d      0xbc0 src/libraries/Wire/src/Wire.o
+ .debug_loc     0x00007edd      0x482 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_loc     0x0000835f      0x18a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_loc     0x000084e9       0x4c C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_loc     0x00008535     0x1c79 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_loc     0x0000a1ae      0x28d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_loc     0x0000a43b       0xfe C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_loc     0x0000a539      0x5fc C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_loc     0x0000ab35      0xc70 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -2437,27 +2385,25 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x928
+.debug_ranges   0x00000000      0x8a0
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x38 GpsManager.o
- .debug_ranges  0x00000038       0x68 GsmManager.o
- .debug_ranges  0x000000a0       0x10 Helpers.o
- .debug_ranges  0x000000b0       0x50 Main_SignalLogging.o
- .debug_ranges  0x00000100       0xf0 RmMemManager.o
- .debug_ranges  0x000001f0       0x30 SensorManager.o
- .debug_ranges  0x00000220      0x298 src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o
- .debug_ranges  0x000004b8       0x70 src/libraries/Wire/src/utility/twi.o
- .debug_ranges  0x00000528       0xd8 src/libraries/Wire/src/Wire.o
- .debug_ranges  0x00000600       0x58 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_ranges  0x00000658       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_ranges  0x00000680       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_ranges  0x000006a0       0x18 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_ranges  0x000006b8      0x110 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_ranges  0x000007c8       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_ranges  0x00000800       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_ranges  0x00000820       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_ranges  0x00000848       0xd0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_ranges  0x00000918       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_ranges  0x00000000      0x2b8 Adafruit_FONA.o
+ .debug_ranges  0x000002b8       0x10 Helpers.o
+ .debug_ranges  0x000002c8       0x48 Main_SignalLogging.o
+ .debug_ranges  0x00000310       0xf0 RmMemManager.o
+ .debug_ranges  0x00000400       0x30 SensorManager.o
+ .debug_ranges  0x00000430       0x70 src/libraries/Wire/src/utility/twi.o
+ .debug_ranges  0x000004a0       0xd8 src/libraries/Wire/src/Wire.o
+ .debug_ranges  0x00000578       0x58 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_ranges  0x000005d0       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_ranges  0x000005f8       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_ranges  0x00000618       0x18 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_ranges  0x00000630      0x110 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_ranges  0x00000740       0x38 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_ranges  0x00000778       0x20 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_ranges  0x00000798       0x28 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_ranges  0x000007c0       0xd0 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_ranges  0x00000890       0x10 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
 .debug_macro
  *(.debug_macro)

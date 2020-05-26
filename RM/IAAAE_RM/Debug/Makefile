@@ -35,18 +35,12 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../include/ \
 ../include/libraries/ \
-../include/libraries/Adafruit_Fona_RMonV3/ \
-../include/libraries/Adafruit_Fona_RMonV3/src/ \
-../include/libraries/Adafruit_Fona_RMonV3/src/includes/ \
-../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform/ \
 ../include/libraries/Wire/ \
 ../include/libraries/Wire/src/ \
 ../include/libraries/Wire/src/utility/ \
 ../componentTests \
 ../src/ \
 ../src/libraries/ \
-../src/libraries/Adafruit_Fona_RMonV3/ \
-../src/libraries/Adafruit_Fona_RMonV3/src/ \
 ../src/libraries/Wire/ \
 ../src/libraries/Wire/src/ \
 ../src/libraries/Wire/src/utility/
@@ -54,13 +48,13 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Adafruit_FONA.cpp \
 ../GpsManager.cpp \
 ../GsmManager.cpp \
 ../Helpers.cpp \
 ../Main_SignalLogging.cpp \
 ../RmMemManager.cpp \
 ../SensorManager.cpp \
-../src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.cpp \
 ../src/libraries/Wire/src/utility/twi.c \
 ../src/libraries/Wire/src/Wire.cpp \
 ../ExtendedTests.cpp \
@@ -74,52 +68,52 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Adafruit_FONA.o \
 GpsManager.o \
 GsmManager.o \
 Helpers.o \
 Main_SignalLogging.o \
 RmMemManager.o \
 SensorManager.o \
-src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
 ExtendedTests.o \
 Timing.o
 
 OBJS_AS_ARGS +=  \
+Adafruit_FONA.o \
 GpsManager.o \
 GsmManager.o \
 Helpers.o \
 Main_SignalLogging.o \
 RmMemManager.o \
 SensorManager.o \
-src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
 ExtendedTests.o \
 Timing.o
 
 C_DEPS +=  \
+Adafruit_FONA.d \
 GpsManager.d \
 GsmManager.d \
 Helpers.d \
 Main_SignalLogging.d \
 RmMemManager.d \
 SensorManager.d \
-src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
 ExtendedTests.d \
 Timing.d
 
 C_DEPS_AS_ARGS +=  \
+Adafruit_FONA.d \
 GpsManager.d \
 GsmManager.d \
 Helpers.d \
 Main_SignalLogging.d \
 RmMemManager.d \
 SensorManager.d \
-src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
 ExtendedTests.d \
@@ -140,6 +134,13 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+./Adafruit_FONA.o: .././Adafruit_FONA.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\variants\standard" -I"../include/libraries/Wire/src" -I"../include/libraries/Wire/src/utility" -I"../include/libraries/Adafruit_Fona_RMonV3/src" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform"  -Os -fno-threadsafe-statics -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./GpsManager.o: .././GpsManager.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
@@ -176,13 +177,6 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./SensorManager.o: .././SensorManager.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\variants\standard" -I"../include/libraries/Wire/src" -I"../include/libraries/Wire/src/utility" -I"../include/libraries/Adafruit_Fona_RMonV3/src" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform"  -Os -fno-threadsafe-statics -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.o: ../src/libraries/Adafruit_Fona_RMonV3/src/Adafruit_FONA.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L -DARDUINO=10609 -DARDUINO_AVR_UNO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x0043 -DUSB_MANUFACTURER="\"Arduino LLC\"" -DUNIT_TESTS  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include" -I"..\\..\ArduinoCore\include\core" -I"..\\..\ArduinoCore\include\libraries\SoftwareSerial" -I"..\\..\ArduinoCore\include\variants\standard" -I"../include/libraries/Wire/src" -I"../include/libraries/Wire/src/utility" -I"../include/libraries/Adafruit_Fona_RMonV3/src" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes" -I"../include/libraries/Adafruit_Fona_RMonV3/src/includes/platform"  -Os -fno-threadsafe-statics -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -w -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu++11 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

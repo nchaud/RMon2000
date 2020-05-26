@@ -6,21 +6,21 @@ the commented section below at the end of the setup() function.
 */
 
 #include <Arduino.h>
+#include "Adafruit_FONA.h"
 #include "DataTypes.h"
 #include "Helpers.h"
 #include "Timing.h"
-#include "GsmManager.h"
-#include "GpsManager.h"
+//#include "GsmManager.h"
+//#include "GpsManager.h"
 #include "RmMemManager.h"
 #include "SensorManager.h"
 #include "ExtendedTests.h"
 
 
 //C++ instances
-Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST, IS_GSM_MOCK);
 RmMemManager mem = RmMemManager(false);
-GpsManager gps = GpsManager(IS_GPS_MOCK);
-GsmManager gsm = GsmManager(IS_GSM_MOCK);
+//GpsManager gps = GpsManager(IS_GPS_MOCK);
 SensorManager sensorMgr = SensorManager(true);
 
 void switchOffSystem();
@@ -55,7 +55,7 @@ void setup() {
 
 
 
-	delay(3000); //time for hardware peripherals to warm up + for user's serial monitor to connect
+	delay(3000); //time for above to happen + hardware peripherals to warm up + for user's serial monitor to connect
 	
 	
 	
@@ -123,23 +123,24 @@ void setup() {
 	}
 }
 
+//TODO: Do this depending on what's required in setup()
 void initSubsystems() {
 
-	gps.setFona(fona);
-	gsm.setFona(fona);
+	//gps.setFona(fona);
 
-	if (!gsm.begin()) {
+	FONA_STATUS_INIT ret = fona.begin(FONA_TX, FONA_RX);
+	if (IS_ERR_FSI(ret)) {
 	
-		//FONA library did not begin - store in ROM, terminate and don't consume power
+		//FONA library did not begin - store err in ROM, terminate and don't consume power
 		//(TODO + Why would this ever happen?)
-		return;
+		return; //false;
 	}
 	
-	if (!gps.toggleGps(true)) {
-	
-		//TODO: store in ROM
-		return;
-	}
+	//if (!gps.toggleGps(true)) {
+	//
+		////TODO: store in ROM
+		//return;
+	//}
 }
 
 

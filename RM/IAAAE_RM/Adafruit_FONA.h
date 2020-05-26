@@ -1,38 +1,13 @@
-/***************************************************
-  This is a library for our Adafruit FONA Cellular Module
-
-  Designed specifically to work with the Adafruit FONA
-  ----> http://www.adafruit.com/products/1946
-  ----> http://www.adafruit.com/products/1963
-
-  These displays use TTL Serial to communicate, 2 pins are required to
-  interface
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  BSD license, all text above must be included in any redistribution
- ****************************************************/
 #ifndef ADAFRUIT_FONA_H
 #define ADAFRUIT_FONA_H
 
-#include "includes/FONAConfig.h"
-#include "includes/FONAExtIncludes.h"
-#include "includes/platform/FONAPlatform.h"
+#include <SoftwareSerial.h>
+#include <avr/pgmspace.h>
+#include "Arduino.h"
+#include "DataTypes.h"
+//#include "includes/platform/FONAPlatform.h"
 
-
-#define FONA800L 1
-#define FONA800H 6
-
-#define FONA808_V1 2
 #define FONA808_V2 3
-
-#define FONA3G_A 4
-#define FONA3G_E 5
-
-// Uncomment to changed the preferred SMS storage
-//#define FONA_PREF_SMS_STORAGE "SM"
 
 #define FONA_HEADSETAUDIO 0
 #define FONA_EXTAUDIO 1
@@ -49,10 +24,43 @@
 #define FONA_CALL_RINGING 3
 #define FONA_CALL_INPROGRESS 4
 
+
+
+
+
+#define DebugStream		Serial
+
+#ifdef ADAFRUIT_FONA_DEBUG
+// need to do some debugging...
+#define DEBUG_PRINT(...)		DebugStream.print(__VA_ARGS__)
+#define DEBUG_PRINTLN(...)		DebugStream.println(__VA_ARGS__)
+#endif
+
+#ifndef DEBUG_PRINT
+// debug is disabled
+#define DEBUG_PRINT(...)
+#define DEBUG_PRINTLN(...)
+#endif
+
+// a few typedefs to keep things portable
+typedef	Stream 						FONAStreamType;
+typedef const __FlashStringHelper *	FONAFlashStringPtr;
+
+#define prog_char  					char PROGMEM
+
+#define prog_char_strcmp(a, b)					strcmp_P((a), (b))
+// define prog_char_strncmp(a, b, c)				strncmp_P((a), (b), (c))
+#define prog_char_strstr(a, b)					strstr_P((a), (b))
+#define prog_char_strlen(a)						strlen_P((a))
+#define prog_char_strcpy(to, fromprogmem)		strcpy_P((to), (fromprogmem))
+
+
+
+
 class Adafruit_FONA : public FONAStreamType {
  public:
-  Adafruit_FONA(int8_t r);
-  boolean begin(FONAStreamType &port);
+  Adafruit_FONA(int8_t r, boolean isMock);
+  FONA_STATUS_INIT begin(uint8_t tx, uint8_t rx);
   uint8_t type();
 
   // Stream
@@ -146,7 +154,8 @@ class Adafruit_FONA : public FONAStreamType {
 
  protected:
   int8_t _rstpin;
-  uint8_t _type;
+  boolean _isMock;
+  uint8_t _type = FONA808_V2;
 
   char replybuffer[255];
   FONAFlashStringPtr apn;
@@ -190,6 +199,24 @@ class Adafruit_FONA : public FONAStreamType {
   static void onIncomingCall();
 
   FONAStreamType *mySerial;
+  //SoftwareSerial *fonaSerial;
 };
 
 #endif
+
+/***************************************************
+  This is a library for our Adafruit FONA Cellular Module
+
+  Designed specifically to work with the Adafruit FONA
+  ----> http://www.adafruit.com/products/1946
+  ----> http://www.adafruit.com/products/1963
+
+  These displays use TTL Serial to communicate, 2 pins are required to
+  interface
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
+  products from Adafruit!
+
+  Written by Limor Fried/Ladyada for Adafruit Industries.
+  BSD license, all text above must be included in any redistribution
+ ****************************************************/
