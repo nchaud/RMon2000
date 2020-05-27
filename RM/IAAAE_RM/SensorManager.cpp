@@ -51,8 +51,6 @@ void getMockData(SensorData* ret) {
 
 void SensorManager::readData(SensorData* ret) {
 	
-	RM_LOGLN(F("Reading sensors..."));
-	
 	if (_isMock) {
 		getMockData(ret);
 	}

@@ -98,7 +98,7 @@ class Adafruit_FONA : public FONAStreamType {
   boolean sendUSSD(char *ussdmsg, char *ussdbuff, uint16_t maxlen, uint16_t *readlen);
 
   // GPRS handling
-  boolean enableGPRS(boolean onoff);
+  FONA_STATUS_GPRS_INIT enableGPRS(boolean onoff);
   uint8_t GPRSstate(void);
   boolean getGSMLoc(uint16_t *replycode, char *buff, uint16_t maxlen);
   boolean getGSMLoc(float *lat, float *lon);

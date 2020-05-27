@@ -18,7 +18,7 @@ the commented section below at the end of the setup() function.
 
 
 //C++ instances
-Adafruit_FONA fona = Adafruit_FONA(FONA_RST, IS_GSM_MOCK);
+Adafruit_FONA __fona = Adafruit_FONA(FONA_RST, IS_GSM_MOCK);
 RmMemManager mem = RmMemManager(false);
 //GpsManager gps = GpsManager(IS_GPS_MOCK);
 SensorManager sensorMgr = SensorManager(true);
@@ -26,7 +26,7 @@ SensorManager sensorMgr = SensorManager(true);
 void switchOffSystem();
 void on3MinutesElapsed(bool doWrite);
 void printData();
-void initSubsystems();
+Adafruit_FONA* ensureFonaInitialised(boolean forDataSend);
 
 uint8_t _behaviour = SYS_BEHAVIOUR::DoNothing;
 
@@ -68,7 +68,7 @@ void setup() {
 	
 	RM_LOGLN(F("Starting..."));
 	
-	initSubsystems();
+	//initSubsystems();
 	
 	if (IS_BASIC_MEM_TEST) {
 		
@@ -82,6 +82,21 @@ void setup() {
 		
 		ExtendedTests::runExtendedMemTest(mem, sensorMgr);
 		
+		switchOffSystem();
+		return;
+	}
+
+	if (IS_EXTENDED_GSM_TEST) {
+	
+		Adafruit_FONA* fona = ensureFonaInitialised(true);
+		
+		if (fona == NULL){ //Failed to init
+			
+			switchOffSystem();
+			return;
+		}
+		ExtendedTests::runExtendedGsmTest(*fona);
+	
 		switchOffSystem();
 		return;
 	}
@@ -123,18 +138,40 @@ void setup() {
 	}
 }
 
-//TODO: Do this depending on what's required in setup()
-void initSubsystems() {
+Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
 
 	//gps.setFona(fona);
 
-	FONA_STATUS_INIT ret = fona.begin(FONA_TX, FONA_RX);
+	RM_LOGLN(F("Initialising fona..."));
+	FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
 	if (IS_ERR_FSI(ret)) {
 	
+		RM_LOG2(F("Error initialising fona..."), ret);
+		
 		//FONA library did not begin - store err in ROM, terminate and don't consume power
 		//(TODO + Why would this ever happen?)
-		return; //false;
+		
+		
+		
+		
+		return NULL;//__fona; //false;
 	}
+	
+	if (forDataSend) {
+		
+		RM_LOGLN(F("Initialising gprs..."));
+		FONA_STATUS_GPRS_INIT gprsRet = __fona.enableGPRS(true);
+		if (IS_ERR_FSGI(gprsRet)) {
+			
+			//TODO: Log this
+			
+			RM_LOG2(F("Error initialising gprs..."), gprsRet);
+			return NULL;//__fona;
+		}
+	}
+	
+	
+	return &__fona;
 	
 	//if (!gps.toggleGps(true)) {
 	//
@@ -208,15 +245,48 @@ void on3MinutesElapsed(bool doWrite) {
 
 boolean takeReadings() {
 	
+	RM_LOGLN(F("Taking readings..."));
+	
 	SensorData sd;
 	sensorMgr.readData(&sd);
 	
 	return true;
 }
 
+Adafruit_FONA* _sendDataFona = NULL;
+uint8_t _sendDataLoopCount = 0;
 boolean sendData() {
 	
-	RM_LOGLN(F("Sending data..."));
+	boolean doInit = (_sendDataLoopCount == 0);
+	
+	//Increment before doing any work so doesn't get stuck continuously initialising
+	//(by being called from 'loop') due to a loop-resetting error raised by FONA
+	++_sendDataLoopCount;
+	
+	if (doInit) {
+	
+		RM_LOGLN(F("Initialising module to send data"));
+	
+		_sendDataFona = ensureFonaInitialised(true);
+	
+		if (_sendDataFona == NULL)
+			return true; //This task is finished even though in error state
+			
+		RM_LOGLN(F("Now waiting for a while before checking signal"));
+	}
+	
+	//Wait to get signal
+	if (_sendDataLoopCount == 60) {
+		
+		//Get RSSI - store? wait another minute?not
+		//_sendDataFona->getRSSI()
+		RM_LOGLN(F("Signal is "));
+		
+		
+		//If all done - reset (even though board will be reset - but for tests)
+		_sendDataLoopCount = 0;
+		_sendDataFona = NULL;
+	}
 	
 	return false;
 }
