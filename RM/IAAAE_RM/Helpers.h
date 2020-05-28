@@ -7,6 +7,7 @@
 class Helpers {
 
 public:
+	static void printRSSI(FONA_GET_RSSI* rssi);
 	static void printSensorData(SensorData* sd);
 };
 

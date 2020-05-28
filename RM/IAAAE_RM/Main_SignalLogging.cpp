@@ -67,13 +67,19 @@ void setup() {
 	#endif
 	
 	RM_LOGLN(F("Starting..."));
-	
-	//initSubsystems();
-	
+		
 	if (IS_BASIC_MEM_TEST) {
 		
 		mem.verifyBasicEepRom();
 		
+		switchOffSystem();
+		return;
+	}
+
+	if (IS_EXTENDED_TYPES_TEST) {
+	
+		ExtendedTests::runExtendedTypesTest();
+	
 		switchOffSystem();
 		return;
 	}
@@ -88,14 +94,15 @@ void setup() {
 
 	if (IS_EXTENDED_GSM_TEST) {
 	
-		Adafruit_FONA* fona = ensureFonaInitialised(true);
+		Adafruit_FONA* fona = ensureFonaInitialised(false);
 		
 		if (fona == NULL){ //Failed to init
 			
-			switchOffSystem();
-			return;
+			RM_LOGLN(F("*** FAIL EGT - FONA INIT ERROR ***"));
+		} else {
+			
+			ExtendedTests::runExtendedGsmTest(*fona);
 		}
-		ExtendedTests::runExtendedGsmTest(*fona);
 	
 		switchOffSystem();
 		return;
@@ -144,13 +151,14 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
 
 	RM_LOGLN(F("Initialising fona..."));
 	FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
+	
 	if (IS_ERR_FSI(ret)) {
 	
 		RM_LOG2(F("Error initialising fona..."), ret);
 		
 		//FONA library did not begin - store err in ROM, terminate and don't consume power
 		//(TODO + Why would this ever happen?)
-		
+		//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 		
 		
 		
@@ -164,6 +172,7 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
 		if (IS_ERR_FSGI(gprsRet)) {
 			
 			//TODO: Log this
+			//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 			
 			RM_LOG2(F("Error initialising gprs..."), gprsRet);
 			return NULL;//__fona;

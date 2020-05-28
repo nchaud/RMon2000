@@ -1,3 +1,5 @@
+NB: 1h39 time between cycles, 3m3 between small cycles
+
 circuit capacitors voltage check
 resistors check
 power unit increase voltage/ensure output is 5V, not less
@@ -15,5 +17,7 @@ timing every 4 hours - collect and save every 24hrs. bigger eeprom? slide out ee
 
 no lipo batt connected to sim808 chip!!
 
-expose all eeprom pins through header so can connect from externally
+expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
+
+jumper/switch for timer pin A to reduce time
 

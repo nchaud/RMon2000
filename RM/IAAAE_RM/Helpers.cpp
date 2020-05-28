@@ -2,6 +2,28 @@
 #include "DataTypes.h"
 #include "Helpers.h"
 
+void Helpers::printRSSI(FONA_GET_RSSI* rssi) {
+	
+	RM_LOG(F("RSSI="));
+	RM_LOG(rssi->rssi);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("BER="));
+	RM_LOG(rssi->ber);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Network-Reg ResCode="));
+	RM_LOG(NETREG_ACTUALVAL_RESULT_CODE(rssi->netReg));
+	RM_LOG(F(", Status="));
+	RM_LOG(NETREG_ACTUALVAL_NETSTAT(rssi->netReg));
+	RM_LOG(F(", Error="));
+	RM_LOG(NETREG_ACTUALVAL_ERROR(rssi->netReg));
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("RSSI Error?="));
+	RM_LOGLN(rssi->rssiErr);
+}
+
 void Helpers::printSensorData(SensorData* sd) {
 
 	RM_LOG(F("Batt-V="));

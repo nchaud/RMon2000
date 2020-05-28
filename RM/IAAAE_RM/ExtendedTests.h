@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "DataTypes.h"
+#include "Helpers.h"
 #include "RmMemManager.h"
 #include "SensorManager.h"
 #include "Adafruit_FONA.h"
@@ -15,6 +16,7 @@ public:
 	public:
 		static void runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr);
 		static void runExtendedGsmTest(Adafruit_FONA fona);
+		static void runExtendedTypesTest();
 };
 
 #endif //__EXTENDEDTESTS_H__

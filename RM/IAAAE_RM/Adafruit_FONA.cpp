@@ -186,21 +186,34 @@ uint8_t Adafruit_FONA::getIMEI(char *imei) {
 
 /********* NETWORK *******************************************************/
 
-uint8_t Adafruit_FONA::getNetworkStatus(void) {
-  uint16_t status;
-
-  if (! sendParseReply(F("AT+CREG?"), F("+CREG: "), &status, ',', 1))
-	return 0;
-
-  return status;
-}
-
-uint8_t Adafruit_FONA::getRSSI(void) {
-  uint16_t reply;
-
-  if (! sendParseReply(F("AT+CSQ"), F("+CSQ: "), &reply) )
-	return 0;
-
+FONA_GET_RSSI Adafruit_FONA::getRSSI(void) {
+	
+  FONA_GET_RSSI reply;
+  uint16_t rssi=0, ber=0, nsPres=0, nsStat=0;
+  uint8_t netReg=0;
+  
+  if (! sendParseReply(F("AT+CSQ"), F("+CSQ: "), &rssi, ',', 0))
+	  reply.rssiErr = 1;
+	
+  if (! sendParseReply(F("AT+CSQ"), F("+CSQ: "), &ber, ',', 1))
+	  reply.rssiErr = 1;
+  
+  if (! sendParseReply(F("AT+CREG?"), F("+CREG: "), &nsPres, ',', 0))
+	  netReg |= FONA_GET_NETREG::IS_ERROR;
+  else
+	  netReg |= nsPres; //Is within GET_NETREG enum bounds
+	
+  if (! sendParseReply(F("AT+CREG?"), F("+CREG: "), &nsStat, ',', 1))
+	  netReg |= FONA_GET_NETREG::IS_ERROR;
+  else
+	  netReg |= nsStat; //Is within GET_NETREG enum bounds
+  
+  //Both are <= 99 so can cast&store in 1 byte fields
+  reply.rssi = rssi;
+  reply.ber = ber;
+  
+  reply.netReg = (FONA_GET_NETREG)netReg;
+  
   return reply;
 }
 
@@ -208,8 +221,10 @@ uint8_t Adafruit_FONA::getRSSI(void) {
 /********* PWM/BUZZER **************************************************/
 
 boolean Adafruit_FONA::setPWM(uint16_t period, uint8_t duty) {
-  if (period > 2000) return false;
-  if (duty > 100) return false;
+  if (period > 2000)
+	return false;
+  if (duty > 100)
+	return false;
 
   return sendCheckReply(F("AT+SPWM=0,"), period, duty, ok_reply);
 }
@@ -221,13 +236,15 @@ int8_t Adafruit_FONA::getNumSMS(void) {
   uint16_t numsms;
 
   // get into text mode
-  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply)) return -1;
+  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply))
+	return -1;
 
   // ask how many sms are stored
   if (sendParseReply(F("AT+CPMS?"), F("\"SM\","), &numsms)) 
     return numsms;
   if (sendParseReply(F("AT+CPMS?"), F("\"SM_P\","), &numsms)) 
     return numsms;
+	
   return -1;
 }
 
@@ -236,18 +253,18 @@ int8_t Adafruit_FONA::getNumSMS(void) {
 boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
 			       uint16_t maxlen, uint16_t *readlen) {
   // text mode
-  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply)) return false;
+  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply))
+	return false;
 
   // show all text mode parameters
-  if (! sendCheckReply(F("AT+CSDH=1"), ok_reply)) return false;
+  if (! sendCheckReply(F("AT+CSDH=1"), ok_reply))
+	return false;
 
   // parse out the SMS len
   uint16_t thesmslen = 0;
 
-
   DEBUG_PRINT(F("AT+CMGR="));
   DEBUG_PRINTLN(i);
-
 
   //getReply(F("AT+CMGR="), i, 1000);  //  do not print debug!
   mySerial->print(F("AT+CMGR="));
@@ -257,9 +274,7 @@ boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
   //DEBUG_PRINT(F("Reply: ")); DEBUG_PRINTLN(replybuffer);
   // parse it out...
 
-
   DEBUG_PRINTLN(replybuffer);
-
   
   if (! parseReply(F("+CMGR:"), &thesmslen, ',', 11)) {
     *readlen = 0;
@@ -273,7 +288,6 @@ boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
   uint16_t thelen = min(maxlen, strlen(replybuffer));
   strncpy(smsbuff, replybuffer, thelen);
   smsbuff[thelen] = 0; // end the string
-
 
   DEBUG_PRINTLN(replybuffer);
 
@@ -305,39 +319,43 @@ boolean Adafruit_FONA::readSMS(uint8_t i, char *smsbuff,
 // copied to the result.  Returns true if a result was successfully retrieved,
 // otherwise false.
 boolean Adafruit_FONA::getSMSSender(uint8_t i, char *sender, int senderlen) {
+	
   // Ensure text mode and all text mode parameters are sent.
-  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply)) return false;
-  if (! sendCheckReply(F("AT+CSDH=1"), ok_reply)) return false;
-
+  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply))
+	return false;
+	
+  if (! sendCheckReply(F("AT+CSDH=1"), ok_reply))
+	return false;
 
   DEBUG_PRINT(F("AT+CMGR="));
   DEBUG_PRINTLN(i);
-
 
   // Send command to retrieve SMS message and parse a line of response.
   mySerial->print(F("AT+CMGR="));
   mySerial->println(i);
   readline(1000);
 
-
   DEBUG_PRINTLN(replybuffer);
-
 
   // Parse the second field in the response.
   boolean result = parseReplyQuoted(F("+CMGR:"), sender, senderlen, ',', 1);
+  
   // Drop any remaining data from the response.
   flushInput();
   return result;
 }
 
 boolean Adafruit_FONA::sendSMS(char *smsaddr, char *smsmsg) {
-  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply)) return false;
+	
+  if (! sendCheckReply(F("AT+CMGF=1"), ok_reply))
+	return false;
 
   char sendcmd[30] = "AT+CMGS=\"";
   strncpy(sendcmd+9, smsaddr, 30-9-2);  // 9 bytes beginning, 2 bytes for close quote + null
   sendcmd[strlen(sendcmd)] = '\"';
 
-  if (! sendCheckReply(sendcmd, F("> "))) return false;
+  if (! sendCheckReply(sendcmd, F("> ")))
+	return false;
 
   DEBUG_PRINT(F("> ")); DEBUG_PRINTLN(smsmsg);
 
@@ -957,6 +975,7 @@ boolean Adafruit_FONA::HTTP_ssl(boolean onoff) {
 
 boolean Adafruit_FONA::HTTP_GET_start(char *url,
               uint16_t *status, uint16_t *datalen){
+				  
   if (! HTTP_setup(url))
     return false;
 
@@ -964,8 +983,10 @@ boolean Adafruit_FONA::HTTP_GET_start(char *url,
   if (! HTTP_action(FONA_HTTP_GET, status, datalen, 30000))
     return false;
 
-  DEBUG_PRINT(F("Status: ")); DEBUG_PRINTLN(*status);
-  DEBUG_PRINT(F("Len: ")); DEBUG_PRINTLN(*datalen);
+  DEBUG_PRINT(F("Status: "));
+  DEBUG_PRINTLN(*status);
+  DEBUG_PRINT(F("Len: "));
+  DEBUG_PRINTLN(*datalen);
 
   // HTTP response data
   if (! HTTP_readall(datalen))
@@ -982,6 +1003,7 @@ boolean Adafruit_FONA::HTTP_POST_start(char *url,
               FONAFlashStringPtr contenttype,
               const uint8_t *postdata, uint16_t postdatalen,
               uint16_t *status, uint16_t *datalen){
+				  
   if (! HTTP_setup(url))
     return false;
 
@@ -992,7 +1014,9 @@ boolean Adafruit_FONA::HTTP_POST_start(char *url,
   // HTTP POST data
   if (! HTTP_data(postdatalen, 10000))
     return false;
+	
   mySerial->write(postdata, postdatalen);
+  
   if (! expectReply(ok_reply))
     return false;
 
@@ -1000,8 +1024,10 @@ boolean Adafruit_FONA::HTTP_POST_start(char *url,
   if (! HTTP_action(FONA_HTTP_POST, status, datalen))
     return false;
 
-  DEBUG_PRINT(F("Status: ")); DEBUG_PRINTLN(*status);
-  DEBUG_PRINT(F("Len: ")); DEBUG_PRINTLN(*datalen);
+  DEBUG_PRINT(F("Status: "));
+  DEBUG_PRINTLN(*status);
+  DEBUG_PRINT(F("Len: "));
+  DEBUG_PRINTLN(*datalen);
 
   // HTTP response data
   if (! HTTP_readall(datalen))
@@ -1056,7 +1082,8 @@ boolean Adafruit_FONA::expectReply(FONAFlashStringPtr reply,
                                    uint16_t timeout) {
   readline(timeout);
 
-  DEBUG_PRINT(F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
+  DEBUG_PRINT(F("\t<--- "));
+  DEBUG_PRINTLN(replybuffer);
 
   return (prog_char_strcmp(replybuffer, (prog_char*)reply) == 0);
 }
@@ -1430,11 +1457,12 @@ boolean Adafruit_FONA::parseReplyQuoted(FONAFlashStringPtr toreply,
 boolean Adafruit_FONA::sendParseReply(FONAFlashStringPtr tosend,
 				      FONAFlashStringPtr toreply,
 				      uint16_t *v, char divider, uint8_t index) {
-						  
+						
   getReply(tosend);
 
-  if (! parseReply(toreply, v, divider, index))
+  if (! parseReply(toreply, v, divider, index)) {
 	return false;
+  }
 
   readline(); // eat 'OK'
 

@@ -22,7 +22,8 @@
 #define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
 #define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
 #define IS_EXTENDED_MEM_TEST		false	//Test reading signals and reading/writing to memory
-#define IS_EXTENDED_GSM_TEST		true	//Test for gprs,web
+#define IS_EXTENDED_GSM_TEST		true	//Test for gprs, web
+#define IS_EXTENDED_TYPES_TEST		false	//Test for RMv3 types are good, esp flags
 
 //Fona Pins
 #define FONA_RX 2
@@ -98,7 +99,7 @@ enum LED_SEL/*:byte*/ {
 	Bottom
 };
 
-enum LED_STATE { 
+enum LED_STATE : uint8_t  { 
 	Red_Solid   = 1,	 
 	Red_Fast    = 2,	 
 	Red_Slow    = 4, 
@@ -113,7 +114,7 @@ enum LED_STATE {
 	//IsTemp		= 256
 };
 
-enum FONA_STATUS_INIT {
+enum FONA_STATUS_INIT : uint8_t  {
 	
 	SUCCESS_FSI=1,
 	WARN_ATEO_FAIL=2,
@@ -126,7 +127,7 @@ enum FONA_STATUS_INIT {
 		(x == FONA_STATUS_INIT::ERR_SERIAL_FAIL || \
 		 x == FONA_STATUS_INIT::ERR_FONA_SIM_MODULE)
 
-enum FONA_STATUS_GPRS_INIT {
+enum FONA_STATUS_GPRS_INIT : uint8_t  {
 	
 	SUCCESS_FSGI=1,
 	WARN_CIPSHUT_BEFORE_OPENING=2,
@@ -148,7 +149,44 @@ enum FONA_STATUS_GPRS_INIT {
 
 enum FONA_STATUS_GSM_SEND {
 	
-	INIT_SUCCESS=1
+	INIT_SUCCESS = 1
+};
+
+//Lowest 2 bytes for result code, next 3 bytes for netstat, next byte for error
+enum FONA_GET_NETREG : uint8_t {
+	RESULT_CODE_0 = 0,
+	RESULT_CODE_1 = 1,
+	RESULT_CODE_2 = 2,
+	NETSTAT_0	  = 0 << 2,
+	NETSTAT_1	  = 1 << 2,
+	NETSTAT_2	  = 2 << 2,
+	NETSTAT_3	  = 3 << 2,
+	NETSTAT_4	  = 4 << 2,
+	NETSTAT_5	  = 5 << 2,
+	IS_ERROR	  = 1 << 5
+};
+//Macros to clear other bytes - nb: cast is critical for later equality checks
+#define NETREG_ONLY_RESULT_CODE(val) \
+	(FONA_GET_NETREG)(val & B00000011)
+#define NETREG_ONLY_NETSTAT(val) \
+	(FONA_GET_NETREG)(val & B00011100)
+#define NETREG_ONLY_ERROR(val) \
+	(FONA_GET_NETREG)(val & B00100000)
+//Macros to deshift so netstat_5 comes out as number 5 - nb: no casting as no longer enum
+#define NETREG_ACTUALVAL_RESULT_CODE(val) \
+	NETREG_ONLY_RESULT_CODE(val)
+#define NETREG_ACTUALVAL_NETSTAT(val) \
+	NETREG_ONLY_NETSTAT(val)>>2
+#define NETREG_ACTUALVAL_ERROR(val) \
+	NETREG_ONLY_ERROR(val)>>5
+
+struct FONA_GET_RSSI {
+	
+	uint8_t rssi	= 0;
+	uint8_t ber		= 0; //bit error rate
+	uint8_t rssiErr	= 0;
+	
+	FONA_GET_NETREG netReg;
 };
 
 //struct TransmitReadingsResult{
@@ -214,16 +252,16 @@ struct GpsData{
 #endif
 
 
-struct GsmInfo{
-
-
-	//TODO: IS THAT IT?
-	
-	
-	uint8_t errorCode;
-	uint8_t rssi;
-	uint8_t networkStatus;
-};
+//struct GsmInfo{
+//
+//
+	////TODO: IS THAT IT?
+	//
+	//
+	//uint8_t errorCode;
+	//uint8_t rssi;
+	//uint8_t networkStatus;
+//};
 
 struct GpsInfo{
 
@@ -239,25 +277,25 @@ struct GpsInfo{
 };
 
 struct SingleSession{
-	GsmInfo gsmInfo;
+	//GsmInfo gsmInfo;
 	GpsInfo gpsInfo;
 };
 
 /* Stored at start of ROM. */
 struct ModuleMeta{
 
-	uint8_t  moduleId;
+	uint8_t  moduleId = 0;
 	
 	/* No of times module has booted up incase numReadings cycles/fails */
-	uint16_t bootCount;
+	uint16_t bootCount = 0;
 	
 	/* Where the next sensor data or daily cycle data can go */
-	uint16_t nextFreeWriteAddr;
+	uint16_t nextFreeWriteAddr = 0;
 	
 	/* Dedicated area where testing eeprom will write and read to */
-	uint64_t eepromTestArea;
+	uint64_t eepromTestArea = 0;
 	
-	uint8_t spareBuffer[16];
+	uint8_t spareBuffer[16] = {0}; //Sets all elems to 0
 };
 
 
@@ -266,11 +304,11 @@ struct ModuleMeta{
 struct SensorData {
 	
 	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
-	uint16_t battVoltage;
-	uint16_t current;
-	uint16_t pVVoltage;
-	uint16_t temperature;
-	uint8_t  errorChar;/* TODO: uint16_32 for bitwise errs?*/ /* not unsigned else will get treated like int by string ctor */
+	uint16_t battVoltage	= 0;
+	uint16_t current		= 0;
+	uint16_t pVVoltage		= 0;
+	uint16_t temperature	= 0;
+	uint8_t  errorChar		= 0;/* TODO: uint16_32 for bitwise errs?*/ /* not unsigned else will get treated like int by string ctor */
 	//bool           HasBeenSent	= false;
 };
 
