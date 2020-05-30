@@ -138,7 +138,7 @@ void setup() {
 	//Take reading every 5 hours so it's a scattered time reading throughout the week
 	_behaviour |= SYS_BEHAVIOUR::TakeReadings;
 	
-	//Send to HQ every 20 hours
+	//Send to HQ every ~20 hours
 	if (currBootCount > 0 && currBootCount%4 == 0) { //TODO: Overflow?
 		
 		_behaviour |= SYS_BEHAVIOUR::SendData;
@@ -147,11 +147,9 @@ void setup() {
 
 Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
 
-	//gps.setFona(fona);
-
 	RM_LOGLN(F("Initialising fona..."));
 	FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
-	
+		
 	if (IS_ERR_FSI(ret)) {
 	
 		RM_LOG2(F("Error initialising fona..."), ret);
@@ -162,13 +160,23 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
 		
 		
 		
-		return NULL;//__fona; //false;
+		return NULL;
 	}
+	
+	
+	//TODO: TEST ! with both single-digit module IDs and double digit
+	uint8_t moduleId = mem.getModuleId();
+	String userAgentStr = "IAAAE_RMonV3_"+moduleId;	
+	__fona.setUserAgent(userAgentStr);
+	
+	
 	
 	if (forDataSend) {
 		
 		RM_LOGLN(F("Initialising gprs..."));
+		
 		FONA_STATUS_GPRS_INIT gprsRet = __fona.enableGPRS(true);
+		
 		if (IS_ERR_FSGI(gprsRet)) {
 			
 			//TODO: Log this
@@ -287,10 +295,19 @@ boolean sendData() {
 	//Wait to get signal
 	if (_sendDataLoopCount == 60) {
 		
-		//Get RSSI - store? wait another minute?not
-		//_sendDataFona->getRSSI()
-		RM_LOGLN(F("Signal is "));
+		//Get RSSI - store? check and/or wait another minute? not?
+		FONA_GET_RSSI rssi = _sendDataFona->getRSSI();
+		Helpers::printRSSI(&rssi);
 		
+		
+		//SensorData* sd;
+//
+		//sd->battVoltage = 10;
+		//sd->pVVoltage = 25;
+		//sd->current = 13;
+		//sd->temperature = 43;
+		
+		 
 		
 		//If all done - reset (even though board will be reset - but for tests)
 		_sendDataLoopCount = 0;
@@ -339,6 +356,10 @@ void loop() {
 
 
 
+//TODO: A good test is putting
+//char forWeb[1000]; 
+//in the stack, causing a restart and we should get a restart code
+//=> to be stored in memory and then module shutdown?
 
 
 

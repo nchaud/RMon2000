@@ -21,14 +21,6 @@
 //#define BAND_READING_CYCLE_START 28*1000 /* Will start cycling from here after it reaches the _END memory location above */
 
 
-//Their current state - true=>high
-boolean _ledBottomPinRed=false;
-boolean _ledBottomPinGreen=false;
-boolean _ledTopPinRed=false;
-boolean _ledTopPinGreen=false;
-LED_STATE _ledBottomState = All_Clear;
-LED_STATE _ledTopState = All_Clear;
-uint8_t _flashCallCount=0;
 
 RmMemManager::RmMemManager(boolean isMock) {
 	_isMock = isMock;
@@ -413,6 +405,13 @@ void RmMemManager::replaceLastSensorEntry(SensorData* r) {
 	//volatile unsigned long lastEntryAddress = MEMADDR_READING_DATA_START + lastEntryOffset;
 	//
 	//internalWriteEntryAtAddress(r, lastEntryAddress);
+}
+
+uint8_t RmMemManager::getModuleId() {
+	
+	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, moduleId);
+	uint8_t val = getUCharFromMemory(addr);
+	return val;
 }
 
 void RmMemManager::appendSensorEntry(SensorData* r) {

@@ -6,6 +6,7 @@
 #include "Helpers.h"
 #include "RmMemManager.h"
 #include "SensorManager.h"
+#include "GsmPayload.h"
 #include "Adafruit_FONA.h"
 
 class ExtendedTests

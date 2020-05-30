@@ -110,14 +110,6 @@ class Adafruit_FONA : public FONAStreamType {
   boolean getGPS(float *lat, float *lon, float *speed_kph, float *heading, float *altitude, char *date);
   boolean enableGPSNMEA(uint8_t nmea);
 
-  // TCP raw connections
-  boolean TCPconnect(char *server, uint16_t port);
-  boolean TCPclose(void);
-  boolean TCPconnected(void);
-  boolean TCPsend(char *packet, uint8_t len);
-  uint16_t TCPavailable(void);
-  uint16_t TCPread(uint8_t *buff, uint8_t len);
-
   // HTTP low level interface (maps directly to SIM800 commands).
   boolean HTTP_init();
   boolean HTTP_term();
@@ -126,6 +118,7 @@ class Adafruit_FONA : public FONAStreamType {
   boolean HTTP_para(FONAFlashStringPtr parameter, const char *value);
   boolean HTTP_para(FONAFlashStringPtr parameter, FONAFlashStringPtr value);
   boolean HTTP_para(FONAFlashStringPtr parameter, int32_t value);
+  boolean HTTP_para(FONAFlashStringPtr parameter, const String value);
   boolean HTTP_data(uint32_t size, uint32_t maxTime=10000);
   boolean HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
   boolean HTTP_readall(uint16_t *datalen);
@@ -136,7 +129,7 @@ class Adafruit_FONA : public FONAStreamType {
   void HTTP_GET_end(void);
   boolean HTTP_POST_start(char *url, FONAFlashStringPtr contenttype, const uint8_t *postdata, uint16_t postdatalen,  uint16_t *status, uint16_t *datalen);
   void HTTP_POST_end(void);
-  void setUserAgent(FONAFlashStringPtr useragent);
+  void setUserAgent(String useragent);
 
   // HTTPS
   void setHTTPSRedirect(boolean onoff);
@@ -161,7 +154,7 @@ class Adafruit_FONA : public FONAStreamType {
   FONAFlashStringPtr apnusername;
   FONAFlashStringPtr apnpassword;
   boolean httpsredirect;
-  FONAFlashStringPtr useragent;
+  String useragent;
   FONAFlashStringPtr ok_reply;
 
   // HTTP helpers
@@ -197,7 +190,7 @@ class Adafruit_FONA : public FONAStreamType {
   static boolean _incomingCall;
   static void onIncomingCall();
 
-  FONAStreamType *mySerial;
+  SoftwareSerial *mySerial;
   //SoftwareSerial *fonaSerial;
 };
 

@@ -8,6 +8,8 @@ GpsManager.cpp
 
 GsmManager.cpp
 
+GsmPayload.cpp
+
 Helpers.cpp
 
 Main_SignalLogging.cpp

@@ -36,8 +36,7 @@ uint16_t SensorManager::takeSampleAnalog(uint8_t pinNo)	{
 	return batt;
 }
 
-uint8_t __mockDataCounter;
-void getMockData(SensorData* ret) {
+void SensorManager::getMockData(SensorData* ret) {
 	
 	++__mockDataCounter; //After 255, will roll back to 0, fine for tests
 	
@@ -52,7 +51,7 @@ void getMockData(SensorData* ret) {
 void SensorManager::readData(SensorData* ret) {
 	
 	if (_isMock) {
-		getMockData(ret);
+		this->getMockData(ret);
 	}
 	else {
 		uint16_t pvRaw   = takeSampleAnalog(PIN_PV_VOLTAGE);

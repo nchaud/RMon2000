@@ -8,7 +8,10 @@ class SensorManager
 {
 private:
 	boolean _isMock;
+	uint8_t __mockDataCounter;
+	
 	float readVcc();
+	void getMockData(SensorData* ret);
 
 public:
 	SensorManager(boolean isMock);

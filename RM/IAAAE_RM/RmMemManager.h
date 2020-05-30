@@ -11,6 +11,15 @@ protected:
 private:
 	boolean _isMock;
 
+	//Their current state - true=>high
+	boolean _ledBottomPinRed=false;
+	boolean _ledBottomPinGreen=false;
+	boolean _ledTopPinRed=false;
+	boolean _ledTopPinGreen=false;
+	LED_STATE _ledBottomState = All_Clear;
+	LED_STATE _ledTopState = All_Clear;
+	uint8_t _flashCallCount=0;
+
 //functions
 public:
 	RmMemManager(boolean isMock);
@@ -32,6 +41,7 @@ public:
 	void runExtendedDumpOutput();
 	void runExtendedShow100Bytes();
 	
+	uint8_t getModuleId();
 	void appendSensorEntry(SensorData* r);
 	unsigned long loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
 								unsigned long* loadedUpTo); //byte* outputData, unsigned int outputDataMaxLength)

@@ -11,8 +11,8 @@ Adafruit_FONA::Adafruit_FONA(int8_t rst, boolean isMock)
   apnusername = 0;
   apnpassword = 0;
   mySerial = 0;
-  httpsredirect = false; 
-  useragent = F("FONA");
+  httpsredirect = true;
+  useragent = String("IAAAE_RMonV3");
   ok_reply = F("OK");
 }
 
@@ -24,9 +24,8 @@ FONA_STATUS_INIT Adafruit_FONA::begin(uint8_t tx, uint8_t rx) { //Stream &port) 
 
   FONA_STATUS_INIT ret = FONA_STATUS_INIT::SUCCESS_FSI;
   
-  SoftwareSerial *fonaSerial = new SoftwareSerial(tx, rx);
-  fonaSerial->begin(4800);
-  mySerial = fonaSerial;
+  mySerial = new SoftwareSerial(tx, rx);
+  mySerial->begin(4800);
 
   pinMode(_rstpin, OUTPUT);
   digitalWrite(_rstpin, HIGH);
@@ -749,120 +748,7 @@ boolean Adafruit_FONA::getGSMLoc(float *lat, float *lon) {
 
 }
 /********* TCP FUNCTIONS  ************************************/
-
-
-boolean Adafruit_FONA::TCPconnect(char *server, uint16_t port) {
-  flushInput();
-
-  // close all old connections
-  if (! sendCheckReply(F("AT+CIPSHUT"), F("SHUT OK"), 20000) ) return false;
-
-  // single connection at a time
-  if (! sendCheckReply(F("AT+CIPMUX=0"), ok_reply) ) return false;
-
-  // manually read data
-  if (! sendCheckReply(F("AT+CIPRXGET=1"), ok_reply) ) return false;
-
-
-  DEBUG_PRINT(F("AT+CIPSTART=\"TCP\",\""));
-  DEBUG_PRINT(server);
-  DEBUG_PRINT(F("\",\""));
-  DEBUG_PRINT(port);
-  DEBUG_PRINTLN(F("\""));
-
-
-  mySerial->print(F("AT+CIPSTART=\"TCP\",\""));
-  mySerial->print(server);
-  mySerial->print(F("\",\""));
-  mySerial->print(port);
-  mySerial->println(F("\""));
-
-  if (! expectReply(ok_reply)) return false;
-  if (! expectReply(F("CONNECT OK"))) return false;
-
-  // looks like it was a success (?)
-  return true;
-}
-
-boolean Adafruit_FONA::TCPclose(void) {
-  return sendCheckReply(F("AT+CIPCLOSE"), ok_reply);
-}
-
-boolean Adafruit_FONA::TCPconnected(void) {
-  if (! sendCheckReply(F("AT+CIPSTATUS"), ok_reply, 100) ) return false;
-  readline(100);
-
-  DEBUG_PRINT (F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
-
-  return (strcmp(replybuffer, "STATE: CONNECT OK") == 0);
-}
-
-boolean Adafruit_FONA::TCPsend(char *packet, uint8_t len) {
-
-  DEBUG_PRINT(F("AT+CIPSEND="));
-  DEBUG_PRINTLN(len);
-#ifdef ADAFRUIT_FONA_DEBUG
-  for (uint16_t i=0; i<len; i++) {
-  DEBUG_PRINT(F(" 0x"));
-  DEBUG_PRINT(packet[i], HEX);
-  }
-#endif
-  DEBUG_PRINTLN();
-
-
-  mySerial->print(F("AT+CIPSEND="));
-  mySerial->println(len);
-  readline();
-
-  DEBUG_PRINT (F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
-
-  if (replybuffer[0] != '>') return false;
-
-  mySerial->write((uint8_t*)packet, len);
-  readline(3000); // wait up to 3 seconds to send the data
-
-  DEBUG_PRINT (F("\t<--- ")); DEBUG_PRINTLN(replybuffer);
-
-
-  return (strcmp(replybuffer, "SEND OK") == 0);
-}
-
-uint16_t Adafruit_FONA::TCPavailable(void) {
-  uint16_t avail;
-
-  if (! sendParseReply(F("AT+CIPRXGET=4"), F("+CIPRXGET: 4,"), &avail, ',', 0) ) return false;
-
-
-  DEBUG_PRINT (avail); DEBUG_PRINTLN(F(" bytes available"));
-
-
-  return avail;
-}
-
-
-uint16_t Adafruit_FONA::TCPread(uint8_t *buff, uint8_t len) {
-  uint16_t avail;
-
-  mySerial->print(F("AT+CIPRXGET=2,"));
-  mySerial->println(len);
-  readline();
-  if (! parseReply(F("+CIPRXGET: 2,"), &avail, ',', 0)) return false;
-
-  readRaw(avail);
-
-#ifdef ADAFRUIT_FONA_DEBUG
-  DEBUG_PRINT (avail); DEBUG_PRINTLN(F(" bytes read"));
-  for (uint8_t i=0;i<avail;i++) {
-  DEBUG_PRINT(F(" 0x")); DEBUG_PRINT(replybuffer[i], HEX);
-  }
-  DEBUG_PRINTLN();
-#endif
-
-  memcpy(buff, replybuffer, avail);
-
-  return avail;
-}
-
+/* Not required for RMonV3 - all removed */
 
 
 /********* HTTP LOW LEVEL FUNCTIONS  ************************************/
@@ -908,6 +794,13 @@ boolean Adafruit_FONA::HTTP_para(FONAFlashStringPtr parameter,
   HTTP_para_start(parameter, true);
   mySerial->print(value);
   return HTTP_para_end(true);
+}
+
+boolean Adafruit_FONA::HTTP_para(FONAFlashStringPtr parameter,
+								const String value) {
+	HTTP_para_start(parameter, true);
+	mySerial->print(value);
+	return HTTP_para_end(true);
 }
 
 boolean Adafruit_FONA::HTTP_para(FONAFlashStringPtr parameter,
@@ -1040,7 +933,7 @@ void Adafruit_FONA::HTTP_POST_end(void) {
   HTTP_term();
 }
 
-void Adafruit_FONA::setUserAgent(FONAFlashStringPtr useragent) {
+void Adafruit_FONA::setUserAgent(String useragent) {
   this->useragent = useragent;
 }
 
@@ -1067,11 +960,16 @@ boolean Adafruit_FONA::HTTP_setup(char *url) {
   // HTTPS redirect
   if (httpsredirect) {
     if (! HTTP_para(F("REDIR"),1))
-      return false;
+      return false; //Make it just a warning
 
     if (! HTTP_ssl(true))
       return false;
   }
+  
+  
+  //TODO: BREAK and BREAKEND !!
+  
+  
 
   return true;
 }

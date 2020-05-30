@@ -22,8 +22,8 @@
 #define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
 #define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
 #define IS_EXTENDED_MEM_TEST		false	//Test reading signals and reading/writing to memory
-#define IS_EXTENDED_GSM_TEST		true	//Test for gprs, web
-#define IS_EXTENDED_TYPES_TEST		false	//Test for RMv3 types are good, esp flags
+#define IS_EXTENDED_GSM_TEST		false	//Test for gprs, web
+#define IS_EXTENDED_TYPES_TEST		true	//Test for RMv3 types are good, esp flags
 
 //Fona Pins
 #define FONA_RX 2
@@ -172,7 +172,7 @@ enum FONA_GET_NETREG : uint8_t {
 	(FONA_GET_NETREG)(val & B00011100)
 #define NETREG_ONLY_ERROR(val) \
 	(FONA_GET_NETREG)(val & B00100000)
-//Macros to deshift so netstat_5 comes out as number 5 - nb: no casting as no longer enum
+//Macros to deshift (eg. so netstat_5 comes out as number 5) - nb: no casting as no longer enum
 #define NETREG_ACTUALVAL_RESULT_CODE(val) \
 	NETREG_ONLY_RESULT_CODE(val)
 #define NETREG_ACTUALVAL_NETSTAT(val) \
@@ -265,14 +265,14 @@ struct GpsData{
 
 struct GpsInfo{
 
-	uint8_t errorCode; //0 implies no error
-	int8_t gpsStatus;
+	uint8_t errorCode=0; //0 implies no error
+	int8_t gpsStatus=0;
 	
-	float lat;
-	float lon;
-	float speed_kph;
-	float heading;
-	float altitude;
+	float lat=0;
+	float lon=0;
+	float speed_kph=0;
+	float heading=0;
+	float altitude=0;
 	char date[15]; //Format yyyyMMddHHmmss with \0
 };
 
@@ -299,8 +299,6 @@ struct ModuleMeta{
 };
 
 
-//TODO: All these to be uint16_t ?
-
 struct SensorData {
 	
 	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
@@ -312,6 +310,28 @@ struct SensorData {
 	//bool           HasBeenSent	= false;
 };
 
+//Populate a struct with data which will be compacted with Base64 and sent via gprs
+//struct SendViaGprsData {
+//
+	//uint8_t moduleId		= 0;
+	//uint16_t thisBootNumber = 0;
+	//FONA_GET_RSSI rssi;
+	////uint8_t content_flags;
+	//
+	//uint8_t hasGpsInfo		= 0;
+	//GpsInfo* gpsInfo;
+	//
+	//uint8_t numOfReadings	= 0;
+	//SensorData* data;
+	//
+	//SensorData arrData[0]; //Size=0, we don't want pointer as it takes up size
+//};
+
+//What was the result of trying to send via GPRS, incl. error codes. Store in EEPROM.
+struct SendViaGprsResult {
+	
+	uint8_t status;
+};
 
 /* Stored in ROM and attempted to be sent every day along with readings */
 struct DailyCycleData {
@@ -320,16 +340,16 @@ struct DailyCycleData {
 	
 	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
 	//TODO: AttemptedSend ?
-	unsigned long BootNo;//		  = 0;
-	boolean GPRSToggleFailure;//	  = false;
-	boolean GetBatteryFailure;//	  = false;
-	uint8_t NoOfReadings;//		  = 0; /* NoOfReadings in this transmission */
-	uint16_t GsmMessageLength;//	  = 0; /* Length of string that was attempted to send */
-	uint16_t GsmFailureCode;//		  = 0;
-	uint8_t SmsFailureCode;//		  = 0;
-	uint8_t	BattPct;//				  = 0;
-	uint8_t NetworkStatus;//		  = 0;
-	uint8_t RSSI;//				  = 0;
+	unsigned long BootNo		  = 0;
+	boolean GPRSToggleFailure	  = false;
+	boolean GetBatteryFailure	  = false;
+	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
+	uint16_t GsmMessageLength	  = 0; /* Length of string that was attempted to send */
+	uint16_t GsmFailureCode		  = 0;
+	uint8_t SmsFailureCode		  = 0;
+	uint8_t	BattPct				  = 0;
+	uint8_t NetworkStatus		  = 0;
+	uint8_t RSSI				  = 0;
 	SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
 	
 };
