@@ -1,5 +1,7 @@
 NB: 1h39 time between cycles, 3m3 between small cycles
 
+https://arduino.stackexchange.com/questions/439/why-does-starting-the-serial-monitor-restart-the-sketch
+
 circuit capacitors voltage check
 resistors check
 power unit increase voltage/ensure output is 5V, not less

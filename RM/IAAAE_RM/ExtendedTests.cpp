@@ -68,12 +68,32 @@ void ExtendedTests::runExtendedTypesTest() {
 	
 	/******* ENCODING TESTS *********/
 	
+	//Avoid this with lib:-
+	//char r = -127;
+	//char q = 129;
+	//Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
+	for(uint8_t i=0 ; ; i++) {
 	
+		char input[1];
+		input[0] = i;
 	
-	char p = 250;
-	uint8_t val22 = (uint8_t)p;
-	RM_LOG2(F("CHAR EXCEEDED BOUNDS IS"), val22);
+		char output2[10]{0};
+		Helpers::base64_encode((char*)&output2, (char*)&input, 1);
 	
+		//RM_LOG2(F("INPUT WAS"), i);
+		//RM_LOG2(F("INPUT ENCODING WAS"), output2);
+	
+		char output3[10]{0};
+		Helpers::base64_decode((char*)&output3, (char*)&output2, 10);
+	
+		//RM_LOG2(F("DECODED BACK WAS"), (uint8_t)output3[0]);
+		
+		if ((uint8_t)output3[0] != i) RM_LOGLN(F("*** TEST FAIL @ENCODING ***"));
+		
+		if (i==255) break;
+	}
+
+
 	
 	
 	

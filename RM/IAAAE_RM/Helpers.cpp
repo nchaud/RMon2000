@@ -52,6 +52,7 @@ inline void a3_to_a4(unsigned char * a4, unsigned char * a3);
 inline void a4_to_a3(unsigned char * a3, unsigned char * a4);
 inline unsigned char b64_lookup(char c);
 
+/* Note: Trailing 0s for strings shouldn't be included in the length */
 int Helpers::base64_encode(char *output, char *input, int inputLen) {
 	int i = 0, j = 0;
 	int encLen = 0;
@@ -90,6 +91,7 @@ int Helpers::base64_encode(char *output, char *input, int inputLen) {
 	return encLen;
 }
 
+/* Note: Trailing 0s for strings shouldn't be included in the length */
 int Helpers::base64_decode(char * output, char * input, int inputLen) {
 	int i = 0, j = 0;
 	int decLen = 0;
