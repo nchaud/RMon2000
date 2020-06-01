@@ -116,8 +116,9 @@ void ExtendedTests::runExtendedTypesTest() {
 	char output[100];
 	int len = Helpers::base64_encode(output, (char*)&sd, sizeof(SensorData));
 	RM_LOG("Encoded result to be sent over Web is ");
-	RM_LOG(output);
-	RM_LOG2(", with size of ", len);
+	RM_LOGLN(output);
+	RM_LOG2("-Expected size given of ", Helpers::base64_enc_len(sizeof(SensorData)));
+	RM_LOG2("-Actual actual resulting size of ", len);
 	RM_LOGLN("\t(excluding the '0' at the end incase to be treated as string)");
 	
 	
