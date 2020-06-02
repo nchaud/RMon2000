@@ -282,13 +282,7 @@
     <Compile Include="GpsManager.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="GpsManager.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="GsmManager.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GsmManager.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="GsmPayload.cpp">

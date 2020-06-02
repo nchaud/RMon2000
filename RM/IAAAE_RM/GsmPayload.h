@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "DataTypes.h"
+#include "Helpers.h"
 
 class GsmPayload
 {
@@ -14,15 +15,20 @@ public:
 		
 	GsmPayload();
 	
-	void getPayload(char*, uint16_t maxLength);
-	void setPayload(char* payload);
-	
+	void createPayload(uint8_t* output, uint16_t maxLength);
+	void readPayload(uint8_t* payload);
+		
+	//When data to be transmitted is formed into a Base64 encoded payload
 	void addSensorData(SensorData* dataArr, uint8_t arraySz);
-	void getSensorData(SensorData* arr);
-	
 	void setGpsInfo(GpsInfo* info);
+	void createEncodedPayload(char* payload, uint16_t maxLength);
+	
+	//When received Base64 payload is parsed (Mainly required for testing/output to ensure encoding+decoding is ok)
+	void readEncodedPayload(char* payload);
+	void getSensorData(SensorData* arr);
 	boolean hasGpsInfo(void);
 	GpsInfo* getGpsInfo(void);
+	
 	
 protected:
 private:

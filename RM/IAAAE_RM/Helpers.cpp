@@ -24,6 +24,19 @@ void Helpers::printRSSI(FONA_GET_RSSI* rssi) {
 	RM_LOGLN(rssi->rssiErr);
 }
 
+void Helpers::printByteArray(uint8_t* sd, uint16_t length) {
+	
+	for(uint16_t t=0 ; t<length ; t++) {
+		
+		if (t>0 && t%5 == 0)
+			RM_LOGLN(*(sd+t))
+		else
+			RM_LOG(*(sd+t));
+		
+		RM_LOG(" ");
+	}
+}
+
 void Helpers::printSensorData(SensorData* sd) {
 
 	RM_LOG(F("Batt-V="));
@@ -40,6 +53,10 @@ void Helpers::printSensorData(SensorData* sd) {
 	
 	RM_LOG(F("Temp="));
 	RM_LOGLN(sd->temperature);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Error="));
+	RM_LOGLN(sd->errorChar);
 }
 
 
@@ -48,16 +65,17 @@ const char PROGMEM b64_alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "0123456789+/";
 
 /* 'Private' declarations */
-inline void a3_to_a4(unsigned char * a4, unsigned char * a3);
-inline void a4_to_a3(unsigned char * a3, unsigned char * a4);
-inline unsigned char b64_lookup(char c);
+inline void a3_to_a4(uint8_t * a4, uint8_t * a3);
+inline void a4_to_a3(uint8_t * a3, uint8_t * a4);
+inline uint8_t b64_lookup(char c);
 
 /* Note: Trailing 0s for strings shouldn't be included in the length */
-int Helpers::base64_encode(char *output, char *input, int inputLen) {
-	int i = 0, j = 0;
-	int encLen = 0;
-	unsigned char a3[3];
-	unsigned char a4[4];
+int16_t Helpers::base64_encode(uint8_t *output, uint8_t *input, int16_t inputLen) {
+	
+	int16_t i = 0, j = 0;
+	int16_t encLen = 0;
+	uint8_t a3[3];
+	uint8_t a4[4];
 
 	while(inputLen--) {
 		a3[i++] = *(input++);
@@ -92,11 +110,11 @@ int Helpers::base64_encode(char *output, char *input, int inputLen) {
 }
 
 /* Note: Trailing 0s for strings shouldn't be included in the length */
-int Helpers::base64_decode(char * output, char * input, int inputLen) {
-	int i = 0, j = 0;
-	int decLen = 0;
-	unsigned char a3[3];
-	unsigned char a4[4];
+int16_t Helpers::base64_decode(uint8_t * output, uint8_t * input, int16_t inputLen) {
+	int16_t i = 0, j = 0;
+	int16_t decLen = 0;
+	uint8_t a3[3];
+	uint8_t a4[4];
 
 
 	while (inputLen--) {
@@ -138,14 +156,14 @@ int Helpers::base64_decode(char * output, char * input, int inputLen) {
 	return decLen;
 }
 
-int Helpers::base64_enc_len(int plainLen) {
-	int n = plainLen;
+int16_t Helpers::base64_enc_len(int16_t plainLen) {
+	int16_t n = plainLen;
 	return (n + 2 - ((n + 2) % 3)) / 3 * 4;
 }
 
-int Helpers::base64_dec_len(char * input, int inputLen) {
-	int i = 0;
-	int numEq = 0;
+int16_t Helpers::base64_dec_len(uint8_t * input, int16_t inputLen) {
+	int16_t i = 0;
+	int16_t numEq = 0;
 	for(i = inputLen - 1; input[i] == '='; i--) {
 		numEq++;
 	}
@@ -153,20 +171,20 @@ int Helpers::base64_dec_len(char * input, int inputLen) {
 	return ((6 * inputLen) / 8) - numEq;
 }
 
-inline void a3_to_a4(unsigned char * a4, unsigned char * a3) {
+inline void a3_to_a4(uint8_t * a4, uint8_t * a3) {
 	a4[0] = (a3[0] & 0xfc) >> 2;
 	a4[1] = ((a3[0] & 0x03) << 4) + ((a3[1] & 0xf0) >> 4);
 	a4[2] = ((a3[1] & 0x0f) << 2) + ((a3[2] & 0xc0) >> 6);
 	a4[3] = (a3[2] & 0x3f);
 }
 
-inline void a4_to_a3(unsigned char * a3, unsigned char * a4) {
+inline void a4_to_a3(uint8_t * a3, uint8_t * a4) {
 	a3[0] = (a4[0] << 2) + ((a4[1] & 0x30) >> 4);
 	a3[1] = ((a4[1] & 0xf) << 4) + ((a4[2] & 0x3c) >> 2);
 	a3[2] = ((a4[2] & 0x3) << 6) + a4[3];
 }
 
-inline unsigned char b64_lookup(char c) {
+inline uint8_t b64_lookup(char c) {
 	if(c >='A' && c <='Z') return c - 'A';
 	if(c >='a' && c <='z') return c - 71;
 	if(c >='0' && c <='9') return c + 4;

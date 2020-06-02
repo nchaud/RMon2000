@@ -9,11 +9,12 @@ class Helpers {
 public:
 	static void printRSSI(FONA_GET_RSSI* rssi);
 	static void printSensorData(SensorData* sd);
-	
-	static int base64_encode(char *output, char *input, int inputLen);
-	static int base64_decode(char *output, char *input, int inputLen);
-	static int base64_enc_len(int inputLen);
-	static int base64_dec_len(char *input, int inputLen);
+	static void printByteArray(uint8_t* sd, uint16_t length);
+		
+	static int16_t base64_encode(uint8_t *output, uint8_t *input, int16_t inputLen);
+	static int16_t base64_decode(uint8_t *output, uint8_t *input, int16_t inputLen);
+	static int16_t base64_enc_len(int16_t inputLen);
+	static int16_t base64_dec_len(uint8_t *input, int16_t inputLen);
 };
 
 //byte writeCharArrWithPad(char* buffer, const char* value, byte padLength);

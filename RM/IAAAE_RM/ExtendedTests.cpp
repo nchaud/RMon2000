@@ -74,17 +74,17 @@ void ExtendedTests::runExtendedTypesTest() {
 	//Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
 	for(uint8_t i=0 ; ; i++) {
 	
-		char input[1];
+		uint8_t input[1];
 		input[0] = i;
 	
-		char output2[10]{0};
-		Helpers::base64_encode((char*)&output2, (char*)&input, 1);
+		uint8_t output2[10]{0};
+		Helpers::base64_encode((uint8_t*)&output2, (uint8_t*)&input, 1);
 	
 		//RM_LOG2(F("INPUT WAS"), i);
 		//RM_LOG2(F("INPUT ENCODING WAS"), output2);
 	
-		char output3[10]{0};
-		Helpers::base64_decode((char*)&output3, (char*)&output2, 10);
+		uint8_t output3[10]{0};
+		Helpers::base64_decode((uint8_t*)&output3, (uint8_t*)&output2, 10);
 	
 		//RM_LOG2(F("DECODED BACK WAS"), (uint8_t)output3[0]);
 		
@@ -114,7 +114,7 @@ void ExtendedTests::runExtendedTypesTest() {
 	RM_LOG2("Basic int->str usage would be", typicalMemUsage);
 	
 	char output[100];
-	int len = Helpers::base64_encode(output, (char*)&sd, sizeof(SensorData));
+	int len = Helpers::base64_encode((uint8_t*)output, (uint8_t*)&sd, sizeof(SensorData));
 	RM_LOG("Encoded result to be sent over Web is ");
 	RM_LOGLN(output);
 	RM_LOG2("-Expected size given of ", Helpers::base64_enc_len(sizeof(SensorData)));
@@ -123,7 +123,7 @@ void ExtendedTests::runExtendedTypesTest() {
 	
 	
 	SensorData sdAfter;
-	int lenAfter = Helpers::base64_decode((char*)&sdAfter, output, len);
+	int lenAfter = Helpers::base64_decode((uint8_t*)&sdAfter, (uint8_t*)output, len);
 	RM_LOG2("Decoded result received over Web has size of ", lenAfter);
 	Helpers::printSensorData(&sdAfter);
 	
@@ -137,15 +137,15 @@ void ExtendedTests::runExtendedTypesTest() {
 	
 	//2) Test a large sequence of them to ensure correctness- MAX_READINGS constant?
 	
-	uint8_t COUNT = 20;
+	uint8_t COUNT = 10;
 	SensorData bulkSd[COUNT];
 	for(uint8_t i=0;i<COUNT;i++){
 		
 		SensorData iSd = bulkSd[i];
-		iSd.battVoltage = i;
-		iSd.current = i*10;
-		iSd.pVVoltage = i*100;
-		iSd.temperature = i+50;
+		iSd.battVoltage = (i+1);
+		iSd.current = (i+1)*10;
+		iSd.pVVoltage = (i+1)*100;
+		iSd.temperature = (i+1)+50;
 	}
 	
 	FONA_GET_RSSI rssi;
@@ -155,15 +155,18 @@ void ExtendedTests::runExtendedTypesTest() {
 	
 	GsmPayload gsm;
 	gsm.moduleId=33;
-	gsm.thisBootNumber = 1055;
+	gsm.thisBootNumber = 1026;
 	gsm.rssi = rssi;
 	gsm.addSensorData(&bulkSd[0], COUNT);
 	
-	char forWeb[1000];
-	gsm.getPayload(&forWeb[0], 1000);
+	//TODO: gsm.getPayloadLength() ? for char count?
+	char forWeb[100] {0};
+	gsm.createPayload((uint8_t*)(&forWeb[0]), 100);//createEncodedPayload(&forWeb[0], 1000);
 	
-	RM_LOG(F("GSM Payload To Be Sent Over Web:"));
-	RM_LOGLN(forWeb);
+	RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
+	Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
+	GsmPayload readGsm;
+	readGsm.readPayload((uint8_t*)(&forWeb[0]));
 	
 	RM_LOGLN(F("------------------------"));
 	/*************************/

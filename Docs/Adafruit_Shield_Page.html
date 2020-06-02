@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<!-- saved from url=(0095)https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#handy-commands -->
+<html lang="en-US" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="mask-icon" href="https://learn.adafruit.com/assets/adafruit_favicon-d77f206e6cc65b40101b6e5b8987f7c35cb6a283ea73c0adad50c37f7347c61a.svg" color="#000000">
+<link rel="shortcut icon" type="image/x-icon" href="https://learn.adafruit.com/assets/favicon-0c79bd4bc582e6d4cf3afe417bd1e28120527c09d92c08a6464690c5bf6b85f4.ico">
+<title>Overview | Adafruit FONA 808 Cellular + GPS Breakout | Adafruit Learning System</title>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="GjTGiG/l8ZU0t1Ez/ECO/AWlCMAGfZkOhaCrRx1S+ppJRiUcSggZO+nycdPqHAVqkEaYRBDRBKIdB3VX0LwPNQ==">
+<link rel="alternate" type="application/atom+xml" title="ATOM" href="https://learn.adafruit.com/feed">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://learn.adafruit.com/feed.rss">
+<link rel="stylesheet" media="screen" href="./Adafruit_Shield_Page_files/application-f530d175180fa2f6fa59ef55598061c801488aa9f44e7ebe27acd9160d294501.css" data-turbolinks-track="reload">
+<script type="text/javascript" src="./Adafruit_Shield_Page_files/308175db61"></script><script src="./Adafruit_Shield_Page_files/nr-1169.min.js.download"></script><script type="text/javascript" async="" src="./Adafruit_Shield_Page_files/ec.js.download"></script><script type="text/javascript" async="" src="./Adafruit_Shield_Page_files/analytics.js.download"></script><script src="./Adafruit_Shield_Page_files/js"></script>
+<script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="turbolinks-cache-control" content="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<script>window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"308175db61","applicationID":"54271218","transactionName":"cVZXRUFeWghRShtEVlVcSh5AWVkT","queueTime":1,"applicationTime":92,"agent":""}</script>
+<script>(window.NREUM||(NREUM={})).loader_config={licenseKey:"308175db61",applicationID:"54271218"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+<meta name="guide-title" content="Adafruit FONA 808 Cellular + GPS Breakout">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@adafruit">
+<meta name="twitter:title" content="Adafruit FONA 808 Cellular + GPS Breakout">
+<meta name="twitter:description" content="A full-featured GSM/GPRS module with GPS as well!">
+<meta name="twitter:image:src" content="https://cdn-learn.adafruit.com/guides/images/000/001/043/medium800/thu.jpg">
+<meta name="twitter:domain" content="https://learn.adafruit.com">
+<meta property="og:title" content="Adafruit FONA 808 Cellular + GPS Breakout">
+<meta property="og:description" content="Cellular + GPS tracking, all in one? Oh yes! Introducing Adafruit FONA 808 MiniGSM + GPS, an all-in-one cellular phone module with that lets you add location-tracking, voice, text, SMS and data to your project in an adorable little package. (It does not contain a drum machine, tho)">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cdn-learn.adafruit.com/guides/images/000/001/043/medium800/thu.jpg">
+<meta property="og:url" content="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/overview">
+<meta property="og:site_name" content="Adafruit Learning System">
+<script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/overview",
+        "name": "Adafruit FONA 808 Cellular + GPS Breakout",
+        "description": "Cellular + GPS tracking, all in one? Oh yes! Introducing Adafruit FONA 808 MiniGSM + GPS, an all-in-one cellular phone module with that lets you add location-tracking, voice, text, SMS and data to your project in an adorable little package. (It does not contain a drum machine, tho)",
+        "publisher": "Adafruit",
+        "datePublished": "2015-05-29T15:48:24-04:00",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://learn.adafruit.com/search?q={search_term}",
+          "query-input": "required name=search_term"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "lady ada"
+        }
+      }
+    </script>
+<!--[if lte IE 9]>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <![endif]-->
+<script>
+    window.rails_env = 'production';
+  </script>
+<script src="./Adafruit_Shield_Page_files/application-a1a01bd66245f3161d0f.js.download" data-turbolinks-track="reload"></script>
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://learn.adafruit.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://learn.adafruit.com/search?q={search_term}",
+        "query-input": "required name=search_term"
+      }
+    }
+  </script>
+<style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+<body class="application pages show">
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PRPXBQ6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div id="outer-wrapper">
+<div id="inner-wrapper">
+<div id="messaging-wrapper" class="messages-container" data-load="https://www.adafruit.com/api/multi_message.php"><div class="messaging-container messaging-news"><div class="msg-container"><div class="message" data-message-id="101">Adafruit is open, safely ... and shipping all orders at this time! <a href="https://www.adafruit.com/opensafely">Read more!</a></div><i class="fa fa-times msg-close-btn"></i></div></div></div>
+<header id="adafruit-header">
+<div id="small-header">
+<div class="first-row">
+<nav>
+<ul class="application-links">
+<li><a href="https://www.adafruit.com/">Shop</a></li>
+<li class="selected"><a href="https://learn.adafruit.com/">Learn</a></li>
+<li><a href="https://blog.adafruit.com/">Blog</a></li>
+<li><a href="https://forums.adafruit.com/">Forums</a></li>
+<li><a href="https://www.youtube.com/adafruit">Videos</a></li>
+<li><a href="https://www.adabox.com/">Adabox</a></li>
+<li><a href="https://io.adafruit.com/">IO</a></li>
+</ul>
+</nav>
+</div>
+<div class="second-row">
+<div class="row-content">
+<div id="mobile-header-logo">
+<a href="https://learn.adafruit.com/">
+<img id="small-logo" height="50" width="50" alt="Adafruit Logo" title="Masks save lives" src="./Adafruit_Shield_Page_files/adafruit_logo_small.png">
+</a> </div>
+<button id="mobile-menu-button" class="c-hamburger c-hamburger--htx">
+<span>toggle menu</span>
+</button>
+<div id="mobile-search-wrapper">
+<form action="https://learn.adafruit.com/search" method="get">
+<label for="mobile-search" style="display:none;">Search</label>
+<input id="mobile-search" type="text" name="q" autocomplete="off" data-app-id="W9DMM4OTH0" data-app-key="e613bcda3453b9ef887e2724362f9e57" data-app-index="learn_guides_production" data-app-uri="https://learn.adafruit.com" accesskey="f">
+<button type="submit"></button>
+</form>
+</div>
+<a id="mobile-header-cart" href="https://www.adafruit.com/shopping_cart">
+<span class="small-cart-count">0</span>
+<i class="fa fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+<nav id="small-header-nav">
+<div id="small-menu">
+<ul>
+<li class="account-info">
+<a href="https://learn.adafruit.com/users/sign_in">Sign In</a> | <a href="https://accounts.adafruit.com/">Create Account</a>
+</li>
+<li><a href="https://learn.adafruit.com/guides/latest">New Guides</a></li>
+<li><a href="https://learn.adafruit.com/groups">Series</a></li>
+</ul>
+</div>
+<div id="mobile-search-results"></div>
+</nav>
+</div>
+<div id="large-header">
+<div class="first-row">
+<div class="row-content">
+<nav>
+<ul class="application-links">
+<li><a href="https://www.adafruit.com/">Shop</a></li>
+<li class="selected"><a href="https://learn.adafruit.com/">Learn</a></li>
+<li><a href="https://blog.adafruit.com/">Blog</a></li>
+<li><a href="https://forums.adafruit.com/">Forums</a></li>
+<li><a href="https://www.youtube.com/adafruit">Videos</a></li>
+<li><a href="https://www.adabox.com/">Adabox</a></li>
+<li><a href="https://io.adafruit.com/">IO</a></li>
+</ul>
+</nav>
+<div id="account">
+<span class="sign-out"><a href="https://learn.adafruit.com/users/sign_in">Sign In</a></span>
+<div class="cart">
+<a href="https://www.adafruit.com/shopping_cart"><i class="fa fa-shopping-cart"></i> 0</a> </div>
+</div>
+</div>
+</div>
+<div class="second-row">
+<div class="row-content">
+<div class="left-content">
+<div id="logo">
+<a accesskey="h" title="Adafruit Learning System" href="https://learn.adafruit.com/">
+<img id="logo" alt="Adafruit Logo" title="Masks save lives" src="./Adafruit_Shield_Page_files/logo_2x.png">
+</a> </div>
+<ul class="main-nav-links">
+<li class="dropdown with-overlay">
+<button class="dropdown-label">Explore &amp; Learn</button>
+<div class="dropdown-container">
+<div class="dropdown-content">
+<div class="flyout">
+<div class="three-panels">
+<div class="first-column">
+<div class="content-header">
+ <span class="title">Learn Categories</span><a class="view-all-count" href="https://learn.adafruit.com/search">view all</a>
+</div>
+<div class="categories">
+<ul>
+<li><a href="https://learn.adafruit.com/category/adabox">AdaBox</a></li>
+<li><a href="https://learn.adafruit.com/category/adafruit-products">Adafruit Products</a></li>
+<li><a href="https://learn.adafruit.com/category/arduino">Arduino Compatibles</a></li>
+<li><a href="https://learn.adafruit.com/category/breakout-boards">Breakout Boards</a></li>
+<li><a href="https://learn.adafruit.com/category/circuit-playground">Circuit Playground</a></li>
+<li><a href="https://learn.adafruit.com/category/circuitpython">CircuitPython</a></li>
+<li><a href="https://learn.adafruit.com/category/collins-lab">Collin's Lab</a></li>
+<li><a href="https://learn.adafruit.com/category/components">Components</a></li>
+<li><a href="https://learn.adafruit.com/category/community-support">Community Support</a></li>
+<li><a href="https://learn.adafruit.com/category/customer-projects">Customer &amp; Partner Projects</a></li>
+<li><a href="https://learn.adafruit.com/category/development-boards">Development Boards</a></li>
+<li><a href="https://learn.adafruit.com/category/educators">Educators</a></li>
+<li><a href="https://learn.adafruit.com/category/el">EL Wire/Tape/Panel</a></li>
+<li><a href="https://learn.adafruit.com/category/feather">Feather</a></li>
+<li><a href="https://learn.adafruit.com/category/hacks">Hacks</a></li>
+<li><a href="https://learn.adafruit.com/category/internet-of-things-iot">Internet of Things - IOT</a></li>
+<li><a href="https://learn.adafruit.com/category/lcds-and-displays">LCDs &amp; Displays</a></li>
+</ul>
+<ul>
+<li><a href="https://learn.adafruit.com/category/leds">LEDs</a></li>
+<li><a href="https://learn.adafruit.com/category/maker-business">Maker Business</a></li>
+<li><a href="https://learn.adafruit.com/category/micro-bit">micro:bit</a></li>
+<li><a href="https://learn.adafruit.com/category/microcontrollers">Microcontrollers</a></li>
+<li><a href="https://learn.adafruit.com/category/programming">Programming</a></li>
+<li><a href="https://learn.adafruit.com/category/projects">Projects</a></li>
+<li><a href="https://learn.adafruit.com/category/raspberry-pi">Raspberry Pi</a></li>
+<li><a href="https://learn.adafruit.com/category/robotics">Robotics &amp; CNC</a></li>
+<li><a href="https://learn.adafruit.com/category/sensors">Sensors</a></li>
+<li><a href="https://learn.adafruit.com/category/tools">Tools</a></li>
+<li><a href="https://learn.adafruit.com/category/wearables">Wearables</a></li>
+<li><a href="https://learn.adafruit.com/category/3d-printing">3D Printing</a></li>
+<li><a href="https://learn.adafruit.com/category/crickit">Crickit</a></li>
+<li><a href="https://learn.adafruit.com/category/makecode">MakeCode</a></li>
+<li><a href="https://learn.adafruit.com/category/trellis">Trellis</a></li>
+<li><a href="https://learn.adafruit.com/category/machine-learning">Machine Learning</a></li>
+</ul>
+</div>
+</div>
+<div class="middle-column">
+<div class="content-header">
+<span class="title">Series</span><a class="view-all-count" href="https://learn.adafruit.com/groups">view all</a>
+</div>
+<ul class="links">
+<li>
+<a href="https://learn.adafruit.com/series/circuit-playground">Circuit Playground</a>
+</li>
+<li>
+<a href="https://learn.adafruit.com/series/adafruit-io-basics">Adafruit IO Basics</a>
+</li>
+</ul>
+</div>
+<div class="last-column hide-md">
+<div class="image-content-card">
+<img class="lazy" src="./Adafruit_Shield_Page_files/stemma-ef66e02164d57776f3c6e36b958d49e60e4697687c622dbe925c112939a8961b.jpg" style="">
+<div class="text">
+<h1 class="main">
+<span>STEMMA</span>
+</h1>
+<div class="tagline">
+<span>Plug-n-play components</span>
+</div>
+</div>
+<div class="button">
+<a title="Plug-n-play components, STEMMA" href="https://learn.adafruit.com/tags/stemma">Get connected</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li class="dropdown with-overlay">
+<button class="dropdown-label">New Guides</button>
+<div class="dropdown-container">
+<div class="dropdown-content">
+<div class="flyout">
+<div class="content-card-group-preview">
+<div class="group-preview-header">
+<h3 class="title">
+Latest Guides
+</h3>
+<a class="view-all" title="View all guides in Latest Guides " href="https://learn.adafruit.com/guides/latest">View All</a>
+</div>
+<a class="scroll-back"><i class="fa fa-angle-left"></i></a>
+<div class="content-card-group-container">
+<div class="content-card-group">
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/wireless-ble-midi-robot-xylophone">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/P1220694_edited.jpg" style="">
+<div class="overlay" id="content-card-info3006">
+<div class="tagline">
+Nothing cures the blues like MIDI over Bluetooth
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/BlitzCityDIY">
+<span class="name">Liz Clark</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info3006">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/wireless-ble-midi-robot-xylophone">Wireless BLE MIDI Robot Xylophone</a>
+</h4>
+<div class="badges">
+<div class="badge skill-level-icons" title="Intermediate">
+Intermediate
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/mp3-circuitpython-lars">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/lars-2383.jpg" style="">
+<div class="overlay" id="content-card-info3004">
+<div class="tagline">
+Native .mp3 playback with no special hardware in CircuitPython!
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/johnpark">
+<span class="name">John Park</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info3004">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/mp3-circuitpython-lars">MP3 Playback in CircuitPython with Lars the Sloth...</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+1
+</div>
+<div class="badge skill-level-icons" title="Beginner">
+Beginner
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/circuitpython-led-animations">
+<div class="image-container">
+<video class="video-preview lazy" preload="auto" muted="muted" loop="loop" autoplay="autoplay" playsinline="" data-error="/assets/missing%2Fmissing.png">
+<source src="https://cdn-learn.adafruit.com/guides/cropped_images/000/003/001/medium640mp4/LED_Anim_RainbowComet_vertical_guide.mp4?1590346410">
+<source src="https://cdn-learn.adafruit.com/guides/cropped_images/000/003/001/medium640webm/LED_Anim_RainbowComet_vertical_guide.webm?1590346410" type="video/webm; codecs=vp8,vorbis">
+Your browser does not support the video tag.
+</video>
+<div class="overlay" id="content-card-info3001">
+<div class="tagline">
+LED animations made super simple, and yet, easily complex!
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/kattni">
+<span class="name">Kattni Rembor</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info3001">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/circuitpython-led-animations">CircuitPython LED Animations</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+5
+</div>
+<div class="badge skill-level-icons" title="Beginner">
+Beginner
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/simple-mini-fume-extractor">
+<div class="image-container">
+<video class="video-preview lazy" preload="auto" muted="muted" loop="loop" autoplay="autoplay" playsinline="" data-error="/assets/missing%2Fmissing.png">
+<source src="https://cdn-learn.adafruit.com/guides/cropped_images/000/003/005/medium640mp4/hero-spin.mp4?1590282639">
+<source src="https://cdn-learn.adafruit.com/guides/cropped_images/000/003/005/medium640webm/hero-spin.webm?1590282639" type="video/webm; codecs=vp8,vorbis">
+Your browser does not support the video tag.
+</video>
+<div class="overlay" id="content-card-info3005">
+<div class="tagline">
+Just plug in USB and your fumes are blown away
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/pixil3d">
+<span class="name">Ruiz Brothers</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info3005">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/simple-mini-fume-extractor">Simple Mini Fume Extractor</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+1
+</div>
+<div class="badge skill-level-icons" title="Beginner">
+Beginner
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="scroll-forward"><i class="fa fa-angle-right"></i></a>
+</div>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="right-content">
+<div class="search-wrapper">
+<form action="https://learn.adafruit.com/search" method="get">
+<label for="search" style="display:none;">Search</label>
+<div id="search-info" type="text" name="q" autocomplete="off" data-page="" data-app-id="W9DMM4OTH0" data-app-key="e613bcda3453b9ef887e2724362f9e57" data-app-index="learn_guides_production" data-app-uri="https://learn.adafruit.com" accesskey="f">
+<div id="search"><div class="ais-SearchBox"><form action="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all" role="search" class="ais-SearchBox-form" novalidate=""><input class="ais-SearchBox-input" type="search" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="512"><button class="ais-SearchBox-submit" type="submit" title="Submit the search query." hidden=""><svg class="ais-SearchBox-submitIcon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 40 40"> <path d="M26.804 29.01c-2.832 2.34-6.465 3.746-10.426 3.746C7.333 32.756 0 25.424 0 16.378 0 7.333 7.333 0 16.378 0c9.046 0 16.378 7.333 16.378 16.378 0 3.96-1.406 7.594-3.746 10.426l10.534 10.534c.607.607.61 1.59-.004 2.202-.61.61-1.597.61-2.202.004L26.804 29.01zm-10.426.627c7.323 0 13.26-5.936 13.26-13.26 0-7.32-5.937-13.257-13.26-13.257C9.056 3.12 3.12 9.056 3.12 16.378c0 7.323 5.936 13.26 13.258 13.26z"></path> </svg></button><button class="ais-SearchBox-reset" type="reset" title="Clear the search query." hidden=""><svg class="ais-SearchBox-resetIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="10" height="10"> <path d="M8.114 10L.944 2.83 0 1.885 1.886 0l.943.943L10 8.113l7.17-7.17.944-.943L20 1.886l-.943.943-7.17 7.17 7.17 7.17.943.944L18.114 20l-.943-.943-7.17-7.17-7.17 7.17-.944.943L0 18.114l.943-.943L8.113 10z"></path> </svg></button><span class="ais-SearchBox-loadingIndicator" hidden=""><svg class="ais-SearchBox-loadingIcon" width="16" height="16" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#444"> <g fill="none" fillrule="evenodd"> <g transform="translate(1 1)" strokewidth="2"> <circle strokeopacity=".5" cx="18" cy="18" r="18"></circle> <path d="M36 18c0-9.94-8.06-18-18-18" transform="rotate(313.501 18 18)"> <animatetransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animatetransform> </path> </g> </g> </svg></span></form></div></div>
+<i class="fa fa-search"></i>
+<input type="submit" style="visibility: hidden; position: fixed;">
+
+</div></form>
+</div>
+</div>
+</div>
+</div>
+</div></header>
+<div id="main-content">
+<div id="main-content-container">
+<div id="page-wrapper" class="single-page">
+<article id="content-wrapper" class="double-sidebar-layout" data-page-id="5744" data-guide-id="1043">
+<div class="content">
+<div class="sidebar-left-wrapper">
+<div class="sidebar-left-content" data-clampedwidth=".sidebar-left-wrapper">
+<nav class="sidebar-left">
+<div class="title-bar">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/thu.jpg" style="">
+</div>
+<div class="title">
+<h1><a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/overview">Adafruit FONA 808 Cellular + GPS Breakout</a></h1>
+<span class="page-tagline"><a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/overview">A full-featured GSM/GPRS module with GPS as well!</a></span>
+</div>
+</div>
+<ul class="page-parent nav">
+<li class="parent active">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#overview" class="published">Overview</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#obtaining-a-sim" class="published">Obtaining a SIM</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#pinouts" class="published">Pinouts</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#assembly-1" class="published">Assembly</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#wiring-to-usb" class="published">Wiring to USB</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#wiring-to-arduino" class="published">Wiring to Arduino</a>
+</li>
+<li class="parent">
+<a data-toggle="collapse" class="collapsed-icon collapsed" href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#page-5752-children" aria-expanded="false"></a>
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#arduino-test" class="published">Arduino Test</a>
+<ul id="page-5752-children" class="page-child nav collapse" aria-expanded="false" style="height: 0px;">
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#hardware-test" class="published">Hardware Test</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#network-test" class="published">Network Test</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#audio-settings-and-test" class="published">Audio Settings &amp; Test</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#pwm-buzzer" class="published">PWM Buzzer</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#phone-calls" class="published">Phone Calls</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#sms" class="published">SMS</a>
+</li>
+<li class="published ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#gps-fona808" class="published">GPS (FONA808)</a>
+</li>
+</ul></li>
+<li class="parent">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#fona-808-vs-fona-800" class="published">FONA 808 vs FONA 800</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faqs" class="published">F.A.Q.s</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#handy-commands" class="published">Handy Commands</a>
+</li>
+<li class="parent  ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#downloads" class="published">Downloads</a>
+</li>
+<li class="parent">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#assembly" class="published">Assembly</a>
+</li>
+<li class="single-page-spacer"></li>
+<li class="single-page-link ">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/featured_products">Featured Products</a>
+</li>
+<li class="single-page-link"><a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout">Multiple Pages</a></li>
+<li><a href="https://cdn-learn.adafruit.com/downloads/pdf/adafruit-fona-808-cellular-plus-gps-breakout.pdf?timestamp=1591028490">Download PDF</a></li>
+</ul>
+</nav>
+<header class="sidebar-meta hidden-xs">
+<h4>Contributors</h4>
+<div><a href="https://learn.adafruit.com/users/adafruit2">lady ada</a></div>
+</header>
+<header class="sidebar-meta hidden-xs">
+<a class="feedback-link" title="Feedback? Corrections?" rel="nofollow" data-remote="true" data-method="get" href="https://learn.adafruit.com/feedback/new?page_id=5744">
+Feedback? Corrections?
+</a> </header>
+</div>
+</div>
+<div class="main-content">
+<div id="categories">
+<span class="category child-category">
+<a href="https://learn.adafruit.com/category/sensors">SENSORS</a>
+<span class="category-link-spacer">/</span>
+<a href="https://learn.adafruit.com/category/gps">GPS</a>
+</span>
+<span class="category child-category">
+<a href="https://learn.adafruit.com/category/internet-of-things-iot">INTERNET OF THINGS - IOT</a>
+<span class="category-link-spacer">/</span>
+<a href="https://learn.adafruit.com/category/wireless">WIRELESS</a>
+</span>
+<span class="category child-category">
+<a href="https://learn.adafruit.com/category/breakout-boards">BREAKOUT BOARDS</a>
+<span class="category-link-spacer">/</span>
+<a href="https://learn.adafruit.com/category/fona">FONA</a>
+</span>
+<span id="guide-favorite">
+<a class="favorites-link category right red" title="" data-toggle="tooltip" data-placement="left" data-remote="true" rel="nofollow" data-method="post" href="https://learn.adafruit.com/guides/1043/favorites.js" data-original-title="Favorite this guide?">
+<i class="fa fa-heart-o"></i>
+</a></span>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="overview">Overview</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-text">
+<p>Cellular + GPS tracking, all in one? Oh yes! Introducing Adafruit FONA 808 MiniGSM + GPS, an all-in-one cellular phone module with that lets you add location-tracking, voice, text, SMS and data to your project in an adorable little package.</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25693">
+<img class="25693-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/693/medium260/adafruit_products_2542_iso_ORIG.jpg?1432924330 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/693/medium640/adafruit_products_2542_iso_ORIG.jpg?1432924330 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/693/medium800/adafruit_products_2542_iso_ORIG.jpg?1432924330 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/693/large1024/adafruit_products_2542_iso_ORIG.jpg?1432924330 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_iso_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_iso_ORIG.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>This module measure only 1.75"x1.6" but packs a surprising amount of technology into it's little frame. At the heart is a powerfull GSM cellular module (we use the latest SIM808) with integrated GPS. This module can do just about everything</p>
+<ul>
+<li>Quad-band 850/900/1800/1900MHz - connect onto any global GSM network with any 2G SIM (in the USA, T-Mobile is suggested)</li>
+<li>Fully-integrated GPS (<a href="http://www.mediatek.com/en/products/connectivity/gps/mt3336/">MT3336 chipset</a> with -165 dBm tracking sensitivity) that can be controlled and query over the same serial port</li>
+<li>Make and receive voice calls using a headset or an external 32Ω speaker + electret microphone</li>
+<li>Send and receive SMS messages</li>
+<li>Send and receive GPRS data (TCP/IP, HTTP, etc.)</li>
+<li>PWM/Buzzer vibrational motor control</li>
+<li>AT command interface with "auto baud" detection</li>
+</ul>
+</div>
+<div class="row-fluid build-text">
+<p>Here's the GPS specifications:</p>
+<ul>
+<li>22 tracking /66 acquisition channels</li>
+<li>GPS L1 C/A code</li>
+<li>Sensitivity<br>Tracking: -165 dBm<br>Cold starts : -147 dBm</li>
+<li>Time-To-First-Fix<br>Cold starts: 30s (typ.)<br>Hot starts: 1s (typ.)<br>Warm starts: 28s (typ.)</li>
+<li>Accuracy: approx 2.5 meters</li>
+</ul>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25694">
+<img class="25694-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/694/medium260/adafruit_products_2542_iso_demo_SIZED.jpg?1432924358 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/694/medium640/adafruit_products_2542_iso_demo_SIZED.jpg?1432924358 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/694/medium800/adafruit_products_2542_iso_demo_SIZED.jpg?1432924358 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/694/large1024/adafruit_products_2542_iso_demo_SIZED.jpg?1432924358 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_iso_demo_SIZED.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_iso_demo_SIZED.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>Sounds delicious, right? So we plated this fine module onto a little breakout with all the extras you need to make your next project shine</p>
+<ul>
+<li>Onboard LiPoly battery charging circuitry so you can take your project on the go. Use any 500mAh+ LiPoly or LiIon battery and recharge over the MicroUSB when necessary. Two LEDs let you know when its charging and done</li>
+<li>Standard 4-pole TRRS headphone jack. Use any 'Android' or 'iPhone'-compatible headset with mic</li>
+<li>Breakouts for external 32Ω speaker and electret mic if you don't want to use a headphone</li>
+<li>Level shifting circuitry so you can run it with 2.8V to 5V logic.</li>
+<li>Vibrational motor (buzzer) driver so you can have noiseless notifications</li>
+<li>uFL connections for external antennas</li>
+<li>Indicator LEDs for power and network connectivity</li>
+<li>Standard SIM slides into the back</li>
+</ul>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25695">
+<img class="25695-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/695/medium260/adafruit_products_2542_top_ORIG.jpg?1432924381 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/695/medium640/adafruit_products_2542_top_ORIG.jpg?1432924381 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/695/medium800/adafruit_products_2542_top_ORIG.jpg?1432924381 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/695/large1024/adafruit_products_2542_top_ORIG.jpg?1432924381 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_top_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_top_ORIG.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>On its own, this module can't do anything. It requires a microcontroller to drive it! We suggest and use an Arduino but any 3-5V microcontroller with a UART can send and receive commands over the RX/TX pins.</p>
+</div>
+<div class="row-fluid build-text">
+<p>You will also need some required accessories to make FONA work. <strong>These are not included!</strong></p>
+<ul>
+<li>
+<strong>SIM Card! </strong><a href="https://www.adafruit.com/product/2505">A 2G Mini SIM card is required to do anything on the cellular network. </a>
+</li>
+<li>
+<strong>Lipoly Battery </strong>- 500mAh or larger! This <a href="https://www.adafruit.com/product/1578">500mAh </a>battery, <a href="https://www.adafruit.com/products/258">or this 1200mAh</a> will work great.</li>
+<li>
+<strong>MicroUSB cable</strong> for charging the battery.</li>
+<li>
+<strong>External uFL GSM Antenna</strong> -<a href="http://www.adafruit.com/product/1991"> this slim one works great</a>.</li>
+<li>
+<strong>(or, if you want to us an SMA antenna</strong> <a href="https://www.adafruit.com/products/851">- a uFL to SMA adapter cable.</a>)</li>
+<li>
+<strong>External uFL Passive GPS Antenna</strong> - <a href="https://www.adafruit.com/product/2460">like this one!</a>
+</li>
+</ul>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25696">
+<img class="25696-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/696/medium260/adafruit_products_2542_quarter_ORIG.jpg?1432924406 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/696/medium640/adafruit_products_2542_quarter_ORIG.jpg?1432924406 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/696/medium800/adafruit_products_2542_quarter_ORIG.jpg?1432924406 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/696/large1024/adafruit_products_2542_quarter_ORIG.jpg?1432924406 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_quarter_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_quarter_ORIG.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>There's also some recommended accessories. They are not required but chances are you'll want them!</p>
+<ul>
+<li>
+<strong>TRRS 4-Pole Headset</strong> - Any 'iPhone' or 'Android' compatible (but not iPhone original) should work. We tried about 10 different ones, and basically the more expensive once are more comfortable and louder but our official iPhone headset mic did not work.</li>
+<li>
+<strong>Vibrating motor</strong> - the FONA can drive this directly, <a href="https://www.adafruit.com/product/1201">just solder a mini vibrating motor disc in!</a>
+</li>
+<li>
+<strong>USB console cable</strong> - the microUSB connector is for charging<a href="https://www.adafruit.com/product/954"> only, but you can wire up a console cable for direct-connection to the module </a>if you want to send commands from a terminal (great for testing and tweaking)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="obtaining-a-sim">Obtaining a SIM</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="row-fluid build-text">
+<p>In order to use the phone parts of FONA you will need a SIM card. Luckily, there's a phone store in every town in America! You can get a pre-paid <strong>or</strong> post-paid SIM but we kinda like the pre-paid kind.<br><br>A 2G Mini SIM card is <strong>required</strong> to use the module. Nearly any cell phone shop can sell you a SIM card. It must be a 2G GSM card. AT&amp;T in the US does not sell these anymore! They are shutting down their GSM network, and only T-mobile sells and supports a GSM network. If you are in another country, chances are you can just ask for a GSM 2G card.<br><br>MicroSIMs won't fit - so make sure its a "Mini" SIM. Sometimes these are just called plain "SIM" cards since the huge-size SIMs are rarely used. <strong>Mini SIMs are 1" x 0.6" / 25mm x 15mm</strong>. these are by far the most common size. <br><br>The only thing to watch for is you need to have a 2G GSM-compatible SIM</p>
+</div>
+<div class="row-fluid build-alert">
+<div class="alert">
+<i class="fa fa-exclamation-circle"></i>
+<span class="alert-content">In the US, AT&amp;T no longer sells 2G SIMs! We suggest T-Mobile or T-Mobile "distributors"</span>
+</div>
+</div>
+<div class="row-fluid build-text">
+
+If you have an <i>older</i> AT&amp;T SIM it <i>may</i> work. AT&amp;T announced in 2012 that they would shut down their 2G network January 1, 2017. The vast majority of M2M (machine-to-machine) cellular devices use GSM, so the 5 year lead time was to give people plenty of time to migrate from AT&amp;T.<br><br>You can read an interesting whitepaper from Aeris about this below:<br>
+</div>
+<div id="element-2358483" class="button-element" data-github-release="">
+<a href="https://learn.adafruit.com/system/assets/assets/000/017/834/original/Aeris_1113_whitepaper.pdf?1404356134" class="btn btn-large btn-block btn-info" target="_self" rel="noopener noreferrer" data-zip-folder="" type="button">AT&amp;T 2G GSM Network Sunset Whitepaper</a>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#t-mobile-and-ting-2358484-5" class="anchor-link"><span class="fa fa-link"></span></a><span id="t-mobile-and-ting-2358484-5" class="anchor-link-target"></span>
+</div>T-Mobile &amp; TING</h1>
+<p>T-Mobile does not have any announcement that they will sunset GSM. We can't speak for them but we expect at least 5 years warning as well, probably they will never fully sunset since there's millions of machines with GSM connectivity.</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25516">
+<img class="25516-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/516/medium260/adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg?1431716264 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/516/medium640/adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg?1431716264 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/516/medium800/adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg?1431716264 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/516/large1024/adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg?1431716264 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_x2505-02.jpg.pagespeed.ic.jcCA14goFU.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>Adafruit now sells the TING SIM card, a 2G GSM SIM that works great with all FONAs, and has a great billing system as well, where you only pay what you use!<br><br>If you don't want to use TING, there are dozens of T-Mobile resellers such as Walmart, SIMPLEMOBILE, etc! Just ask the seller if its AT&amp;T or T-Mobile network. If they get cagey just say your apartment has no AT&amp;T coverage.</p>
+</div>
+<div class="row-fluid build-alert alert-warning">
+<div class="alert">
+<i class="fa fa-exclamation-circle"></i>
+<span class="alert-content">You do not need to bring in or show your FONA to the Cell Phone store. Just tell them you need a Mini SIM for a GSM phone and it's at home.</span>
+</div>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#some-suggestions-from-fona-users-2358488-9" class="anchor-link"><span class="fa fa-link"></span></a><span id="some-suggestions-from-fona-users-2358488-9" class="anchor-link-target"></span>
+</div>Some suggestions from FONA users!</h1>
+<ul>
+<li>I've had good luck using the FONA with a SIM from Walmart. <a href="http://www.walmart.com/ip/Walmart-Family-Mobile-Starter-Kit/22150963">Their 'Walmart Family Mobile' is a T-mobile reseller and you can pick up the SIM starter in store pretty easily </a>. The service isn't the cheapest, it's $25 for the SIM and $30/month for unlimited talk+text or $40/month for unlimited talk+text+data but there's no contract as its all prepaid <strong>-tdicola</strong>
+</li>
+<li>Just want to let the Adafruit team know that it is possible to get pre-paided minutes on T-Mobile and its a pretty good deal. <a href="http://www.t-mobile.com/promotions/genericregular.aspx?passet=pro_pro_goldrewards">I was paying $100 for 1000 minutes (10c a minute 20 a sms) over the course of the year.</a> For me it in my usage came out to about $8 a month. Have found this is something that you have to ask for at the store. No evidence in advertising or website<strong> -Paul B.</strong>
+</li>
+<li>
+<a href="http://www.telnamobile.com/index.php?include=telnamobile_features">Telna has a good deal you may want to point people to for FONA. I used them for a previous GSM project and they worked great. $20 per year, includes 1000 free txt messages and a bunch of other nice features. </a>I had a lot more issues with T-Mobile (Their cards go inactive if not used in a month and you have to call to reactivate)<strong> -Tyler C.</strong>
+</li>
+<li>I pay 2 EUR (a bit less than $3 USD) for 2 hours, unlimited SMS and 50Mb of Data at <a href="http://mobile.free.fr/">http://mobile.free.fr/</a> <strong>-KTOWN</strong>
+</li>
+<li>There are specialty "machine 2 machine" SIM sellers that have plans that are tuned for the short bursts of usage used by these kinds of modules. Check out <a href="http://www.embeddedworks.net/">these guys </a> for example, you can choose data, voice/sms or a combination for a pretty low price!</li>
+<li>Hi, just a update to let you know I have just begun to use the Fona, SIM from ROGERS, which is 2G, 3G, ang 4G. I pulled my sim out of my phone, and it works well. So if you have Canadians that want to use that product, let them know it works on the west coast ! You can go to Rogers website and see the coverage map and services. <strong>- Steve C</strong>
+</li>
+</ul>
+<p><strong>We haven't tried all of these SIMs so you may need to try it out. For other countries, GSM is very common so you should be able to buy a SIM from any cell phone store.<br></strong></p>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="pinouts">Pinouts</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-text">
+<p>There's a lot packed into the FONA MiniGSM, lets go thru all the pins, buttons and indicators and what they do</p>
+</div>
+<div class="row-fluid build-text">
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25716">
+<img class="25716-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/716/medium260/adafruit_products_2542_top_ORIG.jpg?1432929362 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/716/medium640/adafruit_products_2542_top_ORIG.jpg?1432929362 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/716/medium800/adafruit_products_2542_top_ORIG.jpg?1432929362 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/716/large1024/adafruit_products_2542_top_ORIG.jpg?1432929362 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_top_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_top_ORIG(1).jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#connectors-1635522-4" class="anchor-link"><span class="fa fa-link"></span></a><span id="connectors-1635522-4" class="anchor-link-target"></span>
+</div>Connectors</h1>
+<p>There's three external connectors along the left side, from the top, a mini JST 2-pin, a microUSB and a headphone jack.</p>
+<ul>
+<li>
+<strong>JST 2-pin</strong> - this is the battery input connector. It works with any of our Lipoly batteries but since the charge rate is 500mA (and the cellular module can spike high current draw!) we suggest our <a title="Link: https://www.adafruit.com/product/1578" href="https://www.adafruit.com/product/1578">500mAh</a> or <a href="https://www.adafruit.com/products/258">1200mAh </a>batteries. <a title="Link: https://www.adafruit.com/products/261" href="https://www.adafruit.com/products/261">You can also connect a JST cable here if you have other plans.</a>
+</li>
+<li>
+<strong>MicroUSB connector </strong>- this is the LiPoly/LiIon battery charging port. The SIM808 has a USB interface but its ONLY for reprogramming the module with an expensive and unavailable IDE. So charge only! The charge rate is 500mA max.</li>
+<li>
+<strong>Headset jack</strong> - this is a 'standard' TRRS 3.5mm phone headset jack with stereo earphone and mono microphone.&nbsp;<a href="https://www.adafruit.com/product/1966">Any 'iPhone' or 'Android' compatible (but not iPhone original) should work.</a> We tried about 10 different ones, and basically the more expensive once are more comfortable and louder but our official iPhone headset mic did not work for unknown reasons. Sleeve is Mic+, first ring is ground, then the second ring and tip are for stereo audio. The module does not have stereo out so we just tied both together.</li>
+</ul>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25717">
+<img class="25717-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/717/medium260/adafruit_products_2542_iso_demo_SIZED.jpg?1432929536 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/717/medium640/adafruit_products_2542_iso_demo_SIZED.jpg?1432929536 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/717/medium800/adafruit_products_2542_iso_demo_SIZED.jpg?1432929536 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/717/large1024/adafruit_products_2542_iso_demo_SIZED.jpg?1432929536 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_iso_demo_SIZED.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_iso_demo_SIZED(1).jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#antenna-ports-1635524-6" class="anchor-link"><span class="fa fa-link"></span></a><span id="antenna-ports-1635524-6" class="anchor-link-target"></span>
+</div>Antenna ports</h1>
+<p>Up top is the place where you can plug in your GSM antenna. <strong>An antenna is required to use the module for any kind of voice or data communications as well as some SIM commands!</strong></p>
+<p><a href="http://www.adafruit.com/product/1991">You can either use a uFL GSM antenna like this</a>, or use a&nbsp;<a href="http://www.adafruit.com/product/851">uFL to SMA adapter</a> and <a href="http://www.adafruit.com/product/1859">then an SMA antenna</a> <br><br>On the right is a GPS antenna port. This is for <strong>a passive 50 ohm GPS antenna only!</strong></p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25718">
+<img class="25718-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/718/medium260/adafruit_products_2542_quarter_SIZED.jpg?1432929575 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/718/medium640/adafruit_products_2542_quarter_SIZED.jpg?1432929575 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/718/medium800/adafruit_products_2542_quarter_SIZED.jpg?1432929575 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/718/large1024/adafruit_products_2542_quarter_SIZED.jpg?1432929575 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_quarter_SIZED.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_quarter_SIZED.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#sim-connector-on-back-1635526-8" class="anchor-link"><span class="fa fa-link"></span></a><span id="sim-connector-on-back-1635526-8" class="anchor-link-target"></span>
+</div>SIM Connector (on Back)</h1>
+<p>A 2G Mini SIM card is <strong>required</strong> to use the module. Nearly any cell phone shop can sell you a SIM card. It must be a 2G GSM card. AT&amp;T in the US does not sell these anymore! They are shutting down their GSM network, and only T-mobile sells and supports a GSM network. If you are in another country, chances are you can just ask for a GSM 2G card. <a href="https://www.adafruit.com/product/2505">For USA customers, we have a known-working TING SIM card which has a great billing system and works very well!</a><br><br>MicroSIMs won't fit - so make sure its a "Mini" SIM. <strong>Mini SIMs are 1" x 0.6" / 25mm x 15mm</strong>. These are by far the most common size. <br><br>Most cards come with a voice and/or data plan. If you want to make phone calls and SMS's you'll need a voice plan. If you want to transmit data like fetching a webpage, you'll need a data plan.</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25719">
+<img class="25719-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/719/medium260/adafruit_products_2542_top_ORIG.jpg?1432929620 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/719/medium640/adafruit_products_2542_top_ORIG.jpg?1432929620 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/719/medium800/adafruit_products_2542_top_ORIG.jpg?1432929620 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/719/large1024/adafruit_products_2542_top_ORIG.jpg?1432929620 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_top_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_top_ORIG(2).jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#bottom-breakouts-1635528-10" class="anchor-link"><span class="fa fa-link"></span></a><span id="bottom-breakouts-1635528-10" class="anchor-link-target"></span>
+</div>Bottom Breakouts</h1>
+<p>The most important pins are broken out at the bottom of the board. Not all of these are required, but they are all hella useful<br><br>These are in rough order of most important (not in linear order like we usually do)<br><br>These pins are all 3-5V input safe and if they are an output, the logic level is whatever Vio is set to.</p>
+<ul>
+<li>
+<strong>Vio</strong> - <strong>THIS IS THE MOST IMPORTANT PIN! </strong>This is the pin that you MUST drive with an external voltage from 3V-5V to set the logic level converter. The converter also buffers the indicator LEDs so NOTHING will appear to work unless this pin is powered! You should set the voltage to whatever voltage your microcontroller uses for logic. A 5V micro (like Arduino) should have it be 5V, a 3V logic micro should set it to 3V.</li>
+<li>
+<strong>Key</strong> - This is also a super important pin (but not as important as Vio). This is the power on/off indicator. Its also tied to the button in the top left. Tie this pin to ground for 2 seconds to turn the module on or off. It's not a level signal so it isn't like "low is off, high is on" - instead you must pulse it for 2 seconds to turn off/on. The module comes by default off. Tie this permanently to ground if you never want your micro to turn off the FONA for power saving</li>
+<li>
+<strong>5V </strong>- this is the USB 5V from the microUSB connector when its in and powered. Good if you need to know when the microUSB is plugged in and/or want to recharge the battery from an external plug.</li>
+<li>
+<strong>PS </strong>- this is the <strong>P</strong>ower <strong>S</strong>tatus pin. It is low when the module is off and high when the module has power. If you're using the <strong>Key</strong> button or pin, you can monitor this pad to see when the module's booted up. This is tied to the <strong>Pwr</strong> LED too.</li>
+<li>
+<strong>NS</strong> - this is the <strong>N</strong>etwork <strong>S</strong>tatus pin. It pulses to signal the current status of the module. This is also tied to the <strong>Net</strong> LED so for more detail see the LEDs section below.</li>
+<li>
+<strong>Reset</strong> - this is module hard reset pin. By default it has a high pull-up (module not in reset). If you absolutely got the module in a bad space, toggle this pin low for 100ms to perform a hard reset.</li>
+<li>
+<strong>RX &amp; TX</strong> - OK now that I made you read all that you can actually use the UART pins. The module uses UART to send and receive commands and data. These pins are auto-baud so whatever baud rate you send "AT" after reset or boot is the baud rate is used. RX is <strong>into</strong> the module, TX is <strong>out of</strong> the module.</li>
+<li>
+<strong>RTS</strong> - this is the hardware flow control pin. If you turn on flow control on the SIM808 you can use this pin to stop and start data transfer <em>from</em> the SIM808 to your microcontroller</li>
+<li>
+<strong>RI</strong> - this is the <strong>R</strong>ing <strong>I</strong>ndicator. It is basically the 'interrupt' out pin from the module. It is by default high and will pulse low for 120ms when a call is received. It can also be configured to pulse when an SMS is received.</li>
+<li>
+<strong>SPK+ and -</strong> : This is for connecting an external 32 ohm speaker. This is shared with the headphone jack. The two pins are differential so they don't have output DC blocking capacitors. <strong>You cannot connect this to a stereo, powered speakers or other non-differential</strong> <strong>amplifier</strong> without adding a 100uF+ blocking cap in series to the + pin and then not using the - pin. Instead, your amp should use GND for the - reference</li>
+<li>
+<strong>MIC + and -</strong>: this is for connecting an external electret microphone, it will bias the mic with 2V. Most electrets will work just fine. No extra circuitry is required for the mic such as a biaser or amplifier, just wire it up directly!</li>
+</ul>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#leds-1635529-11" class="anchor-link"><span class="fa fa-link"></span></a><span id="leds-1635529-11" class="anchor-link-target"></span>
+</div>LEDs</h1>
+<ul>
+<li>
+<strong>PWR </strong>- Blue! Lit when the module is booted and running</li>
+<li>
+<strong>NET</strong> - Red! You can use this for checking the current state without sending an AT command:<br><strong>64ms on, 800ms off</strong> - the module is running but hasn't made connection to the cellular network yet<br><strong>64ms on, 3 seconds off</strong> - the module has made contact with the cellular network and can send/receive voice and SMS<br><strong>64ms on, 300ms off</strong> - the GPRS data connection you requested is active<br>By watching the blinks you can get a visual feedback on whats going on.</li>
+<li>
+<strong>Charging</strong> - Orange! This is next to the microUSB jack. Indicates the onboard lipo charger is charging</li>
+<li>
+<strong>Done</strong> - Green! This is next to the JST jack. Indicates that the battery charging is done and the battery is full</li>
+</ul>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#other-breakout-pins-1635530-12" class="anchor-link"><span class="fa fa-link"></span></a><span id="other-breakout-pins-1635530-12" class="anchor-link-target"></span>
+</div>Other Breakout Pins</h1>
+<p>We scattered a few other breakouts around the board.</p>
+<ul>
+<li>
+<strong>Buzzer and PWM</strong> (Top right) - These are tied to the PWM output of the module! The PWM capability is quite nice, it can set any frequency and duty cycle. The <strong>PWM</strong> pin is directly output from the module and is 0-2.8Vpp. The <strong>Buzzer</strong> output has a NPN drive transistor so it can run a small vibration motor. Bz+ is the VBat voltage, Bz- is toggled on and off to ground.</li>
+<li>
+<strong>ADC </strong>(left middle) - the SIM800 has an ADC that can read 0-2.8VDC from this pin, referenced to ground. It also has an internal battery ADC so you can use this for a sensor or something. You can query the voltage from the UART. 2.8V max, people!</li>
+<li>
+<strong>2.8V test point</strong> - We have a test point for the 2.8V internal regulator, its off to the right.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="assembly-1">Assembly</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25701">
+<img class="25701-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/701/medium260/adafruit_products_2542_kit_SIZED.jpg?1432926998 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/701/medium640/adafruit_products_2542_kit_SIZED.jpg?1432926998 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/701/medium800/adafruit_products_2542_kit_SIZED.jpg?1432926998 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/701/large1024/adafruit_products_2542_kit_SIZED.jpg?1432926998 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_kit_SIZED.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_kit_SIZED.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#attaching-header-1635532-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="attaching-header-1635532-2" class="anchor-link-target"></span>
+</div>Attaching Header</h1>
+</div>
+<table class="build-table">
+<tbody><tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635533" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635533" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25702">
+<img class="25702-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_header.jpg" alt="adafruit_products_header.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><h2>Prepare the header strip:</h2>
+<p>Cut the strip to length if necessary. It will be easier to solder if you insert it into a breadboard - <strong>long pins down</strong></p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635534" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635534" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25703">
+<img class="25703-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_place.jpg" alt="adafruit_products_place.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><h2>Add the breakout board:</h2>
+<p>Place the breakout board over the pins so that the short pins poke through the breakout pads</p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635535" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635535" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25704">
+<img class="25704-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder1.jpg" alt="adafruit_products_solder1.jpg">
+</a></li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/25704">
+<img class="25704-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder1(1).jpg" alt="adafruit_products_solder1.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/25705">
+<img class="25705-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder2.jpg" alt="adafruit_products_solder2.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/25706">
+<img class="25706-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder3.jpg" alt="adafruit_products_solder3.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/25707">
+<img class="25707-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder4.jpg" alt="adafruit_products_solder4.jpg">
+</a> </li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><h2>And Solder!</h2>
+<p>Be sure to solder all pins for reliable electrical contact.<br><br><em>(For tips on soldering, be sure to check out our </em><a href="http://learn.adafruit.com/adafruit-guide-excellent-soldering"><em>Guide to Excellent Soldering</em></a><em>).</em></p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635536" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635536" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25708">
+<img class="25708-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_done.jpg" alt="adafruit_products_done.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><p>You're done! Check your solder joints visually and continue onto the next steps</p></div></td>
+</tr>
+</tbody></table>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#attaching-antenna-and-battery-1635537-7" class="anchor-link"><span class="fa fa-link"></span></a><span id="attaching-antenna-and-battery-1635537-7" class="anchor-link-target"></span>
+</div>Attaching Antenna &amp; Battery</h1>
+<p>A battery, GPS antenna and GSM antenna is required! Use any Lipoly or LiIon 3.7V/4.2V battery</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25709">
+<img class="25709-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/709/medium260/adafruit_products_2542_iso_demo_02.jpg?1432927114 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/709/medium640/adafruit_products_2542_iso_demo_02.jpg?1432927114 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/709/medium800/adafruit_products_2542_iso_demo_02.jpg?1432927114 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/709/large1024/adafruit_products_2542_iso_demo_02.jpg?1432927114 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_iso_demo_02.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_iso_demo_02.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p><strong>Check polarity for the battery!</strong><br>Snap the uFL connector on, it will click when placed properly</p>
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#sim-card-1635539-9" class="anchor-link"><span class="fa fa-link"></span></a><span id="sim-card-1635539-9" class="anchor-link-target"></span>
+</div>SIM Card</h1>
+<p>You <strong>must</strong> insert a SIM card to do anything but the most basic tests. GPS does work without a SIM but of course you cannot send or receive texts, calls, etc!</p>
+</div>
+<table class="build-table">
+<tbody><tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635540" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635540" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25710">
+<img class="25710-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_2542_quarter_SIZED(1).jpg" alt="adafruit_products_2542_quarter_SIZED.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><p>The SIM card holder is on the back. It holds a very-standard "Mini SIM"<br>Micro SIMs will not work! Make sure you get a "Mini SIM"</p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635541" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635541" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25711">
+<img class="25711-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_simopen.jpg" alt="adafruit_products_simopen.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><p>Open by sliding the cover towards the antenna</p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635542" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635542" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25712">
+<img class="25712-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_siminsert.jpg" alt="adafruit_products_siminsert.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><p>Insert the SIM with the gold pads facing up and the notch on the outer corner</p></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635543" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635543" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/25713">
+<img class="25713-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_simclose.jpg" alt="adafruit_products_simclose.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><p><em></em>Close the hinge down and slide the cover to lock it in place</p></div></td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="wiring-to-usb">Wiring to USB</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="row-fluid build-text">
+If you have a USB console cable you can wire it up directly and send commands using any Terminal software<br><br>For Windows, <a href="http://www.putty.org/">we suggest Putty </a>- it's free and open source!<br>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#wire-it-up-1635297-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="wire-it-up-1635297-2" class="anchor-link-target"></span>
+</div>Wire it up</h1>In this example, we're using our USB console cable.<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17662">
+<img class="17662-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/662/medium260/adafruit_products_954-02.jpg?1403893747 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/662/medium640/adafruit_products_954-02.jpg?1403893747 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/662/medium800/adafruit_products_954-02.jpg?1403893747 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/662/large1024/adafruit_products_954-02.jpg?1403893747 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_954-02.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_954-02.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+You will have to install the PL2303 driver and determine the COM port before you continue.
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17661">
+<img class="17661-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/661/medium260/adafruit_products_pl2302com.png?1403893737 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/661/medium640/adafruit_products_pl2302com.png?1403893737 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/661/medium800/adafruit_products_pl2302com.png?1403893737 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/661/large1024/adafruit_products_pl2302com.png?1403893737 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_pl2302com.png" src="./Adafruit_Shield_Page_files/adafruit_products_pl2302com.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+Connect to that COM port at 8N1 (8-bit, no parity bit, 1 stop bit) at 9600 baud. You can actually use any baud rate and it will autodetect but 9600 is supported by any terminal program!<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17663">
+<img class="17663-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/663/medium260/adafruit_products_puttyconnect.png?1403893899 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/663/medium640/adafruit_products_puttyconnect.png?1403893899 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/663/medium800/adafruit_products_puttyconnect.png?1403893899 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/663/large1024/adafruit_products_puttyconnect.png?1403893899 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_puttyconnect.png" src="./Adafruit_Shield_Page_files/adafruit_products_puttyconnect.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h2>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#double-check-1635306-8" class="anchor-link"><span class="fa fa-link"></span></a><span id="double-check-1635306-8" class="anchor-link-target"></span>
+</div>Double Check!</h2>
+<ol>
+<li>You have a Lipoly battery plugged in to the FONA JST<br>
+</li>
+<li>You have a working 2G SIM installed in the back</li>
+<li>Connect <b>Black</b> wire to <b>GND</b>
+</li>
+<li>Connect <b>White </b>wire to <b>TX</b>
+</li>
+<li>Connect<b> Green </b>wire to<b> RX</b>
+</li>
+<li>Connect <b>Red </b>wire to<b> Vio</b>
+</li>
+<li><b>You may need to hold down the KEY button for 2 seconds until the PWR LED is lit and the NET LED blinks<br></b></li>
+</ol>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17739">
+<img class="17739-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/739/medium260/adafruit_products_pl2303wire.jpg?1404231713 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/739/medium640/adafruit_products_pl2303wire.jpg?1404231713 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/739/medium800/adafruit_products_pl2303wire.jpg?1404231713 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/739/large1024/adafruit_products_pl2303wire.jpg?1404231713 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_pl2303wire.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_pl2303wire.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#test-commands-1635308-10" class="anchor-link"><span class="fa fa-link"></span></a><span id="test-commands-1635308-10" class="anchor-link-target"></span>
+</div>Test Commands</h1>The FONA will <i>echo</i> characters back so you can see what you're typing - very handy!<br><br>Start by initializing the auto-baud'er by sending <b>AT</b> and then return<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17664">
+<img class="17664-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/664/medium260/adafruit_products_AT.png?1403894253 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/664/medium640/adafruit_products_AT.png?1403894253 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/664/medium800/adafruit_products_AT.png?1403894253 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/664/large1024/adafruit_products_AT.png?1403894253 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_AT.png" src="./Adafruit_Shield_Page_files/adafruit_products_AT.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+You may have to try it twice to get it to auto baud. Once it works you should see the<b> AT</b> characters echo and then <b>OK</b> telling you its OK!<br><br>You can then send some commands to query the module and get information about it such as<br><b>ATI</b> - Get the module name and revision<br><b>AT+CMEE=2 </b>- Turn on verbose errors (handy for when you are trying out commands!)<br><b>AT+CCID</b> - get the SIM card number - this tests that the SIM card is found OK and you can verify the number is written on the card<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17665">
+<img class="17665-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/665/medium260/adafruit_products_ATccid.png?1403894480 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/665/medium640/adafruit_products_ATccid.png?1403894480 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/665/medium800/adafruit_products_ATccid.png?1403894480 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/665/large1024/adafruit_products_ATccid.png?1403894480 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_ATccid.png" src="./Adafruit_Shield_Page_files/adafruit_products_ATccid.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#test-setup-1635313-14" class="anchor-link"><span class="fa fa-link"></span></a><span id="test-setup-1635313-14" class="anchor-link-target"></span>
+</div>Test Setup</h1>Some tests to verify the setup<br><br><ul>
+<li>
+<b>AT+COPS?</b> Check that you're connected to the network, in this case T-Mobile</li>
+<li>
+<b>AT+CSQ</b> - Check the 'signal strength' - the first # is dB strength, it should be higher than around 5. Higher is better. Of course it depends on your antenna and location!</li>
+<li>
+<b>AT+CBC</b> - will return the lipo battery state. The second number is the % full (in this case its 92%) and the third number is the actual voltage in mV (in this case, 3.877 V)<br>
+</li>
+</ul>
+</div>
+<div class="row-fluid build-alert">
+<div class="alert">
+<i class="fa fa-exclamation-circle"></i>
+<span class="alert-content">If your SIM card is locked with a PIN code, you will need to enter the pin before you can connect to a network via the 'AT+CPIN' command. For example if the pin is 1234 you need to enter 'AT+CPIN=1234".</span>
+</div>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17666">
+<img class="17666-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/666/medium260/adafruit_products_check.png?1403894751 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/666/medium640/adafruit_products_check.png?1403894751 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/666/medium800/adafruit_products_check.png?1403894751 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/666/large1024/adafruit_products_check.png?1403894751 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_check.png" src="./Adafruit_Shield_Page_files/adafruit_products_check.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#test-send-sms-1635318-17" class="anchor-link"><span class="fa fa-link"></span></a><span id="test-send-sms-1635318-17" class="anchor-link-target"></span>
+</div>Test Send SMS</h1>
+<br>Finally, you can try to text your phone! Sending an SMS is pretty darn easy. <br><br><ul>
+<li>
+<b>AT+CMGF=1</b> - this will set it to TEXT mode not PDU (data) mode. You must do this because otherwise you cannot just type out the message.</li>
+<li>
+<b>AT+CMGS="nnnnnn"</b> - send a text message! You will get a '&gt;' prompt for typing. Type out your message and when you are done send a [Control-Z] on an empty line to send</li>
+</ul>It may take a few seconds after the Control-Z character for the module to send the SMS (you'll get a +CMGS) and verify it was sent (OK reply)<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17672">
+<img class="17672-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/672/medium260/adafruit_products_sendsms.png?1403895520 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/672/medium640/adafruit_products_sendsms.png?1403895520 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/672/medium800/adafruit_products_sendsms.png?1403895520 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/672/large1024/adafruit_products_sendsms.png?1403895520 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_sendsms.png" src="./Adafruit_Shield_Page_files/adafruit_products_sendsms.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17671">
+<img class="17671-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/671/medium260/adafruit_products_smssent.png?1403895381 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/671/medium640/adafruit_products_smssent.png?1403895381 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/671/medium800/adafruit_products_smssent.png?1403895381 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/671/large1024/adafruit_products_smssent.png?1403895381 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_smssent.png" src="./Adafruit_Shield_Page_files/adafruit_products_smssent.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17670">
+<img class="17670-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/670/medium260/adafruit_products_smsok.png?1403895361 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/670/medium640/adafruit_products_smsok.png?1403895361 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/670/medium800/adafruit_products_smsok.png?1403895361 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/670/large1024/adafruit_products_smsok.png?1403895361 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_smsok.png" src="./Adafruit_Shield_Page_files/adafruit_products_smsok.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#test-call-1635323-21" class="anchor-link"><span class="fa fa-link"></span></a><span id="test-call-1635323-21" class="anchor-link-target"></span>
+</div>Test Call</h1>You can also make a phone call, you must have a headset attached to the 4-pole 3.5mm headset connector, with a mic!<br><br>To call, dial<br><ul>
+<li>To call, dial <b>ATD</b>nnnnn<b>;</b> Don't forget the <b>;</b><b> </b>at the end!</li>
+<li>If they pick up you'll hear it in the headset, if no pickup, you'll get a <b>NO CARRIER</b> return</li>
+<li>Once you are chatting, you can hang up by sending <b>ATH</b>
+</li>
+</ul>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17673">
+<img class="17673-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/673/medium260/adafruit_products_call.png?1403895877 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/673/medium640/adafruit_products_call.png?1403895877 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/673/medium800/adafruit_products_call.png?1403895877 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/673/large1024/adafruit_products_call.png?1403895877 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_call.png" src="./Adafruit_Shield_Page_files/adafruit_products_call.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+ </div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="wiring-to-arduino">Wiring to Arduino</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#wire-up-1635544-1" class="anchor-link"><span class="fa fa-link"></span></a><span id="wire-up-1635544-1" class="anchor-link-target"></span>
+</div>Wire up</h1>
+<p>After soldering headers to the FONA module, plug it into a breadboard. We'll use an UNO, other Arduinos may be different</p>
+<ul>
+<li>
+<strong>Vio </strong>connects to <strong>5V (or, with a 3V logic Arduino, 3V)</strong>
+</li>
+<li>
+<strong>GND </strong>connects to <strong>GND</strong>
+</li>
+<li>
+<strong>Key </strong>connects to <strong>GND</strong> (always on)</li>
+<li>
+<strong>RX </strong>connects to digital <strong>2</strong>
+</li>
+<li>
+<strong>TX</strong> connects to digital <strong>3</strong> (<strong>9</strong> on Leo/Micro, <strong>10</strong> on Mega)</li>
+<li>
+<strong>RST </strong>connects to digital <strong>4</strong><strong><br></strong>
+</li>
+</ul>
+<p>We'll be using software serial to talk to the module. The&nbsp;Mega ('2560 based) can't use Digital 3 for FONA TX, so use digital <strong>10</strong><strong>&nbsp;</strong>instead. &nbsp;The&nbsp;Leonardo and Micro ('32u4 based) can't use digital 3 for FONA TX, so use digital&nbsp;<strong>9</strong> instead. &nbsp;See <a href="http://arduino.cc/en/Reference/SoftwareSerial">this page</a>&nbsp;for other pins you can use for FONA TX (SoftwareSerial Receive) on the Mega, Leonardo, and Micro.</p>
+<p>&nbsp;At this time we don't have support for Hardware Serial to talk to the FONA</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25714">
+<img class="25714-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/714/medium260/adafruit_products_wiring.jpg?1432927344 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/714/medium640/adafruit_products_wiring.jpg?1432927344 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/714/medium800/adafruit_products_wiring.jpg?1432927344 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/714/large1024/adafruit_products_wiring.jpg?1432927344 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_wiring.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_wiring.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="arduino-test">Arduino Test</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="element element element element element element element element element row-fluid build-alert">
+<div class="alert">
+<i class="fa fa-exclamation-circle"></i>
+<span class="alert-content">The FONA library is under heavy development! This page may change over time!</span>
+</div>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#download-adafruit-fona-1999288-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="download-adafruit-fona-1999288-2" class="anchor-link-target"></span>
+</div>Download Adafruit_FONA</h1>
+<p>Open up the Arduino library manager</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/84053">
+<img class="84053-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/084/053/medium260/adafruit_products_library_manager_menu.png?1573527775 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/053/medium640/adafruit_products_library_manager_menu.png?1573527775 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/053/medium800/adafruit_products_library_manager_menu.png?1573527775 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/053/large1024/adafruit_products_library_manager_menu.png?1573527775 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_library_manager_menu.png" src="./Adafruit_Shield_Page_files/adafruit_products_library_manager_menu.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>Search for the<span>&nbsp;</span><strong>Adafruit FONA</strong><span>&nbsp;</span>library and install it</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/84054">
+<img class="84054-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/084/054/medium260/adafruit_products_fona.png?1573527824 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/054/medium640/adafruit_products_fona.png?1573527824 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/054/medium800/adafruit_products_fona.png?1573527824 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/084/054/large1024/adafruit_products_fona.png?1573527824 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_fona.png" src="./Adafruit_Shield_Page_files/adafruit_products_fona.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>We also have a great tutorial on Arduino library installation at:<br><a href="http://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use">http://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use</a></p>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#fona-3g-baud-adjustment-1999291-7" class="anchor-link"><span class="fa fa-link"></span></a><span id="fona-3g-baud-adjustment-1999291-7" class="anchor-link-target"></span>
+</div>FONA 3G Baud Adjustment</h1>
+<p>If you have a FONA 3G, the first time you use it you may need to run the <strong>FONA3G_setBaud</strong> example to set the baud rate manually to 4800bps rather than 115200</p>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#load-demo-1999292-8" class="anchor-link"><span class="fa fa-link"></span></a><span id="load-demo-1999292-8" class="anchor-link-target"></span>
+</div>Load Demo</h1>
+<p>Open up <strong>File-&gt;Examples-&gt;Adafruit_FONA</strong><strong>-&gt;FONAtest </strong>and upload to your Arduino wired up to the module.</p>
+<p>For the FONA 3G, change the constructor used in FONATest to Adafruit_FONA_3G:</p>
+</div>
+<div class="build-code code-element">
+<div class="download-code">
+<i class="fa fa-cloud-download"></i> Download:
+<a data-turbolinks="false" href="https://learn.adafruit.com/pages/5744/elements/1999293/download">
+file
+</a> <div class="code-copy-container">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#" class="code-copy-button hidden-xs">Copy Code</a>
+</div>
+</div>
+<pre class="code-text-only" style="display: none;">// Use this for FONA 800 and 808s
+//Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+// Use this one for FONA 3G
+Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
+</pre>
+<pre class="prettyprint
+              
+              linenums
+               prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">// Use this for FONA 800 and 808s</span></li><li class="L1"><span class="com">//Adafruit_FONA fona = Adafruit_FONA(FONA_RST);</span></li><li class="L2"><span class="com">// Use this one for FONA 3G</span></li><li class="L3"><span class="typ">Adafruit_FONA_3G</span><span class="pln"> fona </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Adafruit_FONA_3G</span><span class="pun">(</span><span class="pln">FONA_RST</span><span class="pun">);</span></li></ol></pre>
+</div>
+<div class="row-fluid build-text">
+<p>For Mega, Leonardo, or Micro, change the definition of FONA_TX to the pin you used!</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17810">
+<img class="17810-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/810/medium260/adafruit_products_loadtut.png?1404316141 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/810/medium640/adafruit_products_loadtut.png?1404316141 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/810/medium800/adafruit_products_loadtut.png?1404316141 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/810/large1024/adafruit_products_loadtut.png?1404316141 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_loadtut.png" src="./Adafruit_Shield_Page_files/adafruit_products_loadtut.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+Make sure you have a charged 3.7/4.2V LiPoly or LiIon battery plugged into the JST and an antenna attached<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25543">
+<img class="25543-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/543/medium260/adafruit_products_2468_top_demo_ORIG.jpg?1431723612 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/543/medium640/adafruit_products_2468_top_demo_ORIG.jpg?1431723612 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/543/medium800/adafruit_products_2468_top_demo_ORIG.jpg?1431723612 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/543/large1024/adafruit_products_2468_top_demo_ORIG.jpg?1431723612 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2468_top_demo_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2468_top_demo_ORIG.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17811">
+<img class="17811-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/811/medium260/adafruit_products_kitup.jpg?1404316219 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/811/medium640/adafruit_products_kitup.jpg?1404316219 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/811/medium800/adafruit_products_kitup.jpg?1404316219 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/811/large1024/adafruit_products_kitup.jpg?1404316219 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_kitup.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_kitup.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+Once uploaded to your Arduino, open up the serial console at <b>115200 baud speed</b> to begin the tester sketch<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17812">
+<img class="17812-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/812/medium260/adafruit_products_checkbaud.gif?1448046644 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/812/medium640/adafruit_products_checkbaud.gif?1448046644 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/812/medium800/adafruit_products_checkbaud.gif?1448046644 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/812/large1024/adafruit_products_checkbaud.gif?1448046644 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_checkbaud.gif" src="./Adafruit_Shield_Page_files/adafruit_products_checkbaud.gif" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+Make sure you also have <b>Both NL &amp; CR</b> for the serial command sender option. This means when you send data to the Arduino via the console, it will put a newline/return at the end.<br>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#using-the-test-sketch-1999302-18" class="anchor-link"><span class="fa fa-link"></span></a><span id="using-the-test-sketch-1999302-18" class="anchor-link-target"></span>
+</div>Using the Test Sketch</h1>
+<p>The test sketch has a menu interface so you can test out just about everything the FONA can do. The menu may change slightly as we add more functionality and update code!<br><br></p>
+<p>Continue onto the next few sections to see what functionality you can test with the sketch</p>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="fona-808-vs-fona-800">FONA 808 vs FONA 800</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-text">
+<p>We have two different types of GSM modules &amp; shields under the FONA brand name. The FONA 800 (GSM/GPRS)</p>
+</div>
+ <div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25697">
+<img class="25697-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/697/medium260/adafruit_products_1946-03.jpg?1432924623 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/697/medium640/adafruit_products_1946-03.jpg?1432924623 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/697/medium800/adafruit_products_1946-03.jpg?1432924623 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/697/large1024/adafruit_products_1946-03.jpg?1432924623 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_1946-03.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_1946-03.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/26593">
+<img class="26593-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/026/593/medium260/adafruit_products_2468-08.jpg?1437160752 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/593/medium640/adafruit_products_2468-08.jpg?1437160752 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/593/medium800/adafruit_products_2468-08.jpg?1437160752 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/593/large1024/adafruit_products_2468-08.jpg?1437160752 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2468-08.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2468-08.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>and the FONA 808 (GSM/GPRS + GPS too)</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25698">
+<img class="25698-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/698/medium260/adafruit_products_2542_kit_SIZED.jpg?1432924633 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/698/medium640/adafruit_products_2542_kit_SIZED.jpg?1432924633 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/698/medium800/adafruit_products_2542_kit_SIZED.jpg?1432924633 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/698/large1024/adafruit_products_2542_kit_SIZED.jpg?1432924633 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_2542_kit_SIZED.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_2542_kit_SIZED(1).jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/26592">
+<img class="26592-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/026/592/medium260/adafruit_products_pinouts.jpg?1437160715 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/592/medium640/adafruit_products_pinouts.jpg?1437160715 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/592/medium800/adafruit_products_pinouts.jpg?1437160715 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/026/592/large1024/adafruit_products_pinouts.jpg?1437160715 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_pinouts.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_pinouts.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<p>Here's the key similarities</p>
+<ul>
+<li>Both have a 2G GSM/GPRS cellular core</li>
+<li>Both can do voice, data, text</li>
+<li>Both require a LiPoly battery and GSM antenna</li>
+<li>Both can use a 3.5mm headset</li>
+<li>Both recharge over the microUSB jack</li>
+<li>Both have a buzzer driver</li>
+</ul>
+<p>Here's key differences</p>
+<ul>
+<li>Size: the SIM808 based FONA breakout is larger. Shields are the same size</li>
+<li>The 808 has a GPS module integrated as well</li>
+<li>The 800 has external 8 ohm speaker driver (external audio) whereas the 808 has only headset audio and 32 ohm speaker driver</li>
+<li>The 800 has an FM tuner for listening to radio</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="faqs">F.A.Q.s</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803390" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803390" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>Is a Lipo Battery required? Can I run the FONA off of a power supply or just the microUSB port?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>The microUSB (on the shield, in CHARGE mode and powered via USB or DC power) is only used to charge the battery. Without a battery installed it will flicker on and off so it cannot be used to power a FONA minus battery. <br><br>A 1200mAh+ sized Lithium ion/polymer battery is required, nothing else will be able to easily power the FONA and provide the correct voltage range even during 2 Amp spikes.</p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803391" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803391" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>I really want to run my FONA without a Lipoly battery!</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">
+<p>You can't.</p>
+<p>We keep getting people who ask "Hey I know its a requirement but I want to build a buck/boost/linear 3.8V regulator and it wil be OK because I said so" and then they realize it doesn't work well</p>
+<p>The FONA design depends on a Lipoly battery. <strong>The battery is not optional. The battery is essential to function. If you do not want a Lipoly battery you will have to use a different cellular module design. All of our FONAs require, depend and will not work without a Lipoly battery</strong></p>
+<p>You can keep the battery topped up with an external 5V power supply for long term usage but <strong>the battery is still required even if plugged into USB</strong></p>
+</div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803392" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803392" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>Ahh! My FONA was working fine then I sent it some command and its not working right anymore?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>You can always factory reset the FONA by sending it the</p>
+<p><strong>ATZ</strong></p>
+<p>command. Say with <strong>fona.println("ATZ")</strong> or using a USB console cable to send commands. If you set an odd fixed baud rate (e.g. you cannot even get an <strong>OK</strong> when you send <strong>AT</strong>), a USB serial console cable will be helpful it quickly changing baud rates in your terminal software to get back to a working AT/OK setup!</p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803393" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803393" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>I'm using FONA as a voice caller and the other person can't hear me!</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">
+<p>Note that you do have to use a compatible headset. Not all CTIA headsets will work,&nbsp;<a href="https://www.adafruit.com/product/1966">the ones we have in the shop are known to work</a> and so do many other Android but iPhone headsets do not.</p>
+<p>You can also use 'external' audio on the FONA (electret mic and speaker soldered to FONA) but <strong>you cannot mix and match</strong>. Either you use headset or you use external audio. You cant use external mic and headset speaker.</p>
+<p><a href="https://learn.adafruit.com/adafruit-fona-mini-gsm-gprs-cellular-phone-module/arduino-test#setting-headset-or-external-audio">You also have to tell the FONA which audio you are using, it does not autodetect. You can use our library and fona.setAudio()</a></p>
+</div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803394" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803394" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>My FONA doesn't work with Arduino Due/ADK/101/Galileo/STM32....</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>Right now we only know that the FONA library and shields work with Arduino UNO. Any other platforms may require porting work</p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803395" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803395" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>Can I charge the battery and use FONA at the same time?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>Yes! You can use the Lipoly as sort of a 'backup battery' - keep charging it via MicroUSB (on the shield, in CHARGE mode and powered via USB or DC power) during use. If the MicroUSB loses power, the FONA will keep going.</p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803396" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803396" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>My FONA won't turn on/respond! Or it acts flakey and auto-shuts off sometimes!</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">
+<p>We've noticed a lot of problems that are 'weird' that are a results of using batteries with the wrong polarity.</p>
+<p>All batteries from adafruit have the right wire colors/polarity for the FONA</p>
+<p><strong>Batteries not from Adafruit are not guaranteed to have the right pinout! Using the wrong pinout may damage the FONA and/or make it act 'odd'!</strong></p>
+</div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803397" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803397" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>FONA 800/808 requires a 2G SIM, does it work with a dual 2G-3G SIM?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>That will work fine, as long as the SIM can register to the 2G network at all, it is acceptable to use</p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803398" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803398" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>Are you sure I can't use ATT for 2G service? I'm in a T-Mobile cold spot</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>The AT&amp;T GSM network is going to be live until January 2017. If you're reading this and it's 2017, you're outta luck. If not, you can try to get an AT&amp;T SIM activated to the 2G GSM network but its not going to do that by default. You'll have to call up or talk to an AT&amp;T rep and it may not go so well because they really don't want people to use their GSM network.<br><br><a title="Link: http://support.t-mobile.com/community/coverage/signal-booster" href="http://support.t-mobile.com/community/coverage/signal-booster">You can also call up T-Mobile and say you can't get connected consistently - they may send you a free signal booster</a></p>
+<p><a href="https://orion.freeus.com/coverage-map.aspx">Check out this handy map to see T-Mobile's coverage map in the USA</a></p></div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803399" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803399" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>How long can FONA last on my battery?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">We haven't done extensive testing with FONA but from preliminary reports, the FONA draws about 20-25mA while running, up to 200mA+ while actually making a call/sending/receiving data, and has very small spikes of up to 2A. The spikes are short and are absorbed by the onboard capacitors.<br><br>A 1200mAh battery can run the FONA on 'standby' for a day or two.<br>
+</div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803400" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803400" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>How do I set the Real Time Clock on the FONA SIM?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">Please see <a href="http://forums.adafruit.com/viewtopic.php?f=19&amp;t=58002&amp;p=294235#p294235">this forum post</a>!<br><br>
+</div>
+</div>
+</div>
+<div class="build-faq ">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803401" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803401" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>I'm using a FONA 808 and the GPS commands aren't working</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer">
+<p>The FONA 808 has two versions, due to a revision of the module itself. Version 1 has two barcodes on the front and is part #S2-10606-Z1F0<strong>1</strong>. Version 2 has a QR code on the front and is part #S2-10606-Z1F0<strong>2</strong>. V2 has a newer/better chipset (MT3337 instead of MT3336) but the commandset has changed. Which is annoying but adaptable!</p>
+<p>If you are using V1, <a href="http://www.adafruit.com/datasheets/SIM808_GPS_Application_Note_V1.00.pdf">use this GPS command document for how to interact with the GPS subsystem</a></p>
+<p>If you are using V2, <a href="http://www.adafruit.com/datasheets/SIM800%20Series_GNSS_Application%20Note%20V1.00.pdf">use this GNSS command document instead.</a></p>
+</div>
+</div>
+</div>
+<div class="build-faq last">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803402" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803402" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>How do I switch between SMS storage on SIM and in internal FLASH?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>You can switch between the storage locations by changing the&nbsp;FONA_PREF_SMS_STORAGE definition in the Adafruit_FONA.h library file. &nbsp;The definition "SM" selects the SIM, and the definition "ME" selects FLASH.</p></div>
+</div>
+</div>
+<div class="build-code code-element">
+<div class="download-code">
+<i class="fa fa-cloud-download"></i> Download:
+<a data-turbolinks="false" href="https://learn.adafruit.com/pages/5744/elements/2803403/download">
+file
+</a> <div class="code-copy-container">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#" class="code-copy-button hidden-xs">Copy Code</a>
+</div>
+</div>
+<pre class="code-text-only" style="display: none;">// Set the preferred SMS storage.
+//   Use "SM" for storage on the SIM.
+//   Use "ME" for internal storage on the FONA chip
+#define FONA_PREF_SMS_STORAGE "\"SM\""
+//#define FONA_PREF_SMS_STORAGE "\"ME\""
+</pre>
+<pre class="prettyprint
+              
+              linenums
+               prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">// Set the preferred SMS storage.</span></li><li class="L1"><span class="com">//   Use "SM" for storage on the SIM.</span></li><li class="L2"><span class="com">//   Use "ME" for internal storage on the FONA chip</span></li><li class="L3"><span class="com">#define</span><span class="pln"> FONA_PREF_SMS_STORAGE </span><span class="str">"\"SM\""</span></li><li class="L4"><span class="com">//#define FONA_PREF_SMS_STORAGE "\"ME\""</span></li></ol></pre>
+</div>
+<div class="row-fluid build-text">
+<p>Then recompile and upload</p>
+</div>
+<div class="build-faq last">
+<i class="fa fa-question-circle-o"></i>
+<div class="collapsible-content">
+<div class="faq-anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#faq-2803405" class="anchor-link"><span class="fa fa-link"></span></a>
+<span id="faq-2803405" class="anchor-link-target"></span>
+</div>
+<div class="question">
+<h2>I'm trying to reset the FONA with my microcontroller/computer and pulling the RESET pin low via a GPIO isnt working?</h2>
+<div class="collapsible-icon">
+<i class="collapsed-icon"></i>
+</div>
+</div>
+<div class="answer"><p>There's a superfluous level shifting diode that we put on the FONA and FONA 808 breakouts - it turns out it isn't necessary and for microcontrollers with weaker outputs it can keep the FONA from resetting.</p>
+<p>You can 'bridge' this diode with a piece of wire, its perfectly safe and may give you a little more headroom. There's already level shifting inside the modules so there's no risk to this mod.</p>
+<p>Simply solder a small wire between the two pads, or remove the diode and replace with a 0 ohm resistor or wire.</p>
+<p>See more here: <a href="http://forums.adafruit.com/viewtopic.php?f=54&amp;t=77778#p410867">http://forums.adafruit.com/viewtopic.php?f=54&amp;t=77778#p410867</a></p></div>
+</div>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/29555">
+<img class="29555-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/029/555/medium260/adafruit_products_sim800.jpg?1452281681 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/555/medium640/adafruit_products_sim800.jpg?1452281681 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/555/medium800/adafruit_products_sim800.jpg?1452281681 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/555/large1024/adafruit_products_sim800.jpg?1452281681 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_sim800.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_sim800.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/29556">
+<img class="29556-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/029/556/medium260/adafruit_products_sim808.jpg?1452281681 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/556/medium640/adafruit_products_sim808.jpg?1452281681 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/556/medium800/adafruit_products_sim808.jpg?1452281681 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/029/556/large1024/adafruit_products_sim808.jpg?1452281681 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_sim808.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_sim808.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="handy-commands">Handy Commands</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="row-fluid build-text">
+<p>Here's a quick list of useful commands that may not be directly supported by the library but are handy for many projects!</p>
+</div>
+<div class="row-fluid build-text">
+<h2>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#ri-on-sms-receipt-1984630-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="ri-on-sms-receipt-1984630-2" class="anchor-link-target"></span>
+</div>RI on SMS receipt</h2>
+<p><code>AT+CFGRI=1</code></p>
+<p>The RI pin will pulse low for ~100ms when an SMS is received</p>
+</div>
+<div class="row-fluid build-text">
+<h2>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#factory-reset-1984631-3" class="anchor-link"><span class="fa fa-link"></span></a><span id="factory-reset-1984631-3" class="anchor-link-target"></span>
+</div>Factory Reset</h2>
+<p><code>ATZ</code></p>
+<p>will reset the FONA GSM module to its factory default</p>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#bluetooth-commands-1984632-4" class="anchor-link"><span class="fa fa-link"></span></a><span id="bluetooth-commands-1984632-4" class="anchor-link-target"></span>
+</div>Bluetooth commands</h1>
+<p><a href="https://forums.adafruit.com/viewtopic.php?f=54&amp;t=103353">Here's a thread if you're interested in the BT support in the SIM800H</a> (there's no antenna for BT in the SIM800 breakout but it is in the FONA feather)</p>
+</div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="downloads">Downloads</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="">
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25715">
+<img class="25715-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/715/medium260/adafruit_products_Fona_chip_top_ORIG.jpg?1432929300 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/715/medium640/adafruit_products_Fona_chip_top_ORIG.jpg?1432929300 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/715/medium800/adafruit_products_Fona_chip_top_ORIG.jpg?1432929300 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/715/large1024/adafruit_products_Fona_chip_top_ORIG.jpg?1432929300 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_Fona_chip_top_ORIG.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_Fona_chip_top_ORIG.jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#datasheets-and-app-notes-1999619-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="datasheets-and-app-notes-1999619-2" class="anchor-link-target"></span>
+</div>Datasheets &amp; App Notes:</h1>
+<ul>
+<li>
+<a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_AT%20Command%20Manual_V1.09.pdf">SIM800 Command Manual</a> - All the basic commands that the module supports (please note some are not supported by the FONA 808, such as FM radio, external audio, or bluetooth)</li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM808_Hardware%20Design_V1.02.pdf">SIM808 Hardware design</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM808%20SPEC_V1507.pdf">SIM808 Specifications</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_GSM%20Location_Application%20Note_V1.01.pdf">SIM808 GSM Location App Note</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM808_GPS_Application_Note_V1.00.pdf">SIM808 v1 GPS AT commands</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800%20Series_GNSS_Application%20Note%20V1.00.pdf">SIM808 v2 GPS AT commands</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_TCPIP_Application%20Note_V1.01.pdf">SIM800 TCP/IP App Note (specifics on TCP/IP GPRS)</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_FM_Application%20Note_V1.01.pdf">SIM800 FM Radio details</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_IP_Application%20Note_V1.02.pdf">SIM800 IP (FTP &amp; HTTP) support specifics</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_Email_Application%20Note_V1.00.pdf">SIM800 E-mail support specifics</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_MMS_Application%20Note_V1.00.pdf">SIM800 MMS (multimedia message) support specifics</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_GNSS_Application%20Note%20V1.00.pdf">SIM800 GNSS App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series%20Embedded%20AT%20Sleep%20Application%20Note_V1.01.pdf">SIM800 Sleep App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series%20Embedded%20AT_Application%20Note_1.02.pdf">SIM800 Embedded AT App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series%20Embedded%20AT_Compiling%20Environment_V1.01.pdf">SIM800 Compiling Environments</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_Bluetooth_Application_Note_V1.04.pdf">SIM800 Bluetooth App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_FS_Application%20Note_V1.01.pdf">SIM800 FS App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_Multiplexer_Application%20Note_V1.01.pdf">SIM800 Multiplexer App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_NTP_Application%20Note_V1.01.pdf">SIM800 NTP App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_PCM_Application%20Note_V1.00.pdf">SIM800 PCM App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_Software%20Upgrade_Application%20Note_V1.02.pdf">SIM800 Software Upgrade App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_Serial%20Port_Application%20Note_V1.01.pdf">SIM800 SSL App Note</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM800%20Series_STK_Application%20Note_V1.00.pdf">SIM800 STK App Note</a></li>
+</ul>
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#test-reports-1999619-2" class="anchor-link"><span class="fa fa-link"></span></a><span id="test-reports-1999619-2" class="anchor-link-target"></span>
+</div>Test Reports</h1>
+<ul>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM808%20CE%20Certificate.pdf">SIM808 CE Certificate</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/SIM8XX_%20Suppliers%20declaration%20of%20conformity.pdf">Supplier's Declaration of Conformity</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_FCC_TCB_BT.pdf">FCC TCB BT</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_CE.pdf">R&amp;TTE Statement of Opinion</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_FCC_Part15.pdf">FCC Part 15B Test Report</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_FCC_Part15_BT.pdf">FCC Part 15C Test Report</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_FCC_Report.pdf">FCC RF Test Report</a></li>
+<li><a href="http://www.adafruit.com/datasheets/SIM800_FCC_TCB.pdf">FCC TCB</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/I15D00070-EMC.pdf">EMC Test Report</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/I15D00070-GPS.pdf">GPS Test Report</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/I15D00070-RFG.pdf">RFG Test Report</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/I15D00070-SAF.pdf">SAF Test Report</a></li>
+<li><a href="https://www.adafruit.com/images/product-files/2637/I15D00070-SAR.pdf">SAR Test Report</a></li>
+</ul>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#files-1999620-3" class="anchor-link"><span class="fa fa-link"></span></a><span id="files-1999620-3" class="anchor-link-target"></span>
+</div>Files</h1>
+<ul>
+<li><a href="https://github.com/adafruit/Adafruit-FONA-808-Breakout-PCB">EagleCAD PCB Files on GitHub</a></li>
+<li><a href="https://github.com/adafruit/Fritzing-Library">Fritzing object in the Adafruit Fritzing Library</a></li>
+</ul>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#pcb-print-1999621-4" class="anchor-link"><span class="fa fa-link"></span></a><span id="pcb-print-1999621-4" class="anchor-link-target"></span>
+</div>PCB Print</h1>
+<p>Dimensions are in inches</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25699">
+<img class="25699-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/699/medium260/adafruit_products_print.png?1432925433 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/699/medium640/adafruit_products_print.png?1432925433 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/699/medium800/adafruit_products_print.png?1432925433 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/699/large1024/adafruit_products_print.png?1432925433 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_print.png" src="./Adafruit_Shield_Page_files/adafruit_products_print.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#schematic-1999623-6" class="anchor-link"><span class="fa fa-link"></span></a><span id="schematic-1999623-6" class="anchor-link-target"></span>
+</div>Schematic</h1>
+<p>Click to embiggen</p>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/25700">
+<img class="25700-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/025/700/medium260/adafruit_products_808schem.png?1432925469 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/700/medium640/adafruit_products_808schem.png?1432925469 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/700/medium800/adafruit_products_808schem.png?1432925469 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/025/700/large1024/adafruit_products_808schem.png?1432925469 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_808schem.png" src="./Adafruit_Shield_Page_files/adafruit_products_808schem.png" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+</div>
+</div>
+<div class="page-title-wrapper">
+<h1 class="headline">
+<span id="assembly">Assembly</span>
+</h1>
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+</div>
+<div class="page-content all-page-view-content">
+<div class="mirror">
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#attaching-header-1635269-1" class="anchor-link"><span class="fa fa-link"></span></a><span id="attaching-header-1635269-1" class="anchor-link-target"></span>
+</div>Attaching Header</h1>
+</div>
+<table class="build-table">
+<tbody><tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635271" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635271" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17725">
+<img class="17725-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_header(1).jpg" alt="adafruit_products_header.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><span>
+<h2>Prepare the header strip:</h2>
+Cut the strip to length if necessary. It will be easier to solder if you insert it into a breadboard - <b>long pins down</b></span></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635273" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635273" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17726">
+<img class="17726-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_place(1).jpg" alt="adafruit_products_place.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><span><h2>Add the breakout board:</h2>
+Place the breakout board over the pins so that the short pins poke through the breakout pads</span></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635275" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635275" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17727">
+<img class="17727-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder1(2).jpg" alt="adafruit_products_solder1.jpg">
+</a></li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/17727">
+<img class="17727-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder1(3).jpg" alt="adafruit_products_solder1.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/17728">
+<img class="17728-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder3(1).jpg" alt="adafruit_products_solder3.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/17729">
+<img class="17729-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_solder4(1).jpg" alt="adafruit_products_solder4.jpg">
+</a> </li>
+</ul>
+</td>
+<td class="side-text"><div class="text"><span>
+<h2>And Solder!</h2>
+<span>Be sure to solder all pins for reliable electrical contact.<br><br><i>(For tips on soldering, be sure to check out our </i><a href="http://learn.adafruit.com/adafruit-guide-excellent-soldering"><i>Guide to Excellent Soldering</i></a><i>).</i></span></span></div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635277" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635277" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17730">
+<img class="17730-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_soldered.jpg" alt="adafruit_products_soldered.jpg">
+</a></li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/17730">
+<img class="17730-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_soldered(1).jpg" alt="adafruit_products_soldered.jpg">
+</a> </li>
+<li class="small-side">
+<a class="medium-side-image-link" href="https://learn.adafruit.com/assets/17731">
+<img class="17731-asset small-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_done(1).jpg" alt="adafruit_products_done.jpg">
+</a> </li>
+</ul>
+</td>
+<td class="side-text"><div class="text">You're done! Check your solder joints visually and continue onto the next steps</div></td>
+</tr>
+</tbody></table>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#attaching-antenna-and-battery-1635279-6" class="anchor-link"><span class="fa fa-link"></span></a><span id="attaching-antenna-and-battery-1635279-6" class="anchor-link-target"></span>
+</div>Attaching Antenna &amp; Battery</h1>A battery and antenna is required! If you have a uFL FONA, a uFL-&gt;SMA cable may be required to connect the antenna. Use any Lipoly or LiIon 3.7V/4.2V battery<br>
+</div>
+<div class="row-fluid build-image">
+<a href="https://learn.adafruit.com/assets/17732">
+<img class="17732-asset img-responsive lazy" srcset="https://cdn-learn.adafruit.com/assets/assets/000/017/732/medium260/adafruit_products_kitup.jpg?1404231178 260w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/732/medium640/adafruit_products_kitup.jpg?1404231178 640w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/732/medium800/adafruit_products_kitup.jpg?1404231178 800w,
+               https://cdn-learn.adafruit.com/assets/assets/000/017/732/large1024/adafruit_products_kitup.jpg?1404231178 1024w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1365px) 47vw, 750px" alt="adafruit_products_kitup.jpg" src="./Adafruit_Shield_Page_files/adafruit_products_kitup(1).jpg" style="">
+<span class="image-expand"><i class="fa fa-search-plus"></i></span>
+</a> </div>
+<div class="row-fluid build-text">
+<b>Check polarity for the battery!</b><br>Snap the uFL connector on, it will click when placed properly<br>
+</div>
+<div class="row-fluid build-text">
+<h1>
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#sim-card-1635283-9" class="anchor-link"><span class="fa fa-link"></span></a><span id="sim-card-1635283-9" class="anchor-link-target"></span>
+</div>SIM Card</h1>You <b>must</b> insert a SIM card to do anything but the most basic tests. FM radio does work without a SIM but of course you cannot send or receive texts, calls, etc!<br>
+</div>
+<table class="build-table">
+<tbody><tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635284" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635284" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17721">
+<img class="17721-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_1963_demo_quarter_ORIG.jpg" alt="adafruit_products_1963_demo_quarter_ORIG.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text">The SIM card holder is on the back. It holds a very-standard "Mini SIM"<br>Micro SIMs will not work! Make sure you get a "Mini SIM"<br>
+</div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635285" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635285" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17722">
+<img class="17722-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_simopen(1).jpg" alt="adafruit_products_simopen.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text">Open by sliding the cover towards the antenna<br>
+</div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635286" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635286" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17723">
+<img class="17723-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_siminsert(1).jpg" alt="adafruit_products_siminsert.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text">Insert the SIM with the gold pads facing up and the notch on the outer corner<br>
+</div></td>
+</tr>
+<tr class="build-row">
+<td class="side-images">
+<div class="anchor-anchor">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#step-1635289" class="anchor-link"><span class="fa fa-link"></span></a>
+</div>
+<span id="step-1635289" class="anchor-link-target"></span>
+<ul>
+<li class="medium-side">
+<a class="large-side-image-link" href="https://learn.adafruit.com/assets/17724">
+<img class="17724-asset medium-side-image img-responsive" src="./Adafruit_Shield_Page_files/adafruit_products_simclose(1).jpg" alt="adafruit_products_simclose.jpg">
+</a></li>
+</ul>
+</td>
+<td class="side-text"><div class="text">Close the hinge down and slide the cover to lock it in place<br>
+</div></td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<span class="page-last-updated">
+This guide was first published on May 29, 2015. It was last
+updated on May 29, 2015.
+</span>
+</div>
+<div class="sidebar-right-wrapper">
+<div class="sidebar-right-content">
+<div class="featured-products">
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/2542">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/2542-06.jpg" alt="Adafruit FONA 808 - Mini Cellular GSM + GPS Breakout" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Adafruit FONA 808 - Mini Cellular GSM + GPS Breakout</div>
+<span class="product-price hide-xs">$49.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="2542-product" class="product-buy btn-primary " data-pid="2542" data-qty="1" data-name="Adafruit FONA 808 - Mini Cellular GSM + GPS Breakout" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/2542">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/2461">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/2461-05.jpg" alt="Passive GPS Antenna uFL - 15mm x 15mm  1 dBi gain" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Passive GPS Antenna uFL - 15mm x 15mm 1 dBi gain</div>
+<span class="product-price hide-xs">$3.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="2461-product" class="product-buy btn-primary " data-pid="2461" data-qty="1" data-name="Passive GPS Antenna uFL - 15mm x 15mm  1 dBi gain" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/2461">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/2460">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/2460-03.jpg" alt="Passive GPS Antenna uFL - 9mm x 9mm -2dBi gain" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Passive GPS Antenna uFL - 9mm x 9mm -2dBi gain</div>
+<span class="product-price hide-xs">$4.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="2460-product" class="product-buy btn-primary " data-pid="2460" data-qty="1" data-name="Passive GPS Antenna uFL - 9mm x 9mm -2dBi gain" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/2460">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/2505">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/2505-02.jpg" alt="GSM 2G SIM Card from Ting &amp; Adafruit - Data/Voice/Text USA Only" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">GSM 2G SIM Card from Ting &amp; Adafruit - Data/Voice/Text USA Only</div>
+<span class="product-price hide-xs">$9.00</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="2505-product" class="product-buy btn-primary " data-pid="2505" data-qty="1" data-name="GSM 2G SIM Card from Ting &amp; Adafruit - Data/Voice/Text USA Only" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/2505">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/1991">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/1991-02.jpg" alt="Slim Sticker-type GSM/Cellular Quad-Band Antenna - 3dBi uFL" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Slim Sticker-type GSM/Cellular Quad-Band Antenna - 3dBi uFL</div>
+<span class="product-price hide-xs">$2.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="1991-product" class="product-buy btn-primary " data-pid="1991" data-qty="1" data-name="Slim Sticker-type GSM/Cellular Quad-Band Antenna - 3dBi uFL" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/1991">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/851">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/851-03.jpg" alt="SMA to uFL/u.FL/IPX/IPEX RF Adapter Cable" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">SMA to uFL/u.FL/IPX/IPEX RF Adapter Cable</div>
+<span class="product-price hide-xs"></span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="851-product" class="notify product-buy btn-primary " data-pid="851" data-qty="1" data-name="SMA to uFL/u.FL/IPX/IPEX RF Adapter Cable" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/851">Out of Stock</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/1859">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/1859-01.jpg" alt="Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug</div>
+<span class="product-price hide-xs">$4.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="1859-product" class="product-buy btn-primary " data-pid="1859" data-qty="1" data-name="Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/1859">Add to Cart</a>
+</div>
+</div>
+<div class="product-wrapper">
+<a href="https://www.adafruit.com/product/1858">
+<div class="product-image">
+<img class="img-responsive product-asset" src="./Adafruit_Shield_Page_files/1858-01.jpg" alt="Right-angle Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug" data-error="/assets/missing%2Fmissing.png">
+</div>
+<div class="product-details">
+<div class="product-title">Right-angle Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug</div>
+<span class="product-price hide-xs">$4.95</span>
+</div>
+</a> <div class="product-purchase-link hide-xs">
+<a id="1858-product" class="product-buy btn-primary " data-pid="1858" data-qty="1" data-name="Right-angle Mini GSM/Cellular Quad-Band Antenna - 2dBi SMA Plug" target="_blank" rel="noopener noreferrer" href="https://www.adafruit.com/product/1858">Add to Cart</a>
+</div>
+</div>
+</div>
+<a class="featured-products-link" href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/featured_products">All Featured Products</a>
+</div>
+</div>
+</div>
+</article>
+<div class="related-guides-wrapper">
+<div class="content-card-group-preview">
+<div class="group-preview-header">
+<h3 class="title">
+Related Guides
+</h3>
+</div>
+<a class="scroll-back"><i class="fa fa-angle-left"></i></a>
+<div class="content-card-group-container">
+<div class="content-card-group">
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/mqtt-adafruit-io-and-you">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/howtocomm.png" style="">
+<div class="overlay" id="content-card-info1144">
+<div class="tagline">
+Learn to love the stateful, low-bandwidth pubsub protocol.
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info1144">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/mqtt-adafruit-io-and-you">MQTT, Adafruit IO &amp; You!</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+149
+</div>
+<div class="badge skill-level-icons" title="Intermediate">
+Intermediate
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/geofencing-with-the-fona-808-and-adafruit-io">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/front.png" style="">
+<div class="overlay" id="content-card-info1145">
+<div class="tagline">
+Build a geofencing project that will send alerts when it goes out of the perimeter!
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/marco26fr">
+<span class="name">M. Schwartz</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info1145">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/geofencing-with-the-fona-808-and-adafruit-io">Geofencing with the FONA 808 &amp; Adafruit IO</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+39
+</div>
+<div class="badge skill-level-icons" title="Beginner">
+Beginner
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/adafruit-fona-3g-cellular-gps-breakout">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/thumb.jpg" style="">
+<div class="overlay" id="content-card-info1115">
+<div class="tagline">
+The next generation of FONA is here!
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/adafruit2">
+<span class="name">lady ada</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info1115">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/adafruit-fona-3g-cellular-gps-breakout">Adafruit FONA 3G Cellular + GPS Breakout</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+25
+</div>
+<div class="badge skill-level-icons" title="Intermediate">
+Intermediate
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="guide-preview content-card">
+<div class="preview-content">
+<a href="https://learn.adafruit.com/gps-tour-guide">
+<div class="image-container">
+<img class="image-preview lazy" src="./Adafruit_Shield_Page_files/hero-mansion-2.jpg" style="">
+<div class="overlay" id="content-card-info2270">
+<div class="tagline">
+Make a GPS based tour guide
+</div>
+</div>
+</div>
+</a>
+<div class="bottom-section">
+<div class="top-info">
+<div class="author">
+<a class="purple" href="https://learn.adafruit.com/users/pixil3d">
+<span class="name">Ruiz Brothers</span>
+</a> </div>
+<button class="content-card-info" name="#content-card-info2270">
+<i class="fa fa-info-circle"></i>
+</button>
+</div>
+<h4 class="title">
+<a class="purple" href="https://learn.adafruit.com/gps-tour-guide">GPS Tour Guide</a>
+</h4>
+<div class="badges">
+<div class="badge favorites " title="Favorites">
+8
+</div>
+<div class="badge skill-level-icons" title="Beginner">
+Beginner
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="scroll-forward"><i class="fa fa-angle-right"></i></a>
+</div>
+</div>
+<div class="footer-spacer"></div>
+</div>
+<div class="modal fade" id="notify-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#" class="close" data-dismiss="modal">×</a>
+<h5>OUT OF STOCK NOTIFICATION</h5>
+</div>
+<div class="modal-body">
+<p class="notify-modal-form-header"></p>
+<div class="notify-modal-products"></div>
+<form id="notify-modal-form" name="back_in_stock_notification">
+<p class="notify-modal-form-notice"></p>
+<div class="notify-modal-break"></div>
+<div class="form-group">
+<label class="inputLabel" for="name">YOUR NAME</label>
+<input type="text" size="25" maxlength="64" name="name" value="">
+</div>
+<div class="form-group">
+<label class="inputLabel" for="email">YOUR EMAIL</label>
+<input type="email" size="25" maxlength="96" name="email" value="">
+</div>
+<input type="hidden" name="notify_me" value="true">
+</form>
+<div id="notify-modal-success" style="display:none">
+<p>You have been successfully subscribed to the Notification List for this product and will therefore receive an e-mail from us when it is back in stock!</p>
+<p>For security reasons, an e-mail has been sent to you acknowledging your subscription. Please remember that this subscription will not result in you receiving any e-mail from us about anything other than the restocking of this item.</p>
+<p>If, for any reason, you would like to unsubscribe from the Notification List for this product you will find details of how to do so in the e-mail that has just been sent to you!</p>
+</div>
+</div>
+<div class="modal-footer">
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#" id="close-notify" style="display: none" data-dismiss="modal" data-target="#notify-modal">CLOSE</a>
+<a href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#" id="submit-notify" rel="nofollow" class="blue-button">NOTIFY ME</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="search-container">
+<div class="nav-bar">
+<div class="content">
+<div class="left-content">
+<a href="https://learn.adafruit.com/" class="breadcrumb"><i class="fa fa-home"></i></a>
+/ Search
+</div>
+</div>
+</div>
+<div class="sub-header">
+<div class="content">
+<div class="title">Search</div>
+<div id="search-refinements" class="breakdown"><div class="ais-CurrentRefinements"><ul class="ais-CurrentRefinements-list"></ul></div>
+</div>
+</div>
+</div>
+<div class="search-content">
+<div>
+<div class="facets-wrapper">
+<h5 class="search-refinement-header">Categories</h5>
+<div id="search-categories"><div class="ais-HierarchicalMenu root ais-HierarchicalMenu--noRefinement"></div></div>
+</div>
+</div>
+<div>
+<div id="search-results"><div class="no-results">No results for query</div></div>
+<div id="search-pagination" class="pagination"><div class="ais-Pagination ais-Pagination--noRefinement"><ul class="ais-Pagination-list"><li class="ais-Pagination-item item ais-Pagination-item--firstPage ais-Pagination-item--disabled disabled"><span class="ais-Pagination-link link">«</span></li><li class="ais-Pagination-item item ais-Pagination-item--previousPage ais-Pagination-item--disabled disabled"><span class="ais-Pagination-link link">‹</span></li><li class="ais-Pagination-item item ais-Pagination-item--page ais-Pagination-item--selected selected"><a class="ais-Pagination-link link" aria-label="1" href="https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout?view=all#handy-commands">1</a></li><li class="ais-Pagination-item item ais-Pagination-item--nextPage ais-Pagination-item--disabled disabled"><span class="ais-Pagination-link link">›</span></li><li class="ais-Pagination-item item ais-Pagination-item--lastPage ais-Pagination-item--disabled disabled"><span class="ais-Pagination-link link">»</span></li></ul></div></div>
+</div>
+</div>
+</div>
+<div id="remote-modal"></div>
+<div id="main-content-overlay"></div>
+</div>
+<footer id="adafruit-footer">
+<div class="footer-container">
+<section>
+<h1>Help</h1>
+<ul>
+<li>
+<a href="https://www.adafruit.com/contact_us">Contact Us</a>
+</li>
+<li>
+<a href="https://forums.adafruit.com/">Tech Support Forums</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/faq">FAQs</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/shippinginfo">Shipping &amp; Returns</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/terms_of_service">Terms of Service</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/privacy">Privacy &amp; Legal</a>
+</li>
+</ul>
+</section>
+<section>
+<h1>Explore</h1>
+<ul>
+<li>
+<a href="https://www.adafruit.com/about">About Us</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/press">Press</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/educators">Educators</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/distributors">Distributors</a>
+</li>
+<li>
+<a href="https://jobs.adafruit.com/">Jobs</a>
+</li>
+<li>
+<a href="https://www.adafruit.com/category/14">Gift Cards</a>
+</li>
+</ul>
+</section>
+<aside>
+<div class="quote">"In considering any new subject, there is frequently a tendency, first, to overrate what we find to be already interesting or remarkable; and, secondly, by a sort of natural reaction, to undervalue the true state of the case, when we do discover that our notions have surpassed those that were really tenable"</div>
+<div class="quote-attribution"><a href="http://en.wikipedia.org/wiki/Ada_Lovelace">Ada Lovelace</a></div>
+</aside>
+</div>
+<div class="footer-container bottom">
+<a title="About Adafruit" id="footer-logo" href="https://learn.adafruit.com/">
+<img src="./Adafruit_Shield_Page_files/adafruit_logo_small(1).png">
+</a>
+<div class="social-links">
+<a rel="noopener" href="https://www.instagram.com/adafruit/" target="_blank" aria-label="Adafruit on Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+<a rel="noopener" href="https://twitter.com/adafruit/" target="_blank" aria-label="Adafruit on Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+<a rel="noopener" href="https://www.facebook.com/adafruitindustries" target="_blank" aria-label="Adafruit on Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+<a rel="noopener" href="https://www.youtube.com/adafruit" target="_blank" aria-label="Adafruit on YouTube"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+<a rel="noopener" href="https://github.com/adafruit" target="_blank" aria-label="Adafruit on Github"><i class="fa fa-github" aria-hidden="true"></i></a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+
+</body></html>

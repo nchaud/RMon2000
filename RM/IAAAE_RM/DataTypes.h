@@ -277,6 +277,7 @@ struct GpsInfo{
 };
 
 struct SingleSession{
+	
 	//GsmInfo gsmInfo;
 	GpsInfo gpsInfo;
 };
