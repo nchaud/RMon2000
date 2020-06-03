@@ -223,7 +223,9 @@ void ExtendedTests::runExtendedTypesTest() {
 	//TODO: MAX READINGS A CONSTANT?
 	
 	//Encoding
-	int COUNT=10;	//Can't do much more than this - CHECK RAM STATE HERE AND WITHIN READING
+	int COUNT=10; //Can do ~25 if only encoding but this much if also decoding in this test
+				  //- CHECK RAM STATE HERE AND WITHIN READING
+				  //https://playground.arduino.cc/Code/AvailableMemory/
 	
 	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(COUNT);
 	char forWeb[encodedSz];
@@ -240,7 +242,7 @@ void ExtendedTests::runExtendedTypesTest() {
 	//Now parse it
 	GsmPayload receivedPayload;
 	SensorData receivedSensorData[numReadings];
-	receivedPayload.readEncodedPayload(forWeb, encodedSz, (SensorData*)&receivedSensorData);
+	//receivedPayload.readEncodedPayload(forWeb, encodedSz, (SensorData*)&receivedSensorData);
 	
 	RM_LOGLN(F("First Parsed Reading:"));
 	SensorData* readOne = receivedPayload.getSensorData();
