@@ -7,37 +7,54 @@
 
 class GsmPayload
 {
-public:
-	uint8_t moduleId = 0;
-	uint16_t thisBootNumber = 0;
-	FONA_GET_RSSI rssi;
-	//uint8_t content_flags;
+private:
+	struct PayloadHeader {
+		uint8_t moduleId = 0;
+		uint16_t bootNumber = 0;
+		uint8_t dataArrSz= 0;
+		uint8_t hasGpsInfo = 0;
+		//uint8_t content_flags;
 		
+		FONA_GET_RSSI rssi;
+	};
+	
+	PayloadHeader _header;
+	GpsInfo* _gpsInfo		= NULL;
+	SensorData* _dataArr	= NULL;
+	
+public:
 	GsmPayload();
 	
-	void createPayload(uint8_t* output, uint16_t maxLength);
-	void readPayload(uint8_t* payload, SensorData* inputArr);
+	static uint16_t getRawPayloadSize_S(uint8_t numberSensorReadings);
+	static uint16_t getEncodedPayloadSize_S(uint8_t numberSensorReadings);
+	
+	uint16_t getRawPayloadSize();
+	void createRawPayload(uint8_t* output);
+	
+	uint16_t getEncodedPayloadSize();
+	void createEncodedPayload(char* payload);
 		
 	//When data to be transmitted is formed into a Base64 encoded payload
-	void addSensorData(SensorData* dataArr, uint8_t arraySz);
+	void setSensorData(SensorData* dataArr, uint8_t numberSensorReadings);
 	void setGpsInfo(GpsInfo* info);
-	void createEncodedPayload(char* payload, uint16_t maxLength);
 	
 	//When received Base64 payload is parsed (Mainly required for testing/output to ensure encoding+decoding is ok)
-	void readEncodedPayload(char* payload);
+	void readRawPayload(uint8_t* payload, SensorData* inputArr);
+	void readEncodedPayload(char* payload, SensorData* receivedSensorData);
 	SensorData* getSensorData();//SensorData* arr);
-	boolean hasGpsInfo(void);
 	GpsInfo* getGpsInfo(void);
+	
+	boolean hasGpsInfo(void);
+	uint8_t getModuleId(void);
+	void setModuleId(uint8_t moduleId);
+	uint16_t getBootNumber(void);
+	void setBootNumber(uint16_t bootNumber);
+	FONA_GET_RSSI getRSSI(void);
+	void setRSSI(FONA_GET_RSSI rssi);
 	
 	//Helpers
 	static uint8_t readNumOfSensorReadings(char* payload);
 	
-protected:
-private:
-	uint8_t _hasGpsInfo		= 0;
-	GpsInfo* _gpsInfo		= NULL;
-	SensorData* _dataArr	= NULL;
-	uint8_t _dataArrSz		= 0;
 
 }; //GsmPayload
 

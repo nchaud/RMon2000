@@ -5,74 +5,81 @@ GsmPayload::GsmPayload()
 {
 }
 
-//Internal format that gets encoded/decoded:
-// TODO: Create special char at end if this was truncated and keep a track of truncation
-//		 Try keep data[100] then charEncoding[100] on stack vs new data() then data->delete() then...
-void GsmPayload::createEncodedPayload(char* output, uint16_t maxLength){
+uint16_t GsmPayload::getRawPayloadSize_S(uint8_t numberSensorReadings) {
 	
-	createPayload((uint8_t*)output, maxLength);
+	uint16_t payloadBytes =
+		sizeof(PayloadHeader) +
+		numberSensorReadings * sizeof(SensorData);
 	
-	//TODO: Encode
+	return payloadBytes;
 }
 
-void GsmPayload::createPayload(uint8_t* output, uint16_t maxLength){
+uint16_t GsmPayload::getRawPayloadSize() {
+	return getRawPayloadSize_S(_header.dataArrSz);
+}
+
+uint16_t GsmPayload::getEncodedPayloadSize_S(uint8_t numberSensorReadings) {
 	
-	memcpy(output, &moduleId, sizeof(moduleId));
-	output += sizeof(moduleId);
+	uint16_t payloadSz = getRawPayloadSize_S(numberSensorReadings);
+	uint16_t encodedPayloadSz = Helpers::base64_enc_len(payloadSz);
 	
-	memcpy(output, &thisBootNumber, sizeof(thisBootNumber));
-	output += sizeof(thisBootNumber);
+	return encodedPayloadSz;
+}
+
+uint16_t GsmPayload::getEncodedPayloadSize() {
+	return getEncodedPayloadSize_S(_header.dataArrSz);
+}
+
+void GsmPayload::createRawPayload(uint8_t* output){
 	
-	memcpy(output, &_dataArrSz, sizeof(_dataArrSz));
-	output += sizeof(_dataArrSz);
+	memcpy(output, &_header, sizeof(_header));
 	
-	memcpy(output, _dataArr, _dataArrSz * sizeof(SensorData));
-	output += sizeof(_dataArrSz * sizeof(SensorData));
+	memcpy(output, _dataArr, _header.dataArrSz * sizeof(SensorData));
+	output += sizeof(_header.dataArrSz * sizeof(SensorData));
 	
 	//	uint8_t* ptrToFirst = (uint8_t*)_dataArr;
 	//	RM_LOG2(F("Current WAS "), * ((uint16_t*)(ptrToFirst+offsetof(SensorData, current))));
 }
 
+//Internal format that gets encoded/decoded:
+// TODO: Create special char at end if this was truncated and keep a track of truncation
+//		 Try keep data[100] then charEncoding[100] on stack vs new data() then data->delete() then...
+void GsmPayload::createEncodedPayload(char* encodedPayload){
+	
+	uint16_t payloadSz= getRawPayloadSize();
+	uint8_t bytePayload[payloadSz];
+	
+	createRawPayload(bytePayload);
+	
+	uint16_t sz = Helpers::base64_encode(encodedPayload, bytePayload, payloadSz);
+}
+
 uint8_t GsmPayload::readNumOfSensorReadings(char* payload){
 
-	uint8_t* arrSzPos = 
-		((uint8_t*)payload) +
-		sizeof(moduleId) + 
-		sizeof(thisBootNumber);
-		
+	uint8_t* arrSzPos = ((uint8_t*)payload) + offsetof(PayloadHeader, dataArrSz);
 	uint8_t numReadings = *arrSzPos;
 	return numReadings;
 }
 
-void GsmPayload::readPayload(uint8_t* input, SensorData* inputArr){
+void GsmPayload::readRawPayload(uint8_t* input, SensorData* inputArr){
 	
-	memcpy(&moduleId, input, sizeof(moduleId));
-	input += sizeof(moduleId);
-	RM_LOG2(F("Module ID was "), moduleId);
-	
-	memcpy(&thisBootNumber, input, sizeof(thisBootNumber));
-	input += sizeof(thisBootNumber);
-	RM_LOG2(F("Boot # was "), thisBootNumber);
-	
-	memcpy(&_dataArrSz, input, sizeof(_dataArrSz));
-	input += sizeof(_dataArrSz);
-	RM_LOG2(F("Data Arr Sz was "), _dataArrSz);
-	
+	memcpy(&_header, input, sizeof(_header));
+
 	//SensorData tmp[_dataArrSz];
 	_dataArr = inputArr;
-	memcpy(_dataArr, input, _dataArrSz * sizeof(SensorData));
-	input += sizeof(_dataArrSz * sizeof(SensorData));
+	memcpy(_dataArr, input, _header.dataArrSz * sizeof(SensorData));
+	input += sizeof(_header.dataArrSz * sizeof(SensorData));
 }
 
-void GsmPayload::readEncodedPayload(char* payload){
+void GsmPayload::readEncodedPayload(char* payload, SensorData* receivedSensorData){
 	
 	
 }
 
-void GsmPayload::addSensorData(SensorData* dataArr, uint8_t arraySz){
+void GsmPayload::setSensorData(SensorData* dataArr, uint8_t arraySz){
 
 	_dataArr = dataArr;
-	_dataArrSz = arraySz;	
+	_header.dataArrSz = arraySz;	
 }
 
 SensorData* GsmPayload::getSensorData() {
@@ -80,7 +87,15 @@ SensorData* GsmPayload::getSensorData() {
 	return _dataArr;
 }
 
+boolean GsmPayload::hasGpsInfo(void) { return _header.hasGpsInfo; }
+uint8_t GsmPayload::getModuleId(void) { return _header.moduleId; }
+void GsmPayload::setModuleId(uint8_t moduleId) { _header.moduleId = moduleId; }
+uint16_t GsmPayload::getBootNumber(void) { return _header.bootNumber; }
+void GsmPayload::setBootNumber(uint16_t bootNumber) { _header.bootNumber = bootNumber; }
+FONA_GET_RSSI GsmPayload::getRSSI(void) { return _header.rssi; }
+void GsmPayload::setRSSI(FONA_GET_RSSI rssi) { _header.rssi = rssi; }
+	
+	
 void GsmPayload::setGpsInfo(GpsInfo* info) {}
-boolean GsmPayload::hasGpsInfo(void) { return false; }
 GpsInfo* GsmPayload::getGpsInfo(void){ return NULL; }
 	

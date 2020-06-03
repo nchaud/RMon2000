@@ -124,7 +124,7 @@ void writeMockSD(SensorData* iSd, uint8_t i){
 	iSd->errorChar = i%5==0?3:0;
 }
 
-void encodeBulkSignalsTest(uint8_t COUNT, char* forWeb) {
+void encodeBulkSignalsTest(char* forWeb, uint8_t COUNT) {
 	
 	SensorData bulkSd[COUNT];
 	for(uint8_t i=0;i<COUNT;i++){
@@ -142,12 +142,12 @@ void encodeBulkSignalsTest(uint8_t COUNT, char* forWeb) {
 	rssi.netReg = (FONA_GET_NETREG)(FONA_GET_NETREG::NETSTAT_4 | FONA_GET_NETREG::RESULT_CODE_1);
 	
 	GsmPayload gsm;
-	gsm.moduleId=33;
-	gsm.thisBootNumber = 1026;
-	gsm.rssi = rssi;
-	gsm.addSensorData(&bulkSd[0], COUNT);
+	gsm.setModuleId(33);
+	gsm.setBootNumber( 1026);
+	gsm.setRSSI( rssi);
+	gsm.setSensorData(&bulkSd[0], COUNT);
 	
-	gsm.createPayload((uint8_t*)(&forWeb[0]), 100);//createEncodedPayload(&forWeb[0], 1000);
+	gsm.createEncodedPayload(forWeb);
 }
 #endif
 
@@ -221,20 +221,23 @@ void ExtendedTests::runExtendedTypesTest() {
 	//TODO: MAX READINGS A CONSTANT?
 	
 	int COUNT=5;
-	char forWeb[100] {0};
-	encodeBulkSignalsTest(COUNT, &forWeb[0]);
+	uint8_t encodedSz = GsmPayload::getEncodedPayloadSize_S(COUNT);
+	char forWeb[encodedSz];
+	encodeBulkSignalsTest(forWeb, COUNT);//, &forWeb[0]);
 	
-	//	RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
-	//	Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
+			RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
+			Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
 	
-	uint8_t numReadings = GsmPayload::readNumOfSensorReadings(&forWeb[0]);
+	uint8_t numReadings = GsmPayload::readNumOfSensorReadings(forWeb);
+	
+	RM_LOG2(F(">>>RETURNED"), numReadings);
 	
 	if (numReadings != COUNT) RM_LOGLN(F("*** READ NUM FAIL ***"));
 
 	//Now parse it
 	GsmPayload receivedPayload;
 	SensorData receivedSensorData[numReadings];
-	receivedPayload.readPayload((uint8_t*)(&forWeb[0]), (SensorData*)&receivedSensorData);
+	receivedPayload.readEncodedPayload((char*)forWeb, (SensorData*)&receivedSensorData);
 	
 	RM_LOGLN(F("First Parsed Reading:"));
 	SensorData* readOne = receivedPayload.getSensorData();
@@ -263,7 +266,6 @@ void ExtendedTests::runExtendedTypesTest() {
 	//if (numSensorReadings != COUNT) RM_LOGLN(F("*** WRONG # SENSOR READINGS ***"));
 	//readGsm.readPayload(dataPtr);
 	
-	RM_LOGLN(F("------------------------"));
 	/*************************/
 	
 	
