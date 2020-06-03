@@ -17,6 +17,7 @@ void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr
 	
 	//TODO: Verify mock values match
 	
+	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended Mem Test Complete~~~~~~~~~~~~~~~~"));
 #else
 	RM_LOGLN(F("*** FAIL EMT ***")); //Sync Broken - inclusion of code should be sync'd with flag
 #endif
@@ -218,26 +219,28 @@ void ExtendedTests::runExtendedTypesTest() {
 	
 	
 	//	** 4) Test a full gsm-payload incl. large sequence of them to ensure correctness **
+
 	//TODO: MAX READINGS A CONSTANT?
 	
-	int COUNT=5;
-	uint8_t encodedSz = GsmPayload::getEncodedPayloadSize_S(COUNT);
+	//Encoding
+	int COUNT=10;	//Can't do much more than this - CHECK RAM STATE HERE AND WITHIN READING
+	
+	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(COUNT);
 	char forWeb[encodedSz];
-	encodeBulkSignalsTest(forWeb, COUNT);//, &forWeb[0]);
+	encodeBulkSignalsTest(forWeb, COUNT);
 	
-			RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
-			Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
+	RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
+	RM_LOGLN(forWeb);
+	//		Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
 	
-	uint8_t numReadings = GsmPayload::readNumOfSensorReadings(forWeb);
-	
-	RM_LOG2(F(">>>RETURNED"), numReadings);
-	
+	//Decoding
+	uint8_t numReadings = GsmPayload::readNumSReadings(forWeb, encodedSz);
 	if (numReadings != COUNT) RM_LOGLN(F("*** READ NUM FAIL ***"));
 
 	//Now parse it
 	GsmPayload receivedPayload;
 	SensorData receivedSensorData[numReadings];
-	receivedPayload.readEncodedPayload((char*)forWeb, (SensorData*)&receivedSensorData);
+	receivedPayload.readEncodedPayload(forWeb, encodedSz, (SensorData*)&receivedSensorData);
 	
 	RM_LOGLN(F("First Parsed Reading:"));
 	SensorData* readOne = receivedPayload.getSensorData();
@@ -259,21 +262,14 @@ void ExtendedTests::runExtendedTypesTest() {
 		if (expectedValPtr->temperature != parsed->temperature) {RM_LOG2(F("*** TEMP FAIL ***"), i);}
 	}
 	
-	
-	//uint8_t* dataPtr = (uint8_t*)(&forWeb[0]);
-	//GsmPayload readGsm;
-	//uint8_t numSensorReadings = readGsm.readNumOfSensorReadings(dataPtr);
-	//if (numSensorReadings != COUNT) RM_LOGLN(F("*** WRONG # SENSOR READINGS ***"));
-	//readGsm.readPayload(dataPtr);
-	
 	/*************************/
 	
+	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended Types Test Complete~~~~~~~~~~~~~~~~"));
 	
 #else
 RM_LOGLN(F("*** FAIL ETT ***")); //Sync Broken - inclusion of code should be sync'd with flag
 #endif
 }
-
 
 
 //SMS/GPRS test
@@ -325,6 +321,7 @@ void ExtendedTests::runExtendedGsmTest(Adafruit_FONA fona) {
 		
 		
 			
+	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended GSM Test Complete~~~~~~~~~~~~~~~~"));
 	
 #else
 	RM_LOGLN(F("*** FAIL EGT ***")); //Sync Broken - inclusion of code should be sync'd with flag
