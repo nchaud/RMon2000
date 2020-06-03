@@ -24,6 +24,46 @@ void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr
 
 
 //RMonV3 types/flags test
+
+#if IS_EXTENDED_TYPES_TEST == true
+void writeMockSD(SensorData* iSd, uint8_t i){
+	iSd->battVoltage = (i+1);
+	iSd->current = (i+1)*10;
+	iSd->pVVoltage = (i+1)*100;
+	iSd->temperature = (i+1)+50;
+	iSd->errorChar = i%5==0?3:0;
+}
+
+void encodeBulkSignalsTest(uint8_t COUNT, char* forWeb) {
+	
+	SensorData bulkSd[COUNT];
+	for(uint8_t i=0;i<COUNT;i++){
+		
+		SensorData* iSd = &bulkSd[i];
+		writeMockSD(iSd, i);
+	}
+	
+	//uint8_t* ptrToFirst = (uint8_t*)&bulkSd[0];
+	//RM_LOG2(F(">Batt WAS "), * ((uint16_t*)(ptrToFirst+offsetof(SensorData, battVoltage))));
+	
+	FONA_GET_RSSI rssi;
+	rssi.rssi = 15;
+	rssi.ber = 3;
+	rssi.netReg = (FONA_GET_NETREG)(FONA_GET_NETREG::NETSTAT_4 | FONA_GET_NETREG::RESULT_CODE_1);
+	
+	GsmPayload gsm;
+	gsm.moduleId=33;
+	gsm.thisBootNumber = 1026;
+	gsm.rssi = rssi;
+	gsm.addSensorData(&bulkSd[0], COUNT);
+	
+	//TODO: gsm.getPayloadLength() ? for char count?
+	//char forWeb[100] {0};
+	gsm.createPayload((uint8_t*)(&forWeb[0]), 100);//createEncodedPayload(&forWeb[0], 1000);
+}
+#endif
+
+
 void ExtendedTests::runExtendedTypesTest() {
 	
 #if IS_EXTENDED_TYPES_TEST == true
@@ -63,44 +103,59 @@ void ExtendedTests::runExtendedTypesTest() {
 	Helpers::printRSSI(&result);
 	RM_LOGLN(F("--------------------------"));
 	
-	/*************************/
+	/*********************************/
 	
 	
 	/******* ENCODING TESTS *********/
 	
-	//Avoid this with lib:-
-	//char r = -127;
-	//char q = 129;
-	//Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
+	//	** 1) Ensure this is avoided with lib:- **
+	//	char r = -127; char q = 129; Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
 	for(uint8_t i=0 ; ; i++) {
 	
 		uint8_t input[1];
 		input[0] = i;
 	
-		uint8_t output2[10]{0};
-		Helpers::base64_encode((uint8_t*)&output2, (uint8_t*)&input, 1);
-	
-		//RM_LOG2(F("INPUT WAS"), i);
-		//RM_LOG2(F("INPUT ENCODING WAS"), output2);
+		char output2[10]{0};
+		Helpers::base64_encode(&output2[0], (uint8_t*)&input, 1);
 	
 		uint8_t output3[10]{0};
-		Helpers::base64_decode((uint8_t*)&output3, (uint8_t*)&output2, 10);
-	
-		//RM_LOG2(F("DECODED BACK WAS"), (uint8_t)output3[0]);
+		Helpers::base64_decode((uint8_t*)&output3, &output2[0], 10);
 		
 		if ((uint8_t)output3[0] != i) RM_LOGLN(F("*** TEST FAIL @ENCODING ***"));
 		
-		if (i==255) break;
+		if (i==255) break; //max for unsigned byte
 	}
 
 
+	//	** 2) Check encoding/decoding for strings with their null terminating char \0 **
+	int inputLen = strlen("hello");	//No@terminal char
+	int encLen = Helpers::base64_enc_len(inputLen);
+	if (encLen != strlen("aGVsbG8=")+1) RM_LOGLN(F("*** STR ENC FAIL @1 ***"));
+	
+	char strEncoded[20];
+	Helpers::fillArray((uint8_t*)strEncoded, sizeof(strEncoded), 1); //Extra buffer of 1s to test no overspill
+	
+	int strEncodedLen = Helpers::base64_encode(strEncoded, (uint8_t*)"hello", inputLen);
+	if (strEncodedLen != strlen("aGVsbG8=")+1) RM_LOGLN(F("*** STR ENC FAIL @2 ***")); //Yes@terminal char
+	if ('=' != strEncoded[7]) RM_LOGLN(F("*** STR ENC FAIL @3 ***"));
+	if (0 != strEncoded[8]) RM_LOGLN(F("*** STR ENC FAIL @4 ***"));
+	if (1 != strEncoded[9]) RM_LOGLN(F("*** STR ENC FAIL @5 ***")); //May have overwritten
+	
+	int decodeStrInputLen = strlen("aGVsbG8=")+1;	//Yes@terminal char
+	int expStrDecodingLen = Helpers::base64_dec_len("aGVsbG8=", decodeStrInputLen);
+	if (expStrDecodingLen != strlen("hello")) RM_LOGLN(F("*** STR DEC FAIL @1 ***")); //No@terminal char
+	
+	char strDecoded[20];
+	Helpers::fillArray((uint8_t*)strDecoded, sizeof(strDecoded), 1); //Extra buffer of 1s to test no overspill
+	
+	int strDecodedLen = Helpers::base64_decode((uint8_t*)strDecoded, "aGVsbG8=", decodeStrInputLen);
+	if (strDecodedLen != strlen("hello")) RM_LOGLN(F("*** STR DEC FAIL @2 ***")); //No@terminal char
+	if ('o' != strDecoded[4]) RM_LOGLN(F("*** STR DEC FAIL @3 ***"));
+	if (1 != strDecoded[5]) RM_LOGLN(F("*** STR DEC FAIL @4 ***")); //May have introduced \0, WRONG
 	
 	
 	
-	
-	
-	
-	//1) Single round-trip test
+	//	** 3) Single sensor-data round-trip numbers test **
 	
 	SensorData sd;			//size ~ 10 bytes
 	sd.battVoltage = 20245; //Includes mV - e.g. 20.245V
@@ -113,60 +168,88 @@ void ExtendedTests::runExtendedTypesTest() {
 	uint8_t typicalMemUsage = sizeof("20245-65535-3-64913-0"); //23 bytes
 	RM_LOG2("Basic int->str usage would be", typicalMemUsage);
 	
-	char output[100];
-	int len = Helpers::base64_encode((uint8_t*)output, (uint8_t*)&sd, sizeof(SensorData));
+	// ENCODING
+	char output[100]; //For testing, make a large buffer and check it doesn't overspill
+	int len = Helpers::base64_encode(output, (uint8_t*)&sd, sizeof(SensorData));
+	int expectedLen = Helpers::base64_enc_len(sizeof(SensorData));
 	RM_LOG("Encoded result to be sent over Web is ");
 	RM_LOGLN(output);
-	RM_LOG2("-Expected size given of ", Helpers::base64_enc_len(sizeof(SensorData)));
-	RM_LOG2("-Actual actual resulting size of ", len);
-	RM_LOGLN("\t(excluding the '0' at the end incase to be treated as string)");
+	RM_LOG("\t with size of ");
+	RM_LOG(strlen(output)+1);
+	RM_LOGLN(" (including terminating '0')");
+	if ((strlen(output)+1) != len) RM_LOGLN(F("*** ENC LEN FAIL @1 ***"));
+	if ((strlen(output)+1) != expectedLen) RM_LOGLN(F("*** ENC LEN FAIL @2 ***"));
 	
+	// DECODING
+	int expDecodingLen = Helpers::base64_dec_len(output, len);
+	RM_LOG2("Expected Decoding Len", expDecodingLen);
+	RM_LOG2("For Output Of", output);
+	RM_LOG2("With Length Of", len);
+	RM_LOG2("Decoded Val", sizeof(SensorData));
+	RM_LOG2("sizeof(SensorData)", sizeof(SensorData));
 	
 	SensorData sdAfter;
-	int lenAfter = Helpers::base64_decode((uint8_t*)&sdAfter, (uint8_t*)output, len);
+	int lenAfter = Helpers::base64_decode((uint8_t*)&sdAfter, output, len);
 	RM_LOG2("Decoded result received over Web has size of ", lenAfter);
 	Helpers::printSensorData(&sdAfter);
 	
-	if (sdAfter.battVoltage != sd.battVoltage) RM_LOGLN(F("*** ENC TEST FAIL @1 ***"));
-	if (sdAfter.current != sd.current) RM_LOGLN(F("*** ENC TEST FAIL @2 ***"));
-	if (sdAfter.errorChar != sd.errorChar) RM_LOGLN(F("*** ENC TEST FAIL @3 ***"));
-	if (sdAfter.pVVoltage != sd.pVVoltage) RM_LOGLN(F("*** ENC TEST FAIL @4 ***"));
-	if (sdAfter.temperature != sd.temperature) RM_LOGLN(F("*** ENC TEST FAIL @5 ***"));
+	if (sizeof(SensorData) != lenAfter) RM_LOGLN(F("*** DEC LEN FAIL @1 ***"));
+	if (sizeof(SensorData) != expDecodingLen) RM_LOGLN(F("*** DEC LEN FAIL @2 ***"));
+	
+	if (sdAfter.battVoltage != sd.battVoltage) RM_LOGLN(F("*** CMP TEST FAIL @1 ***"));
+	if (sdAfter.current != sd.current) RM_LOGLN(F("*** CMP TEST FAIL @2 ***"));
+	if (sdAfter.errorChar != sd.errorChar) RM_LOGLN(F("*** CMP TEST FAIL @3 ***"));
+	if (sdAfter.pVVoltage != sd.pVVoltage) RM_LOGLN(F("*** CMP TEST FAIL @4 ***"));
+	if (sdAfter.temperature != sd.temperature) RM_LOGLN(F("*** CMP TEST FAIL @5 ***"));
+	if (sdAfter.dataType != sd.dataType) RM_LOGLN(F("*** CMP TEST FAIL @6 ***"));
 	
 	RM_LOGLN(F("--------------------------"));
 	
-	//2) Test a large sequence of them to ensure correctness- MAX_READINGS constant?
+	//	** 4) Test a full gsm-payload incl. large sequence of them to ensure correctness **
+	//TODO: MAX READINGS A CONSTANT?
 	
-	uint8_t COUNT = 10;
-	SensorData bulkSd[COUNT];
-	for(uint8_t i=0;i<COUNT;i++){
+	int COUNT=5;
+	char forWeb[100] {0};
+	encodeBulkSignalsTest(COUNT, &forWeb[0]);
+	
+	//	RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
+	//	Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
+	
+	uint8_t numReadings = GsmPayload::readNumOfSensorReadings(&forWeb[0]);
+	
+	if (numReadings != COUNT) RM_LOGLN(F("*** READ NUM FAIL ***"));
+
+	//Now parse it
+	GsmPayload receivedPayload;
+	SensorData receivedSensorData[numReadings];
+	receivedPayload.readPayload((uint8_t*)(&forWeb[0]), (SensorData*)&receivedSensorData);
+	
+	RM_LOGLN(F("First Parsed Reading:"));
+	SensorData* readOne = receivedPayload.getSensorData();
+	Helpers::printSensorData(readOne); //print the first
+	
+	for(uint8_t i=0;i<numReadings;i++){
 		
-		SensorData iSd = bulkSd[i];
-		iSd.battVoltage = (i+1);
-		iSd.current = (i+1)*10;
-		iSd.pVVoltage = (i+1)*100;
-		iSd.temperature = (i+1)+50;
+		SensorData expectedVal;
+		SensorData* expectedValPtr=&expectedVal;
+		writeMockSD(expectedValPtr, i);
+		
+		SensorData* parsed = readOne + i;
+		
+		if (expectedValPtr->battVoltage != parsed->battVoltage) {RM_LOG2(F("*** BATT FAIL ***"), i);}
+		if (expectedValPtr->current != parsed->current) {RM_LOG2(F("*** CURR FAIL ***"), i);}
+		if (expectedValPtr->dataType != parsed->dataType) {RM_LOG2(F("*** DT FAIL ***"), i);}
+		if (expectedValPtr->errorChar != parsed->errorChar) {RM_LOG2(F("*** ERR FAIL ***"), i);}
+		if (expectedValPtr->pVVoltage != parsed->pVVoltage) {RM_LOG2(F("*** PV FAIL ***"), i);}
+		if (expectedValPtr->temperature != parsed->temperature) {RM_LOG2(F("*** TEMP FAIL ***"), i);}
 	}
 	
-	FONA_GET_RSSI rssi;
-	rssi.rssi = 15;
-	rssi.ber = 3;
-	rssi.netReg = (FONA_GET_NETREG)(FONA_GET_NETREG::NETSTAT_4 | FONA_GET_NETREG::RESULT_CODE_1);
 	
-	GsmPayload gsm;
-	gsm.moduleId=33;
-	gsm.thisBootNumber = 1026;
-	gsm.rssi = rssi;
-	gsm.addSensorData(&bulkSd[0], COUNT);
-	
-	//TODO: gsm.getPayloadLength() ? for char count?
-	char forWeb[100] {0};
-	gsm.createPayload((uint8_t*)(&forWeb[0]), 100);//createEncodedPayload(&forWeb[0], 1000);
-	
-	RM_LOGLN(F("GSM Payload To Be Sent Over Web:"));
-	Helpers::printByteArray((uint8_t*)(&forWeb[0]), 20);
-	GsmPayload readGsm;
-	readGsm.readPayload((uint8_t*)(&forWeb[0]));
+	//uint8_t* dataPtr = (uint8_t*)(&forWeb[0]);
+	//GsmPayload readGsm;
+	//uint8_t numSensorReadings = readGsm.readNumOfSensorReadings(dataPtr);
+	//if (numSensorReadings != COUNT) RM_LOGLN(F("*** WRONG # SENSOR READINGS ***"));
+	//readGsm.readPayload(dataPtr);
 	
 	RM_LOGLN(F("------------------------"));
 	/*************************/

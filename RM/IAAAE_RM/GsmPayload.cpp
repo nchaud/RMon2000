@@ -29,16 +29,22 @@ void GsmPayload::createPayload(uint8_t* output, uint16_t maxLength){
 	memcpy(output, _dataArr, _dataArrSz * sizeof(SensorData));
 	output += sizeof(_dataArrSz * sizeof(SensorData));
 	
-
-RM_LOG2(F("Batt WAS "), * ((uint16_t*)(_dataArr+offsetof(SensorData, battVoltage))));
-RM_LOG2(F("Current WAS "), * ((uint16_t*)(_dataArr+offsetof(SensorData, current))));
-RM_LOG2(F("PV WAS "), * ((uint16_t*)(_dataArr+offsetof(SensorData, pVVoltage))));
-RM_LOG2(F("Temperature WAS "), * ((uint16_t*)(_dataArr+offsetof(SensorData, temperature))));
-	
-	
+	//	uint8_t* ptrToFirst = (uint8_t*)_dataArr;
+	//	RM_LOG2(F("Current WAS "), * ((uint16_t*)(ptrToFirst+offsetof(SensorData, current))));
 }
 
-void GsmPayload::readPayload(uint8_t* input){
+uint8_t GsmPayload::readNumOfSensorReadings(char* payload){
+
+	uint8_t* arrSzPos = 
+		((uint8_t*)payload) +
+		sizeof(moduleId) + 
+		sizeof(thisBootNumber);
+		
+	uint8_t numReadings = *arrSzPos;
+	return numReadings;
+}
+
+void GsmPayload::readPayload(uint8_t* input, SensorData* inputArr){
 	
 	memcpy(&moduleId, input, sizeof(moduleId));
 	input += sizeof(moduleId);
@@ -53,11 +59,9 @@ void GsmPayload::readPayload(uint8_t* input){
 	RM_LOG2(F("Data Arr Sz was "), _dataArrSz);
 	
 	//SensorData tmp[_dataArrSz];
-	//_dataArr = tmp;
+	_dataArr = inputArr;
 	memcpy(_dataArr, input, _dataArrSz * sizeof(SensorData));
 	input += sizeof(_dataArrSz * sizeof(SensorData));
-	
-	Helpers::printSensorData(_dataArr);//print the first
 }
 
 void GsmPayload::readEncodedPayload(char* payload){
@@ -71,9 +75,9 @@ void GsmPayload::addSensorData(SensorData* dataArr, uint8_t arraySz){
 	_dataArrSz = arraySz;	
 }
 
-void GsmPayload::getSensorData(SensorData* arr) {
+SensorData* GsmPayload::getSensorData() {
 	
-	
+	return _dataArr;
 }
 
 void GsmPayload::setGpsInfo(GpsInfo* info) {}

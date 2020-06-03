@@ -11,10 +11,12 @@ public:
 	static void printSensorData(SensorData* sd);
 	static void printByteArray(uint8_t* sd, uint16_t length);
 		
-	static int16_t base64_encode(uint8_t *output, uint8_t *input, int16_t inputLen);
-	static int16_t base64_decode(uint8_t *output, uint8_t *input, int16_t inputLen);
+	static void fillArray(uint8_t* ptr, uint16_t sz, uint8_t val);
+		
+	static int16_t base64_encode(char *output, uint8_t *input, int16_t inputLen);
+	static int16_t base64_decode(uint8_t *output, char *input, int16_t inputLen);
 	static int16_t base64_enc_len(int16_t inputLen);
-	static int16_t base64_dec_len(uint8_t *input, int16_t inputLen);
+	static int16_t base64_dec_len(char* input, int16_t inputLen);
 };
 
 //byte writeCharArrWithPad(char* buffer, const char* value, byte padLength);

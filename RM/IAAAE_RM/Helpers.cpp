@@ -35,6 +35,8 @@ void Helpers::printByteArray(uint8_t* sd, uint16_t length) {
 		
 		RM_LOG(" ");
 	}
+	
+	RM_LOGLN(" ");
 }
 
 void Helpers::printSensorData(SensorData* sd) {
@@ -52,11 +54,18 @@ void Helpers::printSensorData(SensorData* sd) {
 	RM_LOG(F(" | "));
 	
 	RM_LOG(F("Temp="));
-	RM_LOGLN(sd->temperature);
+	RM_LOG(sd->temperature);
 	RM_LOG(F(" | "));
 	
 	RM_LOG(F("Error="));
 	RM_LOGLN(sd->errorChar);
+}
+
+void Helpers::fillArray(uint8_t* ptr, uint16_t sz, uint8_t val){
+	
+	for(uint16_t i=0; i<sz; i++){
+		*(ptr+i) = val;
+	}
 }
 
 
@@ -69,8 +78,11 @@ inline void a3_to_a4(uint8_t * a4, uint8_t * a3);
 inline void a4_to_a3(uint8_t * a3, uint8_t * a4);
 inline uint8_t b64_lookup(char c);
 
-/* Note: Trailing 0s for strings shouldn't be included in the length */
-int16_t Helpers::base64_encode(uint8_t *output, uint8_t *input, int16_t inputLen) {
+/* 
+	If *input is string, trailing \0 should NOT be included in the length
+	Return length DOES include trailing \0
+*/
+int16_t Helpers::base64_encode(char *output, uint8_t *input, int16_t inputLen) {
 	
 	int16_t i = 0, j = 0;
 	int16_t encLen = 0;
@@ -105,12 +117,15 @@ int16_t Helpers::base64_encode(uint8_t *output, uint8_t *input, int16_t inputLen
 			output[encLen++] = '=';
 		}
 	}
-	output[encLen] = '\0';
+	
+	output[encLen++] = '\0';
+	
 	return encLen;
 }
 
-/* Note: Trailing 0s for strings shouldn't be included in the length */
-int16_t Helpers::base64_decode(uint8_t * output, uint8_t * input, int16_t inputLen) {
+/* Assumes input ends with a \0 */
+int16_t Helpers::base64_decode(uint8_t * output, char* input, int16_t inputLen) {
+	
 	int16_t i = 0, j = 0;
 	int16_t decLen = 0;
 	uint8_t a3[3];
@@ -152,23 +167,25 @@ int16_t Helpers::base64_decode(uint8_t * output, uint8_t * input, int16_t inputL
 			output[decLen++] = a3[j];
 		}
 	}
-	output[decLen] = '\0';
+	//output[decLen] = '\0';
 	return decLen;
 }
 
+/* Return length DOES include trailing \0 */
 int16_t Helpers::base64_enc_len(int16_t plainLen) {
 	int16_t n = plainLen;
-	return (n + 2 - ((n + 2) % 3)) / 3 * 4;
+	return (n + 2 - ((n + 2) % 3)) / 3 * 4 + 1;
 }
 
-int16_t Helpers::base64_dec_len(uint8_t * input, int16_t inputLen) {
+/* Assumes input ends with a \0 and inputLen includes this terminating character*/
+int16_t Helpers::base64_dec_len(char* input, int16_t inputLen) {
 	int16_t i = 0;
 	int16_t numEq = 0;
 	for(i = inputLen - 1; input[i] == '='; i--) {
 		numEq++;
 	}
 
-	return ((6 * inputLen) / 8) - numEq;
+	return ((6 * inputLen) / 8) - numEq - 1;
 }
 
 inline void a3_to_a4(uint8_t * a4, uint8_t * a3) {
