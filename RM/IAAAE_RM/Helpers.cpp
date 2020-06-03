@@ -123,7 +123,7 @@ int16_t Helpers::base64_encode(char *output, uint8_t *input, int16_t inputLen) {
 	return encLen;
 }
 
-/* Assumes input ends with a \0 */
+/* Assumes input ends with a \0 and inputLen includes this terminating character*/
 int16_t Helpers::base64_decode(uint8_t * output, char* input, int16_t inputLen) {
 	
 	int16_t i = 0, j = 0;
@@ -173,19 +173,25 @@ int16_t Helpers::base64_decode(uint8_t * output, char* input, int16_t inputLen) 
 
 /* Return length DOES include trailing \0 */
 int16_t Helpers::base64_enc_len(int16_t plainLen) {
+	
 	int16_t n = plainLen;
+	
 	return (n + 2 - ((n + 2) % 3)) / 3 * 4 + 1;
 }
 
 /* Assumes input ends with a \0 and inputLen includes this terminating character*/
 int16_t Helpers::base64_dec_len(char* input, int16_t inputLen) {
+	
 	int16_t i = 0;
 	int16_t numEq = 0;
+	
+	inputLen -=1; //Remove terminating char
+	
 	for(i = inputLen - 1; input[i] == '='; i--) {
 		numEq++;
 	}
 
-	return ((6 * inputLen) / 8) - numEq - 1;
+	return ((6 * inputLen) / 8) - numEq;
 }
 
 inline void a3_to_a4(uint8_t * a4, uint8_t * a3) {

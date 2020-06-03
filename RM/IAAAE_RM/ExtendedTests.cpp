@@ -26,6 +26,96 @@ void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr
 //RMonV3 types/flags test
 
 #if IS_EXTENDED_TYPES_TEST == true
+
+void encodeIntTest(uint8_t i) {
+	
+	uint8_t input[1];
+	input[0] = i;
+		
+	char output2[10]{0};
+	Helpers::base64_encode(&output2[0], (uint8_t*)&input, 1);
+		
+	uint8_t output3[10]{0};
+	Helpers::base64_decode((uint8_t*)&output3, &output2[0], 10);
+		
+	if ((uint8_t)output3[0] != i) RM_LOGLN(F("*** INT ENC FAIL @1 ***"));
+	if ((uint8_t)output3[1] != 0) RM_LOGLN(F("*** INT ENC FAIL @2 ***")); //Overflow
+}
+
+void encodeStrTest(char* encVal, char* decVal) {
+	
+	int inputLen = strlen(encVal);
+	int decodeLen = strlen(decVal);
+	
+	RM_LOG2("Running Test For ", encVal);
+	int encLen = Helpers::base64_enc_len(inputLen); //No@terminal char
+	if (encLen != strlen(decVal)+1) RM_LOGLN(F("*** STR ENC FAIL @1 ***"));
+		
+	char strEncoded[20];
+	Helpers::fillArray((uint8_t*)strEncoded, sizeof(strEncoded), 1); //Extra buffer of 1s to test no overspill
+
+	int strEncodedLen = Helpers::base64_encode(strEncoded, (uint8_t*)encVal, inputLen);
+	
+	if (strEncodedLen != strlen(decVal)+1) RM_LOGLN(F("*** STR ENC FAIL @2 ***")); //Yes@terminal char
+	if (decVal[decodeLen-1] != strEncoded[decodeLen-1]) RM_LOGLN(F("*** STR ENC FAIL @3 ***"));
+	if (0 != strEncoded[decodeLen]) RM_LOGLN(F("*** STR ENC FAIL @4 ***"));
+	if (1 != strEncoded[decodeLen+1]) RM_LOGLN(F("*** STR ENC FAIL @5 ***")); //May have overwritten
+		
+	int expStrDecodingLen = Helpers::base64_dec_len(decVal, decodeLen+1);
+	if (expStrDecodingLen != strlen(encVal)) RM_LOGLN(F("*** STR DEC FAIL @1 ***")); //No@terminal char
+		
+	char strDecoded[20];
+	Helpers::fillArray((uint8_t*)strDecoded, sizeof(strDecoded), 1); //Extra buffer of 1s to test no overspill
+		
+	int strDecodedLen = Helpers::base64_decode((uint8_t*)strDecoded, decVal, decodeLen+1);
+	if (strDecodedLen != strlen(encVal)) RM_LOGLN(F("*** STR DEC FAIL @2 ***")); //No@terminal char
+	if (encVal[inputLen-1] != strDecoded[inputLen-1]) RM_LOGLN(F("*** STR DEC FAIL @3 ***"));
+	if (1 != strDecoded[inputLen]) RM_LOGLN(F("*** STR DEC FAIL @4 ***")); //May have introduced \0, WRONG
+}
+
+void encodeSingleSensorTest(){
+	
+	SensorData sd;			//size ~ 10 bytes
+	sd.battVoltage = 20245; //Includes mV - e.g. 20.245V
+	sd.current = 65535;
+	sd.errorChar = 3;
+	sd.pVVoltage = 64913;
+	sd.temperature = 0;
+	Helpers::printSensorData(&sd);
+	
+	uint8_t typicalMemUsage = sizeof("20245-65535-3-64913-0"); //23 bytes
+	RM_LOG2("Basic int->str usage would be", typicalMemUsage);
+	
+	// ENCODING
+	char output[100]; //For testing, make a large buffer and check it doesn't overspill
+	int len = Helpers::base64_encode(output, (uint8_t*)&sd, sizeof(SensorData));
+	int expectedLen = Helpers::base64_enc_len(sizeof(SensorData));
+	RM_LOG("Encoded result to be sent over Web is ");
+	RM_LOGLN(output);
+	RM_LOG("\t with size of ");
+	RM_LOG(strlen(output)+1);
+	RM_LOGLN(" (including terminating '0')");
+	if ((strlen(output)+1) != len) RM_LOGLN(F("*** ENC LEN FAIL @1 ***"));
+	if ((strlen(output)+1) != expectedLen) RM_LOGLN(F("*** ENC LEN FAIL @2 ***"));
+	
+	// DECODING
+	SensorData sdAfter;
+	int expDecodingLen = Helpers::base64_dec_len(output, len);
+	int lenAfter = Helpers::base64_decode((uint8_t*)&sdAfter, output, len);
+	RM_LOG2("Decoded result received over Web has size of ", lenAfter);
+	Helpers::printSensorData(&sdAfter);
+	
+	if (sizeof(SensorData) != lenAfter) RM_LOGLN(F("*** DEC LEN FAIL @1 ***"));
+	if (sizeof(SensorData) != expDecodingLen) RM_LOGLN(F("*** DEC LEN FAIL @2 ***"));
+	
+	if (sdAfter.battVoltage != sd.battVoltage) RM_LOGLN(F("*** CMP TEST FAIL @1 ***"));
+	if (sdAfter.current != sd.current) RM_LOGLN(F("*** CMP TEST FAIL @2 ***"));
+	if (sdAfter.errorChar != sd.errorChar) RM_LOGLN(F("*** CMP TEST FAIL @3 ***"));
+	if (sdAfter.pVVoltage != sd.pVVoltage) RM_LOGLN(F("*** CMP TEST FAIL @4 ***"));
+	if (sdAfter.temperature != sd.temperature) RM_LOGLN(F("*** CMP TEST FAIL @5 ***"));
+	if (sdAfter.dataType != sd.dataType) RM_LOGLN(F("*** CMP TEST FAIL @6 ***"));
+}
+
 void writeMockSD(SensorData* iSd, uint8_t i){
 	iSd->battVoltage = (i+1);
 	iSd->current = (i+1)*10;
@@ -43,8 +133,8 @@ void encodeBulkSignalsTest(uint8_t COUNT, char* forWeb) {
 		writeMockSD(iSd, i);
 	}
 	
-	//uint8_t* ptrToFirst = (uint8_t*)&bulkSd[0];
-	//RM_LOG2(F(">Batt WAS "), * ((uint16_t*)(ptrToFirst+offsetof(SensorData, battVoltage))));
+	//	uint8_t* ptrToFirst = (uint8_t*)&bulkSd[0];
+	//	RM_LOG2(F(">Batt WAS "), * ((uint16_t*)(ptrToFirst+offsetof(SensorData, battVoltage))));
 	
 	FONA_GET_RSSI rssi;
 	rssi.rssi = 15;
@@ -57,8 +147,6 @@ void encodeBulkSignalsTest(uint8_t COUNT, char* forWeb) {
 	gsm.rssi = rssi;
 	gsm.addSensorData(&bulkSd[0], COUNT);
 	
-	//TODO: gsm.getPayloadLength() ? for char count?
-	//char forWeb[100] {0};
 	gsm.createPayload((uint8_t*)(&forWeb[0]), 100);//createEncodedPayload(&forWeb[0], 1000);
 }
 #endif
@@ -85,23 +173,22 @@ void ExtendedTests::runExtendedTypesTest() {
 	RM_LOG(F("Cast back after int storage val:"));
 	RM_LOGLNFMT(back, BIN);
 	
-	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_0) RM_LOGLN(F("*** TEST FAIL @1 ***"));
-	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_1) RM_LOGLN(F("*** TEST FAIL @2 ***"));
-	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_2) RM_LOGLN(F("*** TEST FAIL @3 ***"));
-	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_3) RM_LOGLN(F("*** TEST FAIL @4 ***"));
-	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_4) RM_LOGLN(F("*** TEST FAIL @5 ***"));
-	if (NETREG_ONLY_NETSTAT(back) != FONA_GET_NETREG::NETSTAT_5) RM_LOGLN(F("*** TEST FAIL @6 ***"));
+	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_0) RM_LOGLN(F("*** NETREG FAIL @1 ***"));
+	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_1) RM_LOGLN(F("*** NETREG FAIL @2 ***"));
+	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_2) RM_LOGLN(F("*** NETREG FAIL @3 ***"));
+	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_3) RM_LOGLN(F("*** NETREG FAIL @4 ***"));
+	if (NETREG_ONLY_NETSTAT(back) == FONA_GET_NETREG::NETSTAT_4) RM_LOGLN(F("*** NETREG FAIL @5 ***"));
+	if (NETREG_ONLY_NETSTAT(back) != FONA_GET_NETREG::NETSTAT_5) RM_LOGLN(F("*** NETREG FAIL @6 ***"));
 	
-	if (NETREG_ONLY_RESULT_CODE(back) == FONA_GET_NETREG::RESULT_CODE_0) RM_LOGLN(F("*** TEST FAIL @7 ***"));
-	if (NETREG_ONLY_RESULT_CODE(back) != FONA_GET_NETREG::RESULT_CODE_1) RM_LOGLN(F("*** TEST FAIL @8 ***"));
-	if (NETREG_ONLY_RESULT_CODE(back) == FONA_GET_NETREG::RESULT_CODE_2) RM_LOGLN(F("*** TEST FAIL @9 ***"));
+	if (NETREG_ONLY_RESULT_CODE(back) == FONA_GET_NETREG::RESULT_CODE_0) RM_LOGLN(F("*** NETREG FAIL @7 ***"));
+	if (NETREG_ONLY_RESULT_CODE(back) != FONA_GET_NETREG::RESULT_CODE_1) RM_LOGLN(F("*** NETREG FAIL @8 ***"));
+	if (NETREG_ONLY_RESULT_CODE(back) == FONA_GET_NETREG::RESULT_CODE_2) RM_LOGLN(F("*** NETREG FAIL @9 ***"));
 	
-	if (NETREG_ONLY_ERROR(back) != FONA_GET_NETREG::IS_ERROR) RM_LOGLN(F("*** TEST FAIL @10 ***"));
+	if (NETREG_ONLY_ERROR(back) != FONA_GET_NETREG::IS_ERROR) RM_LOGLN(F("*** NETREG FAIL @10 ***"));
 	
 	//Print test
 	RM_LOG(F("Test For Print Output:"));
 	Helpers::printRSSI(&result);
-	RM_LOGLN(F("--------------------------"));
 	
 	/*********************************/
 	
@@ -109,101 +196,26 @@ void ExtendedTests::runExtendedTypesTest() {
 	/******* ENCODING TESTS *********/
 	
 	//	** 1) Ensure this is avoided with lib:- **
-	//	char r = -127; char q = 129; Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
+	//		char r = -127; char q = 129; Serial.println((uint8_t)q==(uint8_t)r); //This is true in Arduino 
 	for(uint8_t i=0 ; ; i++) {
 	
-		uint8_t input[1];
-		input[0] = i;
-	
-		char output2[10]{0};
-		Helpers::base64_encode(&output2[0], (uint8_t*)&input, 1);
-	
-		uint8_t output3[10]{0};
-		Helpers::base64_decode((uint8_t*)&output3, &output2[0], 10);
-		
-		if ((uint8_t)output3[0] != i) RM_LOGLN(F("*** TEST FAIL @ENCODING ***"));
-		
-		if (i==255) break; //max for unsigned byte
+		encodeIntTest(i);
+		if (i==255)
+			break; //max for unsigned byte
 	}
 
-
 	//	** 2) Check encoding/decoding for strings with their null terminating char \0 **
-	int inputLen = strlen("hello");	//No@terminal char
-	int encLen = Helpers::base64_enc_len(inputLen);
-	if (encLen != strlen("aGVsbG8=")+1) RM_LOGLN(F("*** STR ENC FAIL @1 ***"));
-	
-	char strEncoded[20];
-	Helpers::fillArray((uint8_t*)strEncoded, sizeof(strEncoded), 1); //Extra buffer of 1s to test no overspill
-	
-	int strEncodedLen = Helpers::base64_encode(strEncoded, (uint8_t*)"hello", inputLen);
-	if (strEncodedLen != strlen("aGVsbG8=")+1) RM_LOGLN(F("*** STR ENC FAIL @2 ***")); //Yes@terminal char
-	if ('=' != strEncoded[7]) RM_LOGLN(F("*** STR ENC FAIL @3 ***"));
-	if (0 != strEncoded[8]) RM_LOGLN(F("*** STR ENC FAIL @4 ***"));
-	if (1 != strEncoded[9]) RM_LOGLN(F("*** STR ENC FAIL @5 ***")); //May have overwritten
-	
-	int decodeStrInputLen = strlen("aGVsbG8=")+1;	//Yes@terminal char
-	int expStrDecodingLen = Helpers::base64_dec_len("aGVsbG8=", decodeStrInputLen);
-	if (expStrDecodingLen != strlen("hello")) RM_LOGLN(F("*** STR DEC FAIL @1 ***")); //No@terminal char
-	
-	char strDecoded[20];
-	Helpers::fillArray((uint8_t*)strDecoded, sizeof(strDecoded), 1); //Extra buffer of 1s to test no overspill
-	
-	int strDecodedLen = Helpers::base64_decode((uint8_t*)strDecoded, "aGVsbG8=", decodeStrInputLen);
-	if (strDecodedLen != strlen("hello")) RM_LOGLN(F("*** STR DEC FAIL @2 ***")); //No@terminal char
-	if ('o' != strDecoded[4]) RM_LOGLN(F("*** STR DEC FAIL @3 ***"));
-	if (1 != strDecoded[5]) RM_LOGLN(F("*** STR DEC FAIL @4 ***")); //May have introduced \0, WRONG
-	
+	//		Verify encoding/decoding %3 behaviour works
+	encodeStrTest("h", "aA==");
+	encodeStrTest("he", "aGU=");
+	encodeStrTest("hel", "aGVs");
+	encodeStrTest("hell", "aGVsbA==");
+	encodeStrTest("hello", "aGVsbG8=");
 	
 	
 	//	** 3) Single sensor-data round-trip numbers test **
+	encodeSingleSensorTest();
 	
-	SensorData sd;			//size ~ 10 bytes
-	sd.battVoltage = 20245; //Includes mV - e.g. 20.245V
-	sd.current = 65535;
-	sd.errorChar = 3;
-	sd.pVVoltage = 64913;
-	sd.temperature = 0;
-	Helpers::printSensorData(&sd);
-	
-	uint8_t typicalMemUsage = sizeof("20245-65535-3-64913-0"); //23 bytes
-	RM_LOG2("Basic int->str usage would be", typicalMemUsage);
-	
-	// ENCODING
-	char output[100]; //For testing, make a large buffer and check it doesn't overspill
-	int len = Helpers::base64_encode(output, (uint8_t*)&sd, sizeof(SensorData));
-	int expectedLen = Helpers::base64_enc_len(sizeof(SensorData));
-	RM_LOG("Encoded result to be sent over Web is ");
-	RM_LOGLN(output);
-	RM_LOG("\t with size of ");
-	RM_LOG(strlen(output)+1);
-	RM_LOGLN(" (including terminating '0')");
-	if ((strlen(output)+1) != len) RM_LOGLN(F("*** ENC LEN FAIL @1 ***"));
-	if ((strlen(output)+1) != expectedLen) RM_LOGLN(F("*** ENC LEN FAIL @2 ***"));
-	
-	// DECODING
-	int expDecodingLen = Helpers::base64_dec_len(output, len);
-	RM_LOG2("Expected Decoding Len", expDecodingLen);
-	RM_LOG2("For Output Of", output);
-	RM_LOG2("With Length Of", len);
-	RM_LOG2("Decoded Val", sizeof(SensorData));
-	RM_LOG2("sizeof(SensorData)", sizeof(SensorData));
-	
-	SensorData sdAfter;
-	int lenAfter = Helpers::base64_decode((uint8_t*)&sdAfter, output, len);
-	RM_LOG2("Decoded result received over Web has size of ", lenAfter);
-	Helpers::printSensorData(&sdAfter);
-	
-	if (sizeof(SensorData) != lenAfter) RM_LOGLN(F("*** DEC LEN FAIL @1 ***"));
-	if (sizeof(SensorData) != expDecodingLen) RM_LOGLN(F("*** DEC LEN FAIL @2 ***"));
-	
-	if (sdAfter.battVoltage != sd.battVoltage) RM_LOGLN(F("*** CMP TEST FAIL @1 ***"));
-	if (sdAfter.current != sd.current) RM_LOGLN(F("*** CMP TEST FAIL @2 ***"));
-	if (sdAfter.errorChar != sd.errorChar) RM_LOGLN(F("*** CMP TEST FAIL @3 ***"));
-	if (sdAfter.pVVoltage != sd.pVVoltage) RM_LOGLN(F("*** CMP TEST FAIL @4 ***"));
-	if (sdAfter.temperature != sd.temperature) RM_LOGLN(F("*** CMP TEST FAIL @5 ***"));
-	if (sdAfter.dataType != sd.dataType) RM_LOGLN(F("*** CMP TEST FAIL @6 ***"));
-	
-	RM_LOGLN(F("--------------------------"));
 	
 	//	** 4) Test a full gsm-payload incl. large sequence of them to ensure correctness **
 	//TODO: MAX READINGS A CONSTANT?
