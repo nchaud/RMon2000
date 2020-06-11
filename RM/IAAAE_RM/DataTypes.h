@@ -18,12 +18,12 @@
 #define INITIALISE_MODULE_ID		0		//0 implies don't initialise it - modules start with id 1
 #define IS_BASIC_MEM_TEST			false   //Smoke test new module's EEPROM is physically present and working basics
 
-//All these define conditional code only compiled in when set - i.e. only run on the PC
+//All Extended* tests define conditional code only compiled in when set - i.e. only run on the PC
 #define IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
-#define IS_EXTENDED_DUMP_OUTPUT		false	//Prints everything on this module for review
+#define IS_EXTENDED_SHOW_MEM		false	//Prints everything on this module nicely for review - TODO: A Basic?
 #define IS_EXTENDED_MEM_TEST		false	//Test reading signals and reading/writing to memory
-#define IS_EXTENDED_GSM_TEST		false	//Test for gprs, web
-#define IS_EXTENDED_TYPES_TEST		true	//Test for RMv3 types are good, esp flags
+#define IS_EXTENDED_GSM_TEST		true	//Test for gprs and sending over web
+#define IS_EXTENDED_TYPES_TEST		false	//Test for RMv3 types are good, esp flags
 
 //Fona Pins
 #define FONA_RX 2
@@ -43,11 +43,8 @@
 #define PIN_TEMP A2
 #define PIN_CURRENT A3
 
-//Timing constants
-#define HOURS_IN_DAY 24
-#define MINS_IN_HOURS 60
-#define HOURS_IN_WEEK 24*7
-#define FIRST_CYCLE_NO 1
+//Logic constants
+#define GPRS_MAX_ENABLE_TIME 60	//Max time in seconds to try to enable GPRS
 
 //Error constants
 #define ERR_GPS_NO_FIX 10
@@ -187,6 +184,11 @@ struct FONA_GET_RSSI {
 	uint8_t rssiErr	= 0;
 	
 	FONA_GET_NETREG netReg;
+};
+
+struct FONA_INIT_RESULT {
+
+		
 };
 
 //struct TransmitReadingsResult{

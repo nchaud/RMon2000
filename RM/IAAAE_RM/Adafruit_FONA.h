@@ -58,6 +58,7 @@ typedef const __FlashStringHelper *	FONAFlashStringPtr;
 
 
 class Adafruit_FONA : public FONAStreamType {
+	
  public:
   Adafruit_FONA(int8_t r, boolean isMock);
   FONA_STATUS_INIT begin(uint8_t tx, uint8_t rx);
@@ -159,6 +160,8 @@ class Adafruit_FONA : public FONAStreamType {
 
   // HTTP helpers
   boolean HTTP_setup(char *url);
+  
+  //FONA_STATUS_GPRS_INIT Adafruit_FONA::internalEnableGPRS(boolean onoff);
 
   void flushInput();
   uint16_t readRaw(uint16_t b);

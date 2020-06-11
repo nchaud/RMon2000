@@ -26,7 +26,7 @@ SensorManager sensorMgr = SensorManager(true);
 void switchOffSystem();
 void on3MinutesElapsed(bool doWrite);
 void printData();
-Adafruit_FONA* ensureFonaInitialised(boolean forDataSend);
+Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isPending);
 
 uint8_t _behaviour = SYS_BEHAVIOUR::DoNothing;
 
@@ -91,22 +91,6 @@ void setup() {
 		switchOffSystem();
 		return;
 	}
-
-	if (IS_EXTENDED_GSM_TEST) {
-	
-		Adafruit_FONA* fona = ensureFonaInitialised(false);
-		
-		if (fona == NULL){ //Failed to init
-			
-			RM_LOGLN(F("*** FAIL EGT - FONA INIT ERROR ***"));
-		} else {
-			
-			ExtendedTests::runExtendedGsmTest(*fona);
-		}
-	
-		switchOffSystem();
-		return;
-	}
 	
 	if (IS_EXTENDED_SHOW_100_BYTES) {
 		
@@ -116,7 +100,7 @@ void setup() {
 		return;
 	}
 	
-	if (IS_EXTENDED_DUMP_OUTPUT) {
+	if (IS_EXTENDED_SHOW_MEM) {
 		
 		mem.runExtendedDumpOutput();
 		
@@ -131,11 +115,33 @@ void setup() {
 		switchOffSystem();
 		return;
 	}
+
+	if (IS_EXTENDED_GSM_TEST) {
+	
+	
+		//TODO: Change to invoke fro loop so it invokes the same init method
+		//	OR make FONA responsible for it so extended-tests will just call it too
+		//TODO: The init of the fona gprs should return true/false - i.e. keep calling me on 1-second loops
+	
+	
+		//Adafruit_FONA* fona = ensureFonaInitialised(true);
+	
+		//if (fona == NULL){ //Failed to init
+		//
+			//RM_LOGLN(F("*** FAIL EGT - FONA INIT ERROR ***"));
+			//} else {
+		//
+			//ExtendedTests::runExtendedGsmTest(*fona);
+		//}
+	
+		//_behaviour |= SYS_BEHAVIOUR::RunExtendedGsmTest;
+		return;
+	}
 		
 	uint16_t currBootCount = mem.incrementBootCount();
 	RM_LOG2(F("Boot Count"), currBootCount);
 	
-	//Take reading every 5 hours so it's a scattered time reading throughout the week
+	//Take reading every few hours - not a factor of 24 - so it's a scattered time reading throughout the week
 	_behaviour |= SYS_BEHAVIOUR::TakeReadings;
 	
 	//Send to HQ every ~20 hours
@@ -145,56 +151,98 @@ void setup() {
 	}
 }
 
-Adafruit_FONA* ensureFonaInitialised(boolean forDataSend) {
+uint8_t _fonaStatusInit=0;// _isFonaInitialised = 0; //0=>No, 1=>yes for basic, 2=>for data send
+uint8_t _gprsStatusInit=0;//
+uint8_t _initFonaLoopCount = 0;
+Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 
-	RM_LOGLN(F("Initialising fona..."));
-	FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
-		
-	if (IS_ERR_FSI(ret)) {
+	boolean isFirstLoop = _initFonaLoopCount == 0;
+	++_initFonaLoopCount;
 	
-		RM_LOG2(F("Error initialising fona..."), ret);
+	*isComplete = true;
+	
+	if (_fonaStatusInit==0) {
 		
+		RM_LOGLN(F("Initialising fona..."));
+		
+		FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
+		_fonaStatusInit = ret;
+		
+		//TODO: TEST ! with both single-digit module IDs and double digit
+		uint8_t moduleId = mem.getModuleId();
+		String userAgentStr = "IAAAE_RMonV3_"+moduleId;
+		__fona.setUserAgent(userAgentStr);
+	}
+
+	if (IS_ERR_FSI(_fonaStatusInit)) {
+	
+		RM_LOG2(F("Error initialising fona..."), _fonaStatusInit);
+	
 		//FONA library did not begin - store err in ROM, terminate and don't consume power
 		//(TODO + Why would this ever happen?)
 		//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
-		
-		
-		
+	
 		return NULL;
-	}
-	
-	
-	//TODO: TEST ! with both single-digit module IDs and double digit
-	uint8_t moduleId = mem.getModuleId();
-	String userAgentStr = "IAAAE_RMonV3_"+moduleId;	
-	__fona.setUserAgent(userAgentStr);
-	
-	
+	}	
+
 	
 	if (forDataSend) {
 		
-		RM_LOGLN(F("Initialising gprs..."));
-		
-		FONA_STATUS_GPRS_INIT gprsRet = __fona.enableGPRS(true);
-		
-		if (IS_ERR_FSGI(gprsRet)) {
+		if (_gprsStatusInit != 0) {
 			
-			//TODO: Log this
-			//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
+			//No-op, just return what was calculated the last time
+		}
+		else if (_initFonaLoopCount > GPRS_MAX_ENABLE_TIME) {
 			
-			RM_LOG2(F("Error initialising gprs..."), gprsRet);
-			return NULL;//__fona;
+			//No-op, we've already calculated the _gprsStatusInit value
+		}
+		else if (_initFonaLoopCount % 20 != 0) {
+			
+			//Try to enable it every 20 seconds for a period
+			*isComplete = false;
+		}
+		else
+		{
+			RM_LOGLN(F("Attempting to enable GPRS..."));
+		
+			FONA_STATUS_GPRS_INIT gprsRet = __fona.enableGPRS(true);
+		
+			if (IS_ERR_FSGI(gprsRet)) {
+			
+				//TODO: Log this
+				//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
+			
+				RM_LOG2(F("Error initialising GPRS..."), gprsRet);
+				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME){
+				
+					*isComplete = false;
+				}
+				else{
+				
+					//We've hit a minute of trying, so all done trying
+					_gprsStatusInit = gprsRet;
+					RM_LOGLN(F("All attempts to enable GPRS failed"));
+				}
+			}
+			else {
+			
+				_gprsStatusInit = gprsRet;
+				RM_LOGLN(F("GPRS initialised successfully !"));
+				//Success, we're done initialising GPRS
+			}
+		}
+		
+		if (_gprsStatusInit != 0) {
+			if (IS_ERR_FSGI(_gprsStatusInit))
+				return NULL;
+			//else return valid instance
+		}
+		else {
+			return NULL;
 		}
 	}
 	
-	
 	return &__fona;
-	
-	//if (!gps.toggleGps(true)) {
-	//
-		////TODO: store in ROM
-		//return;
-	//}
 }
 
 
@@ -280,20 +328,24 @@ boolean sendData() {
 	//(by being called from 'loop') due to a loop-resetting error raised by FONA
 	++_sendDataLoopCount;
 	
-	if (doInit) {
-	
+	//if (doInit) {
+	if (doInit)
 		RM_LOGLN(F("Initialising module to send data"));
 	
-		_sendDataFona = ensureFonaInitialised(true);
+	boolean isComplete;
+	_sendDataFona = ensureFonaInitialised(true, &isComplete);
 	
-		if (_sendDataFona == NULL)
-			return true; //This task is finished even though in error state
-			
-		RM_LOGLN(F("Now waiting for a while before checking signal"));
-	}
+	if (!isComplete)
+		return false; //Still waiting to initialise
+		
+	if (_sendDataFona == NULL)
+		return true; //Error initialising
+
+	RM_LOGLN(F("Now waiting for a while before checking signal"));
+	//}
 	
-	//Wait to get signal
-	if (_sendDataLoopCount == 60) {
+	//Wait to get signal - may already be over the threshold when doing initialisation
+	if (_sendDataLoopCount >= 60) {
 		
 		//Get RSSI - store? check and/or wait another minute? not?
 		FONA_GET_RSSI rssi = _sendDataFona->getRSSI();

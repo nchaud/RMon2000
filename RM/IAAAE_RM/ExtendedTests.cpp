@@ -242,7 +242,7 @@ void ExtendedTests::runExtendedTypesTest() {
 	//Now parse it
 	GsmPayload receivedPayload;
 	SensorData receivedSensorData[numReadings];
-	//receivedPayload.readEncodedPayload(forWeb, encodedSz, (SensorData*)&receivedSensorData);
+	receivedPayload.readEncodedPayload(forWeb, encodedSz, (SensorData*)&receivedSensorData);
 	
 	RM_LOGLN(F("First Parsed Reading:"));
 	SensorData* readOne = receivedPayload.getSensorData();
@@ -286,38 +286,38 @@ void ExtendedTests::runExtendedGsmTest(Adafruit_FONA fona) {
 	FONA_GET_RSSI result = fona.getRSSI();
 	Helpers::printRSSI(&result);
 	
-	
-	//TODO: This test gets passed signal data, doesn't fetch from mem itself OR call sendData() in main?
-	//TODO: Another test to check compression of data, not to do in this test
-	
-	
-	
-	
-	
-        // Post data to website
-        uint16_t statuscode;
-        int16_t length;
-        char url[80] = "httpbin.org/post"; url[16]=0; //end
-        char data[80] = "hello"; url[5]=0; //end
+	//This test (148 chars without \0) uses hardcoded signal data -- doesn't fetch from mem itself OR call sendData() in main?
+	char* encodedData = "IQIECgAPAwARAQEACgBkADMAAwECABQAyAA0AAABAwAeACwBNQAAAQQAKACQATYAAAEFADIA9AE3AAABBgA8AFgCOAADAQcARgC8AjkAAAEIAFAAIAM6AAABCQBaAIQDOwAAAQoAZADoAzwAAA==";
 
-        Serial.println(F("****"));
-        if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) data,
-								  strlen(data), &statuscode, (uint16_t *)&length)) {
+	RM_LOG2("STRLEN IS", strlen(encodedData));
+    // Post data to website
+    uint16_t statuscode;
+    int16_t length;
+    char url[29] = "http://cars.khuddam.org.uk/r";
+	url[28]=0; //end
+    //char data[80] = "hello";
+	//data[5]=0; //end
+
+    Serial.println(F("****"));
+    if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) encodedData,
+								strlen(encodedData), &statuscode, (uint16_t *)&length)) {
 									  
-	        Serial.println("Failed!");
-        }
-        while (length > 0) {
-	        while (fona.available()) {
-		        char c = fona.read();
+	    Serial.println("Failed!");
+    }
+    while (length > 0) {
+	    while (fona.available()) {
+		    char c = fona.read();
 
-				loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
-				UDR0 = c;
+			loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+			UDR0 = c;
 
-		        length--;
-		        if (! length) break;
-	        }
-        }
-        fona.HTTP_POST_end();
+		    length--;
+		    if (! length)
+				
+				break;
+	    }
+    }
+    fona.HTTP_POST_end();
 		
 		
 		

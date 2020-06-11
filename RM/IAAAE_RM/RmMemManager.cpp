@@ -262,7 +262,7 @@ void RmMemManager::runExtendedShow100Bytes() {
 
 void RmMemManager::runExtendedDumpOutput() {
 
-#if IS_EXTENDED_DUMP_OUTPUT == true
+#if IS_EXTENDED_SHOW_MEM == true
 
 	ModuleMeta meta;
 	internalRead(MEMLOC_START, (uint8_t*)&meta, sizeof(ModuleMeta));
