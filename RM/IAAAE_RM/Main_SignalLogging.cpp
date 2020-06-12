@@ -108,33 +108,17 @@ void setup() {
 		return;
 	}
 
+	if (IS_EXTENDED_GSM_TEST) {
+	
+		_behaviour |= SYS_BEHAVIOUR::ExtendedGsmTest;
+		return;
+	}
+
 	if (INITIALISE_MODULE_ID) {
 		
 		mem.initialiseModule(INITIALISE_MODULE_ID);
 		
 		switchOffSystem();
-		return;
-	}
-
-	if (IS_EXTENDED_GSM_TEST) {
-	
-	
-		//TODO: Change to invoke fro loop so it invokes the same init method
-		//	OR make FONA responsible for it so extended-tests will just call it too
-		//TODO: The init of the fona gprs should return true/false - i.e. keep calling me on 1-second loops
-	
-	
-		//Adafruit_FONA* fona = ensureFonaInitialised(true);
-	
-		//if (fona == NULL){ //Failed to init
-		//
-			//RM_LOGLN(F("*** FAIL EGT - FONA INIT ERROR ***"));
-			//} else {
-		//
-			//ExtendedTests::runExtendedGsmTest(*fona);
-		//}
-	
-		//_behaviour |= SYS_BEHAVIOUR::RunExtendedGsmTest;
 		return;
 	}
 		
@@ -153,10 +137,10 @@ void setup() {
 
 uint8_t _fonaStatusInit=0;// _isFonaInitialised = 0; //0=>No, 1=>yes for basic, 2=>for data send
 uint8_t _gprsStatusInit=0;//
-uint8_t _initFonaLoopCount = 0;
+uint16_t _initFonaLoopCount = 0;
 Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 
-	boolean isFirstLoop = _initFonaLoopCount == 0;
+	//boolean isFirstLoop = _initFonaLoopCount == 0;
 	++_initFonaLoopCount;
 	
 	*isComplete = true;
@@ -188,6 +172,8 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 	
 	if (forDataSend) {
 		
+		//The first enable attempt will happen after GPRS_ENABLE_INTERVAL
+		
 		if (_gprsStatusInit != 0) {
 			
 			//No-op, just return what was calculated the last time
@@ -196,9 +182,9 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 			
 			//No-op, we've already calculated the _gprsStatusInit value
 		}
-		else if (_initFonaLoopCount % 20 != 0) {
+		else if (_initFonaLoopCount % GPRS_ENABLE_INTERVAL != 0) {
 			
-			//Try to enable it every 20 seconds for a period
+			//Try to enable it every x seconds for a period
 			*isComplete = false;
 		}
 		else
@@ -216,19 +202,20 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME){
 				
 					*isComplete = false;
+					RM_LOGLN(F("Will try to enable GPRS again shortly"));
 				}
 				else{
 				
-					//We've hit a minute of trying, so all done trying
+					//We've hit the last interval of trying, so all done trying
 					_gprsStatusInit = gprsRet;
 					RM_LOGLN(F("All attempts to enable GPRS failed"));
 				}
 			}
 			else {
 			
+			//Success, we're done initialising GPRS
 				_gprsStatusInit = gprsRet;
 				RM_LOGLN(F("GPRS initialised successfully !"));
-				//Success, we're done initialising GPRS
 			}
 		}
 		
@@ -319,30 +306,53 @@ boolean takeReadings() {
 }
 
 Adafruit_FONA* _sendDataFona = NULL;
-uint8_t _sendDataLoopCount = 0;
+uint16_t _sendDataLoopCount = 0;
 boolean sendData() {
 	
-	boolean doInit = (_sendDataLoopCount == 0);
+	boolean isInit = (_sendDataLoopCount == 0);
 	
 	//Increment before doing any work so doesn't get stuck continuously initialising
 	//(by being called from 'loop') due to a loop-resetting error raised by FONA
 	++_sendDataLoopCount;
 	
-	//if (doInit) {
-	if (doInit)
-		RM_LOGLN(F("Initialising module to send data"));
+	if (isInit)
+		RM_LOGLN(F("Initialising Fona to send data"));
 	
 	boolean isComplete;
 	_sendDataFona = ensureFonaInitialised(true, &isComplete);
 	
-	if (!isComplete)
+	if (!isComplete) {
+		RM_LOGLN(F("\t(Fona Init Pending...)"));
 		return false; //Still waiting to initialise
+	}
 		
-	if (_sendDataFona == NULL)
+	if (_sendDataFona == NULL) {
+		RM_LOGLN(F("\t(Fona Init ERROR)"));
 		return true; //Error initialising
+	}
+		
+		
+	SensorData sData[2]; //TODO: HARDCODED
+	unsigned long loadedTo;
+	mem.loadSensorData((SensorData*)&sData, 2, &loadedTo);
+	
+	RM_LOGLN(F("FOUND..."));
+	Helpers::printSensorData(sData);
+	Helpers::printSensorData(sData+1);
+	
+	GsmPayload payload;
+	payload.setModuleId(999);
+	payload.setBootNumber(33);
+	payload.setSensorData((SensorData*)&sData, 2);
+	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(2);
 
-	RM_LOGLN(F("Now waiting for a while before checking signal"));
-	//}
+	char encodedData[encodedSz];
+	payload.createEncodedPayload(encodedData);
+
+	RM_LOGLN(F("Encoded data created and ready for send:"));
+	RM_LOGLN(encodedData);
+
+	//RM_LOGLN(F("Now waiting for a while before checking signal"));
 	
 	//Wait to get signal - may already be over the threshold when doing initialisation
 	if (_sendDataLoopCount >= 60) {
@@ -359,18 +369,16 @@ boolean sendData() {
 		//sd->current = 13;
 		//sd->temperature = 43;
 		
-		 
-		
 		//If all done - reset (even though board will be reset - but for tests)
 		_sendDataLoopCount = 0;
 		_sendDataFona = NULL;
 	}
 	
-	return false;
+	return true;
 }
 
 //Loop-scoped variables
-volatile int _timerCounter = 0;
+uint16_t _timerCounter = 0;
 void loop() {
 
 	delay(1000);
@@ -389,7 +397,19 @@ void loop() {
 		if (sendData())
 			_behaviour &= ~SYS_BEHAVIOUR::SendData;
 	}
+
+	if ((_behaviour&SYS_BEHAVIOUR::ExtendedGsmTest) != 0) {
 	
+		if (_timerCounter == 1)
+			ExtendedTests::startExtendedGsmTest(&__fona, &mem);
+	
+		if (sendData()) {
+			
+			_behaviour &= ~SYS_BEHAVIOUR::ExtendedGsmTest;
+			ExtendedTests::endExtendedGsmTest();
+		}
+	}
+
 	if (_behaviour == SYS_BEHAVIOUR::DoNothing) {
 		
 		switchOffSystem();

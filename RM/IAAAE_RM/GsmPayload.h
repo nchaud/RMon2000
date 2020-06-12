@@ -14,17 +14,18 @@ public:
 	static uint16_t getEncodedPayloadSize_S(uint8_t numberSReadings);
 	static uint8_t readNumSReadings(char* payload, uint16_t length);
 	
+	//Raw bytes as an organised concatenation of all data
 	uint16_t getRawPayloadSize();
 	void createRawPayload(uint8_t* output);
 	
+	//When raw bytes data to be transmitted is formed into a Base64 encoded payload
 	uint16_t getEncodedPayloadSize();
 	void createEncodedPayload(char* payload);
 		
-	//When data to be transmitted is formed into a Base64 encoded payload
 	void setSensorData(SensorData* dataArr, uint8_t numberSReadings);
 	void setGpsInfo(GpsInfo* info);
 	
-	//When received Base64 payload is parsed (Mainly required for testing/output to ensure encoding+decoding is ok)
+	//When received Base64 payload is parsed (Mainly required for testing/view-output to ensure encoding+decoding is ok)
 	void readRawPayload(uint8_t* payload, SensorData* sReadingsArr);
 	void readEncodedPayload(char* payload, uint16_t payloadSz, SensorData* sReadingsArr);
 	SensorData* getSensorData();//SensorData* arr);
@@ -39,7 +40,7 @@ public:
 	void setRSSI(FONA_GET_RSSI rssi);
 	uint8_t getNumOfSensorReadings();
 	
-
+	//Internal structure at the beginning of eeprom
 	struct PayloadHeader {
 		uint8_t moduleId = 0;
 		uint16_t bootNumber = 0;
@@ -54,6 +55,6 @@ private:
 	PayloadHeader _header;
 	GpsInfo* _gpsInfo		= NULL;
 	SensorData* _dataArr	= NULL;
-}; //GsmPayload
+};
 
 #endif //__GSMPAYLOAD_H__

@@ -26,6 +26,14 @@ void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr
 
 //RMonV3 types/flags test
 
+void writeMockSD(SensorData* iSd, uint8_t i){
+	iSd->battVoltage = (i+1);
+	iSd->current = (i+1)*10;
+	iSd->pVVoltage = (i+1)*100;
+	iSd->temperature = (i+1)+50;
+	iSd->errorChar = i%5==0?3:0;
+}
+
 #if IS_EXTENDED_TYPES_TEST == true
 
 void encodeIntTest(uint8_t i) {
@@ -115,14 +123,6 @@ void encodeSingleSensorTest(){
 	if (sdAfter.pVVoltage != sd.pVVoltage) RM_LOGLN(F("*** CMP TEST FAIL @4 ***"));
 	if (sdAfter.temperature != sd.temperature) RM_LOGLN(F("*** CMP TEST FAIL @5 ***"));
 	if (sdAfter.dataType != sd.dataType) RM_LOGLN(F("*** CMP TEST FAIL @6 ***"));
-}
-
-void writeMockSD(SensorData* iSd, uint8_t i){
-	iSd->battVoltage = (i+1);
-	iSd->current = (i+1)*10;
-	iSd->pVVoltage = (i+1)*100;
-	iSd->temperature = (i+1)+50;
-	iSd->errorChar = i%5==0?3:0;
 }
 
 void encodeBulkSignalsTest(char* forWeb, uint8_t COUNT) {
@@ -275,55 +275,83 @@ RM_LOGLN(F("*** FAIL ETT ***")); //Sync Broken - inclusion of code should be syn
 
 
 //SMS/GPRS test
-void ExtendedTests::runExtendedGsmTest(Adafruit_FONA fona) {
+SensorData* _mockData;
+
+void ExtendedTests::endExtendedGsmTest() {
 	
 #if IS_EXTENDED_GSM_TEST == true
 
-	delay(5000);
+	//Clear dynamic memory
+	free(_mockData);
+	
+	//Do verification of data test (somehow?)
+	
+	
+	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended GSM Test Complete~~~~~~~~~~~~~~~~"));
+#else
+	RM_LOGLN(F("*** FAIL EGT ***")); //Sync Broken - inclusion of code should be sync'd with flag
+#endif
+}
+
+void ExtendedTests::startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem) {
+	
+#if IS_EXTENDED_GSM_TEST == true
+
+	//delay(5000);
 	
 	RM_LOGLN(F("TEST: Checking rssi..."));
 	
-	FONA_GET_RSSI result = fona.getRSSI();
-	Helpers::printRSSI(&result);
+	//FONA_GET_RSSI result = fona.getRSSI();
+	//Helpers::printRSSI(&result);
 	
-	//This test (148 chars without \0) uses hardcoded signal data -- doesn't fetch from mem itself OR call sendData() in main?
-	char* encodedData = "IQIECgAPAwARAQEACgBkADMAAwECABQAyAA0AAABAwAeACwBNQAAAQQAKACQATYAAAEFADIA9AE3AAABBgA8AFgCOAADAQcARgC8AjkAAAEIAFAAIAM6AAABCQBaAIQDOwAAAQoAZADoAzwAAA==";
-
-	RM_LOG2("STRLEN IS", strlen(encodedData));
-    // Post data to website
-    uint16_t statuscode;
-    int16_t length;
-    char url[29] = "http://cars.khuddam.org.uk/r";
-	url[28]=0; //end
-    //char data[80] = "hello";
-	//data[5]=0; //end
+	//This test (148 chars without \0) uses hardcoded signal data
+	// -- doesn't fetch from mem itself OR call sendData() in main?
+	//char* encodedData = "IQIECgAPAwARAQEACgBkADMAAwECABQAyAA0AAABAwAeACwBNQAAAQQAKACQATYAAAEFADIA9AE3AAABBgA8AFgCOAADAQcARgC8AjkAAAEIAFAAIAM6AAABCQBaAIQDOwAAAQoAZADoAzwAAA==";
+//
+	//RM_LOG2("STRLEN IS", strlen(encodedData));
+    //// Post data to website
+    //uint16_t statuscode;
+    //int16_t length;
+    //char url[29] = "http://cars.khuddam.org.uk/r";
+	//url[28]=0; //end
 
     Serial.println(F("****"));
-    if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) encodedData,
-								strlen(encodedData), &statuscode, (uint16_t *)&length)) {
-									  
-	    Serial.println("Failed!");
-    }
-    while (length > 0) {
-	    while (fona.available()) {
-		    char c = fona.read();
-
-			loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
-			UDR0 = c;
-
-		    length--;
-		    if (! length)
-				
-				break;
-	    }
-    }
-    fona.HTTP_POST_end();
+	
+	//Malloc as the data will be sent later on when gsm connection made
+	_mockData = (SensorData*)malloc(sizeof(SensorData)*2);
+	writeMockSD(_mockData, 0);
+	writeMockSD(_mockData+1, 1);
+	
+	Serial.println(F("2 Sensor-Datas going for transmission:"));
+	Helpers::printSensorData(_mockData);
+	Helpers::printSensorData(_mockData+1);
+	
+	mem->mockSensorData = _mockData;
+	mem->numMockSensorData = 2;
+	
+    //if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) encodedData,
+								//strlen(encodedData), &statuscode, (uint16_t *)&length)) {
+									  //
+	    //Serial.println("Failed!");
+    //}
+    //while (length > 0) {
+	    //while (fona.available()) {
+		    //char c = fona.read();
+//
+			//loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+			//UDR0 = c;
+//
+		    //length--;
+		    //if (!length)
+				//break;
+	    //}
+    //}
+    //fona.HTTP_POST_end();
 		
 		
 		
 		
 			
-	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended GSM Test Complete~~~~~~~~~~~~~~~~"));
 	
 #else
 	RM_LOGLN(F("*** FAIL EGT ***")); //Sync Broken - inclusion of code should be sync'd with flag

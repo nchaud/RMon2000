@@ -7,6 +7,8 @@ class RmMemManager
 {
 //variables
 public:
+	SensorData* mockSensorData;
+	uint8_t numMockSensorData;
 protected:
 private:
 	boolean _isMock;

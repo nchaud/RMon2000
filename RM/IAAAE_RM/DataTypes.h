@@ -44,7 +44,8 @@
 #define PIN_CURRENT A3
 
 //Logic constants
-#define GPRS_MAX_ENABLE_TIME 60	//Max time in seconds to try to enable GPRS
+#define GPRS_MAX_ENABLE_TIME 60 //Max time in seconds to try to enable GPRS
+#define GPRS_ENABLE_INTERVAL 20  //Must be a factor of GPRS_MAX_ENABLE_TIME 
 
 //Error constants
 #define ERR_GPS_NO_FIX 10
@@ -64,9 +65,10 @@ enum MEM_SLOT_TYPE : uint8_t {
 
 /* What the system should do on this start-up */
 enum SYS_BEHAVIOUR : uint8_t {
-	DoNothing	 = 0,
-	TakeReadings = 1 << 0,
-	SendData	 = 1 << 1
+	DoNothing		= 0,
+	TakeReadings	= 1 << 0,
+	SendData		= 1 << 1,
+	ExtendedGsmTest	= 1 << 2
 };
 
 enum SYS_STATE {
@@ -306,8 +308,8 @@ struct SensorData {
 	
 	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
 	uint16_t battVoltage	= 0;
-	uint16_t current		= 0;
 	uint16_t pVVoltage		= 0;
+	uint16_t current		= 0;
 	uint16_t temperature	= 0;
 	uint8_t  errorChar		= 0;/* TODO: uint16_32 for bitwise errs?*/ /* not unsigned else will get treated like int by string ctor */
 	//bool           HasBeenSent	= false;

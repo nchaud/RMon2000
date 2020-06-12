@@ -591,46 +591,9 @@ boolean Adafruit_FONA::enableGPSNMEA(uint8_t i) {
 
 
 /********* GPRS **********************************************************/
-
-
-//FONA_STATUS_GPRS_INIT Adafruit_FONA::enableGPRS(boolean onoff) {
-	//
-	//FONA_STATUS_GPRS_INIT res = this->internalEnableGPRS(onoff);
-	//
-	////Return if successful
-	//if (!IS_ERR_FSGI(res))
-		//return res;
-	//
-	////If it's to turn off, just try once as not critical to get this right
-	//if (!onoff)
-		//return res;
-		//
-	////To turn on, try again after some time, twice
-	//DEBUG_PRINTLN(F("Failed to enable GPRS, retrying after 10s delay...."));
-	//delay(10*1000);
-	//
-	//res = this->internalEnableGPRS(onoff);
-	//if (!IS_ERR_FSGI(res))
-		//return res;
-	//
-	//DEBUG_PRINTLN(F("Failed to enable GPRS, retrying after 60s delay again...."));
-	//delay(60*1000);		//TODO: DO DELAYS HERE or in loop() ?!
-	//
-	//res = this->internalEnableGPRS(onoff);
-	//return res;
-//}
-
 FONA_STATUS_GPRS_INIT Adafruit_FONA::enableGPRS(boolean onoff) {
 
   FONA_STATUS_GPRS_INIT ret = FONA_STATUS_GPRS_INIT::SUCCESS_FSGI;
-  
-  
-  
-  //for testing can put this in
-  //return FONA_STATUS_GPRS_INIT::ERR_CGATT_ATTACH;
-  
-  
-  
   
   if (onoff) {
 	  

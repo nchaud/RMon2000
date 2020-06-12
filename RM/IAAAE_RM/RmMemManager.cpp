@@ -335,10 +335,13 @@ void RmMemManager::runExtendedDumpOutput() {
 	RM_LOG(F("*** FAIL PRINT ***")); //Sync Broken - inclusion of code should be sync'd with flag
 #endif
 }
-
+ 
 /* Returns the number of readings read */
 unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
 										  unsigned long* loadedUpTo) {
+
+	if (mockSensorData != NULL)
+		memcpy(buffer, mockSensorData, sizeof(SensorData)*numMockSensorData);
 
 	return 1;
 	
