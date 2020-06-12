@@ -24,6 +24,16 @@ void Helpers::printRSSI(FONA_GET_RSSI* rssi) {
 	RM_LOGLN(rssi->rssiErr);
 }
 
+boolean Helpers::isSignalGood(FONA_GET_RSSI* rssi){
+	
+	boolean fineToSend = 
+		rssi->rssiErr == 0 &&
+		rssi->rssi != 99 && //Not known/Undetectable.
+		rssi->rssi >= 7;	//@7 RSSI [=100 dBm] (2->30 RSSI = -110dBm -> -54dBm)
+		
+	return fineToSend;
+}
+
 void Helpers::printByteArray(uint8_t* sd, uint16_t length) {
 	
 	for(uint16_t t=0 ; t<length ; t++) {

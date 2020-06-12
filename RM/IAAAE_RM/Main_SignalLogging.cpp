@@ -135,9 +135,11 @@ void setup() {
 	}
 }
 
-uint8_t _fonaStatusInit=0;// _isFonaInitialised = 0; //0=>No, 1=>yes for basic, 2=>for data send
-uint8_t _gprsStatusInit=0;//
+uint8_t _fonaStatusInit=0;
+uint8_t _gprsStatusInit=0;
 uint16_t _initFonaLoopCount = 0;
+uint16_t _gprsSignalLoopCount = 0;
+FONA_GET_RSSI _rssiStatus;
 Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 
 	//boolean isFirstLoop = _initFonaLoopCount == 0;
@@ -180,15 +182,16 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 		}
 		else if (_initFonaLoopCount > GPRS_MAX_ENABLE_TIME) {
 			
-			//No-op, we've already calculated the _gprsStatusInit value
+			//Just for safety - we should've already calculated the _gprsStatusInit value
+			RM_LOGLN(F("__GPRS_OVER_MAX_SHOULD_NEVER_OCCUR__"));
 		}
 		else if (_initFonaLoopCount % GPRS_ENABLE_INTERVAL != 0) {
 			
 			//Try to enable it every x seconds for a period
 			*isComplete = false;
 		}
-		else
-		{
+		else {
+			
 			RM_LOGLN(F("Attempting to enable GPRS..."));
 		
 			FONA_STATUS_GPRS_INIT gprsRet = __fona.enableGPRS(true);
@@ -199,12 +202,12 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 				//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 			
 				RM_LOG2(F("Error initialising GPRS..."), gprsRet);
-				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME){
+				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME) {
 				
 					*isComplete = false;
 					RM_LOGLN(F("Will try to enable GPRS again shortly"));
 				}
-				else{
+				else {
 				
 					//We've hit the last interval of trying, so all done trying
 					_gprsStatusInit = gprsRet;
@@ -213,16 +216,49 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 			}
 			else {
 			
-			//Success, we're done initialising GPRS
+				//Success, we're done initialising GPRS
 				_gprsStatusInit = gprsRet;
 				RM_LOGLN(F("GPRS initialised successfully !"));
 			}
 		}
 		
 		if (_gprsStatusInit != 0) {
-			if (IS_ERR_FSGI(_gprsStatusInit))
+			if (IS_ERR_FSGI(_gprsStatusInit)) {
 				return NULL;
-			//else return valid instance
+			}
+			else { //Initialised successfully, now ensure good signal
+				
+				if (Helpers::isSignalGood(&_rssiStatus)) {
+					
+					//Previously checked - it's fine
+				}
+				else if (_gprsSignalLoopCount++ > GPRS_MAX_SIGNAL_WAIT_TIME) {
+					
+					//Wait-time over for signal, try sending regardless of signal value
+					RM_LOGLN(F("\t (Good-RSSI Wait Timed Out - will continue regardless now)"));
+				}
+				else {
+					FONA_GET_RSSI rssi = __fona.getRSSI();
+
+					RM_LOG(F("Checking Good-RSSI - currently:"));
+					Helpers::printRSSI(&rssi);					
+					
+					if (Helpers::isSignalGood(&rssi)){
+						
+						//All done, signal is good now
+						RM_LOGLN(F("\t (Good-RSSI - successfull, all done)"));
+						_rssiStatus = rssi;
+					}
+					else{
+						
+						RM_LOGLN(F("\t (Good-RSSI Failed - will check again after interval)"));
+						*isComplete = false;
+					}
+				}
+				
+				//Even if we have a bad signal or it times out,
+				//	return __fona so they can try sending data anyway
+			}
 		}
 		else {
 			return NULL;
@@ -305,7 +341,7 @@ boolean takeReadings() {
 	return true;
 }
 
-Adafruit_FONA* _sendDataFona = NULL;
+//Adafruit_FONA* _sendDataFona = NULL;
 uint16_t _sendDataLoopCount = 0;
 boolean sendData() {
 	
@@ -319,62 +355,65 @@ boolean sendData() {
 		RM_LOGLN(F("Initialising Fona to send data"));
 	
 	boolean isComplete;
-	_sendDataFona = ensureFonaInitialised(true, &isComplete);
+	Adafruit_FONA* sendDataFona = ensureFonaInitialised(true, &isComplete);
 	
 	if (!isComplete) {
 		RM_LOGLN(F("\t(Fona Init Pending...)"));
 		return false; //Still waiting to initialise
 	}
 		
-	if (_sendDataFona == NULL) {
+	if (sendDataFona == NULL) {
 		RM_LOGLN(F("\t(Fona Init ERROR)"));
 		return true; //Error initialising
 	}
-		
-		
-	SensorData sData[2]; //TODO: HARDCODED
-	unsigned long loadedTo;
-	mem.loadSensorData((SensorData*)&sData, 2, &loadedTo);
 	
-	RM_LOGLN(F("FOUND..."));
-	Helpers::printSensorData(sData);
-	Helpers::printSensorData(sData+1);
-	
-	GsmPayload payload;
-	payload.setModuleId(999);
-	payload.setBootNumber(33);
-	payload.setSensorData((SensorData*)&sData, 2);
-	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(2);
-
-	char encodedData[encodedSz];
-	payload.createEncodedPayload(encodedData);
-
-	RM_LOGLN(F("Encoded data created and ready for send:"));
-	RM_LOGLN(encodedData);
-
-	//RM_LOGLN(F("Now waiting for a while before checking signal"));
-	
-	//Wait to get signal - may already be over the threshold when doing initialisation
-	if (_sendDataLoopCount >= 60) {
+	//RM_LOGLN(F("\t(Checking RSSI good enough OR Signal-lock wait time expired)"));
+	//
+	//FONA_GET_RSSI rssi = sendDataFona->getRSSI();
+	//RM_LOG(F("\t(Curr RSSI:)"));
+	//Helpers::printRSSI(rssi);
+	//
+	//boolean fineToSend = rssi.rssiErr == 0 &&
+						 //rssi.rssi != 99 && //Not known/Undetectable.
+						 //rssi.rssi >= 7;	//@7 RSSI [=100 dBm] (2->30 RSSI = -110dBm -> -54dBm)
+			
+	//Wait to get signal 
+	//	- may already be over the threshold when doing initialisation so kick it off if so
+	//	OR should we just check RSSI and send if it's ok?
+	if (true) { // _sendDataLoopCount >= GPRS_MAX_SIGNAL_WAIT_TIME) {
 		
 		//Get RSSI - store? check and/or wait another minute? not?
-		FONA_GET_RSSI rssi = _sendDataFona->getRSSI();
-		Helpers::printRSSI(&rssi);
+		FONA_GET_RSSI rssi = sendDataFona->getRSSI();
+		//Helpers::printRSSI(&rssi);
 		
-		
-		//SensorData* sd;
-//
-		//sd->battVoltage = 10;
-		//sd->pVVoltage = 25;
-		//sd->current = 13;
-		//sd->temperature = 43;
-		
+		SensorData sData[2]; //TODO: HARDCODED
+		unsigned long loadedTo;
+		mem.loadSensorData((SensorData*)&sData, 2, &loadedTo);
+
+		GsmPayload payload;
+		payload.setModuleId(999);
+		payload.setBootNumber(33);
+		payload.setSensorData((SensorData*)&sData, 2);
+		payload.setRSSI(rssi);
+		uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(2);
+
+		char encodedData[encodedSz];
+		payload.createEncodedPayload(encodedData);
+
+		RM_LOGLN(F("Encoded data created and ready for send:"));
+		RM_LOGLN(encodedData);
+
+		uint16_t statuscode;
+		sendDataFona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
+
 		//If all done - reset (even though board will be reset - but for tests)
 		_sendDataLoopCount = 0;
-		_sendDataFona = NULL;
+		
+		return true;
 	}
-	
-	return true;
+	else{
+		return false;
+	}
 }
 
 //Loop-scoped variables

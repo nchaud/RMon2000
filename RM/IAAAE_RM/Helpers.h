@@ -10,6 +10,8 @@ public:
 	static void printRSSI(FONA_GET_RSSI* rssi);
 	static void printSensorData(SensorData* sd);
 	static void printByteArray(uint8_t* sd, uint16_t length);
+
+	static boolean isSignalGood(FONA_GET_RSSI* rssi);
 		
 	static void fillArray(uint8_t* ptr, uint16_t sz, uint8_t val);
 		

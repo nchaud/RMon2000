@@ -111,19 +111,8 @@ class Adafruit_FONA : public FONAStreamType {
   boolean getGPS(float *lat, float *lon, float *speed_kph, float *heading, float *altitude, char *date);
   boolean enableGPSNMEA(uint8_t nmea);
 
-  // HTTP low level interface (maps directly to SIM800 commands).
-  boolean HTTP_init();
-  boolean HTTP_term();
-  void HTTP_para_start(FONAFlashStringPtr parameter, boolean quoted = true);
-  boolean HTTP_para_end(boolean quoted = true);
-  boolean HTTP_para(FONAFlashStringPtr parameter, const char *value);
-  boolean HTTP_para(FONAFlashStringPtr parameter, FONAFlashStringPtr value);
-  boolean HTTP_para(FONAFlashStringPtr parameter, int32_t value);
-  boolean HTTP_para(FONAFlashStringPtr parameter, const String value);
-  boolean HTTP_data(uint32_t size, uint32_t maxTime=10000);
-  boolean HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
-  boolean HTTP_readall(uint16_t *datalen);
-  boolean HTTP_ssl(boolean onoff);
+  // Send data over GPRS
+  void sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode);
 
   // HTTP high level interface (easier to use, less flexible).
   boolean HTTP_GET_start(char *url, uint16_t *status, uint16_t *datalen);
@@ -178,6 +167,18 @@ class Adafruit_FONA : public FONAStreamType {
   boolean sendCheckReply(FONAFlashStringPtr prefix, int32_t suffix, int32_t suffix2, FONAFlashStringPtr reply, uint16_t timeout = FONA_DEFAULT_TIMEOUT_MS);
   boolean sendCheckReplyQuoted(FONAFlashStringPtr prefix, FONAFlashStringPtr suffix, FONAFlashStringPtr reply, uint16_t timeout = FONA_DEFAULT_TIMEOUT_MS);
 
+	boolean HTTP_init();
+	boolean HTTP_term();
+	void HTTP_para_start(FONAFlashStringPtr parameter, boolean quoted = true);
+	boolean HTTP_para_end(boolean quoted = true);
+	boolean HTTP_para(FONAFlashStringPtr parameter, const char *value);
+	boolean HTTP_para(FONAFlashStringPtr parameter, FONAFlashStringPtr value);
+	boolean HTTP_para(FONAFlashStringPtr parameter, int32_t value);
+	boolean HTTP_para(FONAFlashStringPtr parameter, const String value);
+	boolean HTTP_data(uint32_t size, uint32_t maxTime=10000);
+	boolean HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
+	boolean HTTP_readall(uint16_t *datalen);
+	boolean HTTP_ssl(boolean onoff);
 
   boolean parseReply(FONAFlashStringPtr toreply,
           uint16_t *v, char divider  = ',', uint8_t index=0);

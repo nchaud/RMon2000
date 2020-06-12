@@ -329,30 +329,6 @@ void ExtendedTests::startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem)
 	mem->mockSensorData = _mockData;
 	mem->numMockSensorData = 2;
 	
-    //if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) encodedData,
-								//strlen(encodedData), &statuscode, (uint16_t *)&length)) {
-									  //
-	    //Serial.println("Failed!");
-    //}
-    //while (length > 0) {
-	    //while (fona.available()) {
-		    //char c = fona.read();
-//
-			//loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
-			//UDR0 = c;
-//
-		    //length--;
-		    //if (!length)
-				//break;
-	    //}
-    //}
-    //fona.HTTP_POST_end();
-		
-		
-		
-		
-			
-	
 #else
 	RM_LOGLN(F("*** FAIL EGT ***")); //Sync Broken - inclusion of code should be sync'd with flag
 #endif

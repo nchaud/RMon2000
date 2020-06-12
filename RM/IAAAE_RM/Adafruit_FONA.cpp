@@ -685,6 +685,31 @@ FONA_STATUS_GPRS_INIT Adafruit_FONA::enableGPRS(boolean onoff) {
   return ret;
 }
 
+void Adafruit_FONA::sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode){
+	
+	uint16_t responseLength;
+	char url[] = "http://iaaae.khuddam.org.uk/add";
+	if (!this->HTTP_POST_start((char*)url, F("text/plain"), data,
+		length, statuscode, &responseLength)) {
+	
+		Serial.println("Failed!");
+		return;
+	}
+	
+	while (length > 0) {
+		while (this->available()) {
+			char c = this->read();
+	
+			loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+			UDR0 = c;
+	
+			length--;
+			if (!length)
+				break;
+		}
+	}
+	this->HTTP_POST_end();
+}
 
 uint8_t Adafruit_FONA::GPRSstate(void) {
   uint16_t state;
@@ -965,7 +990,7 @@ boolean Adafruit_FONA::HTTP_setup(char *url) {
   }
   
   
-  //TODO: BREAK and BREAKEND !!
+  //TODO: Use BREAK and BREAKEND and TIMEOUT, 2 useful parameters in SIMCOM manual
   
   
 
