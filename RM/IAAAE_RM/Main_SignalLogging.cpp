@@ -156,7 +156,8 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 		
 		//TODO: TEST ! with both single-digit module IDs and double digit
 		uint8_t moduleId = mem.getModuleId();
-		String userAgentStr = "IAAAE_RMonV3_"+moduleId;
+		String userAgentStr = "IAAAE_RMonV3_";
+		userAgentStr += moduleId;
 		__fona.setUserAgent(userAgentStr);
 	}
 
@@ -180,11 +181,6 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 			
 			//No-op, just return what was calculated the last time
 		}
-		else if (_initFonaLoopCount > GPRS_MAX_ENABLE_TIME) {
-			
-			//Just for safety - we should've already calculated the _gprsStatusInit value
-			RM_LOGLN(F("__GPRS_OVER_MAX_SHOULD_NEVER_OCCUR__"));
-		}
 		else if (_initFonaLoopCount % GPRS_ENABLE_INTERVAL != 0) {
 			
 			//Try to enable it every x seconds for a period
@@ -201,7 +197,7 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 				//TODO: Log this
 				//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 			
-				RM_LOG2(F("Error initialising GPRS..."), gprsRet);
+				RM_LOG2(F("Error initialising GPRS"), gprsRet);
 				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME) {
 				
 					*isComplete = false;
@@ -228,36 +224,47 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 			}
 			else { //Initialised successfully, now ensure good signal
 				
+				++_gprsSignalLoopCount;
+				
 				if (Helpers::isSignalGood(&_rssiStatus)) {
 					
 					//Previously checked - it's fine
 				}
-				else if (_gprsSignalLoopCount++ > GPRS_MAX_SIGNAL_WAIT_TIME) {
-					
-					//Wait-time over for signal, try sending regardless of signal value
-					RM_LOGLN(F("\t (Good-RSSI Wait Timed Out - will continue regardless now)"));
+				else if (_gprsSignalLoopCount % GPRS_SIGNAL_CHECK_INTERVAL != 0) {
+			
+					//Try to enable it every x seconds for a period
+					*isComplete = false;
 				}
 				else {
-					FONA_GET_RSSI rssi = __fona.getRSSI();
 
-					RM_LOG(F("Checking Good-RSSI - currently:"));
+					RM_LOG(F("Checking RSSI - currently:"));
+					FONA_GET_RSSI rssi = __fona.getRSSI();
 					Helpers::printRSSI(&rssi);					
 					
-					if (Helpers::isSignalGood(&rssi)){
+					if (!Helpers::isSignalGood(&rssi)){
+						
+						if (_gprsSignalLoopCount < GPRS_MAX_SIGNAL_WAIT_TIME) {
+							
+							*isComplete = false;
+							RM_LOGLN(F("\t (Bad-RSSI - will check again after interval)"));
+						}						
+						else{
+							
+							//Wait-time over for signal, continue regardless of signal value, it may work
+							RM_LOGLN(F("\t (Waiting For Good-RSSI Timed Out - will continue now)"));
+							_rssiStatus = rssi;
+						}
+					}
+					else{
 						
 						//All done, signal is good now
 						RM_LOGLN(F("\t (Good-RSSI - successfull, all done)"));
 						_rssiStatus = rssi;
 					}
-					else{
-						
-						RM_LOGLN(F("\t (Good-RSSI Failed - will check again after interval)"));
-						*isComplete = false;
-					}
 				}
 				
-				//Even if we have a bad signal or it times out,
-				//	return __fona so they can try sending data anyway
+				//Even if we have a bad signal at timeout,
+				//	we let the code flow to the end and return __fona so they can try sending data anyway
 			}
 		}
 		else {

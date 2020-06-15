@@ -299,7 +299,7 @@ void ExtendedTests::startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem)
 
 	//delay(5000);
 	
-	RM_LOGLN(F("TEST: Checking rssi..."));
+	//RM_LOGLN(F("TEST: Checking rssi..."));
 	
 	//FONA_GET_RSSI result = fona.getRSSI();
 	//Helpers::printRSSI(&result);

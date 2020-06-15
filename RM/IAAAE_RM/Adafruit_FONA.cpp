@@ -11,8 +11,7 @@ Adafruit_FONA::Adafruit_FONA(int8_t rst, boolean isMock)
   apnusername = 0;
   apnpassword = 0;
   mySerial = 0;
-  httpsredirect = true;
-  useragent = String("IAAAE_RMonV3");
+  httpsredirect = false; //Doesn't work - AT+HTTPSSL always gives an error
   ok_reply = F("OK");
 }
 

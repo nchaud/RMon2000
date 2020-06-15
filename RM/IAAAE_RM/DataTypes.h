@@ -45,8 +45,9 @@
 
 //Logic constants
 #define GPRS_MAX_ENABLE_TIME		60  //Max time in seconds to try to enable GPRS
-#define GPRS_ENABLE_INTERVAL		20  //Must be a factor of GPRS_MAX_ENABLE_TIME
+#define GPRS_ENABLE_INTERVAL		10  //Must be a factor of GPRS_MAX_ENABLE_TIME
 #define GPRS_MAX_SIGNAL_WAIT_TIME	300 //Wait this long to get a fix on signal
+#define GPRS_SIGNAL_CHECK_INTERVAL	10  //Must be a factory of GPRS_MAX_SIGNAL_WAIT_TIME
 
 //Error constants
 #define ERR_GPS_NO_FIX 10
