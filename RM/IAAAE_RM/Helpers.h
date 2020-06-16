@@ -14,7 +14,7 @@ public:
 	static boolean isSignalGood(FONA_GET_RSSI* rssi);
 		
 	static void fillArray(uint8_t* ptr, uint16_t sz, uint8_t val);
-	static int freeMemory();
+	static int16_t freeMemory();
 		
 	static int16_t base64_encode(char *output, uint8_t *input, int16_t inputLen);
 	static int16_t base64_decode(uint8_t *output, char *input, int16_t inputLen);
@@ -22,7 +22,7 @@ public:
 	static int16_t base64_dec_len(char* input, int16_t inputLen);
 	
 private:
-	static int freeListSize();
+	static int16_t freeListSize();
 };
 
 //byte writeCharArrWithPad(char* buffer, const char* value, byte padLength);

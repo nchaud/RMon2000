@@ -87,7 +87,7 @@ struct __freelist {
   struct __freelist *nx;
 };
 extern struct __freelist *__flp;
-int Helpers::freeListSize() {
+int16_t Helpers::freeListSize() {
   struct __freelist* current;
   int total = 0;
   for (current = __flp; current; current = current->nx) {
@@ -96,7 +96,7 @@ int Helpers::freeListSize() {
   }
   return total;
 }
-int Helpers::freeMemory() {
+int16_t Helpers::freeMemory() {
   int free_memory;
   if ((int)__brkval == 0) {
     free_memory = ((int)&free_memory) - ((int)&__heap_start);

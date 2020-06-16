@@ -99,7 +99,7 @@ FONA_STATUS_INIT Adafruit_FONA::begin(uint8_t tx, uint8_t rx) { //Stream &port) 
   
 	  if (prog_char_strstr(replybuffer, (prog_char *)F("SIM808 R14")) == 0) {
     
-		return FONA_STATUS_INIT::ERR_FONA_SIM_MODULE;
+		ret = FONA_STATUS_INIT::ERR_FONA_SIM_MODULE;
 	  }
   }
 
@@ -209,7 +209,6 @@ FONA_GET_RSSI Adafruit_FONA::getRSSI(void) {
   //Both are <= 99 so can cast&store in 1 byte fields
   reply.rssi = rssi;
   reply.ber = ber;
-  
   reply.netReg = (FONA_GET_NETREG)netReg;
   
   return reply;
@@ -684,15 +683,19 @@ FONA_STATUS_GPRS_INIT Adafruit_FONA::enableGPRS(boolean onoff) {
   return ret;
 }
 
-void Adafruit_FONA::sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode){
+FONA_STATUS_GPRS_SEND Adafruit_FONA::sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode){
 	
 	uint16_t responseLength;
 	char url[] = "http://iaaae.khuddam.org.uk/add";
-	if (!this->HTTP_POST_start((char*)url, F("text/plain"), data,
-		length, statuscode, &responseLength)) {
 	
-		Serial.println("Failed!");
-		return;
+	FONA_STATUS_GPRS_SEND status = 
+		this->HTTP_POST_start((char*)url, F("text/plain"), data,
+							length, statuscode, &responseLength);
+	if (IS_ERR_FSGS(status))
+	{
+		DEBUG_PRINT(F("Failed to send data: "));
+		DEBUG_PRINTLN(status);
+		return status;
 	}
 	
 	while (length > 0) {
@@ -708,6 +711,8 @@ void Adafruit_FONA::sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* s
 		}
 	}
 	this->HTTP_POST_end();
+	
+	return status;
 }
 
 uint8_t Adafruit_FONA::GPRSstate(void) {
@@ -840,15 +845,14 @@ boolean Adafruit_FONA::HTTP_para(FONAFlashStringPtr parameter,
 }
 
 boolean Adafruit_FONA::HTTP_data(uint32_t size, uint32_t maxTime) {
+	
   flushInput();
-
 
   DEBUG_PRINT(F("\t---> "));
   DEBUG_PRINT(F("AT+HTTPDATA="));
   DEBUG_PRINT(size);
   DEBUG_PRINT(',');
   DEBUG_PRINTLN(maxTime);
-
 
   mySerial->print(F("AT+HTTPDATA="));
   mySerial->print(size);
@@ -858,23 +862,25 @@ boolean Adafruit_FONA::HTTP_data(uint32_t size, uint32_t maxTime) {
   return expectReply(F("DOWNLOAD"));
 }
 
-boolean Adafruit_FONA::HTTP_action(uint8_t method, uint16_t *status,
+FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_action(uint8_t method, uint16_t *status,
                                    uint16_t *datalen, int32_t timeout) {
   // Send request.
   if (! sendCheckReply(F("AT+HTTPACTION="), method, ok_reply))
-    return false;
+	return FONA_STATUS_GPRS_SEND::ERR_ACTION_EXEC_SEND;
 
   // Parse response status and size.
   readline(timeout);
+  
   if (! parseReply(F("+HTTPACTION:"), status, ',', 1))
-    return false;
+	return FONA_STATUS_GPRS_SEND::ERR_ACTION_GETSTATUS;
   if (! parseReply(F("+HTTPACTION:"), datalen, ',', 2))
-    return false;
+	return FONA_STATUS_GPRS_SEND::ERR_ACTION_GETLENGTH;
 
-  return true;
+  return (FONA_STATUS_GPRS_SEND)0;
 }
 
 boolean Adafruit_FONA::HTTP_readall(uint16_t *datalen) {
+	
   getReply(F("AT+HTTPREAD"));
   if (! parseReply(F("+HTTPREAD:"), datalen, ',', 0))
     return false;
@@ -888,56 +894,34 @@ boolean Adafruit_FONA::HTTP_ssl(boolean onoff) {
 
 /********* HTTP HIGH LEVEL FUNCTIONS ***************************/
 
-boolean Adafruit_FONA::HTTP_GET_start(char *url,
-              uint16_t *status, uint16_t *datalen){
-				  
-  if (! HTTP_setup(url))
-    return false;
-
-  // HTTP GET
-  if (! HTTP_action(FONA_HTTP_GET, status, datalen, 30000))
-    return false;
-
-  DEBUG_PRINT(F("Status: "));
-  DEBUG_PRINTLN(*status);
-  DEBUG_PRINT(F("Len: "));
-  DEBUG_PRINTLN(*datalen);
-
-  // HTTP response data
-  if (! HTTP_readall(datalen))
-    return false;
-
-  return true;
-}
-
-void Adafruit_FONA::HTTP_GET_end(void) {
-  HTTP_term();
-}
-
-boolean Adafruit_FONA::HTTP_POST_start(char *url,
+FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_POST_start(char *url,
               FONAFlashStringPtr contenttype,
               const uint8_t *postdata, uint16_t postdatalen,
               uint16_t *status, uint16_t *datalen){
-				  
-  if (! HTTP_setup(url))
-    return false;
 
-  if (! HTTP_para(F("CONTENT"), contenttype)) {
-    return false;
-  }
+  FONA_STATUS_GPRS_SEND ret = HTTP_setup(url);
+  
+  if (IS_ERR_FSGS(ret))
+	return ret;
+
+  if (! HTTP_para(F("CONTENT"), contenttype)) //Optional
+	ret = FSGS_OR(ret, FONA_STATUS_GPRS_SEND::WARN_CONTENT);
 
   // HTTP POST data
-  if (! HTTP_data(postdatalen, 10000))
-    return false;
+  uint32_t timeoutInMs = GPRS_MODULE_SEND_TIMEOUT * 1000;
+  if (! HTTP_data(postdatalen, timeoutInMs))
+	return FSGS_OR(ret, FONA_STATUS_GPRS_SEND::ERR_SET_DATA_PARAMS);
 	
   mySerial->write(postdata, postdatalen);
   
   if (! expectReply(ok_reply))
-    return false;
+	  return FSGS_OR(ret, FONA_STATUS_GPRS_SEND::ERR_SET_DATA);
 
   // HTTP POST
-  if (! HTTP_action(FONA_HTTP_POST, status, datalen))
-    return false;
+  FONA_STATUS_GPRS_SEND exec = HTTP_action(FONA_HTTP_POST, status, datalen);
+  
+  if (IS_ERR_FSGS(exec))
+	  return FSGS_OR(ret, exec);
 
   DEBUG_PRINT(F("Status: "));
   DEBUG_PRINTLN(*status);
@@ -946,9 +930,10 @@ boolean Adafruit_FONA::HTTP_POST_start(char *url,
 
   // HTTP response data
   if (! HTTP_readall(datalen))
-    return false;
+    ret = FSGS_OR(ret, FONA_STATUS_GPRS_SEND::WARN_READRESPONSE);
 
-  return true;
+  ret = FSGS_OR(ret, FONA_STATUS_GPRS_SEND::SUCCESS_FSGS);
+  return ret;
 }
 
 void Adafruit_FONA::HTTP_POST_end(void) {
@@ -959,41 +944,29 @@ void Adafruit_FONA::setUserAgent(String useragent) {
   this->useragent = useragent;
 }
 
-void Adafruit_FONA::setHTTPSRedirect(boolean onoff) {
-  httpsredirect = onoff;
-}
-
 /********* HTTP HELPERS ****************************************/
 
-boolean Adafruit_FONA::HTTP_setup(char *url) {
+FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_setup(char *url) {
+	
   // Handle any pending
   HTTP_term();
 
   // Initialize and set parameters
   if (! HTTP_init())
-    return false;
+    return FONA_STATUS_GPRS_SEND::ERR_HTTP_INIT;
   if (! HTTP_para(F("CID"), 1))
-    return false;
+    return FONA_STATUS_GPRS_SEND::ERR_CID; //Mandatory
+    if (! HTTP_para(F("URL"), url))
+    return FONA_STATUS_GPRS_SEND::ERR_URL; //Mandatory
   if (! HTTP_para(F("UA"), useragent))
-    return false;
-  if (! HTTP_para(F("URL"), url))
-    return false;
+    return FONA_STATUS_GPRS_SEND::WARN_UA;
 
-  // HTTPS redirect
-  if (httpsredirect) {
-    if (! HTTP_para(F("REDIR"),1))
-      return false; //Make it just a warning
-
-    if (! HTTP_ssl(true))
-      return false;
-  }
-  
   
   //TODO: Use BREAK and BREAKEND and TIMEOUT, 2 useful parameters in SIMCOM manual
   
   
 
-  return true;
+  return (FONA_STATUS_GPRS_SEND)0;
 }
 
 /********* HELPERS *********************************************/

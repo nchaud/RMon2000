@@ -112,17 +112,14 @@ class Adafruit_FONA : public FONAStreamType {
   boolean enableGPSNMEA(uint8_t nmea);
 
   // Send data over GPRS
-  void sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode);
+  FONA_STATUS_GPRS_SEND sendDataOverGprs(uint8_t* data, uint16_t length, uint16_t* statuscode);
 
   // HTTP high level interface (easier to use, less flexible).
   boolean HTTP_GET_start(char *url, uint16_t *status, uint16_t *datalen);
   void HTTP_GET_end(void);
-  boolean HTTP_POST_start(char *url, FONAFlashStringPtr contenttype, const uint8_t *postdata, uint16_t postdatalen,  uint16_t *status, uint16_t *datalen);
+  FONA_STATUS_GPRS_SEND HTTP_POST_start(char *url, FONAFlashStringPtr contenttype, const uint8_t *postdata, uint16_t postdatalen,  uint16_t *status, uint16_t *datalen);
   void HTTP_POST_end(void);
   void setUserAgent(String useragent);
-
-  // HTTPS
-  void setHTTPSRedirect(boolean onoff);
 
   // PWM (buzzer)
   boolean setPWM(uint16_t period, uint8_t duty = 50);
@@ -148,7 +145,7 @@ class Adafruit_FONA : public FONAStreamType {
   FONAFlashStringPtr ok_reply;
 
   // HTTP helpers
-  boolean HTTP_setup(char *url);
+  FONA_STATUS_GPRS_SEND HTTP_setup(char *url);
   
   //FONA_STATUS_GPRS_INIT Adafruit_FONA::internalEnableGPRS(boolean onoff);
 
@@ -176,7 +173,7 @@ class Adafruit_FONA : public FONAStreamType {
 	boolean HTTP_para(FONAFlashStringPtr parameter, int32_t value);
 	boolean HTTP_para(FONAFlashStringPtr parameter, const String value);
 	boolean HTTP_data(uint32_t size, uint32_t maxTime=10000);
-	boolean HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
+	FONA_STATUS_GPRS_SEND HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
 	boolean HTTP_readall(uint16_t *datalen);
 	boolean HTTP_ssl(boolean onoff);
 

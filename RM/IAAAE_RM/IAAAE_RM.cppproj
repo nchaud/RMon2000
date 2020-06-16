@@ -318,9 +318,6 @@
     <Compile Include="SensorManager.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sketch_OLD.cpp.OLD">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\libraries\Wire\src\utility\twi.c">
       <SubType>compile</SubType>
     </Compile>
@@ -358,11 +355,6 @@
     <Folder Include="src\libraries\Wire\" />
     <Folder Include="src\libraries\Wire\src\" />
     <Folder Include="src\libraries\Wire\src\utility\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Adafruit_FONA.cpp.original.txt">
-      <SubType>compile</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

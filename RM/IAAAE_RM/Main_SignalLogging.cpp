@@ -137,9 +137,9 @@ void setup() {
 
 uint8_t _fonaStatusInit=0;
 uint8_t _gprsStatusInit=0;
+FONA_GET_RSSI _rssiStatusInit;
 uint16_t _initFonaLoopCount = 0;
 uint16_t _gprsSignalLoopCount = 0;
-FONA_GET_RSSI _rssiStatus;
 Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 
 	//boolean isFirstLoop = _initFonaLoopCount == 0;
@@ -226,7 +226,7 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 				
 				++_gprsSignalLoopCount;
 				
-				if (Helpers::isSignalGood(&_rssiStatus)) {
+				if (Helpers::isSignalGood(&_rssiStatusInit)) {
 					
 					//Previously checked - it's fine
 				}
@@ -252,14 +252,14 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 							
 							//Wait-time over for signal, continue regardless of signal value, it may work
 							RM_LOGLN(F("\t (Waiting For Good-RSSI Timed Out - will continue now)"));
-							_rssiStatus = rssi;
+							_rssiStatusInit = rssi;
 						}
 					}
 					else {
 						
 						//All done, signal is good now
 						RM_LOGLN(F("\t (Good-RSSI - successfull, all done)"));
-						_rssiStatus = rssi;
+						_rssiStatusInit = rssi;
 					}
 				}
 				
@@ -348,19 +348,39 @@ boolean takeReadings() {
 	return true;
 }
 
-void createEncodedData(Adafruit_FONA* fona, char* encodedOutput, uint8_t maxReadings) {
+void createEncodedData(Adafruit_FONA* fona, char* encodedOutput, uint8_t maxReadings, DailyCycleData* cycleData) {
+	
+	//This will likely be peak of stack usage so warn if low memory !
+	int8_t freeRAM = Helpers::freeMemory();
+	int8_t minRAM = (sizeof(SensorData)*maxReadings)
+					+sizeof(FONA_GET_RSSI)
+					+sizeof(GsmPayload)
+					+100; //Buffer
+					
+	if (freeRAM < minRAM)
+		RM_LOG2(F("**** Too little RAM before payload creation ***"), freeRAM);
 	
 	FONA_GET_RSSI rssi = fona->getRSSI();
 	
 	SensorData sData[maxReadings];
 	uint8_t numLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
-
+	
 	GsmPayload payload;
 	payload.setModuleId(999);
 	payload.setBootNumber(33);
 	payload.setSensorData((SensorData*)&sData, numLoaded);
 	payload.setRSSI(rssi);
-	payload.createEncodedPayload(encodedOutput);	
+	payload.createEncodedPayload(encodedOutput);
+	
+	cycleData->BootNo = payload.getBootNumber();
+	cycleData->NoOfReadings = numLoaded;
+	cycleData->RSSI = rssi;
+	
+	uint16_t battPct;
+	if (!fona->getBattPercent(&battPct))
+		cycleData->BattPct = -1;
+	else
+		cycleData->BattPct = battPct;
 }
 
 uint16_t _sendDataLoopCount = 0;
@@ -383,47 +403,48 @@ boolean sendData() {
 		
 	if (sendDataFona == NULL) {
 		RM_LOGLN(F("\t(Fona Init ERROR)"));
+		
+		
+		DailyCycleData errorSendData;
+		errorSendData.GPRSToggleFailure = true;
+		//Save to ROM
+		
+		
+		
 		return true; //Error initialising
 	}
 	
-	if (true) { // _sendDataLoopCount >= GPRS_MAX_SIGNAL_WAIT_TIME) {
-		
-		//Helpers::printRSSI(&rssi);
-		
-		 //TODO: Max number of readings to send vs when eeprom rolls over and start from beginning
-		 //TODO: HARDCODED
+	//TODO: Max number of readings to send vs when eeprom rolls over and start from beginning
 		 
-		uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
-		char encodedData[encodedSz];
+	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
+	char encodedData[encodedSz];
 		
-		RM_LOG2(F("FREE RAM AT START"), Helpers::freeMemory());
-		
-		//Encode in another method to free up RAM on return for the sending (just in case)
-		createEncodedData(sendDataFona, encodedData, GPRS_MAX_READINGS_FOR_SEND);
+	//Encode in another method to free up RAM on return for the sending (just in case)
+	DailyCycleData sendData;
+	createEncodedData(sendDataFona, encodedData, GPRS_MAX_READINGS_FOR_SEND, &sendData);
 
-		RM_LOGLN(F("Encoded data created and ready for send:"));
-		RM_LOGLN(encodedData);
+	RM_LOGLN(F("Encoded data created and ready for send:"));
+	RM_LOGLN(encodedData);
 
-		RM_LOG2(F("FREE RAM BEFORE SEND"), Helpers::freeMemory());
-		
-		uint16_t statuscode;
+	uint16_t statuscode=0;
+	FONA_STATUS_GPRS_SEND status = 
 		sendDataFona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
+	
+	sendData.SendStatus = status;
+	sendData.HTMLStatusCode = statuscode;
 
-		//If all done - reset (even though board will be reset - but for tests)
-		//_sendDataLoopCount = 0;
+	//If all done - reset (even though board will be reset - but for tests)
+	//_sendDataLoopCount = 0;
+		
+	
+		
+		
+	//TODO: Save send-status
 		
 		
 		
-		//TODO: Save send-status
 		
-		
-		
-		
-		return true;
-	}
-	else {
-		return false;
-	}
+	return true;
 }
 
 //Loop-scoped variables

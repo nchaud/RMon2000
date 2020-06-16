@@ -43,12 +43,13 @@
 #define PIN_TEMP A2
 #define PIN_CURRENT A3
 
-//Logic constants
+//Logic constants - all in seconds
 #define GPRS_MAX_ENABLE_TIME		60  //Max time in seconds to try to enable GPRS
 #define GPRS_ENABLE_INTERVAL		10  //Must be a factor of GPRS_MAX_ENABLE_TIME
 #define GPRS_MAX_SIGNAL_WAIT_TIME	300 //Wait this long to get a fix on signal
 #define GPRS_SIGNAL_CHECK_INTERVAL	10  //Must be a factory of GPRS_MAX_SIGNAL_WAIT_TIME
 #define GPRS_MAX_READINGS_FOR_SEND	20  //Max number of readings to send
+#define GPRS_MODULE_SEND_TIMEOUT    120 //120k ms is the module's maximum time allowed to send 
 
 //Error constants
 #define ERR_GPS_NO_FIX 10
@@ -149,12 +150,34 @@ enum FONA_STATUS_GPRS_INIT : uint8_t  {
 		(x != FONA_STATUS_GPRS_INIT::SUCCESS_FSGI && \
 		 x != FONA_STATUS_GPRS_INIT::WARN_CIPSHUT_BEFORE_OPENING)
 
-enum FONA_STATUS_GSM_SEND {
-	
-	INIT_SUCCESS = 1
-};
 
-//Lowest 2 bytes for result code, next 3 bytes for netstat, next byte for error
+
+//Lowest 4 bits for success/error, next 3 bits for warning
+enum FONA_STATUS_GPRS_SEND: uint8_t {
+	
+	//These are all mutually exclusive
+	SUCCESS_FSGS=1,
+	ERR_HTTP_INIT=2,
+	ERR_CID=3,
+	ERR_URL=4,
+	ERR_SET_DATA_PARAMS=5,
+	ERR_SET_DATA=6,
+	ERR_ACTION_EXEC_SEND=7,
+	ERR_ACTION_GETSTATUS=8,
+	ERR_ACTION_GETLENGTH=9,
+	
+	//These can be combined with any of the above
+	WARN_CONTENT = 1 << 4,
+	WARN_READRESPONSE = 1 << 5,
+	WARN_UA = 1 << 6,
+};
+#define IS_ERR_FSGS(x) \
+	((x&B1111) > FONA_STATUS_GPRS_SEND::SUCCESS_FSGS) //Clear warning then check
+#define FSGS_OR(x,y) ((FONA_STATUS_GPRS_SEND)(x | y))
+
+
+
+//Lowest 2 bits for result code, next 3 bits for netstat, next bit for error
 enum FONA_GET_NETREG : uint8_t {
 	RESULT_CODE_0 = 0,
 	RESULT_CODE_1 = 1,
@@ -195,12 +218,6 @@ struct FONA_INIT_RESULT {
 
 		
 };
-
-//struct TransmitReadingsResult{
-	//boolean HasDataToSend=false;
-	//uint16_t GsmResultCode=0;
-	//uint16_t SmsResultCode=0;
-//}
 
 //TODO: Kill below, mixes gps and gsm data
 #ifdef GPS
@@ -258,18 +275,6 @@ struct GpsData{
 	#define RM_LOGLNFMT(x,fmt)
 #endif
 
-
-//struct GsmInfo{
-//
-//
-	////TODO: IS THAT IT?
-	//
-	//
-	//uint8_t errorCode;
-	//uint8_t rssi;
-	//uint8_t networkStatus;
-//};
-
 struct GpsInfo{
 
 	uint8_t errorCode=0; //0 implies no error
@@ -281,12 +286,6 @@ struct GpsInfo{
 	float heading=0;
 	float altitude=0;
 	char date[15]; //Format yyyyMMddHHmmss with \0
-};
-
-struct SingleSession{
-	
-	//GsmInfo gsmInfo;
-	GpsInfo gpsInfo;
 };
 
 /* Stored at start of ROM. */
@@ -318,61 +317,31 @@ struct SensorData {
 	//bool           HasBeenSent	= false;
 };
 
-//Populate a struct with data which will be compacted with Base64 and sent via gprs
-//struct SendViaGprsData {
-//
-	//uint8_t moduleId		= 0;
-	//uint16_t thisBootNumber = 0;
-	//FONA_GET_RSSI rssi;
-	////uint8_t content_flags;
-	//
-	//uint8_t hasGpsInfo		= 0;
-	//GpsInfo* gpsInfo;
-	//
-	//uint8_t numOfReadings	= 0;
-	//SensorData* data;
-	//
-	//SensorData arrData[0]; //Size=0, we don't want pointer as it takes up size
-//};
-
-//What was the result of trying to send via GPRS, incl. error codes. Store in EEPROM.
-struct SendViaGprsResult {
-	
-	uint8_t status;
-};
-
-/* Stored in ROM and attempted to be sent every day along with readings */
+/* Stored in ROM (for later checking) to record what happened when trying to send a day's worth of readings */
 struct DailyCycleData {
 	
 	//TODO: BITWISE OF ALL FAILURE CODE, INCLUDING IN FONA?
 	
+	
+	//TODO: Move this to end of struct so can traverse and find previous X sensor entries?
 	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
+	
+	
+	
 	//TODO: AttemptedSend ?
-	unsigned long BootNo		  = 0;
-	boolean GPRSToggleFailure	  = false;
-	boolean GetBatteryFailure	  = false;
+	int8_t	BattPct				  = 0;	//-1 indicates error fetching
+	uint16_t BootNo				  = 0;
 	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
-	uint16_t GsmMessageLength	  = 0; /* Length of string that was attempted to send */
-	uint16_t GsmFailureCode		  = 0;
-	uint8_t SmsFailureCode		  = 0;
-	uint8_t	BattPct				  = 0;
-	uint8_t NetworkStatus		  = 0;
-	uint8_t RSSI				  = 0;
-	SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
+	
+	boolean GPRSToggleFailure	  = false;
+	
+	uint16_t HTMLStatusCode		  = 0;
+	FONA_STATUS_GPRS_SEND SendStatus;
+	FONA_GET_RSSI RSSI;
+	
+	//uint8_t SmsFailureCode		  = 0;
+	//SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
 	
 };
-
-//typedef struct GsmTransmitData{
-	//
-	//unsigned int NoOfReadings = 0;
-	//unsigned byte* Readings   = NULL;
-	//unsigned int ReadingsLength = 0;
-	//unsigned int ErrorCodes = 0;
-//} GsmTransmitData;
-
-//typedef struct SmsTransmitData{
-//} SmsTransmitData;
-
-
 
 #endif //__DATATYPES_H__
