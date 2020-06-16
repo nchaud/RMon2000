@@ -909,6 +909,15 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_POST_start(char *url,
 
   // HTTP POST data
   uint32_t timeoutInMs = GPRS_MODULE_SEND_TIMEOUT * 1000;
+  
+  
+  
+  
+  DEBUG_PRINT(F("Timeout value: "));
+  DEBUG_PRINTLN(timeoutInMs);
+  
+  
+  
   if (! HTTP_data(postdatalen, timeoutInMs))
 	return FSGS_OR(ret, FONA_STATUS_GPRS_SEND::ERR_SET_DATA_PARAMS);
 	

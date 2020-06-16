@@ -135,24 +135,26 @@ void setup() {
 	}
 }
 
-uint8_t _fonaStatusInit=0;
-uint8_t _gprsStatusInit=0;
-FONA_GET_RSSI _rssiStatusInit;
-uint16_t _initFonaLoopCount = 0;
-uint16_t _gprsSignalLoopCount = 0;
-Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
+INITIALISING_STATE __initState;
+//uint8_t _fonaStatusInit=0;
+//uint8_t _gprsStatusInit=0;
+//FONA_GET_RSSI _rssiStatusInit;
+//uint16_t _initFonaLoopCount = 0;
+//uint16_t _gprsSignalLoopCount = 0;
+INITIALISING_STATE* ensureFonaInitialised(boolean forDataSend) { //, boolean* isComplete) {
 
 	//boolean isFirstLoop = _initFonaLoopCount == 0;
-	++_initFonaLoopCount;
+	++__initState._initFonaLoopCount;
 	
-	*isComplete = true;
+	__initState.isComplete = true;
+	__initState.fona = &__fona; //Assume this succeeds
 	
-	if (_fonaStatusInit==0) {
+	if (__initState._fonaStatusInit==0) {
 		
 		RM_LOGLN(F("Initialising fona..."));
 		
 		FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
-		_fonaStatusInit = ret;
+		__initState._fonaStatusInit = ret;
 		
 		//TODO: TEST ! with both single-digit module IDs and double digit
 		uint8_t moduleId = mem.getModuleId();
@@ -161,15 +163,16 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 		__fona.setUserAgent(userAgentStr);
 	}
 
-	if (IS_ERR_FSI(_fonaStatusInit)) {
+	if (IS_ERR_FSI(__initState._fonaStatusInit)) {
 	
-		RM_LOG2(F("Error initialising fona..."), _fonaStatusInit);
+		RM_LOG2(F("Error initialising fona..."), __initState._fonaStatusInit);
 	
 		//FONA library did not begin - store err in ROM, terminate and don't consume power
 		//(TODO + Why would this ever happen?)
 		//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 	
-		return NULL;
+		__initState.fona = NULL;
+		return &__initState;
 	}	
 
 	
@@ -177,14 +180,14 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 		
 		//The first enable attempt will happen after GPRS_ENABLE_INTERVAL
 		
-		if (_gprsStatusInit != 0) {
+		if (__initState._gprsStatusInit != 0) {
 			
 			//No-op, just return what was calculated the last time
 		}
-		else if (_initFonaLoopCount % GPRS_ENABLE_INTERVAL != 0) {
+		else if (__initState._initFonaLoopCount % GPRS_ENABLE_INTERVAL != 0) {
 			
 			//Try to enable it every x seconds for a period
-			*isComplete = false;
+			__initState.isComplete = false;
 		}
 		else {
 			
@@ -198,42 +201,43 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 				//But don't log it in eeprom if running a test? Basic=non-writing test vs Extended tests?
 			
 				RM_LOG2(F("Error initialising GPRS"), gprsRet);
-				if (_initFonaLoopCount < GPRS_MAX_ENABLE_TIME) {
+				if (__initState._initFonaLoopCount < GPRS_MAX_ENABLE_TIME) {
 				
-					*isComplete = false;
+					__initState.isComplete = false;
 					RM_LOGLN(F("Will try to enable GPRS again shortly"));
 				}
 				else {
 				
 					//We've hit the last interval of trying, so all done trying
-					_gprsStatusInit = gprsRet;
+					__initState._gprsStatusInit = gprsRet;
 					RM_LOGLN(F("All attempts to enable GPRS failed"));
 				}
 			}
 			else {
 			
 				//Success, we're done initialising GPRS
-				_gprsStatusInit = gprsRet;
+				__initState._gprsStatusInit = gprsRet;
 				RM_LOGLN(F("GPRS initialised successfully !"));
 			}
 		}
 		
-		if (_gprsStatusInit != 0) {
-			if (IS_ERR_FSGI(_gprsStatusInit)) {
-				return NULL;
+		if (__initState._gprsStatusInit != 0) {
+			if (IS_ERR_FSGI(__initState._gprsStatusInit)) {
+				__initState.fona=NULL;
+				return &__initState;
 			}
 			else { //Initialised successfully, now ensure good signal
 				
-				++_gprsSignalLoopCount;
+				++__initState._gprsSignalLoopCount;
 				
-				if (Helpers::isSignalGood(&_rssiStatusInit)) {
+				if (Helpers::isSignalGood(&__initState._rssiStatusInit)) {
 					
 					//Previously checked - it's fine
 				}
-				else if (_gprsSignalLoopCount % GPRS_SIGNAL_CHECK_INTERVAL != 0) {
+				else if (__initState._gprsSignalLoopCount % GPRS_SIGNAL_CHECK_INTERVAL != 0) {
 			
 					//Try to enable it every x seconds for a period
-					*isComplete = false;
+					__initState.isComplete = false;
 				}
 				else {
 
@@ -243,23 +247,23 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 					
 					if (!Helpers::isSignalGood(&rssi)) {
 						
-						if (_gprsSignalLoopCount < GPRS_MAX_SIGNAL_WAIT_TIME) {
+						if (__initState._gprsSignalLoopCount < GPRS_MAX_SIGNAL_WAIT_TIME) {
 							
-							*isComplete = false;
+							__initState.isComplete = false;
 							RM_LOGLN(F("\t (Bad-RSSI - will check again after interval)"));
 						}						
 						else {
 							
 							//Wait-time over for signal, continue regardless of signal value, it may work
 							RM_LOGLN(F("\t (Waiting For Good-RSSI Timed Out - will continue now)"));
-							_rssiStatusInit = rssi;
+							__initState._rssiStatusInit = rssi;
 						}
 					}
 					else {
 						
 						//All done, signal is good now
 						RM_LOGLN(F("\t (Good-RSSI - successfull, all done)"));
-						_rssiStatusInit = rssi;
+						__initState._rssiStatusInit = rssi;
 					}
 				}
 				
@@ -268,11 +272,12 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 			}
 		}
 		else {
-			return NULL;
+			__initState.fona = NULL;
+			return &__initState;
 		}
 	}
 	
-	return &__fona;
+	return &__initState;//__fona;
 }
 
 
@@ -348,19 +353,16 @@ boolean takeReadings() {
 	return true;
 }
 
-void createEncodedData(Adafruit_FONA* fona, char* encodedOutput, uint8_t maxReadings, DailyCycleData* cycleData) {
+void createEncodedData(char* encodedOutput, uint8_t maxReadings, DailyCycleData* cycleData) {
 	
 	//This will likely be peak of stack usage so warn if low memory !
-	int8_t freeRAM = Helpers::freeMemory();
-	int8_t minRAM = (sizeof(SensorData)*maxReadings)
-					+sizeof(FONA_GET_RSSI)
+	int16_t freeRAM = Helpers::freeMemory();
+	int16_t minRAM = (sizeof(SensorData)*maxReadings)
 					+sizeof(GsmPayload)
 					+100; //Buffer
-					
+
 	if (freeRAM < minRAM)
 		RM_LOG2(F("**** Too little RAM before payload creation ***"), freeRAM);
-	
-	FONA_GET_RSSI rssi = fona->getRSSI();
 	
 	SensorData sData[maxReadings];
 	uint8_t numLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
@@ -369,18 +371,11 @@ void createEncodedData(Adafruit_FONA* fona, char* encodedOutput, uint8_t maxRead
 	payload.setModuleId(999);
 	payload.setBootNumber(33);
 	payload.setSensorData((SensorData*)&sData, numLoaded);
-	payload.setRSSI(rssi);
+	payload.setRSSI(cycleData->RSSI);
 	payload.createEncodedPayload(encodedOutput);
 	
 	cycleData->BootNo = payload.getBootNumber();
 	cycleData->NoOfReadings = numLoaded;
-	cycleData->RSSI = rssi;
-	
-	uint16_t battPct;
-	if (!fona->getBattPercent(&battPct))
-		cycleData->BattPct = -1;
-	else
-		cycleData->BattPct = battPct;
 }
 
 uint16_t _sendDataLoopCount = 0;
@@ -393,56 +388,51 @@ boolean sendData() {
 	if (_sendDataLoopCount == 1)
 		RM_LOGLN(F("Initialising Fona to send data"));
 	
-	boolean isComplete;
-	Adafruit_FONA* sendDataFona = ensureFonaInitialised(true, &isComplete);
+	INITIALISING_STATE* sendDataFona = ensureFonaInitialised(true);
 	
-	if (!isComplete) {
+	if (!sendDataFona->isComplete) {
 		RM_LOGLN(F("\t(Fona Init Pending...)"));
 		return false; //Still waiting to initialise
 	}
 		
-	if (sendDataFona == NULL) {
+	DailyCycleData sendData;
+	sendData.InitStatus = sendDataFona->_fonaStatusInit;
+	sendData.GPRSInitStatus = sendDataFona->_gprsStatusInit;
+	sendData.RSSI = sendDataFona->_rssiStatusInit;
+		
+	if (sendDataFona->fona == NULL) {
+		
 		RM_LOGLN(F("\t(Fona Init ERROR)"));
-		
-		
-		DailyCycleData errorSendData;
-		errorSendData.GPRSToggleFailure = true;
-		//Save to ROM
-		
-		
+		mem.appendDailyEntry(&sendData);
 		
 		return true; //Error initialising
 	}
 	
+	Adafruit_FONA* fona = (Adafruit_FONA*)sendDataFona->fona;
 	//TODO: Max number of readings to send vs when eeprom rolls over and start from beginning
 		 
 	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
 	char encodedData[encodedSz];
 		
 	//Encode in another method to free up RAM on return for the sending (just in case)
-	DailyCycleData sendData;
-	createEncodedData(sendDataFona, encodedData, GPRS_MAX_READINGS_FOR_SEND, &sendData);
+	createEncodedData(encodedData, GPRS_MAX_READINGS_FOR_SEND, &sendData);
 
 	RM_LOGLN(F("Encoded data created and ready for send:"));
 	RM_LOGLN(encodedData);
 
 	uint16_t statuscode=0;
-	FONA_STATUS_GPRS_SEND status = 
-		sendDataFona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
+	FONA_STATUS_GPRS_SEND status =  fona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
+
+	uint16_t battPct;
+	if (!fona->getBattPercent(&battPct))
+		sendData.BattPct = -1;
+	else
+		sendData.BattPct = battPct;
 	
 	sendData.SendStatus = status;
 	sendData.HTMLStatusCode = statuscode;
-
-	//If all done - reset (even though board will be reset - but for tests)
-	//_sendDataLoopCount = 0;
 		
-	
-		
-		
-	//TODO: Save send-status
-		
-		
-		
+	mem.appendDailyEntry(&sendData);
 		
 	return true;
 }

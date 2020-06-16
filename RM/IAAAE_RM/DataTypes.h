@@ -214,9 +214,17 @@ struct FONA_GET_RSSI {
 	FONA_GET_NETREG netReg;
 };
 
-struct FONA_INIT_RESULT {
+struct INITIALISING_STATE {
 
-		
+	void* fona;
+	boolean isComplete					  = false;
+	FONA_STATUS_INIT _fonaStatusInit;
+	FONA_STATUS_GPRS_INIT _gprsStatusInit;
+	FONA_GET_RSSI _rssiStatusInit;
+	
+	//These 2 are internal use
+	uint16_t _initFonaLoopCount = 0;
+	uint16_t _gprsSignalLoopCount = 0;
 };
 
 //TODO: Kill below, mixes gps and gsm data
@@ -333,10 +341,10 @@ struct DailyCycleData {
 	uint16_t BootNo				  = 0;
 	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
 	
-	boolean GPRSToggleFailure	  = false;
-	
+	FONA_STATUS_INIT InitStatus	  = (FONA_STATUS_INIT)0;
+	FONA_STATUS_GPRS_INIT GPRSInitStatus = (FONA_STATUS_GPRS_INIT)0;
+	FONA_STATUS_GPRS_SEND SendStatus = (FONA_STATUS_GPRS_SEND)0;
 	uint16_t HTMLStatusCode		  = 0;
-	FONA_STATUS_GPRS_SEND SendStatus;
 	FONA_GET_RSSI RSSI;
 	
 	//uint8_t SmsFailureCode		  = 0;
