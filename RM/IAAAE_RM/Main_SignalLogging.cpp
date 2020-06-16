@@ -241,21 +241,21 @@ Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isComplete) {
 					FONA_GET_RSSI rssi = __fona.getRSSI();
 					Helpers::printRSSI(&rssi);					
 					
-					if (!Helpers::isSignalGood(&rssi)){
+					if (!Helpers::isSignalGood(&rssi)) {
 						
 						if (_gprsSignalLoopCount < GPRS_MAX_SIGNAL_WAIT_TIME) {
 							
 							*isComplete = false;
 							RM_LOGLN(F("\t (Bad-RSSI - will check again after interval)"));
 						}						
-						else{
+						else {
 							
 							//Wait-time over for signal, continue regardless of signal value, it may work
 							RM_LOGLN(F("\t (Waiting For Good-RSSI Timed Out - will continue now)"));
 							_rssiStatus = rssi;
 						}
 					}
-					else{
+					else {
 						
 						//All done, signal is good now
 						RM_LOGLN(F("\t (Good-RSSI - successfull, all done)"));
@@ -348,17 +348,29 @@ boolean takeReadings() {
 	return true;
 }
 
-//Adafruit_FONA* _sendDataFona = NULL;
+void createEncodedData(Adafruit_FONA* fona, char* encodedOutput, uint8_t maxReadings) {
+	
+	FONA_GET_RSSI rssi = fona->getRSSI();
+	
+	SensorData sData[maxReadings];
+	uint8_t numLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
+
+	GsmPayload payload;
+	payload.setModuleId(999);
+	payload.setBootNumber(33);
+	payload.setSensorData((SensorData*)&sData, numLoaded);
+	payload.setRSSI(rssi);
+	payload.createEncodedPayload(encodedOutput);	
+}
+
 uint16_t _sendDataLoopCount = 0;
 boolean sendData() {
-	
-	boolean isInit = (_sendDataLoopCount == 0);
 	
 	//Increment before doing any work so doesn't get stuck continuously initialising
 	//(by being called from 'loop') due to a loop-resetting error raised by FONA
 	++_sendDataLoopCount;
 	
-	if (isInit)
+	if (_sendDataLoopCount == 1)
 		RM_LOGLN(F("Initialising Fona to send data"));
 	
 	boolean isComplete;
@@ -374,51 +386,42 @@ boolean sendData() {
 		return true; //Error initialising
 	}
 	
-	//RM_LOGLN(F("\t(Checking RSSI good enough OR Signal-lock wait time expired)"));
-	//
-	//FONA_GET_RSSI rssi = sendDataFona->getRSSI();
-	//RM_LOG(F("\t(Curr RSSI:)"));
-	//Helpers::printRSSI(rssi);
-	//
-	//boolean fineToSend = rssi.rssiErr == 0 &&
-						 //rssi.rssi != 99 && //Not known/Undetectable.
-						 //rssi.rssi >= 7;	//@7 RSSI [=100 dBm] (2->30 RSSI = -110dBm -> -54dBm)
-			
-	//Wait to get signal 
-	//	- may already be over the threshold when doing initialisation so kick it off if so
-	//	OR should we just check RSSI and send if it's ok?
 	if (true) { // _sendDataLoopCount >= GPRS_MAX_SIGNAL_WAIT_TIME) {
 		
-		//Get RSSI - store? check and/or wait another minute? not?
-		FONA_GET_RSSI rssi = sendDataFona->getRSSI();
 		//Helpers::printRSSI(&rssi);
 		
-		SensorData sData[2]; //TODO: HARDCODED
-		unsigned long loadedTo;
-		mem.loadSensorData((SensorData*)&sData, 2, &loadedTo);
-
-		GsmPayload payload;
-		payload.setModuleId(999);
-		payload.setBootNumber(33);
-		payload.setSensorData((SensorData*)&sData, 2);
-		payload.setRSSI(rssi);
-		uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(2);
-
+		 //TODO: Max number of readings to send vs when eeprom rolls over and start from beginning
+		 //TODO: HARDCODED
+		 
+		uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
 		char encodedData[encodedSz];
-		payload.createEncodedPayload(encodedData);
+		
+		RM_LOG2(F("FREE RAM AT START"), Helpers::freeMemory());
+		
+		//Encode in another method to free up RAM on return for the sending (just in case)
+		createEncodedData(sendDataFona, encodedData, GPRS_MAX_READINGS_FOR_SEND);
 
 		RM_LOGLN(F("Encoded data created and ready for send:"));
 		RM_LOGLN(encodedData);
 
+		RM_LOG2(F("FREE RAM BEFORE SEND"), Helpers::freeMemory());
+		
 		uint16_t statuscode;
 		sendDataFona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
 
 		//If all done - reset (even though board will be reset - but for tests)
-		_sendDataLoopCount = 0;
+		//_sendDataLoopCount = 0;
+		
+		
+		
+		//TODO: Save send-status
+		
+		
+		
 		
 		return true;
 	}
-	else{
+	else {
 		return false;
 	}
 }

@@ -48,6 +48,7 @@
 #define GPRS_ENABLE_INTERVAL		10  //Must be a factor of GPRS_MAX_ENABLE_TIME
 #define GPRS_MAX_SIGNAL_WAIT_TIME	300 //Wait this long to get a fix on signal
 #define GPRS_SIGNAL_CHECK_INTERVAL	10  //Must be a factory of GPRS_MAX_SIGNAL_WAIT_TIME
+#define GPRS_MAX_READINGS_FOR_SEND	20  //Max number of readings to send
 
 //Error constants
 #define ERR_GPS_NO_FIX 10

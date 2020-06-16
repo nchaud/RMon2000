@@ -2,7 +2,7 @@
 	
 ExtendedTests::ExtendedTests() { }
 
-//Bulk read/write signals test
+//Gsm Payload Generation Test: Several signals readings & module data
 void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr) {
 	
 #if IS_EXTENDED_MEM_TEST == true
@@ -296,24 +296,6 @@ void ExtendedTests::endExtendedGsmTest() {
 void ExtendedTests::startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem) {
 	
 #if IS_EXTENDED_GSM_TEST == true
-
-	//delay(5000);
-	
-	//RM_LOGLN(F("TEST: Checking rssi..."));
-	
-	//FONA_GET_RSSI result = fona.getRSSI();
-	//Helpers::printRSSI(&result);
-	
-	//This test (148 chars without \0) uses hardcoded signal data
-	// -- doesn't fetch from mem itself OR call sendData() in main?
-	//char* encodedData = "IQIECgAPAwARAQEACgBkADMAAwECABQAyAA0AAABAwAeACwBNQAAAQQAKACQATYAAAEFADIA9AE3AAABBgA8AFgCOAADAQcARgC8AjkAAAEIAFAAIAM6AAABCQBaAIQDOwAAAQoAZADoAzwAAA==";
-//
-	//RM_LOG2("STRLEN IS", strlen(encodedData));
-    //// Post data to website
-    //uint16_t statuscode;
-    //int16_t length;
-    //char url[29] = "http://cars.khuddam.org.uk/r";
-	//url[28]=0; //end
 
     Serial.println(F("****"));
 	

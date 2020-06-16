@@ -337,8 +337,7 @@ void RmMemManager::runExtendedDumpOutput() {
 }
  
 /* Returns the number of readings read */
-unsigned long RmMemManager::loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
-										  unsigned long* loadedUpTo) {
+uint8_t RmMemManager::loadSensorData(SensorData* buffer, uint8_t maxNoOfReadings) {
 
 	if (mockSensorData != NULL)
 		memcpy(buffer, mockSensorData, sizeof(SensorData)*numMockSensorData);

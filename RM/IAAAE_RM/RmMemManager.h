@@ -45,8 +45,10 @@ public:
 	
 	uint8_t getModuleId();
 	void appendSensorEntry(SensorData* r);
-	unsigned long loadSensorData(SensorData* buffer, unsigned int maxNoOfReadings,
-								unsigned long* loadedUpTo); //byte* outputData, unsigned int outputDataMaxLength)
+	
+	/* Returns the number of readings read */
+	uint8_t loadSensorData(SensorData* buffer, uint8_t maxNoOfReadings);
+									//unsigned long* loadedUpTo); //byte* outputData, unsigned int outputDataMaxLength)
 
 	/* Indicates that data up to this value has been sent and need not be 
 	   sent again next time */
