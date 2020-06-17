@@ -356,5 +356,10 @@
     <Folder Include="src\libraries\Wire\src\" />
     <Folder Include="src\libraries\Wire\src\utility\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Adafruit_FONA.cpp.original.txt">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

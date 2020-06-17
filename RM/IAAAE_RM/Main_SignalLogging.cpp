@@ -353,7 +353,7 @@ boolean takeReadings() {
 	return true;
 }
 
-void createEncodedData(char* encodedOutput, uint8_t maxReadings, DailyCycleData* cycleData) {
+void createEncodedData(char* encodedOutput, uint8_t* outputNumLoaded, uint8_t maxReadings, DailyCycleData* cycleData) {
 	
 	//This will likely be peak of stack usage so warn if low memory !
 	int16_t freeRAM = Helpers::freeMemory();
@@ -365,17 +365,16 @@ void createEncodedData(char* encodedOutput, uint8_t maxReadings, DailyCycleData*
 		RM_LOG2(F("**** Too little RAM before payload creation ***"), freeRAM);
 	
 	SensorData sData[maxReadings];
-	uint8_t numLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
+	*outputNumLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
 	
 	GsmPayload payload;
 	payload.setModuleId(999);
 	payload.setBootNumber(33);
-	payload.setSensorData((SensorData*)&sData, numLoaded);
+	payload.setSensorData((SensorData*)&sData, *outputNumLoaded);
 	payload.setRSSI(cycleData->RSSI);
 	payload.createEncodedPayload(encodedOutput);
 	
 	cycleData->BootNo = payload.getBootNumber();
-	cycleData->NoOfReadings = numLoaded;
 }
 
 uint16_t _sendDataLoopCount = 0;
@@ -409,19 +408,32 @@ boolean sendData() {
 	}
 	
 	Adafruit_FONA* fona = (Adafruit_FONA*)sendDataFona->fona;
+	
 	//TODO: Max number of readings to send vs when eeprom rolls over and start from beginning
 		 
-	uint16_t encodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
-	char encodedData[encodedSz];
+	uint16_t fullEncodedSz = GsmPayload::getEncodedPayloadSize_S(GPRS_MAX_READINGS_FOR_SEND);
+	char encodedData[fullEncodedSz];
 		
 	//Encode in another method to free up RAM on return for the sending (just in case)
-	createEncodedData(encodedData, GPRS_MAX_READINGS_FOR_SEND, &sendData);
+	uint8_t numReadingsLoaded;
+	createEncodedData(encodedData, &numReadingsLoaded, GPRS_MAX_READINGS_FOR_SEND, &sendData);
+	sendData.NoOfReadings = numReadingsLoaded;
+	
+	uint16_t actualEncodedSz = GsmPayload::getEncodedPayloadSize_S(numReadingsLoaded);
 
 	RM_LOGLN(F("Encoded data created and ready for send:"));
 	RM_LOGLN(encodedData);
-
+	
+	char response[10];
 	uint16_t statuscode=0;
-	FONA_STATUS_GPRS_SEND status =  fona->sendDataOverGprs((uint8_t*)encodedData, encodedSz, &statuscode);
+	uint16_t actualResponseLen=0;
+	uint16_t finalResponseLen=0; //Probably don't need this here
+	FONA_STATUS_GPRS_SEND status =  fona->sendDataOverGprs(
+		(uint8_t*)encodedData, actualEncodedSz, 
+		response, 10, &actualResponseLen, &finalResponseLen, &statuscode);
+
+	RM_LOGLN(F("Response from send:"));
+	RM_LOGLN(response);
 
 	uint16_t battPct;
 	if (!fona->getBattPercent(&battPct))
