@@ -116,7 +116,7 @@ class Adafruit_FONA : public FONAStreamType {
   FONA_STATUS_GPRS_SEND sendDataOverGprs(
 						  uint8_t* sendData, uint16_t sendDataLength,
 						  char* response, uint16_t maxResponseLength, uint16_t* actualResponseLength,
-						  uint16_t* finalResponseLength, uint16_t*statuscode);
+						  uint16_t*statuscode);
 
   // HTTP high level interface (easier to use, less flexible).
   boolean HTTP_GET_start(FONAFlashStringPtr url, uint16_t *status, uint16_t *datalen);

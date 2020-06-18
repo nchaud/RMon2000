@@ -424,16 +424,17 @@ boolean sendData() {
 	RM_LOGLN(F("Encoded data created and ready for send:"));
 	RM_LOGLN(encodedData);
 	
-	char response[10];
+	uint8_t maxResponseSz = 10;
+	char response[maxResponseSz] = {0};
 	uint16_t statuscode=0;
 	uint16_t actualResponseLen=0;
-	uint16_t finalResponseLen=0; //Probably don't need this here
 	FONA_STATUS_GPRS_SEND status =  fona->sendDataOverGprs(
 		(uint8_t*)encodedData, actualEncodedSz, 
-		response, 10, &actualResponseLen, &finalResponseLen, &statuscode);
+		response, maxResponseSz, &actualResponseLen, &statuscode);
 
-	RM_LOGLN(F("Response from send:"));
-	RM_LOGLN(response);
+	RM_LOG(F("Response from send: "));
+	RM_LOG(response);
+	RM_LOG2(F(", with length"), strlen(response));
 
 	uint16_t battPct;
 	if (!fona->getBattPercent(&battPct))
@@ -442,7 +443,8 @@ boolean sendData() {
 		sendData.BattPct = battPct;
 	
 	sendData.SendStatus = status;
-	sendData.HTMLStatusCode = statuscode;
+	sendData.ResponseHTMLCode = statuscode;
+	sendData.ResponseLength = actualResponseLen;
 		
 	mem.appendDailyEntry(&sendData);
 		

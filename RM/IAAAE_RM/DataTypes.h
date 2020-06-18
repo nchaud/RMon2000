@@ -342,11 +342,14 @@ struct DailyCycleData {
 	uint16_t BootNo				  = 0;
 	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
 	
+	FONA_GET_RSSI RSSI;
+	
 	FONA_STATUS_INIT InitStatus	  = (FONA_STATUS_INIT)0;
 	FONA_STATUS_GPRS_INIT GPRSInitStatus = (FONA_STATUS_GPRS_INIT)0;
 	FONA_STATUS_GPRS_SEND SendStatus = (FONA_STATUS_GPRS_SEND)0;
-	uint16_t HTMLStatusCode		  = 0;
-	FONA_GET_RSSI RSSI;
+	
+	uint16_t ResponseHTMLCode	  = 0; //HTML code
+	uint16_t ResponseLength    	  = 0;
 	
 	//uint8_t SmsFailureCode		  = 0;
 	//SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
