@@ -702,7 +702,7 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::sendDataOverGprs(
 	
 	DEBUG_PRINT(F("Received response of length "));
 	DEBUG_PRINT(*actualResponseLength);
-	DEBUG_PRINT(F(", wit max length of "));
+	DEBUG_PRINT(F(", with max length of "));
 	DEBUG_PRINT(maxResponseLength);
 	DEBUG_PRINT(F(", final length we'll read:  "));
 	DEBUG_PRINTLN(*finalResponseLength);
@@ -913,12 +913,21 @@ boolean Adafruit_FONA::HTTP_readall(uint16_t maxReadSz, uint16_t *datalen) {
     //return false;
 
 	//return true;
+	
+  //Specify timeout to get right overload of method invoked
+  getReply(F("AT+HTTPREAD=0,"), maxReadSz, FONA_DEFAULT_TIMEOUT_MS);
 
-	if (!sendCheckReply(F("AT+HTTPREAD="), 0, maxReadSz))
-		return false;
+DEBUG_PRINTLN(F("NOW PARSING..."));
+DEBUG_PRINTLN(replybuffer);
+
+  if (! parseReply(F("+HTTPREAD: "), datalen))
+	return false;
+
+DEBUG_PRINTLN(F("GOT"));
+DEBUG_PRINTLN(*datalen);
+  readline(); // eat OK
 		
-	if (! parseReply(F("+HTTPREAD:"), datalen))
-		return false;
+
 }
 
 boolean Adafruit_FONA::HTTP_ssl(boolean onoff) {
@@ -1270,6 +1279,7 @@ boolean Adafruit_FONA::sendCheckReply(FONAFlashStringPtr prefix, int32_t suffix,
 
 // Send prefix, suffix, suffix2, and newline.  Verify FONA response matches reply parameter.
 boolean Adafruit_FONA::sendCheckReply(FONAFlashStringPtr prefix, int32_t suffix1, int32_t suffix2, FONAFlashStringPtr reply, uint16_t timeout) {
+	
   getReply(prefix, suffix1, suffix2, timeout);
   return (prog_char_strcmp(replybuffer, (prog_char*)reply) == 0);
 }
