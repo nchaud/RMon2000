@@ -36,6 +36,9 @@ public:
 	void setULongToMemory(uint16_t address, uint64_t value);
 	
 	void initialiseModule(uint8_t moduleId);
+	
+	uint16_t getBootCount();
+	uint8_t getModuleId();
 	uint16_t incrementBootCount();
 	
 	uint16_t verifyBasicEepRom();
@@ -43,7 +46,6 @@ public:
 	void runExtendedDumpOutput();
 	void runExtendedShow100Bytes();
 	
-	uint8_t getModuleId();
 	void appendSensorEntry(SensorData* r);
 	
 	/* Returns the number of readings read */

@@ -353,7 +353,8 @@ boolean takeReadings() {
 	return true;
 }
 
-void createEncodedData(char* encodedOutput, uint8_t* outputNumLoaded, uint8_t maxReadings, DailyCycleData* cycleData) {
+void createEncodedData(char* encodedOutput, uint8_t* outputNumLoaded, uint8_t maxReadings, 
+					   FONA_GET_RSSI rssi) {
 	
 	//This will likely be peak of stack usage so warn if low memory !
 	int16_t freeRAM = Helpers::freeMemory();
@@ -368,13 +369,11 @@ void createEncodedData(char* encodedOutput, uint8_t* outputNumLoaded, uint8_t ma
 	*outputNumLoaded = mem.loadSensorData((SensorData*)&sData, maxReadings);//, countToSend, &loadedTo);
 	
 	GsmPayload payload;
-	payload.setModuleId(999);
-	payload.setBootNumber(33);
+	payload.setModuleId(mem.getModuleId());
+	payload.setBootNumber(mem.getBootCount());
 	payload.setSensorData((SensorData*)&sData, *outputNumLoaded);
-	payload.setRSSI(cycleData->RSSI);
+	payload.setRSSI(rssi);
 	payload.createEncodedPayload(encodedOutput);
-	
-	cycleData->BootNo = payload.getBootNumber();
 }
 
 uint16_t _sendDataLoopCount = 0;
@@ -395,6 +394,7 @@ boolean sendData() {
 	}
 		
 	DailyCycleData sendData;
+	sendData.BootNo = mem.getBootCount();
 	sendData.InitStatus = sendDataFona->_fonaStatusInit;
 	sendData.GPRSInitStatus = sendDataFona->_gprsStatusInit;
 	sendData.RSSI = sendDataFona->_rssiStatusInit;
@@ -416,7 +416,7 @@ boolean sendData() {
 		
 	//Encode in another method to free up RAM on return for the sending (just in case)
 	uint8_t numReadingsLoaded;
-	createEncodedData(encodedData, &numReadingsLoaded, GPRS_MAX_READINGS_FOR_SEND, &sendData);
+	createEncodedData(encodedData, &numReadingsLoaded, GPRS_MAX_READINGS_FOR_SEND, sendData.RSSI);
 	sendData.NoOfReadings = numReadingsLoaded;
 	
 	uint16_t actualEncodedSz = GsmPayload::getEncodedPayloadSize_S(numReadingsLoaded);
@@ -432,11 +432,7 @@ boolean sendData() {
 		(uint8_t*)encodedData, actualEncodedSz, 
 		response, maxResponseSz, &actualResponseLen, &statuscode);
 
-	RM_LOG2(F("Response from send"), response);
-	RM_LOG2(F("with length"), strlen(response));
-	
 	uint16_t responseId = atoi(response);
-	RM_LOG2(F("\tNumber: "), responseId);
 
 	uint16_t battPct;
 	if (!fona->getBattPercent(&battPct))
@@ -448,6 +444,9 @@ boolean sendData() {
 	sendData.ResponseHTMLCode = statuscode;
 	sendData.ResponseLength = actualResponseLen;
 	sendData.ResponseId = responseId;
+	
+	RM_LOGLN(F("Send-Data Status Slot:"));
+	Helpers::printDailySendData(&sendData);
 		
 	mem.appendDailyEntry(&sendData);
 		

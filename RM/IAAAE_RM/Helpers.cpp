@@ -71,7 +71,49 @@ void Helpers::printSensorData(SensorData* sd) {
 	RM_LOGLN(sd->errorChar);
 }
 
-void Helpers::fillArray(uint8_t* ptr, uint16_t sz, uint8_t val){
+void Helpers::printDailySendData(DailyCycleData* sd) {
+	
+	RM_LOG(F("\tBoot#="));
+	RM_LOG(sd->BootNo);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("#Readings="));
+	RM_LOG(sd->NoOfReadings);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Batt%="));
+	RM_LOG(sd->BattPct);
+	RM_LOGLN(F(" | "));
+	
+	RM_LOG(F("\t"));
+	printRSSI(&sd->RSSI);
+	
+	RM_LOG(F("\tInit Stat.="));
+	RM_LOGFMT(sd->InitStatus, BIN);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("GPRS Stat.="));
+	RM_LOGFMT(sd->GPRSInitStatus, BIN);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Send Stat.="));
+	RM_LOGFMT(sd->SendStatus, BIN);
+	RM_LOGLN(F(" | "));
+	
+	RM_LOG(F("\tResponse Id="));
+	RM_LOG(sd->ResponseId);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Response Len="));
+	RM_LOG(sd->ResponseLength);
+	RM_LOG(F(" | "));
+	
+	RM_LOG(F("Response Code="));
+	RM_LOG(sd->ResponseHTMLCode);
+	RM_LOGLN(F(" | "));
+}
+
+void Helpers::fillArray(uint8_t* ptr, uint16_t sz, uint8_t val) {
 	
 	for(uint16_t i=0; i<sz; i++){
 		*(ptr+i) = val;

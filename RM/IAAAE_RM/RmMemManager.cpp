@@ -185,6 +185,20 @@ uint16_t RmMemManager::incrementBootCount() {
 	return currVal;
 }
 
+uint16_t RmMemManager::getBootCount() {
+	
+	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, bootCount);
+	uint16_t currVal = getUShortFromMemory(addr);
+	return currVal;
+}
+
+uint8_t RmMemManager::getModuleId() {
+	
+	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, moduleId);
+	uint8_t currVal = getUCharFromMemory(addr);
+	return currVal;
+}
+
 uint16_t RmMemManager::verifyBasicEepRom() {
 	
 	//TODO: Verify of spill over 64-bit boundary what to do
@@ -339,8 +353,10 @@ void RmMemManager::runExtendedDumpOutput() {
 /* Returns the number of readings read */
 uint8_t RmMemManager::loadSensorData(SensorData* buffer, uint8_t maxNoOfReadings) {
 
-	if (mockSensorData != NULL)
+	if (mockSensorData != NULL) {
 		memcpy(buffer, mockSensorData, sizeof(SensorData)*numMockSensorData);
+		return numMockSensorData;
+	}
 
 	return 1;
 	
@@ -409,12 +425,6 @@ void RmMemManager::replaceLastSensorEntry(SensorData* r) {
 	//internalWriteEntryAtAddress(r, lastEntryAddress);
 }
 
-uint8_t RmMemManager::getModuleId() {
-	
-	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, moduleId);
-	uint8_t val = getUCharFromMemory(addr);
-	return val;
-}
 
 void RmMemManager::appendSensorEntry(SensorData* r) {
 	
