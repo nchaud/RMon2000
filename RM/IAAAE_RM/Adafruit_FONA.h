@@ -121,10 +121,12 @@ class Adafruit_FONA : public FONAStreamType {
   // HTTP high level interface (easier to use, less flexible).
   boolean HTTP_GET_start(FONAFlashStringPtr url, uint16_t *status, uint16_t *datalen);
   void HTTP_GET_end(void);
+  
   FONA_STATUS_GPRS_SEND HTTP_POST_start(
-						FONAFlashStringPtr url, FONAFlashStringPtr contenttype,
-						const uint8_t *postdata, uint16_t postdatalen, uint16_t *status,
-						uint16_t maxResponseLen, uint16_t *actualResponselen, uint16_t* finalResponseLen);
+							FONAFlashStringPtr url, FONAFlashStringPtr contenttype,
+							const uint8_t *postdata, uint16_t postdatalen, uint16_t *status,
+							uint16_t maxResponseLen, uint16_t *actualResponselen, char* response);
+  
   void HTTP_POST_end(void);
   void setUserAgent(String useragent);
 
@@ -155,7 +157,8 @@ class Adafruit_FONA : public FONAStreamType {
   FONA_STATUS_GPRS_SEND HTTP_setup(FONAFlashStringPtr url);
   
   //FONA_STATUS_GPRS_INIT Adafruit_FONA::internalEnableGPRS(boolean onoff);
-
+  void internalReadRawData(char* response, uint16_t lenToRead);
+  
   void flushInput();
   uint16_t readRaw(uint16_t b);
   uint8_t readline(uint16_t timeout = FONA_DEFAULT_TIMEOUT_MS, boolean multiline = false);
@@ -181,7 +184,7 @@ class Adafruit_FONA : public FONAStreamType {
 	boolean HTTP_para(FONAFlashStringPtr parameter, const String value);
 	boolean HTTP_data(uint32_t size, uint32_t maxTime=10000);
 	FONA_STATUS_GPRS_SEND HTTP_action(uint8_t method, uint16_t *status, uint16_t *datalen, int32_t timeout = 10000);
-	boolean HTTP_readall(uint16_t maxReadSz, uint16_t *datalen);
+	boolean HTTP_readall(uint16_t maxReadSz, char *response);
 	boolean HTTP_ssl(boolean onoff);
 
   boolean parseReply(FONAFlashStringPtr toreply,

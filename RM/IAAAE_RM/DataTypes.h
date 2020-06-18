@@ -350,6 +350,7 @@ struct DailyCycleData {
 	
 	uint16_t ResponseHTMLCode	  = 0; //HTML code
 	uint16_t ResponseLength    	  = 0;
+	uint16_t ResponseId			  = 0;
 	
 	//uint8_t SmsFailureCode		  = 0;
 	//SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state

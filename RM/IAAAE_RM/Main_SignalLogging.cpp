@@ -432,9 +432,11 @@ boolean sendData() {
 		(uint8_t*)encodedData, actualEncodedSz, 
 		response, maxResponseSz, &actualResponseLen, &statuscode);
 
-	RM_LOG(F("Response from send: "));
-	RM_LOG(response);
-	RM_LOG2(F(", with length"), strlen(response));
+	RM_LOG2(F("Response from send"), response);
+	RM_LOG2(F("with length"), strlen(response));
+	
+	uint16_t responseId = atoi(response);
+	RM_LOG2(F("\tNumber: "), responseId);
 
 	uint16_t battPct;
 	if (!fona->getBattPercent(&battPct))
@@ -445,6 +447,7 @@ boolean sendData() {
 	sendData.SendStatus = status;
 	sendData.ResponseHTMLCode = statuscode;
 	sendData.ResponseLength = actualResponseLen;
+	sendData.ResponseId = responseId;
 		
 	mem.appendDailyEntry(&sendData);
 		

@@ -690,11 +690,11 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::sendDataOverGprs(
 	
 	FONAFlashStringPtr url = F("http://rmon.khuddam.org.uk/?a=add");
 	
-	uint16_t lenToRead = 0;
+	//maxResponseLength -= 1; //One is for the null-terminating char at the end
 	
 	FONA_STATUS_GPRS_SEND status = 
 		this->HTTP_POST_start(url, F("text/plain"), sendData, sendDataLength, 
-							  statuscode, maxResponseLength, actualResponseLength, &lenToRead);
+							  statuscode, maxResponseLength, actualResponseLength, response);
 	if (IS_ERR_FSGS(status))
 	{
 		DEBUG_PRINT(F("Failed to send data, status code: "));
@@ -706,39 +706,37 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::sendDataOverGprs(
 	DEBUG_PRINT(*actualResponseLength);
 	DEBUG_PRINT(F(", with our max of "));
 	DEBUG_PRINT(maxResponseLength);
-	DEBUG_PRINT(F(", we'll read "));
-	DEBUG_PRINTLN(lenToRead);
+	DEBUG_PRINT(F(", we've read "));
+	DEBUG_PRINTLN(strlen(response));
 	
+	//internalReadRawData(response, lenToRead);
 	
-	lenToRead+=2;
+	this->HTTP_POST_end();
 	
+	return status;
+}
+
+void Adafruit_FONA::internalReadRawData(char* response, uint16_t lenToRead) {
 	
 	uint16_t idx=0;
 	while (lenToRead > 0) {
 		while (this->available()) {
 			
 			char c = this->read();
-			DEBUG_PRINT(c);
-			DEBUG_PRINT("=");
-			DEBUG_PRINTLN((uint8_t)c);
 			
 			*(response + idx) = c;
-	
+			
 			loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
 			UDR0 = c;
-	
+			
 			idx++;
 			lenToRead--;
 			if (!lenToRead)
-				break;
+			break;
 		}
 	}
 	
 	*(response + idx) = '\0';
-	
-	this->HTTP_POST_end();
-	
-	return status;
 }
 
 uint8_t Adafruit_FONA::GPRSstate(void) {
@@ -908,13 +906,18 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_action(uint8_t method, uint16_t *statu
   return (FONA_STATUS_GPRS_SEND)0;
 }
 
-boolean Adafruit_FONA::HTTP_readall(uint16_t maxReadSz, uint16_t *datalen) {
+boolean Adafruit_FONA::HTTP_readall(uint16_t maxReadSz, char *response) {
 	
+  maxReadSz -= 1; //For null terminating char
+  
   //Specify timeout to get right overload of method invoked
   getReply(F("AT+HTTPREAD=0,"), maxReadSz, FONA_DEFAULT_TIMEOUT_MS);
 
-  if (! parseReply(F("+HTTPREAD: "), datalen))
+  uint16_t datalen;
+  if (! parseReply(F("+HTTPREAD: "), &datalen))
 	return false;
+	
+  internalReadRawData(response, datalen);
 
   readline(); // eat OK
 }
@@ -928,7 +931,7 @@ boolean Adafruit_FONA::HTTP_ssl(boolean onoff) {
 FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_POST_start(
 			  FONAFlashStringPtr url, FONAFlashStringPtr contenttype,
               const uint8_t *postdata, uint16_t postdatalen, uint16_t *status, 
-			  uint16_t maxResponseLen, uint16_t *actualResponselen, uint16_t* finalResponseLen){
+			  uint16_t maxResponseLen, uint16_t *actualResponselen, char* response) {
 
   FONA_STATUS_GPRS_SEND ret = HTTP_setup(url);
   
@@ -957,7 +960,7 @@ FONA_STATUS_GPRS_SEND Adafruit_FONA::HTTP_POST_start(
 	  return FSGS_OR(ret, exec);
 
   // HTTP response data
-  if (! HTTP_readall(maxResponseLen, finalResponseLen))
+  if (! HTTP_readall(maxResponseLen, response))
     ret = FSGS_OR(ret, FONA_STATUS_GPRS_SEND::WARN_READRESPONSE);
 
   ret = FSGS_OR(ret, FONA_STATUS_GPRS_SEND::SUCCESS_FSGS);
