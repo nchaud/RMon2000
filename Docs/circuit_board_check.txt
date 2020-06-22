@@ -1,5 +1,7 @@
 NB: 1h39 time between cycles, 3m3 between small cycles
 
+check what happens if all sms full
+
 https://arduino.stackexchange.com/questions/439/why-does-starting-the-serial-monitor-restart-the-sketch
 
 circuit capacitors voltage check
@@ -16,6 +18,8 @@ add test line/board/header
 wire sizes check
 
 timing every 4 hours - collect and save every 24hrs. bigger eeprom? slide out eeprom?
+
+use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
 
 no lipo batt connected to sim808 chip!!
 

@@ -56,11 +56,6 @@
 #define ERR_GPS_NO_RESPONSE 11
 #define ERR_GPS_BAD_FIELD 12
 
-enum FAILURE {
-	FAILURE_NONE=0,
-	FAILURE_WARN_NO_DATA_TO_SEND=1
-};
-
 enum MEM_SLOT_TYPE : uint8_t {
 	NoMem		= 0,
 	SensorMem	= 1,
@@ -329,21 +324,16 @@ struct SensorData {
 /* Stored in ROM (for later checking) to record what happened when trying to send a day's worth of readings */
 struct DailyCycleData {
 	
-	//TODO: BITWISE OF ALL FAILURE CODE, INCLUDING IN FONA?
-	
 	
 	//TODO: Move this to end of struct so can traverse and find previous X sensor entries?
 	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
 	
 	
-	
-	//TODO: AttemptedSend ?
 	int8_t	BattPct				  = 0;	//-1 indicates error fetching
 	uint16_t BootNo				  = 0;
-	uint8_t NoOfReadings		  = 0; /* NoOfReadings in this transmission */
+	uint8_t NoOfReadings		  = 0;
 	
 	FONA_GET_RSSI RSSI;
-	
 	FONA_STATUS_INIT InitStatus	  = (FONA_STATUS_INIT)0;
 	FONA_STATUS_GPRS_INIT GPRSInitStatus = (FONA_STATUS_GPRS_INIT)0;
 	FONA_STATUS_GPRS_SEND SendStatus = (FONA_STATUS_GPRS_SEND)0;
@@ -351,10 +341,6 @@ struct DailyCycleData {
 	uint16_t ResponseHTMLCode	  = 0; //HTML code
 	uint16_t ResponseLength    	  = 0;
 	uint16_t ResponseId			  = 0;
-	
-	//uint8_t SmsFailureCode		  = 0;
-	//SYS_STATE SystemState	      = SysState_Initialising; //Bitwise combination of sys state
-	
 };
 
 #endif //__DATATYPES_H__

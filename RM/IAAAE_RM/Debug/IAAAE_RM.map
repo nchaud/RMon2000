@@ -2836,29 +2836,29 @@ END GROUP
  .debug_abbrev  0x000043d7      0x60d C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
  .debug_abbrev  0x000049e4       0x2a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_line     0x00000000     0x72a8
+.debug_line     0x00000000     0x72a9
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000133     0x1771 Adafruit_FONA.o
  .debug_line    0x000018a4      0x3b1 GsmPayload.o
  .debug_line    0x00001c55      0x758 Helpers.o
- .debug_line    0x000023ad      0x695 Main_SignalLogging.o
- .debug_line    0x00002a42      0x791 RmMemManager.o
- .debug_line    0x000031d3      0x23f SensorManager.o
- .debug_line    0x00003412      0x519 src/libraries/Wire/src/utility/twi.o
- .debug_line    0x0000392b      0x5ad src/libraries/Wire/src/Wire.o
- .debug_line    0x00003ed8      0x31e ExtendedTests.o
- .debug_line    0x000041f6      0x426 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_line    0x0000461c      0x257 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_line    0x00004873      0x165 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_line    0x000049d8      0x12f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
- .debug_line    0x00004b07      0x62e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_line    0x00005135      0x299 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_line    0x000053ce      0x20f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
- .debug_line    0x000055dd      0x252 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_line    0x0000582f     0x12ae C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(WString.o)
- .debug_line    0x00006add      0x78a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
- .debug_line    0x00007267       0x41 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_line    0x000023ad      0x696 Main_SignalLogging.o
+ .debug_line    0x00002a43      0x791 RmMemManager.o
+ .debug_line    0x000031d4      0x23f SensorManager.o
+ .debug_line    0x00003413      0x519 src/libraries/Wire/src/utility/twi.o
+ .debug_line    0x0000392c      0x5ad src/libraries/Wire/src/Wire.o
+ .debug_line    0x00003ed9      0x31e ExtendedTests.o
+ .debug_line    0x000041f7      0x426 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_line    0x0000461d      0x257 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_line    0x00004874      0x165 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_line    0x000049d9      0x12f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(new.o)
+ .debug_line    0x00004b08      0x62e C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_line    0x00005136      0x299 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_line    0x000053cf      0x20f C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_analog.o)
+ .debug_line    0x000055de      0x252 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_line    0x00005830     0x12ae C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(WString.o)
+ .debug_line    0x00006ade      0x78a C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(SoftwareSerial.o)
+ .debug_line    0x00007268       0x41 C:\Users\Saba Baig\Documents\Atmel Studio\7.0\RM\RM\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
 .debug_frame    0x00000000     0x304c
  *(.debug_frame)
