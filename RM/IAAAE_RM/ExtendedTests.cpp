@@ -14,8 +14,13 @@ void ExtendedTests::runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr
 	
 	RM_LOGLN(F("TEST: Appending to Memory..."));
 	mem.appendSensorEntry(&sData);
+
 	
 	//TODO: Verify mock values match
+	
+	
+	//TODO: Test eeprom rolling logic (write to eeprom last-written place)
+	
 	
 	RM_LOGLN(F("~~~~~~~~~~~~~~~ Extended Mem Test Complete~~~~~~~~~~~~~~~~"));
 #else

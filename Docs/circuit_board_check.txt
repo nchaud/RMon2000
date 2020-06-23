@@ -5,19 +5,26 @@ check what happens if all sms full
 https://arduino.stackexchange.com/questions/439/why-does-starting-the-serial-monitor-restart-the-sketch
 
 circuit capacitors voltage check
+
 resistors check
+
 power unit increase voltage/ensure output is 5V, not less
+
 easy put on LED maintenance set/or have secret button for it somewhere with lid?
+
 farnell power adaptor increase in power
+
 1 cap per IC
 
 replace generic connectors in digram with actuals
+
 change timing interval connectors
 
 add test line/board/header
+
 wire sizes check
 
-timing every 4 hours - collect and save every 24hrs. bigger eeprom? slide out eeprom?
+bigger eeprom? slide out eeprom?
 
 use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
 

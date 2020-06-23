@@ -9,7 +9,6 @@ class RmMemManager
 public:
 	SensorData* mockSensorData;
 	uint8_t numMockSensorData;
-protected:
 private:
 	boolean _isMock;
 
@@ -46,19 +45,12 @@ public:
 	void runExtendedDumpOutput();
 	void runExtendedShow100Bytes();
 	
-	void appendSensorEntry(SensorData* r);
-	
 	/* Returns the number of readings read */
 	uint8_t loadSensorData(SensorData* buffer, uint8_t maxNoOfReadings);
 									//unsigned long* loadedUpTo); //byte* outputData, unsigned int outputDataMaxLength)
 
-	/* Indicates that data up to this value has been sent and need not be 
-	   sent again next time */
-	void markDataSent(uint64_t sentUpTo);
-
+	void appendSensorEntry(SensorData* r);
 	void appendDailyEntry(DailyCycleData* r);
-	
-	void replaceLastSensorEntry(SensorData* r);
 	
 	//Called at regular intervals at a fast-rate to toggle LEDs between off-on
 	void flashLED();
@@ -66,9 +58,10 @@ public:
 	void toggleLED(LED_SEL led_num, LED_STATE state);
 	void reset();
 	
-protected:
 private:
-
+	void incrementCycleCount();
+	uint16_t dataStartAddress();
+	uint16_t cycleAddressIfRequired(uint16_t currFreeAddr, uint8_t dataSz);
 }; //RmMemManager
 
 #endif //__RMMEMMANAGER_H__

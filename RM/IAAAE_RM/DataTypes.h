@@ -240,10 +240,16 @@ struct GpsData{
 	#define RM_LOGMEM(x) \
 	Serial.print(x);
 	
+	#define RM_LOGMEM2(x,y)  \
+	Serial.print (x);\
+	Serial.print (":");\
+	Serial.println (y);
+	
 	#define RM_LOGMEMLN(x) \
 	Serial.println(x);
 #else
 	#define RM_LOGMEM(x)
+	#define RM_LOGMEM2(x,y)
 	#define RM_LOGMEMLN(x)
 #endif
 
@@ -300,6 +306,9 @@ struct ModuleMeta{
 	/* No of times module has booted up incase numReadings cycles/fails */
 	uint16_t bootCount = 0;
 	
+	/* No of times module has cycled back to start of EEPROM */
+	uint8_t cycleMemCount = 0;
+	
 	/* Where the next sensor data or daily cycle data can go */
 	uint16_t nextFreeWriteAddr = 0;
 	
@@ -312,22 +321,19 @@ struct ModuleMeta{
 
 struct SensorData {
 	
-	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
 	uint16_t battVoltage	= 0;
 	uint16_t pVVoltage		= 0;
 	uint16_t current		= 0;
 	uint16_t temperature	= 0;
 	uint8_t  errorChar		= 0;/* TODO: uint16_32 for bitwise errs?*/ /* not unsigned else will get treated like int by string ctor */
 	//bool           HasBeenSent	= false;
+	
+	//NB: This datatype MUST be at end for reverse traversal that happens
+	MEM_SLOT_TYPE  dataType = MEM_SLOT_TYPE::SensorMem;
 };
 
 /* Stored in ROM (for later checking) to record what happened when trying to send a day's worth of readings */
 struct DailyCycleData {
-	
-	
-	//TODO: Move this to end of struct so can traverse and find previous X sensor entries?
-	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
-	
 	
 	int8_t	BattPct				  = 0;	//-1 indicates error fetching
 	uint16_t BootNo				  = 0;
@@ -341,6 +347,9 @@ struct DailyCycleData {
 	uint16_t ResponseHTMLCode	  = 0; //HTML code
 	uint16_t ResponseLength    	  = 0;
 	uint16_t ResponseId			  = 0;
+	
+	//NB: This datatype MUST be at end for reverse traversal that happens
+	MEM_SLOT_TYPE DataType		  = MEM_SLOT_TYPE::SentMem;
 };
 
 #endif //__DATATYPES_H__

@@ -10,8 +10,6 @@ the commented section below at the end of the setup() function.
 #include "DataTypes.h"
 #include "Helpers.h"
 #include "Timing.h"
-//#include "GsmManager.h"
-//#include "GpsManager.h"
 #include "RmMemManager.h"
 #include "SensorManager.h"
 #include "ExtendedTests.h"
@@ -20,11 +18,9 @@ the commented section below at the end of the setup() function.
 //C++ instances
 Adafruit_FONA __fona = Adafruit_FONA(FONA_RST, IS_GSM_MOCK);
 RmMemManager mem = RmMemManager(false);
-//GpsManager gps = GpsManager(IS_GPS_MOCK);
 SensorManager sensorMgr = SensorManager(true);
 
 void switchOffSystem();
-void on3MinutesElapsed(bool doWrite);
 void printData();
 Adafruit_FONA* ensureFonaInitialised(boolean forDataSend, boolean* isPending);
 
@@ -121,6 +117,8 @@ void setup() {
 		switchOffSystem();
 		return;
 	}
+	
+	//TODO: Ensure FONA powered off if not needed, ideally no power going to it (and send off signal just incase?)
 		
 	uint16_t currBootCount = mem.incrementBootCount();
 	RM_LOG2(F("Boot Count"), currBootCount);
@@ -136,12 +134,7 @@ void setup() {
 }
 
 INITIALISING_STATE __initState;
-//uint8_t _fonaStatusInit=0;
-//uint8_t _gprsStatusInit=0;
-//FONA_GET_RSSI _rssiStatusInit;
-//uint16_t _initFonaLoopCount = 0;
-//uint16_t _gprsSignalLoopCount = 0;
-INITIALISING_STATE* ensureFonaInitialised(boolean forDataSend) { //, boolean* isComplete) {
+INITIALISING_STATE* ensureFonaInitialised(boolean forDataSend) {
 
 	//boolean isFirstLoop = _initFonaLoopCount == 0;
 	++__initState._initFonaLoopCount;
@@ -290,58 +283,6 @@ void switchOffSystem() {
 	delay(3000); //To allow serial to purge the shutdown message
 }
 
-void on3MinutesElapsed(bool doWrite) {
-
-	//RM_LOGLN(F("3 minutes elapsed - logging..."));
-	//
-	//byte META_SZ = sizeof(ModuleMeta);
-	//byte SESSION_SZ = sizeof(SingleSession);
-	//
-	////Get last reading
-	//ModuleMeta meta;
-	//readMem(MEM_START, (uint8_t*)&meta, sizeof(ModuleMeta));
-	//
-	//RM_LOG(F("Module #"));
-	//RM_LOG(meta.moduleId);
-	//RM_LOG(F(", Current #Readings: "));
-	//RM_LOGLN(meta.numReadings);
-//
-	//if (!doWrite)
-		//return;
-//
-	////Update the number of readings in metadata first so no matter what happens, existing data isnt overwritten
-	//meta.numReadings++;
-	//writeMem(TART, (uint8_t*)&meta, sizeof(ModuleMeta));
-	//
-	//SingleSession session;
-	//gps.getGpsInfo(session.gpsInfo);
-	//gsm.getGsmInfo(session.gsmInfo);
-//
-	//
-	//RM_LOG(F("Got GPS info, lat="));
-	//RM_LOG(session.gpsInfo.lat);
-	//RM_LOG(F(" lon="));
-	//RM_LOG(session.gpsInfo.lon);
-	//RM_LOG(F(" date="));
-	//RM_LOG(session.gpsInfo.date);
-	//RM_LOG(F(" status="));
-	//RM_LOG(session.gpsInfo.gpsStatus);
-	//RM_LOG(F(" errCode="));
-	//RM_LOGLN(session.gpsInfo.errorCode);
-	//
-	//uint16_t writeAddress = getReadingAddress(meta.numReadings);
-////	Serial.print(F("Calculated next address for data to be written to: "));
-////	Serial.println(writeAddress);
-	//
-	////Run 2 tests
-	////gsm.setGPRSNetworkSettings
-	//String sm = "";//"Module ID:"+ModuleMeta.moduleId+" transmitting.";
-	//
-	////gsm.sendViaSms(sm.c_str()); //TO: local number !
-	////gsm.sendViaGprs(sm.c_str());
-	//
-	//writeMem(writeAddress, (uint8_t*)&session, SESSION_SZ);
-}
 
 boolean takeReadings() {
 	
@@ -431,6 +372,9 @@ boolean sendData() {
 	FONA_STATUS_GPRS_SEND status =  fona->sendDataOverGprs(
 		(uint8_t*)encodedData, actualEncodedSz, 
 		response, maxResponseSz, &actualResponseLen, &statuscode);
+	
+	//Switch off internet, lowers power consumption	
+	fona->enableGPRS(false);
 
 	uint16_t responseId = atoi(response);
 
@@ -490,15 +434,6 @@ void loop() {
 		
 		switchOffSystem();
 	}
-	
-	//if (DIAGNOSTIC_TEST) {
-	//
-		////Write and print every second
-		//on3MinutesElapsed(true);
-		//printData();
-		//return;
-	//}
-
 }
 
 

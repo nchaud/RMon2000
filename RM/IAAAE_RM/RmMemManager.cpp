@@ -15,9 +15,10 @@
 //The start and end positions in EEPROM of circular buffer reserved for Readings
 //#define BAND_READING_START 100 /* Sizeof module data above + spare */
 //The number of entries stored so far. 0=> no entries. -1 to get the idx of an entry.
-#define MEMLOC_READING_ENTRY_COUNT 100 /* Long - 4 bytes */
-#define MEMADDR_READING_DATA_START  104 /* Long - 4 bytes */
-#define MEMADDR_READING_END 30L*1000 /* ROM is 32K  - but do we want to cycle back and lose that important historical data? Circular should be limited to 1K @ end?*/
+//#define MEMLOC_READING_ENTRY_COUNT 100 /* Long - 4 bytes */
+//#define MEMADDR_READING_DATA_START  104 /* Long - 4 bytes */
+//#define MEMADDR_READING_END 30L*1000 /* ROM is 32K  - but do we want to cycle back and lose that important historical data? Circular should be limited to 1K @ end?*/
+#define MEMADDRESS_MAX 0x7FFF
 //#define BAND_READING_CYCLE_START 28*1000 /* Will start cycling from here after it reaches the _END memory location above */
 
 
@@ -158,6 +159,11 @@ void RmMemManager::setULongToMemory(uint16_t address, uint64_t value) {
 	internalWrite(address, (uint8_t*)&value, sizeof(value));
 }
 
+uint16_t RmMemManager::dataStartAddress() {
+	
+	return MEMLOC_START + sizeof(ModuleMeta);
+}
+
 void RmMemManager::initialiseModule(uint8_t moduleId) {
 
 	RM_LOG2(F("Init Module"), moduleId);
@@ -166,7 +172,7 @@ void RmMemManager::initialiseModule(uint8_t moduleId) {
 	meta.moduleId = moduleId;
 	meta.bootCount = 0;
 	meta.eepromTestArea = 0;
-	meta.nextFreeWriteAddr = MEMLOC_START + sizeof(ModuleMeta);
+	meta.nextFreeWriteAddr = dataStartAddress();
 	memset(meta.spareBuffer, 0, sizeof(meta.spareBuffer));
 	
 	//TODO: Blank out rest of eeprom too!
@@ -183,6 +189,14 @@ uint16_t RmMemManager::incrementBootCount() {
 	++currVal;
 	setUShortToMemory(addr, currVal);
 	return currVal;
+}
+
+void RmMemManager::incrementCycleCount() {
+	
+	uint16_t addr = MEMLOC_START + offsetof(ModuleMeta, cycleMemCount);
+	uint8_t currVal = getUCharFromMemory(addr);
+	++currVal;
+	setUCharToMemory(addr, currVal);
 }
 
 uint16_t RmMemManager::getBootCount() {
@@ -306,45 +320,21 @@ void RmMemManager::runExtendedDumpOutput() {
 			RM_LOGLN("");
 			
 		} else if (slotType == MEM_SLOT_TYPE::SentMem) {
+			
 			RM_LOG(F("Sent Data:"));
+			
+			DailyCycleData sd;
+			internalRead(currAddress, (uint8_t*)&sd, sizeof(DailyCycleData));
+			Helpers::printDailySendData(&sd);
+			
+			RM_LOGLN("");
+			
 		} else if (slotType == MEM_SLOT_TYPE::NoMem) {
 			RM_LOG(F("_END_DATA_"));
 		}
 		
 		break;
 	}
-	//
-	//for(uint8_t i=0;i<meta.numReadings;i++){
-	//
-	//RM_LOG(F("Reading #"));
-	//RM_LOGLN(i);
-	//
-	//uint16_t readingAddr = getReadingAddress(i);
-	//SingleSession session;
-	//readMem(readingAddr, (uint8_t*)&session, sizeof(SingleSession));
-	//
-	//RM_LOG(F("Gsm-Status: "));
-	//RM_LOG(session.gsmInfo.networkStatus);
-	//RM_LOG(F(", Gsm-RSSI: "));
-	//RM_LOG(session.gsmInfo.rssi);
-	//RM_LOG(F(", Gsm-Error Code: "));
-	//RM_LOG(session.gsmInfo.errorCode);
-	//
-	//RM_LOG(F(", Gps-Status: "));
-	//RM_LOG(session.gpsInfo.gpsStatus);
-	//RM_LOG(F(", Gps-Error Code: "));
-	//RM_LOG(session.gpsInfo.errorCode);
-	//RM_LOG(F(", Gps-Lat: "));
-	//RM_LOG(session.gpsInfo.lat);
-	//RM_LOG(F(", Gps-Lon: "));
-	//RM_LOG(session.gpsInfo.lon);
-	//RM_LOG(F(", Gps-Date: "));
-	//RM_LOG(session.gpsInfo.date);
-	//RM_LOG(F(", Gps-Heading: "));
-	//RM_LOG(session.gpsInfo.heading);
-	//RM_LOG(F(", Gps-Speed: "));
-	//RM_LOGLN(session.gpsInfo.speed_kph);
-	//}
 #else
 	RM_LOG(F("*** FAIL PRINT ***")); //Sync Broken - inclusion of code should be sync'd with flag
 #endif
@@ -354,106 +344,90 @@ void RmMemManager::runExtendedDumpOutput() {
 uint8_t RmMemManager::loadSensorData(SensorData* buffer, uint8_t maxNoOfReadings) {
 
 	if (mockSensorData != NULL) {
+		
 		memcpy(buffer, mockSensorData, sizeof(SensorData)*numMockSensorData);
 		return numMockSensorData;
 	}
 
-	return 1;
+	uint8_t numReadings = 0;
+	uint16_t freeMemAddress = MEMLOC_START + offsetof(ModuleMeta, nextFreeWriteAddr);
+	uint16_t currSlotStartAddr = getUShortFromMemory(freeMemAddress);
 	
-	//uint8_t readingSz = sizeof(SensorData);
-	//
-	////TODO: This only takes the last few, change to average/compress?
-	//
-	//volatile unsigned long entryCount = getLongFromMemory(MEMLOC_READING_ENTRY_COUNT);
-	//volatile unsigned long alreadySentTo = getLongFromMemory(MEMLOC_SENT_UPTO);
-	//
-	////We need the last {<maxNoOfReadings}. This may mean we skip from {alreadySentTo-x} onwards.
-	//volatile unsigned long numOfLastReadings = min(entryCount-alreadySentTo, maxNoOfReadings); //Take last n readings
-	//if (numOfLastReadings == 0)
-	//{
-		//*loadedUpTo = alreadySentTo; /* Nothing more */
-		//return 0UL; //Nothing to send
-	//}
-	//
-	////Get read idx => 2 readings if 10 entry count => @ idx 8 offset
-	//volatile unsigned int startReadOffset = (entryCount-numOfLastReadings) * readingSz;
-	//volatile unsigned int startReadAddress = MEMADDR_READING_DATA_START + startReadOffset;
-//
-	//byte* rPtr = (byte*)buffer;//&r2;
-	//
-	//for(volatile int readingNo = 0; readingNo < numOfLastReadings; readingNo++)
-		//for(volatile int byteIdx=0;byteIdx<readingSz;byteIdx++)
-		//{
-			//unsigned int currBufferOffset = (readingNo*readingSz)+byteIdx;//curr buffer offset
-			//unsigned int currReadAddress = startReadAddress + currBufferOffset;
-			//unsigned volatile int stopme=currBufferOffset;
-			//unsigned volatile int stopme2=currReadAddress;
-			//volatile byte stopx = (byte)EEPROM.read(currReadAddress);
-			//*(rPtr+currBufferOffset) = EEPROM.read(currReadAddress);
-		//}
-	//
-	//
-	//*loadedUpTo = entryCount; //Gets passed to markDataSent() if sent successfully
-	//return numOfLastReadings;
+	while(true) {
+		
+		if (numReadings == maxNoOfReadings)
+			break;
+			
+		uint16_t prevMemSlotTypeAddr = currSlotStartAddr-1; //The MEM_SLOT_TYPE address of the previous slot
+	
+		if (prevMemSlotTypeAddr <= (sizeof(MEMLOC_START) + sizeof(ModuleMeta)))
+			break; //We're at the very beginning - either module has just been deployed or mem has wrapped (& we'll ignore this one day's readings)
+	
+		uint8_t slotType = (MEM_SLOT_TYPE)getUCharFromMemory(prevMemSlotTypeAddr);
+		
+		if (slotType == MEM_SLOT_TYPE::SensorMem) {
+		
+			uint16_t prevSlotStartAddr = currSlotStartAddr - sizeof(SensorData);
+			internalRead(prevSlotStartAddr, (uint8_t*)buffer, sizeof(SensorData));
+			
+			buffer += sizeof(SensorData);
+			currSlotStartAddr -= sizeof(SensorData);
+			++numReadings;
+		}
+		else {
+			
+			//Reached the last SentMem slot, which has sent readings before it so we don't need to now
+			break;
+		}
+	}
+
+	return numReadings;
 }
 
-void RmMemManager::markDataSent(uint64_t sentUpTo) {
-
-	//this->setULongToMemory(MEMLOC_SENT_UPTO, sentUpTo);
+uint16_t RmMemManager::cycleAddressIfRequired(uint16_t currFreeAddr, uint8_t dataSz) {
+	
+	//If past the EEPROM, reset to start
+	if (currFreeAddr + dataSz >= MEMADDRESS_MAX) {
+		
+		currFreeAddr = dataStartAddress();
+		incrementCycleCount();
+	}
+	
+	return currFreeAddr;
 }
+
 
 void RmMemManager::appendDailyEntry(DailyCycleData* r) {
-
-	//TODO
-}
-
-void internalWriteEntryAtAddress(SensorData* r, unsigned long address) {
 	
-	//byte* rPtr = (byte*)r;
-//
-	//for(int i=0;i<sizeof(SensorData);i++)
-		//EEPROM.write(address+i, *(rPtr+i));
-}
-
-void RmMemManager::replaceLastSensorEntry(SensorData* r) {
-
-	//Read where last entry is
-	//volatile unsigned long entryCount = this->getULongFromMemory(MEMLOC_READING_ENTRY_COUNT);
-	//volatile unsigned long lastEntryOffset = max(0,entryCount-1) * sizeof(SensorData);
-	//volatile unsigned long lastEntryAddress = MEMADDR_READING_DATA_START + lastEntryOffset;
-	//
-	//internalWriteEntryAtAddress(r, lastEntryAddress);
+	uint16_t freeMemAddress = MEMLOC_START + offsetof(ModuleMeta, nextFreeWriteAddr);
+	uint16_t currFreeAddr = getUShortFromMemory(freeMemAddress);
+	
+	currFreeAddr = cycleAddressIfRequired(currFreeAddr, sizeof(DailyCycleData));
+	
+	RM_LOGMEM2(F("Writing Send Data To Addr"), currFreeAddr);
+	internalWrite(currFreeAddr, (uint8_t*)r, sizeof(DailyCycleData));
+	
+	uint16_t nextFreeAddr = currFreeAddr + sizeof(DailyCycleData);
+	RM_LOGMEM2(F("Free Addr Now Is"), nextFreeAddr);
+	
+	setUShortToMemory(freeMemAddress, nextFreeAddr);
 }
 
 
 void RmMemManager::appendSensorEntry(SensorData* r) {
 	
 	uint16_t freeMemAddress = MEMLOC_START + offsetof(ModuleMeta, nextFreeWriteAddr);
-	
 	uint16_t currFreeAddr = getUShortFromMemory(freeMemAddress);
 	
-	RM_LOG2(F("Writing To Addr"), currFreeAddr);
+	currFreeAddr = cycleAddressIfRequired(currFreeAddr, sizeof(SensorData));
+	
+	RM_LOGMEM2(F("Writing Sensor Data To Addr"), currFreeAddr);
 	internalWrite(currFreeAddr, (uint8_t*)r, sizeof(SensorData));
 	
 	uint16_t nextFreeAddr = currFreeAddr + sizeof(SensorData);
-	RM_LOG2(F("Free Addr Now Is"), nextFreeAddr);
+	RM_LOGMEM2(F("Free Addr Now Is"), nextFreeAddr);
 	
 	setUShortToMemory(freeMemAddress, nextFreeAddr);
-	
-	//TODO: What to do on overflow and not enough memory for next reading?
-	
-	
-	/* Can we do this even with writing page limitations ? */
-	
-	//If it goes beyond the end, restart from beginning
-	//uint32_t structureSize = sizeof(Reading);
-	//if (nextFreeMemAddr+structureSize > BAND_READING_END)
-	//	nextFreeMemAddr = BAND_READING_START;
-	
-	//unsigned int nextFreeAddr = writeEEPROM(nextFreeMemAddr, (byte*)&r, sizeof(Reading));
-	
-	//IF success, update the location at which to write the next Reading
-	//writeEEPROM(MEMLOC_READING_DATA_START, (byte*)&nextFreeAddr, 2);
 }
 
 

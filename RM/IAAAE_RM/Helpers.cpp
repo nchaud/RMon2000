@@ -88,15 +88,15 @@ void Helpers::printDailySendData(DailyCycleData* sd) {
 	RM_LOG(F("\t"));
 	printRSSI(&sd->RSSI);
 	
-	RM_LOG(F("\tInit Stat.="));
+	RM_LOG(F("\tInit Status="));
 	RM_LOGFMT(sd->InitStatus, BIN);
 	RM_LOG(F(" | "));
 	
-	RM_LOG(F("GPRS Stat.="));
+	RM_LOG(F("GPRS Status="));
 	RM_LOGFMT(sd->GPRSInitStatus, BIN);
 	RM_LOG(F(" | "));
 	
-	RM_LOG(F("Send Stat.="));
+	RM_LOG(F("Send Status="));
 	RM_LOGFMT(sd->SendStatus, BIN);
 	RM_LOGLN(F(" | "));
 	
