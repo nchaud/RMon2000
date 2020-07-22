@@ -1,0 +1,672 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0048)https://www.hobbytronics.co.uk/eeprom-page-write -->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Eeprom Page Write (Writing long strings to 24LC256)</title>
+<meta name="keywords" content="Eeprom, Page, Writes, 24LC256, 24lc512, boundary, string, data, ">
+<meta name="description" content="Eeprom Page Writes (24LC256)">
+<!--<base href="https://www.hobbytronics.co.uk/">--><base href=".">
+<link href="https://www.hobbytronics.co.uk/image/data/ht_icon.png" rel="icon">
+<link rel="stylesheet" type="text/css" href="./Eeprom Page Write (Writing long strings to 24LC256)_files/stylesheet.css">
+<link rel="stylesheet" type="text/css" href="./Eeprom Page Write (Writing long strings to 24LC256)_files/print.css" media="print">
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/black/stylesheet/ie6.css" />
+<script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
+<script>
+DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .top');
+</script>
+<![endif]-->
+<script type="text/javascript" async="" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/ga.js.download"></script><script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/jquery-1.3.2.js.download"></script>
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/common.js.download"></script>
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/jquery.easing-1.3.js.download"></script>
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/jquery.fancybox-1.3.4.js.download"></script>
+<link rel="stylesheet" type="text/css" href="./Eeprom Page Write (Writing long strings to 24LC256)_files/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/fancybox.js.download"></script>
+
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/tab.js.download"></script>
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/bookmark.js.download"></script>
+
+<style type="text/css">
+div#fancybox-inner { text-align: left; }
+div#fancybox-content { text-align: left; }
+</style>
+
+</head>
+<body>
+<div id="wrapper">
+<div id="container" style="width: 100%;">
+<div id="header0">
+<div id="header">
+  <div class="div1">
+    <div class="div2">
+            <a href="http://www.hobbytronics.co.uk/index.php?route=common/home"><img height="75" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/ht_logo.png" title="HobbyTronics Ltd" alt="HobbyTronics Ltd"></a>
+          </div>
+    <div class="div3"><a href="http://www.hobbytronics.co.uk/index.php?route=information/sitemap" style="background-image: url(&#39;catalog/view/theme/black/image/sitemap.png&#39;);">Sitemap</a><a href="http://www.hobbytronics.co.uk/index.php?route=product/special" style="background-image: url(&#39;catalog/view/theme/black/image/special.png&#39;);">Special Offers</a><a onclick="bookmark(document.location, &#39;Eeprom Page Write (Writing long strings to 24LC256)&#39;);" style="background-image: url(&#39;catalog/view/theme/black/image/bookmark.png&#39;);">Bookmark</a><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/sales" style="background-image: url(&#39;catalog/view/theme/black/image/contact.png&#39;);">Contact</a></div>
+    <div class="div-flags">
+		<a href="http://www.hobbytronics.co.uk/" title="English Website"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/gb.png"></a>
+		<a href="http://fr.hobbytronics.co.uk/" title="Site en Francais"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/fr.png"></a>
+		<a href="https://www.hobbytronics.co.uk/informacion-espanol" title="Informacion Espanol"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/es.png"></a>
+		<a href="https://www.hobbytronics.co.uk/informazioni-italiano" title="Informazioni Italiano"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/it.png"></a>
+		<a href="https://www.hobbytronics.co.uk/delivery" title="Europe Delivery"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/eu.png"></a>
+		<a href="https://www.hobbytronics.co.uk/delivery" title="Worldwide Delivery"><img border="0" height="15" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/worldwide.png"></a>		
+	 </div>
+	 <div class="div4"><a href="http://www.hobbytronics.co.uk/index.php?route=common/home" id="tab_home" class="selected">Home</a>
+            <a href="https://www.hobbytronics.co.uk/index.php?route=account/login" id="tab_login">Log In</a>
+            <a href="https://www.hobbytronics.co.uk/index.php?route=account/account" id="tab_account">Account</a>
+		<a href="http://www.hobbytronics.co.uk/index.php?route=product/compare" id="tab_compare">Compare</a>		
+		<a href="http://www.hobbytronics.co.uk/index.php?route=checkout/cart" id="tab_cart">Basket</a>
+		<a href="https://www.hobbytronics.co.uk/index.php?route=checkout/shipping" id="tab_checkout">Checkout</a>
+	 </div>
+    <div class="div5">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="center">
+			<div id="search">
+				<div class="div8">Search:&nbsp;</div>
+				<div class="div9">
+										<input type="text" value="Keywords" id="filter_keyword" onclick="this.value = &#39;&#39;;" onkeydown="this.style.color = &#39;#000000&#39;" style="color: #999;">
+					
+				</div>
+				<div class="div10">&nbsp;&nbsp;<a onclick="moduleSearch();" class="button"><span>Go</span></a> </div>
+			</div>
+							<div><p style="text-align: right; padding:0; margin:0 ; font-size: 12px;	color: #FFFFFF; font-weight: normal;"><b>All our prices include VAT</b></p><p style="text-align: right; font-size: 10px;	color: #FFFFFF; font-weight: normal;">we don't add VAT at the checkout&nbsp;</p></div>
+			      </div>
+    </div>
+  </div>
+  <div class="div6">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">
+	        <div id="breadcrumb">
+                <a href="http://www.hobbytronics.co.uk/index.php?route=common/home">Home</a>
+                 &gt; <a href="http://www.hobbytronics.co.uk/eeprom-page-write">Eeprom Page Write (Writing long strings to 24LC256)</a>
+              </div>
+      <div class="div7">
+                <form action="https://www.hobbytronics.co.uk/index.php?route=common/home" method="post" enctype="multipart/form-data" id="currency_form">
+          <div class="switcher">
+                                                            <div class="selected"><a>Pound Sterling</a></div>
+                                                            <div class="option">
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;EUR&#39;); $(&#39;#currency_form&#39;).submit();">Euro</a>
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;GBP&#39;); $(&#39;#currency_form&#39;).submit();">Pound Sterling</a>
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;USD&#39;); $(&#39;#currency_form&#39;).submit();">US Dollar</a>
+                          </div>
+          </div>
+          <div style="display: inline;">
+            <input type="hidden" name="currency_code" value="">
+            <input type="hidden" name="redirect" value="http://www.hobbytronics.co.uk/eeprom-page-write?language=en">
+          </div>
+        </form>
+        		  
+		  
+		  
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div id="container">
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/header.js.download"></script>
+
+
+<div id="content">
+  <div class="top">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">
+      <h1>Eeprom Page Write (Writing long strings to 24LC256)</h1>
+    </div>
+  </div>
+  <div class="middle"><h3>
+	Eeprom Page Write (Writing long strings to 24LC256)</h3>
+<p>
+	The Microchip 24LC256 eeprom and variants thereof are used in many projects for the storage of data when the microcontroller in use either doesn't have any eeprom memory or not enough. These useful eeproms use a simple I2C connection and are easy to setup and use. Writing and reading single bytes of data to any of the 32k memory locations is straightforward, but what if you want to store a string of characters? You might think this is actually easy to do as well. And indeed you can send it a string of characters, up to 64 in fact before the eeprom needs to store them using a feature called Page Write. But there is a big problem with this as we shall see.</p>
+<p>
+	<strong>So, what is page write?</strong></p>
+<p>
+	First, lets look back at how we store a single byte of data. The examples shown are Arduino (version 1.0 and above), but the same basics apply to any other programming language.</p>
+<p>
+	Here is the routine for writing a byte of data</p>
+<pre><span style="color: #CC6600;">void</span> writeEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress, <span style="color: #CC6600;">byte</span> data ) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>(data);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">delay</span>(5);
+}
+</pre>
+<p>
+	We start transmission to our device (I2C) address. Next we send 2 bytes which define the memory location we are writing to. Then finally the one byte of data we are storing.</p>
+<p>
+	A small delay is required to give time for the eeprom to save the data.</p>
+<p>
+	So far so good. Now, the 24LC256 eeprom has a feature called page write. This allows you to send up to 64 bytes of data before it needs to be saved. We can extend our writeEEPROM routine to perform this function. The routine can be re-written to that shown below.</p>
+<pre><span style="color: #CC6600;">void</span> writeEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress, <span style="color: #CC6600;">char</span>* data) 
+{
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Write a string of chars to eeprom</span>
+&nbsp; <span style="color: #7E7E7E;">// DO NOT USE THIS CODE - IT DOES NOT WORK</span> 
+&nbsp; <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> i=0;
+&nbsp;&nbsp;
+&nbsp; <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp; <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)((address) &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp; <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)((address) &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+
+&nbsp; <span style="color: #CC6600;">do</span>{ 
+&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">byte</span>) data[i]);
+&nbsp;&nbsp;&nbsp;&nbsp; i++;
+&nbsp; }&nbsp;<span style="color: #CC6600;">while</span>(data[i]);  
+&nbsp; <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; <span style="color: #CC6600;">delay</span>(6);  <span style="color: #7E7E7E;">// needs 5ms for page write</span>
+}
+</pre>
+<p>
+	<em><strong>NOTE:</strong> The Arduino Wire library only has a 32 character buffer, so that is the maximun we can send using Arduino. This buffer includes the two address bytes which limits our data payload to 30 bytes.</em></p>
+<p>
+	The above code works exactly as it should. It sends the two starting address bytes, followed by each individual byte in the string. The problem with this method is that the 24LC256 eeprom doesn't work in the way we assume it does.</p>
+<p>
+	Let me explain. The eeprom's memory is split up into a number of <strong>pages</strong> that are 64 bytes wide.</p>
+<p>
+	So, starting at memory location 0 the pages are</p>
+<ol>
+	<li>
+		<pre>0 - 63</pre></li>
+	<li>
+		<pre>64 - 127</pre></li>
+	<li>
+		<pre>128 - 191</pre></li>
+	<li>
+		<pre>192 - 255</pre></li>
+	<li>
+		<pre>etc ...</pre></li>
+</ol>
+<p>
+	The problem is "<strong>A page wite can only write to one page</strong>."</p>
+<p>
+	As per the 24LC256 datasheet..</p>
+<p style="margin-left: 40px;">
+	<em>"Page write operations are limited to writing bytes within a single physical page, regardless of the number of bytes actually being written. Physical page boundaries start at addresses that are integer multiples of the page buffer size (or ‘page size’) and end at addresses that are integer multiples of [page size - 1]. If a Page Write command attempts to write across a physical page boundary, the result is that the data wraps around to the beginning of the current page (overwriting data previously stored there), instead of being written to the next page, as might be expected. It is, therefore, necessary for the application software to prevent page write operations that would attempt to cross a page boundary."</em></p>
+<p>
+	What this means can be shown in the following diagram</p>
+<p>
+	<img alt="24LC256 Eeprom Page Write problem" height="123" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/page_write.jpg" width="481"></p>
+<p>
+	The blue dashed line indicates the data we are intending to write (ignoring Arduino's 32 byte limit)</p>
+<p>
+	The green dashed line shows what the 24LC256 eeprom does with the data.</p>
+<p>
+	When storing the data, if the eeprom address reaches a page boundary, the address is wrapped back to the beginning of the page and the data is written there. This causes over writing of data.</p>
+<p>
+	The eeprom read functionality has no such page boundary issues and will happily read past a page boundary. So when we read the data back it looks like it is corrupted. It isn't, it was just not saved in the way we had thought it would be.</p>
+<p>
+	<strong>The Solution<br>
+	</strong></p>
+<p>
+	The solution to this is not straightforward. If storing strings that are shorter than 64 bytes and we have lots of eeprom memory available, you could opt to always store the data starting at a page boundary (i.e. 0, 64, 128 etc) and you won't have a problem. If we are logging data and want it stored consecutively and dont want to waste memory, we need to come up with a solution.</p>
+<p>
+	We can store the data one byte at a time. This would indeed work and would not be effected by the page boundary problem. The problem with this solution is that each byte written needs a small delay to allow the eeprom to store the data. This is in the region of 3.5ms ( we have allowed 5ms in the code). If you write a 100 character string, this would add up to 350ms, over a third of a second. We would be restricted to only being able to write 3 such lines per second.</p>
+<p>
+	A better solution provided here calculates how much remaining space there is in the initial page that is being written to, and then breaks up the write into separate page write chunks to make the writing fit into the page boundaries.<br>
+	<br>
+	E.g. We want to write 78 bytes starting at memory location 55 (ending at memory location 132). This overlaps into 3 pages.</p>
+<pre> 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 64&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128 
+ |------------page----------------|--------------page--------------|----- 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |------------------data-------------------|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 55&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 132 
+</pre>
+<p>
+	The program below will split the write up as follows</p>
+<ul>
+	<li>
+		write 9 bytes&nbsp; ( 55 to&nbsp; 63) - up to page boundary</li>
+	<li>
+		write 16 bytes ( 64 to&nbsp; 79)</li>
+	<li>
+		write 16 bytes ( 80 to&nbsp; 95)</li>
+	<li>
+		write 16 bytes ( 96 to 111)</li>
+	<li>
+		write 16 bytes (112 to 127) - up to page boundary</li>
+	<li>
+		write 5 bytes&nbsp; (128 to 132)</li>
+</ul>
+<p>
+	<br>
+	Why 16 bytes and not 32 or 64? Remember the Arduino uses a 32 byte buffer for sending and receiving data so this is the maximum you can send. But this buffer needs to include the memory location bytes which reduces the available space to 30 bytes. So 16 bytes is used as an easy divisor of 64. Other programming languages can adjust this code to accomodate 32 or 64 byte writes.</p>
+<p>
+	The overhead for these 6 writes&nbsp; = 5ms x 6&nbsp; = 30ms, whilst the overhead for writing 78 individual bytes = 3.5ms x 78 = 273ms. A considerable improvement.</p>
+<p>
+	So here is the complete code. Any suggestions for improvement are always welcome</p>
+<pre><span style="color: #7E7E7E;">/*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;EEPROM_PAGE_WRITE</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;Example&nbsp;program&nbsp;showing&nbsp;a&nbsp;method&nbsp;for&nbsp;writing&nbsp;large&nbsp;amounts&nbsp;of</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;data&nbsp;to&nbsp;an&nbsp;eeprom&nbsp;(24LC256/512&nbsp;etc),&nbsp;whilst&nbsp;avoiding&nbsp;page&nbsp;write</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;boundaries</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;copyright&nbsp;www.hobbytronics.co.uk&nbsp;2012</span>
+<span style="color: #7E7E7E;"> * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version. see &lt;http://www.gnu.org/licenses/&gt;</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;PROBLEM:&nbsp;There&nbsp;are&nbsp;two&nbsp;methods&nbsp;for&nbsp;writing&nbsp;data&nbsp;to&nbsp;an&nbsp;eeprom</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;1.&nbsp;Write&nbsp;a&nbsp;single&nbsp;byte.&nbsp;Apart&nbsp;from&nbsp;the&nbsp;overhead&nbsp;of&nbsp;sending&nbsp;the</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;eeprom&nbsp;memory&nbsp;address,&nbsp;the&nbsp;eeprom&nbsp;needs&nbsp;3ms&nbsp;for&nbsp;each&nbsp;write&nbsp;to</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;complete.&nbsp;Thus&nbsp;if&nbsp;you&nbsp;send&nbsp;100&nbsp;bytes&nbsp;it&nbsp;needs&nbsp;300ms</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;2.&nbsp;Write&nbsp;an&nbsp;array&nbsp;of&nbsp;bytes&nbsp;(called&nbsp;Page&nbsp;write).&nbsp;Up&nbsp;to&nbsp;64&nbsp;bytes&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;can&nbsp;be&nbsp;sent&nbsp;before&nbsp;the&nbsp;eeprom&nbsp;needs&nbsp;to&nbsp;save&nbsp;the&nbsp;data.&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;save&nbsp;only&nbsp;needs&nbsp;5ms&nbsp;thus&nbsp;saving&nbsp;considerable&nbsp;time.&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;There&nbsp;is&nbsp;however&nbsp;a&nbsp;problem&nbsp;with&nbsp;method&nbsp;2.&nbsp;The&nbsp;eeprom's&nbsp;memory&nbsp;is</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;split&nbsp;into&nbsp;64byte&nbsp;chunks&nbsp;(or&nbsp;pages)&nbsp;and&nbsp;the&nbsp;page&nbsp;write&nbsp;can&nbsp;only&nbsp;write</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;within&nbsp;one&nbsp;page.&nbsp;Attempting&nbsp;to&nbsp;write&nbsp;past&nbsp;a&nbsp;page&nbsp;boundary&nbsp;will&nbsp;lead</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;to&nbsp;the&nbsp;the&nbsp;memory&nbsp;pointer&nbsp;wrapping&nbsp;back&nbsp;to&nbsp;the&nbsp;start&nbsp;of&nbsp;the&nbsp;page</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;and&nbsp;data&nbsp;at&nbsp;the&nbsp;beginning&nbsp;will&nbsp;be&nbsp;overwritten.</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;The&nbsp;solution&nbsp;provided&nbsp;here&nbsp;calculates&nbsp;the&nbsp;remaining&nbsp;space&nbsp;in&nbsp;the</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;initial&nbsp;page&nbsp;that&nbsp;is&nbsp;being&nbsp;written&nbsp;to&nbsp;and&nbsp;breaks&nbsp;up&nbsp;the&nbsp;write&nbsp;into</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;separate&nbsp;writes&nbsp;to&nbsp;make&nbsp;the&nbsp;data&nbsp;fit&nbsp;the&nbsp;page&nbsp;boudaries.</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;E.g.&nbsp;We&nbsp;want&nbsp;to&nbsp;write&nbsp;78&nbsp;bytes&nbsp;starting&nbsp;at&nbsp;memory&nbsp;location&nbsp;55&nbsp;(ending</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;at&nbsp;memory&nbsp;location&nbsp;132).&nbsp;This&nbsp;overlaps&nbsp;into&nbsp;3&nbsp;pages.</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;64&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;128&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;|------------page----------------|--------------page--------------|&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|------------------data-------------------|</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;55&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;132&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;The&nbsp;program&nbsp;below&nbsp;will&nbsp;split&nbsp;the&nbsp;write&nbsp;up&nbsp;as&nbsp;follows</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;9&nbsp;bytes&nbsp;&nbsp;(&nbsp;55&nbsp;to&nbsp;&nbsp;63)&nbsp;-&nbsp;up&nbsp;to&nbsp;page&nbsp;boundary</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;16&nbsp;bytes&nbsp;(&nbsp;64&nbsp;to&nbsp;&nbsp;79)</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;16&nbsp;bytes&nbsp;(&nbsp;80&nbsp;to&nbsp;&nbsp;95)</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;16&nbsp;bytes&nbsp;(&nbsp;96&nbsp;to&nbsp;111)</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;16&nbsp;bytes&nbsp;(112&nbsp;to&nbsp;127)&nbsp;-&nbsp;up&nbsp;to&nbsp;page&nbsp;boundary</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;-&nbsp;write&nbsp;5&nbsp;bytes&nbsp;&nbsp;(128&nbsp;to&nbsp;132)</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;Why&nbsp;16&nbsp;bytes&nbsp;and&nbsp;not&nbsp;32&nbsp;or&nbsp;64?&nbsp;Arduino&nbsp;uses&nbsp;a&nbsp;32&nbsp;byte&nbsp;buffer&nbsp;for&nbsp;sending</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;and&nbsp;receiving&nbsp;data&nbsp;so&nbsp;this&nbsp;is&nbsp;the&nbsp;maximum&nbsp;you&nbsp;can&nbsp;send.&nbsp;But&nbsp;this&nbsp;buffer</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;needs&nbsp;to&nbsp;include&nbsp;the&nbsp;memory&nbsp;location&nbsp;bytes&nbsp;which&nbsp;reduces&nbsp;the&nbsp;available&nbsp;</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;space&nbsp;to&nbsp;30&nbsp;bytes.&nbsp;So&nbsp;16&nbsp;bytes&nbsp;is&nbsp;used&nbsp;as&nbsp;an&nbsp;easy&nbsp;divisor&nbsp;of&nbsp;64.</span>
+<span style="color: #7E7E7E;">&nbsp;*</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;The&nbsp;overhead&nbsp;for&nbsp;these&nbsp;6&nbsp;writes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5ms&nbsp;x&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;30ms</span>
+<span style="color: #7E7E7E;">&nbsp;*&nbsp;The&nbsp;overhead&nbsp;for&nbsp;writing&nbsp;78&nbsp;individual&nbsp;bytes&nbsp;=&nbsp;3.5ms&nbsp;x&nbsp;78&nbsp;=&nbsp;273ms</span>
+<span style="color: #7E7E7E;">*/</span>
+
+#include&nbsp;&lt;<span style="color: #CC6600;">Wire</span>.h&gt;
+#define&nbsp;eeprom1&nbsp;0x50&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #7E7E7E;">//Address of 24LC256 eeprom chip</span>
+#define&nbsp;WRITE_CNT&nbsp;5
+
+<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> rdata[32];
+
+<span style="color: #CC6600;">void</span> <span style="color: #CC6600;"><b>setup</b></span>(<span style="color: #CC6600;">void</span>)
+{
+&nbsp;&nbsp;<span style="color: #CC6600;"><b>Serial</b></span>.<span style="color: #CC6600;">begin</span>(9600);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">begin</span>();  
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> i;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// define large string of data to be written</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">char</span> str_data[]={<span style="color: #006699;">"Hello-1234567890-and-abcdefghijklmnopqrstuvwxyz-Goodbye\n"</span>};
+
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Work out length of data</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">char</span> str_len=0;  
+&nbsp;&nbsp;<span style="color: #CC6600;">do</span>{ str_len++; } <span style="color: #CC6600;">while</span>(str_data[str_len]);  
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Write out data several times consecutively starting at address 0</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">for</span>(i=0;i&lt;WRITE_CNT;i++) writeEEPROM(eeprom1,i*str_len,str_data);
+
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// read back the data 28 bytes at a time</span>
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// reading data doesn't suffer from the page boundary rules</span>
+&nbsp;&nbsp;<span style="color: #CC6600;"><b>Serial</b></span>.<span style="color: #CC6600;">println</span>(<span style="color: #006699;">"DATA READ"</span>);
+&nbsp;&nbsp;<span style="color: #CC6600;">for</span>(i=0;i&lt;10;i++) {
+&nbsp;&nbsp;&nbsp;&nbsp;readEEPROM(eeprom1,&nbsp;(i*28),&nbsp;rdata,&nbsp;28);
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;"><b>Serial</b></span>.<span style="color: #CC6600;">write</span>(rdata,28);
+&nbsp;&nbsp;}&nbsp;&nbsp;
+
+}
+&nbsp;
+<span style="color: #CC6600;">void</span> <span style="color: #CC6600;"><b>loop</b></span>(){
+}
+&nbsp;
+<span style="color: #CC6600;">void</span> writeEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress, <span style="color: #CC6600;">char</span>* data) 
+{
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Uses Page Write for 24LC256</span>
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Allows for 64 byte page boundary</span>
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Splits string into max 16 byte writes</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> i=0, counter=0;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span>  address;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span>  page_space;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span>  page=0;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span>  num_writes;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span>  data_len=0;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> first_write_size;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> last_write_size;  
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> write_size;  
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Calculate length of data</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">do</span>{ data_len++; } <span style="color: #CC6600;">while</span>(data[data_len]);   
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Calculate space available in first page</span>
+&nbsp;&nbsp;page_space&nbsp;=&nbsp;<span style="color: #CC6600;">int</span>(((eeaddress/64) + 1)*64)-eeaddress;
+
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Calculate first write size</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (page_space&gt;16){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first_write_size=page_space-((page_space/16)*16);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (first_write_size==0) first_write_size=16;
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">else</span> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first_write_size=page_space;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// calculate size of last write  </span>
+&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (data_len&gt;first_write_size) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last_write_size&nbsp;=&nbsp;(data_len-first_write_size)%16;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span style="color: #7E7E7E;">// Calculate how many writes we need</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (data_len&gt;first_write_size)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_writes&nbsp;=&nbsp;((data_len-first_write_size)/16)+2;
+&nbsp;&nbsp;<span style="color: #CC6600;">else</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_writes&nbsp;=&nbsp;1;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;i=0;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;address=eeaddress;
+&nbsp;&nbsp;<span style="color: #CC6600;">for</span>(page=0;page&lt;num_writes;page++) 
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">if</span>(page==0) write_size=first_write_size;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">else</span> <span style="color: #CC6600;">if</span>(page==(num_writes-1)) write_size=last_write_size;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">else</span> write_size=16;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)((address) &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)((address) &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter=0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">do</span>{ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">byte</span>) data[i]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style="color: #CC6600;">while</span>((data[i]) &amp;&amp; (counter&lt;write_size));  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address+=write_size;&nbsp;&nbsp;&nbsp;<span style="color: #7E7E7E;">// Increment address for next write</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #CC6600;">delay</span>(6);  <span style="color: #7E7E7E;">// needs 5ms for page write</span>
+&nbsp;&nbsp;}
+}
+&nbsp;
+<span style="color: #CC6600;">void</span> readEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress,  
+                 <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span>* data, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> num_chars) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">char</span> i=0;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">write</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">requestFrom</span>(deviceaddress,num_chars);
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">while</span>(<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">available</span>()) data[i++] = <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">read</span>();
+
+}
+
+</pre> 
+  </div>
+  <div class="bottom">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center"></div>
+  </div>
+</div>
+<div id="column_right">
+			
+	<div id="module_cart" class="box">
+  <div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/basket.png" alt="">Shopping Cart</div>
+  <div id="module_cart_middle" class="middle">	
+
+        <div style="text-align: center;">0 items</div>
+      </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+<script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/ajax_add.js.download"></script>
+
+<div id="free_delivery_info" class="box">
+	<div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/delivery.png" alt="">DELIVERY/PAYMENT</div>
+  <div class="middle">
+		<p>
+	<img alt="Free Delivery Orders over £50" height="113" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/free-delivery.jpg" width="160"></p>
+<p>
+	<b>UK</b> - £2.40 orders under £50<br>
+	<b>Airmail</b> from £2.95 (+VAT)<br>
+	<a href="https://www.hobbytronics.co.uk/delivery" title="Delivery Infomation">More Details...</a></p>
+<p>
+	<img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/paypal_worldpay.jpg"></p>
+		
+	</div>
+  <div class="bottom">&nbsp;</div>
+</div>
+
+<script src="./Eeprom Page Write (Writing long strings to 24LC256)_files/dist.js.download"></script>
+<div id="badge-140" style="max-width:180px;"><iframe src="./Eeprom Page Write (Writing long strings to 24LC256)_files/widget.html" frameborder="0" width="100%" title="Reviews Badge Widget" style="min-width: 140px;" height="137"></iframe></div>
+<script>
+reviewsBadge('badge-140',{
+  store: 'hobbytronics-ltd',
+  primaryClr: '#12d06c',
+  neutralClr: '#f4f4f4',
+  starsClr: '#fff',
+  textClr: '#fff'
+});
+</script>
+
+<script type="text/javascript"><!--
+
+function getUrlParam(name) {
+  var name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.href);
+  if (results == null)
+    return "";
+  else
+    return results[1];
+}
+
+$(document).ready(function () {
+	$('.cart_remove').live('click', function () {
+		if (!confirm('Remove item from Cart?')) {
+			return false;
+		}
+		$(this).removeClass('cart_remove').addClass('cart_remove_loading');
+		$.ajax({
+			type: 'post',
+			url: 'index.php?route=module/cart/callback',
+			dataType: 'html',
+			data: 'remove=' + this.id,
+			success: function (html) {
+				$('#module_cart .middle').html(html);
+				$('#module_cart').removeClass("highlightcart");
+				$("#module_cart_middle").css("background","#FFFFFF");
+				if (getUrlParam('route').indexOf('checkout') != -1) {
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
+//--></script>
+				<div class="box">
+  <div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/featured.png" alt="">Featured</div>
+  <div class="middle">
+        <table cellpadding="2" cellspacing="0" style="width: 100%;">
+            <tbody><tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-stackable-header-kit"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/arduino_stackable_header_kit-38x38.jpg" title="Arduino Stackable Header Kit" alt="Arduino Stackable Header Kit"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-stackable-header-kit" title="Arduino Stackable Header Kit">Arduino Stackable Header Kit</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£1.39</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=205" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;205&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-pro-mini-16mhz-328-5v"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/arduino_pro_mini_328_5v-38x38.jpg" title="Arduino Pro Mini 328 - 5V/16MHz" alt="Arduino Pro Mini 328 - 5V/16MHz"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-pro-mini-16mhz-328-5v" title="Arduino Pro Mini 328 - 5V/16MHz">Arduino Pro Mini 328 - 5V/16MHz</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£8.94</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=224" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;224&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-uno-r3"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/arduino-uno-r3-38x38.jpg" title="Arduino UNO R3" alt="Arduino UNO R3"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-uno-r3" title="Arduino UNO R3">Arduino UNO R3</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£22.80</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=540" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;540&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/i2clcd-backpack-v2"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/lcd-backpack-v21-38x38.jpg" title="LCD Backpack V2 - I2C and Serial RX" alt="LCD Backpack V2 - I2C and Serial RX"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/i2clcd-backpack-v2" title="LCD Backpack V2 - I2C and Serial RX">LCD Backpack V2 - I2C and Serial RX</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£6.00</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=754" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;754&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/teensy-v32"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/teensy32-38x38.jpg" title="Teensy 3.2" alt="Teensy 3.2"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/teensy-v32" title="Teensy 3.2">Teensy 3.2</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£19.20</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=1139" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;1139&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+          </tbody></table>
+      </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+	
+</div>
+<div id="column_left">
+    <div class="box">
+  <div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/category.png" alt="">Categories</div>
+  <div id="category"><ul><li><a href="http://www.hobbytronics.co.uk/sale">SALE ITEMS</a></li><li><a href="http://www.hobbytronics.co.uk/arduino">Arduino</a></li><li><a href="http://www.hobbytronics.co.uk/audio-midi">Audio / MIDI</a></li><li><a href="http://www.hobbytronics.co.uk/batteries">Batteries / Chargers / PSU</a></li><li><a href="http://www.hobbytronics.co.uk/cables-connectors">Cables / Connectors</a></li><li><a href="http://www.hobbytronics.co.uk/electronic-components">Components</a></li><li><a href="http://www.hobbytronics.co.uk/lcd">Displays</a></li><li><a href="http://www.hobbytronics.co.uk/gps">GPS</a></li><li><a href="http://www.hobbytronics.co.uk/hardware">Hardware</a></li><li><a href="http://www.hobbytronics.co.uk/kits">Kits</a></li><li><a href="http://www.hobbytronics.co.uk/motor-control">Motor Control</a></li><li><a href="http://www.hobbytronics.co.uk/pcb-design">PCB Design</a></li><li><a href="http://www.hobbytronics.co.uk/programmers">Programmers</a></li><li><a href="http://www.hobbytronics.co.uk/prototyping">Prototyping</a></li><li><a href="http://www.hobbytronics.co.uk/radio-control">Radio Control / UAV</a></li><li><a href="http://www.hobbytronics.co.uk/raspberry-pi">Raspberry Pi</a></li><li><a href="http://www.hobbytronics.co.uk/robotics">Robotics</a></li><li><a href="http://www.hobbytronics.co.uk/sensors">Sensors</a></li><li><a href="http://www.hobbytronics.co.uk/teensy-boards">Teensy</a></li><li><a href="http://www.hobbytronics.co.uk/test-equipment">Tools / Test Equipment</a></li><li><a href="http://www.hobbytronics.co.uk/usb-host">USB Host</a></li><li><a href="http://www.hobbytronics.co.uk/wireless">Wireless</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/staff-picks">Staff Picks</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/index.php?route=product/latest">Latest Products</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/downloads">Downloads</a></li><li><a class="gvoucher" href="http://www.hobbytronics.co.uk/index.php?route=account/voucher">Gift Voucher</a></li><li><a class="laser" href="http://www.hobbytronics.co.uk/laser-cutting">Laser Cutting</a></li><li><a class="stencil" href="http://www.hobbytronics.co.uk/smt-stencils">SMT Stencils</a></li><li><a class="project" href="http://www.hobbytronics.co.uk/projects">Projects</a></li><li><a class="tutorial" href="http://www.hobbytronics.co.uk/tutorials-code">Tutorials</a></li></ul></div>
+  <div class="bottom_c">&nbsp;</div>
+</div>
+    <div class="box">
+  <div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/brands.png" alt="">Brands</div>
+  <div class="middle" style="text-align: center;">
+    <select onchange="location = this.value">
+      <option value=""> --- Please Select --- </option>
+                  <option value="http://www.hobbytronics.co.uk/index.php?route=product/manufacturer&amp;manufacturer_id=0" selected="selected"></option>
+                        <option value="http://www.hobbytronics.co.uk/adafruit">Adafruit</option>
+                        <option value="http://www.hobbytronics.co.uk/allegro-microsystems">Allegro Microsystems</option>
+                        <option value="http://www.hobbytronics.co.uk/analog-devices">Analog Devices</option>
+                        <option value="http://www.hobbytronics.co.uk/antex">Antex</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-arduino">Arduino</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-atmel">Atmel</option>
+                        <option value="http://www.hobbytronics.co.uk/devantech">Devantech Ltd</option>
+                        <option value="http://www.hobbytronics.co.uk/digi">Digi</option>
+                        <option value="http://www.hobbytronics.co.uk/ftdi">FTDI</option>
+                        <option value="http://www.hobbytronics.co.uk/globalsat">GlobalSat</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-hobbytronics">HobbyTronics</option>
+                        <option value="http://www.hobbytronics.co.uk/id-innovations">ID Innovations</option>
+                        <option value="http://www.hobbytronics.co.uk/ikalogic">IKALogic</option>
+                        <option value="http://www.hobbytronics.co.uk/ir">International Rectifier</option>
+                        <option value="http://www.hobbytronics.co.uk/maxim">Maxim</option>
+                        <option value="http://www.hobbytronics.co.uk/mega">Mega</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-microchip">Microchip</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-misc">Miscellaneous</option>
+                        <option value="http://www.hobbytronics.co.uk/nxp">NXP</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-parallax">Parallax</option>
+                        <option value="http://www.hobbytronics.co.uk/pololu">Pololu</option>
+                        <option value="http://www.hobbytronics.co.uk/power-hd">Power HD</option>
+                        <option value="http://www.hobbytronics.co.uk/seeed-studio">Seeed Studio</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-sparkfun">SparkFun</option>
+                        <option value="http://www.hobbytronics.co.uk/stmicroelectronics">ST Microelectronics</option>
+                        <option value="http://www.hobbytronics.co.uk/teensy">Teensy</option>
+                        <option value="http://www.hobbytronics.co.uk/texas-instruments">Texas Instruments</option>
+                        <option value="http://www.hobbytronics.co.uk/wiznet">Wiznet</option>
+                </select>
+  </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+    <div class="box">
+  <div class="top"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/information.png" alt="">Information</div>
+  <div id="information" class="middle">
+    <ul>
+            <li><a href="http://www.hobbytronics.co.uk/about-us">About Us</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/privacy-policy">Privacy Policy</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/terms-conditions">Terms &amp; Conditions</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/delivery">Delivery and Payment</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/universities-schools">Universities / Schools</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/vat">VAT</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/cookies">Cookies</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/terms-of-use">Terms of use</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/sales">Contact Sales</a></li>
+      <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/support">Contact Support</a></li>		
+      <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/sitemap">Site Map</a></li>
+    </ul>
+  </div>
+  <div class="bottom">&nbsp;</div>
+</div>    
+  <div style="padding-left:15px">
+	<a href="http://www.youtube.com/user/hobbytronics101/videos" title="Subscribe to our YouTube channel" target="_new"><img align="left" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/youtube.png"></a>
+   &nbsp;Check out our videos<br clear="all">
+  
+	Follow us on:<br>
+	<a href="http://www.facebook.com/hobbyTronics.co.uk" title="Follow us on Facebook" target="_new"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/facebook.png"></a>acebook
+<!--
+	<a href="http://twitter.com/#!hobbytronics" title="Follow us on Twitter" target="_new"><img src="/image/data/twitter2.png" /></a>
+	<a href="http://www.youtube.com/hobbytronics101" title="Subscribe to our YouTube channel" target="_new"><img src="/image/data/youtube.png" /></a>
+	<a href="http://hobbytronicsuk.blogspot.co.uk/" title="Follow our New Product and Information blogs on Blogspot" target="_new"><img src="/image/data/google_blogger.jpg" /></a>	
+-->
+
+	</div>
+
+
+</div>
+<div id="footer">
+  <div class="div1"><a onclick="window.open(&#39;https://www.paypal.com/uk/mrb/pal=W9TBB5DTD6QJW&#39;);"><img src="./Eeprom Page Write (Writing long strings to 24LC256)_files/payment.png" alt=""></a>
+<!--
+                    &nbsp;&nbsp;<a href="http://www.shopwiki.co.uk/s/841787" target="_blank" title="Hobbytronics is a www.shopwiki.co.uk Approved Store"><img height=26 src="https://staticssl.shopwiki.com/static/badges/StoreBadgeEN.png?sid=841787" data-swmc-badge-code="9b5ca0a62593cda61197d6e93043344afcbaf4d8" /></a>
+
+<a class="tf_upfront_badge" href="http://www.thefind.com/store/about-hobbytronicscouk" title="TheFind Upfront"><img  border="0" src="//upfront.thefind.com/images/badges/r/c5/ac/c5ac747585ccff8c1ad4cbc1032d705d.png" alt="HobbyTronics is an Upfront Merchant on TheFind. Click for info."/></a>
+  <script type="text/javascript">
+    (function() {
+      var upfront = document.createElement('SCRIPT'); upfront.type = "text/javascript"; upfront.async = true;
+      upfront.src = document.location.protocol + "//upfront.thefind.com/scripts/main/utils-init-ajaxlib/upfront-badgeinit.js";
+      upfront.text = "thefind.upfront.init('tf_upfront_badge', 'c5ac747585ccff8c1ad4cbc1032d705d')";
+      document.getElementsByTagName('HEAD')[0].appendChild(upfront);
+    })();
+  </script>
+ --> 
+ <script type="text/javascript" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/seal.js.download"></script><img id="trustwaveSealImage" src="./Eeprom Page Write (Writing long strings to 24LC256)_files/seal_image.php" border="0" style="cursor:pointer;" onclick="javascript:window.open(&#39;https://sealserver.trustwave.com/cert.php?customerId=ca65b9ec9d5b42a8bf1fdc1a687bc2db&amp;size=105x54&amp;style=invert&#39;, &#39;c_TW&#39;, &#39;location=no, toolbar=no, resizable=yes, scrollbars=yes, directories=no, status=no, width=615, height=720&#39;); return false;" oncontextmenu="javascript:alert(&#39;Copying Prohibited by Law - Trusted Commerce is a Service Mark of TrustWave Holdings, Inc.&#39;); return false;" alt="This site is protected by Trustwave&#39;s Trusted Commerce program" title="This site is protected by Trustwave&#39;s Trusted Commerce program"> 
+ </div>
+
+ <div class="div2" style="height: 60px;"><span style="position: absolute; bottom: 0px; right: 0px;">Powered By <a href="https://www.opencart.com/">OpenCart</a><br> HobbyTronics Ltd © 2020</span></div>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19652031-1']);
+  _gaq.push(['_trackPageview']);
+
+  //ECOMMERCE//
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script> </div><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div></body></html>

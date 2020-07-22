@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0057)https://diyaudioprojects.com/Technical/Voltage-Regulator/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>LM317 / LM338 / LM350 Voltage Regulator Calculator and Circuits</title>
+
+
+
+<meta name="keywords" content="Voltage Regulator Calculator, LM117, LM138, LM150, LM317, LM338, LM350, National Semiconductor, 3 Terminal Adjustable Datasheets, schematics, circuits, power supply, electronics, diy">
+
+<meta name="description" content="Information, Voltage Regulator Calculator and Circuits / Schematics for the LM317 / LM338 / LM350 family of 3-Terminal Adjustable Voltage Regulators.">
+
+<link rel="alternate" type="application/rss+xml" title="DIY Audio Projects RSS Feed" href="http://diyaudioprojects.blogspot.com/rss.xml">  
+
+<link rel="stylesheet" type="text/css" href="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/style.css">
+
+<script type="text/javascript"><!--
+function adjreg (obj) {
+
+with (Math) {
+
+r1=eval(obj.r1.value);
+r2=eval(obj.r2.value);
+obj.vout.value=Math.round(1250*(1+(r2/r1)))/1000; 
+
+}    
+}
+//-->
+</script> 
+
+
+</head>
+
+
+<body>
+
+<div id="outer">
+
+<div id="header"> <!-- START Header -->
+<a href="https://diyaudioprojects.com/"><img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/logo.png" border="0" alt="DIY Audio Projects | diyAudioProjects.com" title="Go to DIY Audio Projects Main Page"></a>
+
+<ul class="bevelmenu">
+  <li><a class="current" href="https://diyaudioprojects.com/" title="DIY Audio Projects"><span>DIY Audio Projects</span></a></li>
+  <li><a href="https://diyaudioprojects.com/Forum/" title="DIY Audio Forum"><span>DIY Audio Forum</span></a></li>
+  <li><a href="https://diyaudioprojects.com/Gallery/" title="DIY Audio Photo Gallery"><span>DIY Audio Photo Gallery</span></a></li>
+  <li><a target="_blank" href="http://diyaudioprojects.blogspot.com/" title="DIY Audio Projects Blog"><span>DIY Audio Blog</span></a></li>
+</ul>
+</div> <!-- END Header -->
+
+<div id="search"> <!-- START Search -->
+<center><!-- SiteSearch Google -->
+<form action="http://diyaudioprojects.com/search.htm" id="cse-search-box">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-0863621997902329:9l0oyjijt7f">
+    <input type="hidden" name="cof" value="FORID:11">
+    <input type="hidden" name="ie" value="ISO-8859-1">
+    <input type="text" name="q" size="50">
+    <input type="submit" name="sa" value="Search">
+  </div>
+</form>
+<script type="text/javascript" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/f.txt"></script>
+</center><!-- SiteSearch Google -->
+</div><!-- END Search -->
+
+
+<div id="bar"><!-- START Bar -->
+
+&nbsp;&nbsp;Navigation: <a href="https://diyaudioprojects.com/" title="Main Page">DIY Audio Projects</a> / <a href="https://diyaudioprojects.com/Technical/" title="Technical Audio and Reference Information">Technical Audio and Reference Information</a> / <b>LM317 / LM338 / LM350 Voltage Regulator Calculator and Circuits</b>
+
+</div> <!-- END Bar -->
+
+<div id="bodyblock" align="right">
+
+<div id="menu" align="center"> <!-- START Left Menu -->
+
+<ul>
+  <li><a href="https://diyaudioprojects.com/" title="DIY Audio Projects Home">DIY Audio Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Tubes/tubes.htm" title="DIY Vacuum Tube Projects">DIY <b>Tube</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Tubes/" title="DIY Tube Amplifier Kits">DIY <b>Tube Amp Kits</b></a></li>
+  <li><a href="https://diyaudioprojects.com/Speakers/speakers.htm" title="DIY Hi-Fi Loudspeaker Projects">DIY <b>Speaker</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Drivers/drivers.htm" title="Hi-Fi Speaker Drivers and Tweeters">Speaker Drivers / Tweeters</a></li>
+  <li><a href="https://diyaudioprojects.com/Solid/solid_state.htm" title="DIY Solid State Projects">DIY <b>Solid State</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Chip/chip.htm" title="DIY IC / Opamp Projects (Chip Amp / Gainclone)">DIY <b>IC / Opamp</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Phono/" title="DIY Phono Projects - turntable, RIAA preamp">DIY <b>Phono</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Power/power.htm" title="DIY Hi-Fi Cable Projects">DIY <b>Cable</b> Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Misc/" title="Miscellaneous DIY Audio Projects">Misc. Audio Projects</a></li>
+  <li><a href="https://diyaudioprojects.com/Schematics/" title="DIY and Hi-Fi Audio Schematics">Hi-Fi Audio <b>Schematics</b></a></li>
+  <li><a href="https://diyaudioprojects.com/Technical/" title="Technical and Reference Information for Hi-Fi Audio">Technical Audio Information</a></li>
+  <li><a href="https://diyaudioprojects.com/Testeq/testeq.htm" title="Testing Equipment and Tools for DIY">Testing Equipment / Tools</a></li>
+  <li><a href="https://diyaudioprojects.com/links.htm" title="Links to DIY Audio sites">DIY Audio <b>Links</b></a></li>
+  <li><a href="https://diyaudioprojects.com/email.htm" rel="nofollow" title="Website and Contact Information">Contact / About Us</a></li>
+</ul>
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0863621997902329";
+/* 160x600, created 6/2/08 */
+google_ad_slot = "4163544326";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/f(1).txt">
+</script>
+
+
+</div> <!-- END Left Menu -->
+
+
+<div id="content"> <!-- START Main Content -->
+
+<h1 align="center">LM317 / LM338 / LM350 Voltage Regulator Calculator</h1>
+
+
+<table border="0" cellpadding="1" width="90%">
+<tbody><tr>
+
+<td width="43%" align="right">
+
+<!-- Google Translate - BEGIN -->
+<div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en'
+  }, 'google_translate_element');
+}
+</script><script type="text/javascript" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/f(2).txt"></script>
+
+<!-- Google Translate - END -->
+
+</td>
+
+<td width="4%">
+</td>
+
+<td width="43%"> 
+
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_google_plusone" g:plusone:annotation="none"></a>
+<a class="addthis_button_google"></a>
+<a class="addthis_button_favorites"></a>
+<a class="addthis_button_print"></a>
+<a class="addthis_button_email"></a>
+<a href="http://addthis.com/bookmark.php?v=250&amp;pub=diyaudioprojects" class="addthis_button_compact">Share</a>
+</div>
+<script src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/addthis_widget.js.download" type="text/javascript"></script>
+<!-- AddThis Button END -->
+
+</td>
+
+</tr>
+</tbody></table>
+
+
+<hr>
+<h2>LM317 / LM338 / LM350 Voltage Regulators</h2>
+<p>
+The LM317 / LM338 / LM350 family of adjustable 3-terminal positive voltage regulators can take a input of 3 to 40 Volts DC and provide a regulated voltage over a 1.2V to 37V output range.  The LM317 voltage regulators can provide up to 1.5 Amperes (A) of output current.  Where greater output current is required, the LM350 series regulators are suitable up to 3A and the LM338 series voltage regulators for up to 5A of output.
+</p>
+
+<p>
+The LM317 / LM338 / LM350 voltage regulators are exceptionally easy to use, requiring only two external resistors to set the regulated output voltage.  You can expect performance of both the line and load regulation using the LM317 / LM338 / LM350 adjustable voltage regulators over that of standard fixed voltage regulator.  The LM317 / LM338 / LM350 voltage regulators offer full overload protection. Normally, no capacitors are needed unless the device is situated more than 150 mm (6 inches) from the input filter capacitors in which case an input bypass capacitor is required.  An optional output capacitor can be added to improve transient response. The adjustment terminal of the regulator can be bypassed to achieve very high ripple rejection.  Refer to the adjustable regulator data sheets below for more information about the LM317 / LM338 / LM350 adjustable voltage regulators.
+</p>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/LM317-TO-220-Voltage-Regulator.jpg" border="0" alt="LM317 Voltage Regulator (TO-220 Plastic Package)" title="LM317 Voltage Regulator (TO-220 Plastic Package)">
+</p>
+<h3 align="center">Photograph 1: LM317 Voltage Regulator (TO-220 Plastic Package)</h3>
+
+
+<hr>
+<h2>LM317 / LM338 / LM350 Voltage Regulator Calculator</h2>
+<p>
+You can use this Voltage Regulator Calculator to vary the value of the program resistor (R<sub>1</sub>) and output set resistor (R<sub>2</sub>) and calculate the output voltage for the LM317 / LM338 / LM350 family of three terminal adjustable voltage regulators.  This Voltage Regulator Calculator will work for all voltage regulators with a reference voltage (V<sub>REF</sub>) of 1.25.  Typically, the program resistor (R<sub>1</sub>) is set at 240 ohms for the LM117, LM317, LM138 and LM150 regulators.  For the LM338 and LM350 regulators, 120 ohms is typically used for the program resistor R<sub>1</sub>.  However, other values such as 150 or 220 ohms can also be used for R<sub>1</sub>.  The LM317 / LM338 / LM350 series of voltage regulators can also be configured to regulate current in a circuit.  For information about current regulation with these integrated circuit (IC) regulators see the <a href="https://diyaudioprojects.com/Technical/Current-Regulator/">LM317 / LM338 / LM350 Current Regulator Calculator</a>.  
+</p>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/voltage-regulator.png" border="1" alt="LM317 / LM338 / LM350 Voltage Regulator Calculator Schematic" title="Typical LM317 / LM338 / LM350 Voltage Regulator Calculator Schematic">
+</p>
+<h3 align="center">Figure 1: LM317 / LM338 / LM350 Voltage Regulator Calculator Schematic</h3>
+
+<h3>LM317 / LM338 / LM350 Voltage Regulator Calculator</h3>
+<p>
+To determine the output voltage, enter values for the program (R<sub>1</sub>) and set (R<sub>2</sub>) resistors and hit the "Calculate" button.
+</p>
+
+<p>
+NOTE: this online voltage regulator calculator requires that JavaScript be enabled on your browser.
+</p>
+
+<form action="https://diyaudioprojects.com/Technical/Voltage-Regulator/post">
+<table border="1" align="center" bgcolor="#FFFFFF" cellpadding="2">
+  <tbody><tr>
+    <td><b>R<sub>1</sub></b><br>[ohms]<br><input type="text" name="r1" size="8" value="240"></td>
+    <td><b>R<sub>2</sub></b><br>[ohms]<br><input type="text" name="r2" size="8" value="1000"><input type="button" value="Calculate" onclick="adjreg(this.form)"></td>
+    <td><b>Output Voltage</b><br>[Volts]<br><input type="text" name="vout" size="8"></td>
+  </tr>
+</tbody></table>
+</form>
+
+<h3 align="center">LM317 / LM338 / LM350 Voltage Regulator Calculator</h3>
+
+<p>
+<span style="background-color: #FFFF00"><b>&nbsp;UPDATE&nbsp;</b></span> - the LM317 / LM338 / LM350 current regulator calculator has been moved to it's own page, <a href="https://diyaudioprojects.com/Technical/Current-Regulator/">LM317 / LM338 / LM350 Current Regulator Calculator</a>.  Please update your bookmarks.
+</p>
+
+
+<hr>
+<h2>Datasheets - LM317 / LM338 / LM350 3-Terminal Adjustable Regulator</h2>
+<ul>
+  <li><a target="_blank" rel="nofollow" href="https://diyaudioprojects.com/Technical/Voltage-Regulator/LM117-LM317A-LM317-Adjustable-Regulator-Datasheet.pdf">LM117 / LM317A / <b>LM317</b> Adjustable Regulator Datasheet</a> - (PDF 1MB) - March 2010 - National Semiconductor</li>
+  <li><a target="_blank" rel="nofollow" href="https://diyaudioprojects.com/Technical/Voltage-Regulator/LM138-LM338-5-Amp-Adjustable-Regulator-Datasheet.pdf">LM138 / <b>LM338</b> 5 Amp 3-Terminal Adjustable Regulator Datasheet</a> - (PDF 400kB) - May 1998 - National Semiconductor</li>
+  <li><a target="_blank" rel="nofollow" href="https://diyaudioprojects.com/Technical/Voltage-Regulator/LM150-LM350A-LM350-Adjustable-Regulator-Datasheet.pdf">LM150 / <b>LM350</b> 3 Amp 3-Terminal Adjustable Regulator Datasheet</a> - (PDF 400kB) - May 1998 - National Semiconductor</li>
+</ul>
+
+
+<center>
+<!-- START diyAudioProjects-content -->
+<table border="0" cellpadding="1" width="100%">
+ <tbody><tr>
+  <td width="98%">
+
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0863621997902329";
+/* 728 x 90, diyAudioProjects-content */
+google_ad_slot = "8590001455";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/f(1).txt">
+</script>
+
+  </td>
+  <td width="1%"></td>
+ </tr>
+</tbody></table>
+<!-- END diyAudioProjects-content -->
+</center>
+
+
+<hr>
+<h2>LM317 / LM338 / LM350 Voltage Regulator Circuits</h2>
+<p>
+The following schematics show typical circuit applications for the LM317 / LM338 / LM350 voltage regulators.  <b>Note</b>: The dropout voltage of the IC regulator is about 1.5 to 2.5 Volts, dependent on the output current (I<sub>OUT</sub>).  Therefore, the input voltage to the LM317 / LM338 / LM350 regulator will need to be at least 1.5V to 2.5V greater than the desired output voltage.  Plan to be about 3V about the desired output voltage.  You don't want to use too high an input voltage as the excess will need to be dissipated as heat through the regulator.  See the voltage regulator datasheets above for specific details regarding the dropout voltage and heatsink requirements.
+</p>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/25V-Adjustable-Voltage-Regulator-Schematic.png" border="1" alt="1.2 to 25V Adjustable Voltage Regulator Schematic for LM317 / LM338 / LM350" title="1.2 to 25V Adjustable Voltage Regulator Schematic for LM317 / LM338 / LM350">
+</p>
+<h3 align="center">Figure 2: 1.2 to 25V Adjustable Voltage Regulator Schematic for LM317 / LM338 / LM350</h3>
+
+<p>
+When external capacitors are used with a voltage regulator it may be necessary to use protection diodes to prevent the capacitors from discharging through low current points into the voltage regulator. Even small capacitors can have a low enough internal series resistance to be able to deliver 20A spikes when shorted.  Although the surge is very short in duration, there is enough energy to damage parts of the regulator IC.  No protection diodes are required for output voltages of less than 25V or greater than 10 uF capacitance.  Figure 3 shows the LM317 / LM338 / LM350 with protection diodes included for use with voltage outputs greater than 25V and high values of output capacitance.
+</p>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/Voltage-Regulator-Schematic-Protection-Diodes.png" border="1" alt="LM317 / LM338 / LM350 Voltage Regulator Schematic with Protection Diodes" title="LM317 / LM338 / LM350 Voltage Regulator Schematic with Protection Diodes">
+</p>
+<h3 align="center">Figure 3: LM317 / LM338 / LM350 Voltage Regulator Schematic with Protection Diodes</h3>
+
+<p>
+Solid tantalum capacitors can be used on the voltage output to improve the ripple rejection of the voltage regulator.
+</p>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/Adjustable-Voltage-Regulator-Schematic-Improved-Ripple-Rejection.png" border="1" alt="LM317 / LM338 / LM350 Adjustable Voltage Regulator Schematic with Improved Ripple Rejection" title="LM317 / LM338 / LM350 Adjustable Voltage Regulator Schematic with Improved Ripple Rejection">
+</p>
+<h3 align="center">Figure 4: LM317 / LM338 / LM350 Adjustable Voltage Regulator Schematic with Improved Ripple Rejection</h3>
+
+<p align="center">
+<img src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/LM317-12V-Battery-Charger-Circuit.png" border="1" alt="12 Volt Battery Charger Circuit with LM317 regulator" title="12 Volt Battery Charger Circuit with LM317 regulator">
+</p>
+<h3 align="center">Figure 5: 12 Volt Battery Charger Circuit with LM317 regulator</h3>
+
+
+<hr>
+<h2>Video Tutorial - LM317 Adjustable Voltage Regulator</h2>
+<p>
+LM317 Adjustable Voltage Regulator Tutorial - Uploaded by Afrotechmods on Apr 17, 2011 (YouTube) - 4 minutes, 8 seconds.
+</p>
+
+<center>
+<iframe title="YouTube video player" width="640" height="390" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/IjJWWGPjc-w.html" frameborder="0" allowfullscreen=""></iframe>
+</center>
+<h3 align="center">LM317 Adjustable Voltage Regulator Tutorial</h3>
+
+
+<hr>
+<h3>Voltage and Current Regulator Links</h3>
+<ul>
+  <li><a href="https://diyaudioprojects.com/Technical/Current-Regulator/">LM317 / LM338 / LM350 Current Regulator Calculator</a></li>
+  <li><a href="http://diyaudioprojects.blogspot.com/2008/11/simple-low-resistance-measurement.html" target="_blank">Simple Low Resistance Test Jig with LM317</a> - [external link]</li>
+  <li><a href="https://diyaudioprojects.com/Technical/Voltage-Regulator/LM317-LR8-IC-Regulators.htm">The Care and Feeding of LM317 and LR8 Integrated Circuit Regulators, Particularly in Valve Circuits</a></li>
+</ul>
+
+
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-0863621997902329";
+/* 728x90, created 6/2/08 */
+google_ad_slot = "4244034953";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/f(1).txt">
+</script>
+</center>
+
+
+</div> <!-- END Main Content -->
+</div> <!-- close bodyblock -->
+
+<div id="footer">
+Last update 6 January 2014.  Created 28 July 2007. © diyAudioProjects.com - <a rel="nofollow" href="https://diyaudioprojects.com/tos.htm">Terms of Service</a> - <a rel="nofollow" href="https://diyaudioprojects.com/privacy.htm">Privacy Policy</a>.
+
+</div>
+
+</div> <!-- close outer -->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./LM350Regulator_220Ohms_470Ohms_3.92Volts_files/ga.js.download" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-2180582-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body></html>

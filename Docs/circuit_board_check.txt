@@ -1,16 +1,109 @@
+*** measurements ***
+with usb attached + battery & with transmit -> current battery ~ 300ma, never higher than 400ma
+with no usb attached + battery -> current battery fluctuates a lot but 13-47ma is consumed WHEN ARDUINO IS OFF.
+* (with linear regulator?) *
+arduino power consumption with shield power on -> constantly 500mA.
+arduino power consumption with shield power off -> 90-140mA as shield LEDs light on&off.
+* with ldo *
+arduino power consumption with shield power off -> ~50mA, roughly constant
+arduino power consumption with shield power on -> start quick peak @ 600mA, 70-140mA (even while transmitting)
+* with ldo, but shutdown pin=1 *
+arduino power consumption with shield power connected (jst-pin) -> ~54mA constant
+arduino power consumption with shield power disconnected (jst-pin) -> ~53mA constant
+arduino power consumption with ldo disconnected -> ~52mA constant
+
+
+
+Pre-switching-regulator power usage of timer (no LEDs)
+@12v - 0.9mA (1.0 with LED) 
+@6V - 1.5mA
+
+LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 100pF on output (not 68pF)
+
+
+@LDO Output: 
+	330uF Alum cap + 3*100uF caps = 3/3 successess
+	330uF Alum cap + 2*100uF caps = 3/3 successess
+	330uF Alum cap + 1*100uF caps = 3/3 successess
+	330uF Alum cap + 0*100uF caps = 3/3 successess
+*WAIT FOR 20 MINS*
+	1000uF Alum cap = 1/1 success
+	330uF Alum cap + 0*100uF caps = 0/2 successess
+	330uF Alum cap + 3*100uF caps = 0/3 successess
+	
+	
+
+	//Next tasks
+	//		xx Switch off the external power to FONA on start-up until fona needed (so get base voltage steady for good sensor reading)
+	//		xx Update Schematic with above switch 
+	//	Add sensor-logic with pins, shunt, current check etc. + update schematic
+	//	Test transmission with 12 readings worth of data and 1kuF cap still ok?
+	//	Add EEPROM rolling logic test + any other software updates
+	//	Add LEDs/output-print etc. logic for jumpers, directing SIM808's LED to surface of box
+	//	Run whole board (with timer circuit) test with linear 30V->5V regulator
+	//	Add any components from above testing to existing purchase-list
+	//	Lots of reading on safety around circuit, fuses etc. and add anything extra to purchase-list
+	//	Make purchase from purchase-list
+	//	[When Components Come] Full test with Tant. Caps instead of Alum. Cap. @LDO-Output + @LDO-Circuit
+	//	[When Components Come] EEPROM: Run tests for the bigger memory size
+	//	
+	
+	//Design/PCB
+	//	Make sure connections wide enough
+	
+	
+	//Phase 2
+	// SD card
+
+
+cap failure should never short circuit; need fuse incase short-circuit
+derate the voltage rating by a factor of 3-4 if you want the full capacitance.
+***** check ESR on my 100uF caps !! *****
+we need - switching optimal main regulator **optimised for timer's current** but up to 2A max
+	- tantalum caps (or other robust ones at 1k Farads?) and several varieties to be deployed in parallel
+	- update tantalum cap on LDO
+	- several reverse voltage protection
+	- another cheap step-down (several quantity)
+	- ldo suitable tantalum caps
+	- rigid breadboard circuit cables (?)
+	- fuses
+Increase the 33PF and 10PF capacitors can effectively eliminate the high frequency interference. A 5.1V/500mW
+Zener diode is strongly recommended, the diode can prevent chip from damaging by the voltage surge. These
+capacitors and Zener diode should be placed as close as possible to SIM808 VBAT pins.
+
+
+
+
+The ERROR pin must be connected to ground if this function is not used
+If the sense option pin is not required, the sense pin must be connected to the VOUT pin.
+reverse current flow protection from LDO
+
+In designs, caps need to be near devices - <1cm
+
+ESD protection for LDO - https://www.design-reuse.com/articles/42191/low-dropout-ldo-linear-voltage-regulators.html
+
+https://resources.altium.com/p/what-is-esd-and-how-does-it-affect-my-pcb-design
+
+no lipo batt connected to sim808 chip!!
+
+bigger eeprom? slide-out eeprom? + slide-out serial connector to d/l data
+
+learn APNs
+
+add shocky to step-down? 12m@ https://training.ti.com/comparing-synchronous-and-non-synchronous-dcdc-converters (but mainly for heavy loads so no-op?) but shotty makes it much cooler
+
+jumper/switch for timer pin A to reduce time
+
+expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
++ easy put on LED maintenance set/or have secret button for it somewhere with lid?
+
 NB: 1h39 time between cycles, 3m3 between small cycles
-
-check what happens if all sms full
-
-https://arduino.stackexchange.com/questions/439/why-does-starting-the-serial-monitor-restart-the-sketch
 
 circuit capacitors voltage check
 
 resistors check
 
 power unit increase voltage/ensure output is 5V, not less
-
-easy put on LED maintenance set/or have secret button for it somewhere with lid?
 
 farnell power adaptor increase in power
 
@@ -23,14 +116,8 @@ change timing interval connectors
 add test line/board/header
 
 wire sizes check
-
-bigger eeprom? slide out eeprom?
-
+ 
 use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
 
-no lipo batt connected to sim808 chip!!
-
-expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
-
-jumper/switch for timer pin A to reduce time
+check what happens if all sms full
 

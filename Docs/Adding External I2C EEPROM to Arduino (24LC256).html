@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0054)https://www.hobbytronics.co.uk/arduino-external-eeprom -->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Adding External I2C EEPROM to Arduino (24LC256)</title>
+<meta name="keywords" content="External, EEPROM, Arduino, i2c, 24lc256, memory">
+<meta name="description" content="Adding External I2C EEPROM to Arduino (24LC256)">
+<!--<base href="https://www.hobbytronics.co.uk/">--><base href=".">
+<link href="https://www.hobbytronics.co.uk/image/data/ht_icon.png" rel="icon">
+<link rel="stylesheet" type="text/css" href="./Adding External I2C EEPROM to Arduino (24LC256)_files/stylesheet.css">
+<link rel="stylesheet" type="text/css" href="./Adding External I2C EEPROM to Arduino (24LC256)_files/print.css" media="print">
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/black/stylesheet/ie6.css" />
+<script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
+<script>
+DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .top');
+</script>
+<![endif]-->
+<script type="text/javascript" async="" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/ga.js.download"></script><script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/jquery-1.3.2.js.download"></script>
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/common.js.download"></script>
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/jquery.easing-1.3.js.download"></script>
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/jquery.fancybox-1.3.4.js.download"></script>
+<link rel="stylesheet" type="text/css" href="./Adding External I2C EEPROM to Arduino (24LC256)_files/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/fancybox.js.download"></script>
+
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/tab.js.download"></script>
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/bookmark.js.download"></script>
+
+<style type="text/css">
+div#fancybox-inner { text-align: left; }
+div#fancybox-content { text-align: left; }
+</style>
+
+</head>
+<body>
+<div id="wrapper">
+<div id="container" style="width: 100%;">
+<div id="header0">
+<div id="header">
+  <div class="div1">
+    <div class="div2">
+            <a href="http://www.hobbytronics.co.uk/index.php?route=common/home"><img height="75" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/ht_logo.png" title="HobbyTronics Ltd" alt="HobbyTronics Ltd"></a>
+          </div>
+    <div class="div3"><a href="http://www.hobbytronics.co.uk/index.php?route=information/sitemap" style="background-image: url(&#39;catalog/view/theme/black/image/sitemap.png&#39;);">Sitemap</a><a href="http://www.hobbytronics.co.uk/index.php?route=product/special" style="background-image: url(&#39;catalog/view/theme/black/image/special.png&#39;);">Special Offers</a><a onclick="bookmark(document.location, &#39;Adding External I2C EEPROM to Arduino (24LC256)&#39;);" style="background-image: url(&#39;catalog/view/theme/black/image/bookmark.png&#39;);">Bookmark</a><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/sales" style="background-image: url(&#39;catalog/view/theme/black/image/contact.png&#39;);">Contact</a></div>
+    <div class="div-flags">
+		<a href="http://www.hobbytronics.co.uk/" title="English Website"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/gb.png"></a>
+		<a href="http://fr.hobbytronics.co.uk/" title="Site en Francais"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/fr.png"></a>
+		<a href="https://www.hobbytronics.co.uk/informacion-espanol" title="Informacion Espanol"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/es.png"></a>
+		<a href="https://www.hobbytronics.co.uk/informazioni-italiano" title="Informazioni Italiano"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/it.png"></a>
+		<a href="https://www.hobbytronics.co.uk/delivery" title="Europe Delivery"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/eu.png"></a>
+		<a href="https://www.hobbytronics.co.uk/delivery" title="Worldwide Delivery"><img border="0" height="15" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/worldwide.png"></a>		
+	 </div>
+	 <div class="div4"><a href="http://www.hobbytronics.co.uk/index.php?route=common/home" id="tab_home" class="selected">Home</a>
+            <a href="https://www.hobbytronics.co.uk/index.php?route=account/login" id="tab_login">Log In</a>
+            <a href="https://www.hobbytronics.co.uk/index.php?route=account/account" id="tab_account">Account</a>
+		<a href="http://www.hobbytronics.co.uk/index.php?route=product/compare" id="tab_compare">Compare</a>		
+		<a href="http://www.hobbytronics.co.uk/index.php?route=checkout/cart" id="tab_cart">Basket</a>
+		<a href="https://www.hobbytronics.co.uk/index.php?route=checkout/shipping" id="tab_checkout">Checkout</a>
+	 </div>
+    <div class="div5">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="center">
+			<div id="search">
+				<div class="div8">Search:&nbsp;</div>
+				<div class="div9">
+										<input type="text" value="Keywords" id="filter_keyword" onclick="this.value = &#39;&#39;;" onkeydown="this.style.color = &#39;#000000&#39;" style="color: #999;">
+					
+				</div>
+				<div class="div10">&nbsp;&nbsp;<a onclick="moduleSearch();" class="button"><span>Go</span></a> </div>
+			</div>
+							<div><p style="text-align: right; padding:0; margin:0 ; font-size: 12px;	color: #FFFFFF; font-weight: normal;"><b>All our prices include VAT</b></p><p style="text-align: right; font-size: 10px;	color: #FFFFFF; font-weight: normal;">we don't add VAT at the checkout&nbsp;</p></div>
+			      </div>
+    </div>
+  </div>
+  <div class="div6">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">
+	        <div id="breadcrumb">
+                <a href="http://www.hobbytronics.co.uk/index.php?route=common/home">Home</a>
+                 &gt; <a href="http://www.hobbytronics.co.uk/arduino-external-eeprom">Adding External I2C EEPROM to Arduino (24LC256)</a>
+              </div>
+      <div class="div7">
+                <form action="https://www.hobbytronics.co.uk/index.php?route=common/home" method="post" enctype="multipart/form-data" id="currency_form">
+          <div class="switcher">
+                                                            <div class="selected"><a>Pound Sterling</a></div>
+                                                            <div class="option">
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;EUR&#39;); $(&#39;#currency_form&#39;).submit();">Euro</a>
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;GBP&#39;); $(&#39;#currency_form&#39;).submit();">Pound Sterling</a>
+                            <a onclick="$(&#39;input[name=\&#39;currency_code\&#39;]&#39;).attr(&#39;value&#39;, &#39;USD&#39;); $(&#39;#currency_form&#39;).submit();">US Dollar</a>
+                          </div>
+          </div>
+          <div style="display: inline;">
+            <input type="hidden" name="currency_code" value="">
+            <input type="hidden" name="redirect" value="http://www.hobbytronics.co.uk/arduino-external-eeprom?language=en">
+          </div>
+        </form>
+        		  
+		  
+		  
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div id="container">
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/header.js.download"></script>
+
+
+<div id="content">
+  <div class="top">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">
+      <h1>Adding External I2C EEPROM to Arduino (24LC256)</h1>
+    </div>
+  </div>
+  <div class="middle"><p>
+	<strong>Adding External I2C EEPROM to Arduino (24LC256)</strong></p>
+<p>
+	<span style="color:#0000cd;">This tutorial was originally posted on the 10kohms.com website, which now seems to be no longer with us, so we have reproduced it here.</span></p>
+<p>
+	In my last post I discussed using the built in EEPROM to store permanent data on the Arduino. All though this is a very easy and effective way of storing data on the Arduino the built in EEPROM only offers 512 bytes of storage. When working with larger or more advanced Arduino projects we may need to store additional data so an external memory solution like the 24LC256 I²C EEPROM IC becomes necessary.</p>
+<p class="info">
+	We’re using a 256kbit eeprom which is actually 32kbytes of space. 262,144 bits / 8 bits in a byte = 32,768 bytes. That’s 62 times the Arduino’s built-in storage!</p>
+<p>
+	<strong>Hardware Setup</strong></p>
+<p class="info">
+	In this example we’ll be using the Microchip 24LC256 IC. If you’re using a different IC please confirm that the pin-out and power requirements are the same so you don’t damage your chip.</p>
+<p>
+	<img alt="eeprom" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/17230_PV.jpg"><img alt="eeprom" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/pinout-24LC256.png"></p>
+<p>
+	The Microchip 24LC256 chip can be purchased in a 8 pin DIP package. The pins on the 24LC256 are pretty straightforward and consist of power(8), gnd(4), write protection(7), SCL/SDA(6,5), and three address pins(1,2,3). Before we get into the software part lets hook up the 24LC256 chip up to our Arduino.</p>
+<p>
+	<img alt="eeprom" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/24LC256-1.jpg" width="500"></p>
+<p>
+	Using the image above as a guide lets begin to wire the chip. First connect GND and VCC, pins 4 and 8 respectivly. Next lets go ahead and connect the data pins to the Arduino board. Since we’re using the Arduino I²C bus we’re going to be using <strong>Analog</strong> pins 4 and 5. Connect the SDA pin on the 24LC256(pin 5) to the pin 4 of the Arduino. Then connect the SCL(pin 6) to pin 5 on the Arduino. Double check that you’ve connected the correct pins on the 24LC256 to the correct pins on the Arduino; strange things will happen if you have them reversed. After our data and power pins are connected we have four left on 24LC256 chip, the WP pin and the three address pins. The WP pin stands for write-protected and this allows you to control if data can be written to the eeprom or not. If this pin is low then writing is enabled but if it’s high then writing is disable; reading is always enabled. For the purpose of this tutorial we’re going to be writing to the eeprom so we can connect the WP pin to GND.</p>
+<p>
+	The last three pins set the address of the 24LC256 chip which allows us to target a particular chip on the I²C bus. This particular I²C chip comes pre-wired with four bits of it’s address already set(1010) and these can not be changed. The last three bits of the address however can be changed which allows us to run up to eight 24LC256 chips on the same I²C bus. This is a little confusing at first so lets look at the figure below to explain the address in a little more detail.</p>
+<p>
+	<img alt="" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/24LC256-address.png"></p>
+<p>
+	For the purpose of explaining how the address works we can ignore the Start and Acknowledge bits. The way the I²C bus works is a 7-bit address is passed along with a read/write bit that tells the chip if it should write the incoming data or read it and send it back. The Arduino takes care of the last R/W bit for us depending on what function we’re using so as long as you’re using the standard Arduino Wire library we don’t have to worry about this bit. This leaves us with the seven middle bits and as I mentioned above the first four bits(Control Code) are hard-wired and we can’t change these. The next three bits(A2,A1,A0) are the important bits that we can change so lets look at the simple table below to see what address the chip will have depending on what we set these pins to.</p>
+<p>
+	So, if we were to tie pins 1,2 and 3 on the 24LC256 to GND then the chip would have address 0×50 and if were to assign them all Vcc then the chip would have address 0×57 and every combination in between. To keep things simple lets just tie all pins to GND to make the address 0×50. In a future tutorial I will show you how to use multiple eeprom chips off the same I²C at which point we will be assigning each chip a different address but for now lets stick with 0×50. With the address pins connected the hardware part of this tutorial is complete and every pin of the 24LC256 should be connected to either Vcc, GND or the Arduino. Time to move on to software!</p>
+<p class="info">
+	It’s been brought to my attention that some people use pull-up resistors on the data and clock pins to the Arduino. All though this would not hurt the circuit it’s not needed because when the Wire.h library is initialized it knows pins 4 and 5 are going to be used for I²C so it also activates the built-in pull-up resistors. For more information please read <a href="http://www.arduino.cc/en/Reference/Wire" target="_new">http://www.arduino.cc/en/Reference/Wire</a>.</p>
+<p>
+	<strong>Arduino Sketch</strong></p>
+<p>
+	Below is the entire tutorial code, scan over it and see if you understand it before I dive into what each section does.</p>
+<p>
+	Note: This is written for Arduino versions before 1.0. If you are using Arduino 1.0 and above then you need to change <span style="color:#ff8c00;"><strong>Wire.send</strong></span> to <span style="color:#ff8c00;"><strong>Wire.write</strong></span> and <strong><span style="color:#ff8c00;">Wire.receive</span></strong> to <span style="color:#ff8c00;"><strong>Wire.read</strong></span></p>
+<pre>#include&nbsp;&lt;<span style="color: #CC6600;">Wire</span>.h&gt;    
+&nbsp;
+#define&nbsp;disk1&nbsp;0x50&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #7E7E7E;">//Address of 24LC256 eeprom chip</span>
+&nbsp;
+<span style="color: #CC6600;">void</span> <span style="color: #CC6600;"><b>setup</b></span>(<span style="color: #CC6600;">void</span>)
+{
+&nbsp;&nbsp;<span style="color: #CC6600;"><b>Serial</b></span>.<span style="color: #CC6600;">begin</span>(9600);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">begin</span>();  
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> address = 0;
+&nbsp;
+&nbsp;&nbsp;writeEEPROM(disk1,&nbsp;address,&nbsp;123);
+&nbsp;&nbsp;<span style="color: #CC6600;"><b>Serial</b></span>.<span style="color: #CC6600;">print</span>(readEEPROM(disk1, address), <span style="color: #006699;">DEC</span>);
+}
+&nbsp;
+<span style="color: #CC6600;">void</span> <span style="color: #CC6600;"><b>loop</b></span>(){}
+&nbsp;
+<span style="color: #CC6600;">void</span> writeEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress, <span style="color: #CC6600;">byte</span> data ) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>(data);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">delay</span>(5);
+}
+&nbsp;
+<span style="color: #CC6600;">byte</span> readEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress ) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">byte</span> rdata = 0xFF;
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">requestFrom</span>(deviceaddress,1);
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">available</span>()) rdata = <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">receive</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">return</span> rdata;
+}
+
+</pre>
+<p>
+	In order to use the I²C interface we need to include the Arduino standard Wire library so first things first, include Wire.h at the top of the sketch. You’ll notice directly after the include we define a variable called disk1 and assign it a hex value of 0×50. When we setup the chip above we set the address of the chip to 0×50 by tying all the address pins to GNS so we simple set this variable to that address which allows us to access the chip from within our sketch. This variable is not required but it allows us to easily change the address we want to access without going through all of the code and replacing the value. Also, if you plan on adding more than one chip it’s easier to refer to them as disk1, disk2, etc rather than 0×50, 0×51 which might get confusing.</p>
+<p>
+	Moving on we have our standard setup and a loop functions, for this tutorial the loop function is left empty so we’ll just focus on the setup function. We first initialize our Serial connection for printing back to the computer and then we initiate the I²C connection by calling Wire.begin(). This enables pins 4 and 5 for I²C and also enabled the internal pull-up resistor(See note above). Next we create a new variable to store the address of the eeprom we want to write to(not the address of the eeprom IC itself but the address of the byte we want to read/write to). Since this eeprom has 32Kbytes of storage this address can be any number between 0 and 32,767; we’ll start with address 0. After we’ve initialized everything we call our two primary functions, writeEEPROM and readEEPROM which actually do the dirty work of writing and reading the bytes of data.</p>
+<p>
+	Lets first start off with the writeEEPROM function. This function takes three arguments, the device address(the disk1 variable), the memory address on the eeprom and the byte of data you want to write. The first argument is the address of the device you want to write to, in our case we only have one device(disk1) so we pass this on. The next argument is the address on the eeprom you want to write to and as stated above can be between 0 and 32,767. Finally we have to pass along the byte we want to store. So, writeEEPROM(disk1, address, 123) is going to write the decimal 123 to “address”(which is 0) on disk1(0×50). Lets jump into the actual writeEEPROM function to learn what it does.</p>
+<pre><span style="color: #CC6600;">void</span> writeEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress, <span style="color: #CC6600;">byte</span> data ) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>(data);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">delay</span>(5);
+}</pre>
+<p>
+	We first call the Wire.beginTransmission function which sends the deviceaddress to let the chip know we want to communicate with it. Next we have to send the address on the eeprom we want to write to. Since our eeprom chip has 32,000 address locations we are using two bytes(16 bits) to store the address but we can only send one byte at a time so we have to split it up. The first send function takes the eeaddress and shifts the bits to the right by eight which moves the higher end of the 16 bit address down to the lower eight bits. Next we do a bitwise AND to get just the last eight bits. To illustrate this lets follow the steps below.</p>
+<p>
+	Lets say we want to write to address location 20,000 which is 0100 1110 0010 0000 in binary. We need to send the MSB(Most significant bits) first so we have to shift our address to the right eight bits.</p>
+<p>
+	0100 1110 0010 0000 (eeaddress)<br>
+	After shifting 8 bits to the right we have<br>
+	0100 1110</p>
+<p>
+	We now have the first half of the address, time to get the second half:</p>
+<p>
+	0100 1110 0010 0000 (eeaddress)<br>
+	After we bitwise AND 0xFF with eeadddress we get<br>
+	0010 0000</p>
+<p>
+	This means our 24LC256 chip gets the address 1001 1100 and then 0010 0000 which tells it to store the next byte in address location 20,000. Now that we’ve sent the address we send the data and then we end the process by calling the endTransmission function. The 24LC256 gets the data and writes the data to that address location. To finish up this function you’ll notice I’ve included a delay of 5 milliseconds. This allows the chip time to complete the write operation, without this if you try to do sequential writes weird things might happen.</p>
+<p>
+	Now that you’re data has been stored it’s time to get it back, lets examine the readEEPROM function.</p>
+<pre><span style="color: #CC6600;">byte</span> readEEPROM(<span style="color: #CC6600;">int</span> deviceaddress, <span style="color: #CC6600;">unsigned</span> <span style="color: #CC6600;">int</span> eeaddress ) 
+{
+&nbsp;&nbsp;<span style="color: #CC6600;">byte</span> rdata = 0xFF;
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">beginTransmission</span>(deviceaddress);
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &gt;&gt; 8));   <span style="color: #7E7E7E;">// MSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">send</span>((<span style="color: #CC6600;">int</span>)(eeaddress &amp; 0xFF)); <span style="color: #7E7E7E;">// LSB</span>
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">endTransmission</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">requestFrom</span>(deviceaddress,1);
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">if</span> (<span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">available</span>()) rdata = <span style="color: #CC6600;">Wire</span>.<span style="color: #CC6600;">receive</span>();
+&nbsp;
+&nbsp;&nbsp;<span style="color: #CC6600;">return</span> rdata;
+}</pre>
+<p>
+	The readEEPROM accepts two arguments and returns on byte(the data). The arguments it accepts are the same first two arguments the write function, the device address and the address on the eeprom to read from. First we declare a variable to store the byte we’re going to retrieve. Next we start off just like we did with the write function by starting the process with beginTransmission and then we send the address we want to access; this works exactly the same way as the write function. Continuing on we end the the transmission and we’ve now set the 24LC256 with the address we’re interested in so now we just have to request and read the data. The next function requestFrom() sends the command to that chip to start sending the data at the address we set above. The second argument is how many bytes(starting at this address) to send back; we’re only requesting one. Finally we check to see if there is data available on the I²C bus and if there is we read it into the rdata variable. We return the byte of data and we’re done!</p>
+<p>
+	That’s all you really need to know in order to use and external I²C EEPROM chip with the Arduino. Take this setup and play around with it, see if you can figure out how to store more than one byte at a time or if you want a challenge try using more than one 24LC256 on the same I²C bus.</p>
+<p>
+	<strong>See also<br>
+	</strong></p>
+<p style="margin-left: 40px;">
+	<a href="https://www.hobbytronics.co.uk/eeprom-page-write" title="Eeprom Page Write (Writing long strings to 24LC256)">Eeprom Page Write (Writing long strings to 24LC256)</a></p>
+ 
+  </div>
+  <div class="bottom">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center"></div>
+  </div>
+</div>
+<div id="column_right">
+			
+	<div id="module_cart" class="box">
+  <div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/basket.png" alt="">Shopping Cart</div>
+  <div id="module_cart_middle" class="middle">	
+
+        <div style="text-align: center;">0 items</div>
+      </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+<script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/ajax_add.js.download"></script>
+
+<div id="free_delivery_info" class="box">
+	<div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/delivery.png" alt="">DELIVERY/PAYMENT</div>
+  <div class="middle">
+		<p>
+	<img alt="Free Delivery Orders over £50" height="113" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/free-delivery.jpg" width="160"></p>
+<p>
+	<b>UK</b> - £2.40 orders under £50<br>
+	<b>Airmail</b> from £2.95 (+VAT)<br>
+	<a href="https://www.hobbytronics.co.uk/delivery" title="Delivery Infomation">More Details...</a></p>
+<p>
+	<img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/paypal_worldpay.jpg"></p>
+		
+	</div>
+  <div class="bottom">&nbsp;</div>
+</div>
+
+<script src="./Adding External I2C EEPROM to Arduino (24LC256)_files/dist.js.download"></script>
+<div id="badge-140" style="max-width:180px;"><iframe src="./Adding External I2C EEPROM to Arduino (24LC256)_files/widget.html" frameborder="0" width="100%" title="Reviews Badge Widget" style="min-width: 140px;" height="137"></iframe></div>
+<script>
+reviewsBadge('badge-140',{
+  store: 'hobbytronics-ltd',
+  primaryClr: '#12d06c',
+  neutralClr: '#f4f4f4',
+  starsClr: '#fff',
+  textClr: '#fff'
+});
+</script>
+
+<script type="text/javascript"><!--
+
+function getUrlParam(name) {
+  var name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.href);
+  if (results == null)
+    return "";
+  else
+    return results[1];
+}
+
+$(document).ready(function () {
+	$('.cart_remove').live('click', function () {
+		if (!confirm('Remove item from Cart?')) {
+			return false;
+		}
+		$(this).removeClass('cart_remove').addClass('cart_remove_loading');
+		$.ajax({
+			type: 'post',
+			url: 'index.php?route=module/cart/callback',
+			dataType: 'html',
+			data: 'remove=' + this.id,
+			success: function (html) {
+				$('#module_cart .middle').html(html);
+				$('#module_cart').removeClass("highlightcart");
+				$("#module_cart_middle").css("background","#FFFFFF");
+				if (getUrlParam('route').indexOf('checkout') != -1) {
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
+//--></script>
+				<div class="box">
+  <div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/featured.png" alt="">Featured</div>
+  <div class="middle">
+        <table cellpadding="2" cellspacing="0" style="width: 100%;">
+            <tbody><tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-stackable-header-kit"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/arduino_stackable_header_kit-38x38.jpg" title="Arduino Stackable Header Kit" alt="Arduino Stackable Header Kit"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-stackable-header-kit" title="Arduino Stackable Header Kit">Arduino Stackable Header Kit</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£1.39</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=205" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;205&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-pro-mini-16mhz-328-5v"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/arduino_pro_mini_328_5v-38x38.jpg" title="Arduino Pro Mini 328 - 5V/16MHz" alt="Arduino Pro Mini 328 - 5V/16MHz"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-pro-mini-16mhz-328-5v" title="Arduino Pro Mini 328 - 5V/16MHz">Arduino Pro Mini 328 - 5V/16MHz</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£8.94</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=224" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;224&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/arduino-uno-r3"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/arduino-uno-r3-38x38.jpg" title="Arduino UNO R3" alt="Arduino UNO R3"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/arduino-uno-r3" title="Arduino UNO R3">Arduino UNO R3</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£22.80</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=540" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;540&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/i2clcd-backpack-v2"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/lcd-backpack-v21-38x38.jpg" title="LCD Backpack V2 - I2C and Serial RX" alt="LCD Backpack V2 - I2C and Serial RX"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/i2clcd-backpack-v2" title="LCD Backpack V2 - I2C and Serial RX">LCD Backpack V2 - I2C and Serial RX</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£6.00</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=754" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;754&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+            <tr>
+        <td valign="top" style="width:1px"><a href="http://www.hobbytronics.co.uk/teensy-v32"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/teensy32-38x38.jpg" title="Teensy 3.2" alt="Teensy 3.2"></a></td>
+        <td valign="top"><a href="http://www.hobbytronics.co.uk/teensy-v32" title="Teensy 3.2">Teensy 3.2</a>
+                    <br>
+                    <span style="font-size: 11px; color: #900;">£19.20</span>
+                    <a class="button_add_small" href="https://www.hobbytronics.co.uk/index.php?route=checkout/cart&amp;product_id=1139" title="Add to Cart">&nbsp;</a>
+          <a class="button_compare_small" onclick="addToCompare(&#39;1139&#39;);" title="Add to Compare">&nbsp;</a>
+                              <br>
+          <img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/stars_5.png" alt="5 out of 5 Stars!">
+          </td>
+      </tr>
+          </tbody></table>
+      </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+	
+</div>
+<div id="column_left">
+    <div class="box">
+  <div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/category.png" alt="">Categories</div>
+  <div id="category"><ul><li><a href="http://www.hobbytronics.co.uk/sale">SALE ITEMS</a></li><li><a href="http://www.hobbytronics.co.uk/arduino">Arduino</a></li><li><a href="http://www.hobbytronics.co.uk/audio-midi">Audio / MIDI</a></li><li><a href="http://www.hobbytronics.co.uk/batteries">Batteries / Chargers / PSU</a></li><li><a href="http://www.hobbytronics.co.uk/cables-connectors">Cables / Connectors</a></li><li><a href="http://www.hobbytronics.co.uk/electronic-components">Components</a></li><li><a href="http://www.hobbytronics.co.uk/lcd">Displays</a></li><li><a href="http://www.hobbytronics.co.uk/gps">GPS</a></li><li><a href="http://www.hobbytronics.co.uk/hardware">Hardware</a></li><li><a href="http://www.hobbytronics.co.uk/kits">Kits</a></li><li><a href="http://www.hobbytronics.co.uk/motor-control">Motor Control</a></li><li><a href="http://www.hobbytronics.co.uk/pcb-design">PCB Design</a></li><li><a href="http://www.hobbytronics.co.uk/programmers">Programmers</a></li><li><a href="http://www.hobbytronics.co.uk/prototyping">Prototyping</a></li><li><a href="http://www.hobbytronics.co.uk/radio-control">Radio Control / UAV</a></li><li><a href="http://www.hobbytronics.co.uk/raspberry-pi">Raspberry Pi</a></li><li><a href="http://www.hobbytronics.co.uk/robotics">Robotics</a></li><li><a href="http://www.hobbytronics.co.uk/sensors">Sensors</a></li><li><a href="http://www.hobbytronics.co.uk/teensy-boards">Teensy</a></li><li><a href="http://www.hobbytronics.co.uk/test-equipment">Tools / Test Equipment</a></li><li><a href="http://www.hobbytronics.co.uk/usb-host">USB Host</a></li><li><a href="http://www.hobbytronics.co.uk/wireless">Wireless</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/staff-picks">Staff Picks</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/index.php?route=product/latest">Latest Products</a></li><li><a class="staffpicks" href="http://www.hobbytronics.co.uk/downloads">Downloads</a></li><li><a class="gvoucher" href="http://www.hobbytronics.co.uk/index.php?route=account/voucher">Gift Voucher</a></li><li><a class="laser" href="http://www.hobbytronics.co.uk/laser-cutting">Laser Cutting</a></li><li><a class="stencil" href="http://www.hobbytronics.co.uk/smt-stencils">SMT Stencils</a></li><li><a class="project" href="http://www.hobbytronics.co.uk/projects">Projects</a></li><li><a class="tutorial" href="http://www.hobbytronics.co.uk/tutorials-code">Tutorials</a></li></ul></div>
+  <div class="bottom_c">&nbsp;</div>
+</div>
+    <div class="box">
+  <div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/brands.png" alt="">Brands</div>
+  <div class="middle" style="text-align: center;">
+    <select onchange="location = this.value">
+      <option value=""> --- Please Select --- </option>
+                  <option value="http://www.hobbytronics.co.uk/index.php?route=product/manufacturer&amp;manufacturer_id=0" selected="selected"></option>
+                        <option value="http://www.hobbytronics.co.uk/adafruit">Adafruit</option>
+                        <option value="http://www.hobbytronics.co.uk/allegro-microsystems">Allegro Microsystems</option>
+                        <option value="http://www.hobbytronics.co.uk/analog-devices">Analog Devices</option>
+                        <option value="http://www.hobbytronics.co.uk/antex">Antex</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-arduino">Arduino</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-atmel">Atmel</option>
+                        <option value="http://www.hobbytronics.co.uk/devantech">Devantech Ltd</option>
+                        <option value="http://www.hobbytronics.co.uk/digi">Digi</option>
+                        <option value="http://www.hobbytronics.co.uk/ftdi">FTDI</option>
+                        <option value="http://www.hobbytronics.co.uk/globalsat">GlobalSat</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-hobbytronics">HobbyTronics</option>
+                        <option value="http://www.hobbytronics.co.uk/id-innovations">ID Innovations</option>
+                        <option value="http://www.hobbytronics.co.uk/ikalogic">IKALogic</option>
+                        <option value="http://www.hobbytronics.co.uk/ir">International Rectifier</option>
+                        <option value="http://www.hobbytronics.co.uk/maxim">Maxim</option>
+                        <option value="http://www.hobbytronics.co.uk/mega">Mega</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-microchip">Microchip</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-misc">Miscellaneous</option>
+                        <option value="http://www.hobbytronics.co.uk/nxp">NXP</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-parallax">Parallax</option>
+                        <option value="http://www.hobbytronics.co.uk/pololu">Pololu</option>
+                        <option value="http://www.hobbytronics.co.uk/power-hd">Power HD</option>
+                        <option value="http://www.hobbytronics.co.uk/seeed-studio">Seeed Studio</option>
+                        <option value="http://www.hobbytronics.co.uk/manufacturer-sparkfun">SparkFun</option>
+                        <option value="http://www.hobbytronics.co.uk/stmicroelectronics">ST Microelectronics</option>
+                        <option value="http://www.hobbytronics.co.uk/teensy">Teensy</option>
+                        <option value="http://www.hobbytronics.co.uk/texas-instruments">Texas Instruments</option>
+                        <option value="http://www.hobbytronics.co.uk/wiznet">Wiznet</option>
+                </select>
+  </div>
+  <div class="bottom">&nbsp;</div>
+</div>
+    <div class="box">
+  <div class="top"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/information.png" alt="">Information</div>
+  <div id="information" class="middle">
+    <ul>
+            <li><a href="http://www.hobbytronics.co.uk/about-us">About Us</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/privacy-policy">Privacy Policy</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/terms-conditions">Terms &amp; Conditions</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/delivery">Delivery and Payment</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/universities-schools">Universities / Schools</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/vat">VAT</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/cookies">Cookies</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/terms-of-use">Terms of use</a></li>
+            <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/sales">Contact Sales</a></li>
+      <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/contact/support">Contact Support</a></li>		
+      <li><a href="http://www.hobbytronics.co.uk/index.php?route=information/sitemap">Site Map</a></li>
+    </ul>
+  </div>
+  <div class="bottom">&nbsp;</div>
+</div>    
+  <div style="padding-left:15px">
+	<a href="http://www.youtube.com/user/hobbytronics101/videos" title="Subscribe to our YouTube channel" target="_new"><img align="left" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/youtube.png"></a>
+   &nbsp;Check out our videos<br clear="all">
+  
+	Follow us on:<br>
+	<a href="http://www.facebook.com/hobbyTronics.co.uk" title="Follow us on Facebook" target="_new"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/facebook.png"></a>acebook
+<!--
+	<a href="http://twitter.com/#!hobbytronics" title="Follow us on Twitter" target="_new"><img src="/image/data/twitter2.png" /></a>
+	<a href="http://www.youtube.com/hobbytronics101" title="Subscribe to our YouTube channel" target="_new"><img src="/image/data/youtube.png" /></a>
+	<a href="http://hobbytronicsuk.blogspot.co.uk/" title="Follow our New Product and Information blogs on Blogspot" target="_new"><img src="/image/data/google_blogger.jpg" /></a>	
+-->
+
+	</div>
+
+
+</div>
+<div id="footer">
+  <div class="div1"><a onclick="window.open(&#39;https://www.paypal.com/uk/mrb/pal=W9TBB5DTD6QJW&#39;);"><img src="./Adding External I2C EEPROM to Arduino (24LC256)_files/payment.png" alt=""></a>
+<!--
+                    &nbsp;&nbsp;<a href="http://www.shopwiki.co.uk/s/841787" target="_blank" title="Hobbytronics is a www.shopwiki.co.uk Approved Store"><img height=26 src="https://staticssl.shopwiki.com/static/badges/StoreBadgeEN.png?sid=841787" data-swmc-badge-code="9b5ca0a62593cda61197d6e93043344afcbaf4d8" /></a>
+
+<a class="tf_upfront_badge" href="http://www.thefind.com/store/about-hobbytronicscouk" title="TheFind Upfront"><img  border="0" src="//upfront.thefind.com/images/badges/r/c5/ac/c5ac747585ccff8c1ad4cbc1032d705d.png" alt="HobbyTronics is an Upfront Merchant on TheFind. Click for info."/></a>
+  <script type="text/javascript">
+    (function() {
+      var upfront = document.createElement('SCRIPT'); upfront.type = "text/javascript"; upfront.async = true;
+      upfront.src = document.location.protocol + "//upfront.thefind.com/scripts/main/utils-init-ajaxlib/upfront-badgeinit.js";
+      upfront.text = "thefind.upfront.init('tf_upfront_badge', 'c5ac747585ccff8c1ad4cbc1032d705d')";
+      document.getElementsByTagName('HEAD')[0].appendChild(upfront);
+    })();
+  </script>
+ --> 
+ <script type="text/javascript" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/seal.js.download"></script><img id="trustwaveSealImage" src="./Adding External I2C EEPROM to Arduino (24LC256)_files/seal_image.php" border="0" style="cursor:pointer;" onclick="javascript:window.open(&#39;https://sealserver.trustwave.com/cert.php?customerId=ca65b9ec9d5b42a8bf1fdc1a687bc2db&amp;size=105x54&amp;style=invert&#39;, &#39;c_TW&#39;, &#39;location=no, toolbar=no, resizable=yes, scrollbars=yes, directories=no, status=no, width=615, height=720&#39;); return false;" oncontextmenu="javascript:alert(&#39;Copying Prohibited by Law - Trusted Commerce is a Service Mark of TrustWave Holdings, Inc.&#39;); return false;" alt="This site is protected by Trustwave&#39;s Trusted Commerce program" title="This site is protected by Trustwave&#39;s Trusted Commerce program"> 
+ </div>
+
+ <div class="div2" style="height: 60px;"><span style="position: absolute; bottom: 0px; right: 0px;">Powered By <a href="https://www.opencart.com/">OpenCart</a><br> HobbyTronics Ltd © 2020</span></div>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19652031-1']);
+  _gaq.push(['_trackPageview']);
+
+  //ECOMMERCE//
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script> </div><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div></body></html>

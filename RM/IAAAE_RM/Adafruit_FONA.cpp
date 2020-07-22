@@ -108,6 +108,8 @@ FONA_STATUS_INIT Adafruit_FONA::begin(uint8_t tx, uint8_t rx) { //Stream &port) 
 
 
 /********* Power off ********************************************/
+
+//Don't use - actually causes the whole Arduino to restart (we see "Starting..." again in serial output), not just fona
 boolean Adafruit_FONA::powerOff() {
 	return sendCheckReply(F("AT+CPOWD="), 1, F("NORMAL POWER DOWN"));
 }

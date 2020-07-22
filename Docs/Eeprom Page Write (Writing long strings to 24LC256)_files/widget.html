@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!-- saved from url=(0168)https://widget.reviews.co.uk/badge/widget?elementId=badge-140&version=1&&store=hobbytronics-ltd&primaryClr=%2312d06c&neutralClr=%23f4f4f4&starsClr=%23fff&textClr=%23fff -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reviews Badge</title>
+<link rel="stylesheet" href="./style-cf.css">
+<link rel="stylesheet" href="./style.css">
+<!--[if lte IE 8]>
+        <link rel="stylesheet" type="text/css" href="css/ie8.css" />
+        <![endif]-->
+</head>
+<body>
+<div class="Badge">
+<div class="Badge__content">
+<div class="Badge__stars"><i class="ruk-icon-full-star-01 RatingStars__star"></i> <i class="ruk-icon-full-star-01 RatingStars__star"></i> <i class="ruk-icon-full-star-01 RatingStars__star"></i> <i class="ruk-icon-full-star-01 RatingStars__star"></i> <i class="ruk-icon-full-star-01 RatingStars__star"></i> </div>
+<div class="Badge__stats">
+<div class="statsWrap">
+<div class="stats__left">
+<span class="ruk_rating">4.89</span>
+</div>
+<div class="stats__right">
+Average
+</div>
+<br>
+<div class="stats__left">
+<span class="ruk_count">825</span>
+</div>
+<div class="stats__right">
+Reviews
+</div>
+</div>
+</div>
+</div>
+<a href="http://www.reviews.co.uk/company-reviews/store/hobbytronics-ltd?utm_source=hobbytronics-ltd&amp;utm_medium=widget&amp;utm_campaign=badge" target="_blank" class="Badge__footer">
+<div class="ReviewsLogo ReviewsLogo--medium">
+<div class="ReviewsLogo__star">
+<i class="ruk-icon-rev-star-xsmall-01"></i>
+</div>
+<div class="ReviewsLogo__text">
+<i class="ruk-icon-reviewsio-logo-text-small"></i>
+</div>
+</div>
+</a>
+</div>
+<script>
+
+        var content_mode = 'company'.split(';');
+
+        if (content_mode.includes('product')){
+        var xhttp2 = new XMLHttpRequest;
+        xhttp2.onreadystatechange = function() {
+
+            if (xhttp2.readyState == 4 && xhttp2.status == 200) {
+            var data2 = JSON.parse(xhttp2.responseText);
+
+
+            var starsWraps = document.querySelectorAll(".starsWrap");
+            for(var i=0; i < starsWraps.length; i++){
+                starsWraps[i].innerHTML = renderRating((Number(data2.company_review_stats.average_rating) + Number(data2.product_review_stats.average_rating)) / 2);
+            }
+
+            var counts = document.querySelectorAll(".ruk_count");
+            for(var i=0;i<counts.length;i++){
+                counts[i].innerHTML = Number(data2.company_review_stats.total_reviews) + Number(data2.product_review_stats.total_reviews);
+            }
+
+            var ratings = document.querySelectorAll(".ruk_rating");
+            for(var i=0;i<ratings.length;i++){
+                ratings[i].innerHTML = parseFloat((Number(data2.company_review_stats.average_rating) + Number(data2.product_review_stats.average_rating)) / 2).toFixed(2).replace('.','.');
+            }
+
+            var badgeStars = document.querySelectorAll(".Badge__stars");
+            for(var i=0;i<badgeStars.length;i++){
+                badgeStars[i].innerHTML = renderRating(parseFloat((Number(data2.company_review_stats.average_rating) + Number(data2.product_review_stats.average_rating)) / 2).toFixed(2));
+            }
+
+            resize();
+        }
+
+
+
+        };
+        xhttp2.open("GET", "https://api.reviews.co.uk/stats/all?store=hobbytronics-ltd", true);
+        xhttp2.send();
+    }
+
+
+        else {
+        var xhttp = new XMLHttpRequest;
+        xhttp.onreadystatechange = function() {
+          if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var data = JSON.parse(xhttp.responseText);
+
+            var starsWraps = document.querySelectorAll(".starsWrap");
+            for(var i=0;i<starsWraps.length;i++){
+                starsWraps[i].innerHTML = renderRating(data.stats.average_rating);
+            }
+
+            var counts = document.querySelectorAll(".ruk_count");
+            for(var i=0;i<counts.length;i++){
+                counts[i].innerHTML = data.stats.total_reviews;
+            }
+
+            var ratings = document.querySelectorAll(".ruk_rating");
+            for(var i=0;i<ratings.length;i++){
+                ratings[i].innerHTML = parseFloat(data.stats.average_rating).toFixed(2).replace('.','.');
+            }
+
+            var badgeStars = document.querySelectorAll(".Badge__stars");
+            for(var i=0;i<badgeStars.length;i++){
+                badgeStars[i].innerHTML = renderRating(parseFloat(data.stats.average_rating).toFixed(2));
+            }
+
+            resize();
+          }
+        };
+        xhttp.open("GET", "https://api.reviews.co.uk/merchant/latest?store=hobbytronics-ltd&limit=21&tag=&branch=", true);
+        xhttp.send();
+
+        }
+
+
+
+
+
+          function renderRating(rating){
+
+
+                // Round to nearest quater
+                rating = Math.round(rating * 4)/4;
+
+              var html = '';
+              for(i=1;i<=5;i++){
+                      if(i <= rating){
+                            html += '<i class="ruk-icon-full-star-01 RatingStars__star"></i> ';
+                      }
+                      else if(i - 0.25 <= rating)
+                      {
+							html += '<i class="ruk-icon-percentage-star-75-01 RatingStars__star"></i> ';
+                      }
+                      else if(i - 0.5 <= rating)
+                      {
+							html += '<i class="ruk-icon-percentage-star-50-01 RatingStars__star"></i> ';
+                      }
+                      else if(i - 0.75 <= rating)
+                      {
+							html += '<i class="ruk-icon-percentage-star-25-01 RatingStars__star"></i> ';
+                      }
+                      else
+                      {
+                            html += '<i class="ruk-icon-empty-star-01 RatingStars__star"></i> ';
+                      }
+              }
+              return html;
+          }
+
+
+        function resize(){
+            var bodyStyle = window.getComputedStyle(document.body);
+            var height = parseInt(bodyStyle.getPropertyValue("height")) + 5;
+
+            window.parent.postMessage(JSON.stringify({
+                action: 'widget-resize',
+                height: height,
+                elementId: 'badge-140'
+            }),'*');
+        }
+
+        resize();
+        </script>
+<style type="text/css">undefined</style>
+
+
+</body></html>

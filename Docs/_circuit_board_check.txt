@@ -1,0 +1,37 @@
+no lipo batt connected to sim808 chip!!
+
+bigger eeprom? slide-out eeprom? + slide-out serial connector to d/l data
+
+learn APNs
+
+add shocky to step-down? 12m@ https://training.ti.com/comparing-synchronous-and-non-synchronous-dcdc-converters (but mainly for heavy loads so no-op?) but shotty makes it much cooler
+
+jumper/switch for timer pin A to reduce time
+
+expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
++ easy put on LED maintenance set/or have secret button for it somewhere with lid?
+
+NB: 1h39 time between cycles, 3m3 between small cycles
+
+circuit capacitors voltage check
+
+resistors check
+
+power unit increase voltage/ensure output is 5V, not less
+
+farnell power adaptor increase in power
+
+1 cap per IC
+
+replace generic connectors in digram with actuals
+
+change timing interval connectors
+
+add test line/board/header
+
+wire sizes check
+ 
+use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
+
+check what happens if all sms full
+

@@ -45,18 +45,19 @@ void setup() {
 	//fona.setHTTPSRedirect(true);
 
 
-	//Must immediately run as this pin in LOW switches off the system
+	//Must immediately set this to high as this pin in LOW (the default) turns off PWR_SYS
 	pinMode(PIN_SHUTDOWN, OUTPUT);
 	digitalWrite(PIN_SHUTDOWN, HIGH);
 
-
-
-	delay(3000); //time for above to happen + hardware peripherals to warm up + for user's serial monitor to connect
-	
-	
+	//Keep FONA powered off by default until it's required later
+	pinMode(PIN_FONA_PWR, OUTPUT);
+	digitalWrite(PIN_FONA_PWR, LOW);
 	
 	//Turn off redundant Arduino board notification LED controlled by pin 13
 	pinMode(13, OUTPUT);
+
+	delay(3000); //time for above to happen + hardware peripherals to warm up + for user's serial monitor to connect
+	
 	
 	#ifdef OUTPUT_DEBUG
 		Serial.begin(9600); //Writes to Serial output
@@ -142,10 +143,22 @@ INITIALISING_STATE* ensureFonaInitialised(boolean forDataSend) {
 	__initState.isComplete = true;
 	__initState.fona = &__fona; //Assume this succeeds
 	
+	//Power on and wait 5 seconds
+	if (__initState._initFonaLoopCount <= 5) {
+		
+		if (__initState._initFonaLoopCount == 1) {
+			
+			RM_LOGLN(F("Switching on fona..."));
+			digitalWrite(PIN_FONA_PWR, HIGH);
+		}
+		
+		__initState.isComplete = false;
+		return &__initState;
+	}
+	
 	if (__initState._fonaStatusInit==0) {
 		
 		RM_LOGLN(F("Initialising fona..."));
-		
 		FONA_STATUS_INIT ret = __fona.begin(FONA_TX, FONA_RX);
 		__initState._fonaStatusInit = ret;
 		
@@ -280,7 +293,7 @@ void switchOffSystem() {
 	
 	digitalWrite(PIN_SHUTDOWN, LOW);
 	
-	delay(3000); //To allow serial to purge the shutdown message
+	delay(1000); //To allow serial to purge the shutdown message
 }
 
 

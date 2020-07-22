@@ -175,9 +175,6 @@ void RmMemManager::initialiseModule(uint8_t moduleId) {
 	meta.nextFreeWriteAddr = dataStartAddress();
 	memset(meta.spareBuffer, 0, sizeof(meta.spareBuffer));
 	
-	//TODO: Blank out rest of eeprom too!
-	//		Else MEM_TYPE may be set in some places and printData() fails!
-	
 	internalWrite(MEMLOC_START, (uint8_t*)&meta, sizeof(ModuleMeta));
 }
 

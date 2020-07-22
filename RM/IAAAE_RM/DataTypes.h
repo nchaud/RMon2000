@@ -31,11 +31,12 @@
 #define FONA_RST 4
 
 //Digital Pins
-#define PIN_SHUTDOWN 5
+#define PIN_SHUTDOWN 5						//Triggers the timer to reset to switch off SYS_PWR
 #define PIN_LED_BOTTOM_RED 8
 #define PIN_LED_BOTTOM_GREEN 9
 #define PIN_LED_TOP_RED 10
 #define PIN_LED_TOP_GREEN 11
+#define PIN_FONA_PWR 12						//LDO shutdown pin to switch off FONA module
 
 //Analog Pins
 #define PIN_BATT_VOLTAGE A1
