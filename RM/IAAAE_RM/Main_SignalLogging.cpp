@@ -131,7 +131,7 @@ void setup() {
 	if (currBootCount > 0 && currBootCount%4 == 0) { //TODO: Overflow?
 		
 		_behaviour |= SYS_BEHAVIOUR::SendData;
-	}
+ 	}
 }
 
 INITIALISING_STATE __initState;
@@ -343,6 +343,7 @@ boolean sendData() {
 	INITIALISING_STATE* sendDataFona = ensureFonaInitialised(true);
 	
 	if (!sendDataFona->isComplete) {
+		
 		RM_LOGLN(F("\t(Fona Init Pending...)"));
 		return false; //Still waiting to initialise
 	}
@@ -386,8 +387,8 @@ boolean sendData() {
 		(uint8_t*)encodedData, actualEncodedSz, 
 		response, maxResponseSz, &actualResponseLen, &statuscode);
 	
-	//Switch off internet, lowers power consumption	
-	fona->enableGPRS(false);
+	//Turn off FONA module to minimise power usage
+	digitalWrite(PIN_FONA_PWR, LOW);
 
 	uint16_t responseId = atoi(response);
 
@@ -434,7 +435,7 @@ void loop() {
 	if ((_behaviour&SYS_BEHAVIOUR::ExtendedGsmTest) != 0) {
 	
 		if (_timerCounter == 1)
-			ExtendedTests::startExtendedGsmTest(&__fona, &mem);
+			ExtendedTests::startExtendedGsmTest(&mem);
 	
 		if (sendData()) {
 			

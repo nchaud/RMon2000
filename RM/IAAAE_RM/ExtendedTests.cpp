@@ -300,23 +300,24 @@ void ExtendedTests::endExtendedGsmTest() {
 #endif
 }
 
-void ExtendedTests::startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem) {
+void ExtendedTests::startExtendedGsmTest(RmMemManager* mem) {
 	
 #if IS_EXTENDED_GSM_TEST == true
 
     Serial.println(F("****"));
 	
 	//Malloc as the data will be sent later on when gsm connection made
-	_mockData = (SensorData*)malloc(sizeof(SensorData)*2);
-	writeMockSD(_mockData, 0);
-	writeMockSD(_mockData+1, 1);
+	int numReadings=12;
+	_mockData = (SensorData*)malloc(sizeof(SensorData)*numReadings);
+	for(int i=0;i<numReadings;i++)
+		writeMockSD(_mockData+i, i);
 	
-	Serial.println(F("2 Sensor-Datas going for transmission:"));
-	Helpers::printSensorData(_mockData);
-	Helpers::printSensorData(_mockData+1);
+	Serial.println(F("Sensor-Datas going for transmission:"));
+	for(int i=0;i<numReadings;i++)
+		Helpers::printSensorData(_mockData+i);
 	
 	mem->mockSensorData = _mockData;
-	mem->numMockSensorData = 2;
+	mem->numMockSensorData = numReadings;
 	
 #else
 	RM_LOGLN(F("*** FAIL EGT ***")); //Sync Broken - inclusion of code should be sync'd with flag

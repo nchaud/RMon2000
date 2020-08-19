@@ -336,7 +336,9 @@ struct SensorData {
 /* Stored in ROM (for later checking) to record what happened when trying to send a day's worth of readings */
 struct DailyCycleData {
 	
+	//TODO: We can kill this now as no batt
 	int8_t	BattPct				  = 0;	//-1 indicates error fetching
+	
 	uint16_t BootNo				  = 0;
 	uint8_t NoOfReadings		  = 0;
 	

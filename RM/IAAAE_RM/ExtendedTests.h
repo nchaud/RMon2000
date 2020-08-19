@@ -18,7 +18,7 @@ public:
 		static void runExtendedMemTest(RmMemManager mem, SensorManager sensorMgr);
 		static void runExtendedTypesTest();
 		
-		static void startExtendedGsmTest(Adafruit_FONA* fona, RmMemManager* mem);
+		static void startExtendedGsmTest(RmMemManager* mem);
 		static void endExtendedGsmTest();
 };
 
