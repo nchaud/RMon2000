@@ -34,38 +34,14 @@ So, the TLDR; is that you use BJTs for building robust interfaces since they usu
 
 HCPL-7510: The design of the printed circuit board (PCB) should follow good layout practices, such as keeping bypass capacitors close to the supply pins...
 
-103mV -> 2.2mV (10/470)
-154mV -> 2.2mV output, 10mA current through R@15Ohms, 11mA current through Vdd1 (15/470)
-NO INPUT -> 2.2mV 
-
-vRef=5v(vhdd_2)
-15/470 (154mV)
-	no input (floating)	= +92mV vhdd_2 -> vout (so 5v-.092= ~4.9V )
-	input connected		= 1.16V
-	input to ground		= 2.7V 
-10/470 (104mV)
-	input connected		= +1.725V - 1.689 (constantly fluctuating)
-	
-	
-@vRef=4.9 (680/6800 divider)
-Vhdd2-GND = 5.39
-15/470 (154mV)
-	input connected	but off = 2.42V
-	input connected	        = 1.99V
-10/470 (104mV)
-	input connected		= 2.33V (minimal fluctuation, +/- 2mV)
 
 
-@vRef=4.38 (1500/6800 divider (theoretical=4.42))
-Vhdd2-GND = 5.39
-15/470 (154mV)
-	input connected	but off = 2.16V
-	input connected	        = 2.34V
-10/470 (104mV)
-	input connected			= 2.66V
-	
 
 	
+https://www.newark.com/wcsstore/ExtendedSitesCatalogAssetStore/cms/asset/pdf/americas/common/storefront/recom-power/isolated-dcdc-converters.pdf - page 4, creepage insulation required for 100V PV
+^ disconnected converter by default
+> have a jumper to turn entire network off
+
 
 Current Sensor
 40W Load implies .16A current
@@ -101,13 +77,19 @@ LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 1
 
 	order hunt backup for current measurement (?)
 	solar pv-voltage 100V input caps
+	get step-up-to-80V transformer to simulate pv panels voltage
+	set correct IL300 bin number on Order Sheet/DipTrace etc. etc. (Use 'E' as it's possible to order only-E ?)
+	need a way to be able to adjust the input/output voltages or switch hardware tracks for opto-isolator incoming+receiving signal (using software) for village vs PV
+		//Or ideally system that just works for both
+		
+	Also need something that can step down both 24V and 48V village-project systems to 5V
 	
 	//Next tasks
 	//		xx Switch off the external power to FONA on start-up until fona needed (so get base voltage steady for good sensor reading)
 	//		xx Update Schematic with above switch 
 	//		xx Test transmission with 12 readings worth of data and 1kuF cap still ok? yep - same data came out x3
 	//		xx Turn off FONA when done 
-	//	Add sensor-logic with pins, shunt, current check, temperature etc. + update schematic + add anything to purchase-list. 
+	//Add sensor-logic with pins, shunt, current check, temperature etc. + update schematic + add anything to purchase-list. 
 		(VERY high precision resistors for pv-voltage-divider + relay/bjt - NOPE, Opto intead)
 		
 		big resistor for high loads (testing)

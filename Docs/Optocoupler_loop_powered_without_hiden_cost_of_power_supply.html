@@ -1,0 +1,134 @@
+
+<!-- saved from url=(0041)http://e-rokodelnica.si/A004/A004_EN.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<title>e-Rokodelnica: Signal Powered Linear Optocoupler</title>
+
+
+
+<meta name="Description" content="Signal Powered Linear Optocoupler">
+<meta name="Keywords" content="electronics, linear optocoupler, circuit">
+<meta name="Author" content="Mitja Rihtarsic">
+<!-- verzija: yyyymmdd-->
+</head>
+
+<body bgcolor="WHITE">
+	<a name="Naslov_NaZacetek">
+
+<!--== Uvod =============================================================================================-->
+	<table width="100%" border="0"><tbody><tr>
+		<td width="5%">
+		</td><td width="15%" align="CENTER"><a href="http://e-rokodelnica.si/A.html#Naslov_El"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/elec_arrow.gif" border="0"></a><br><a href="http://e-rokodelnica.si/A.html#Naslov_El"><small><i>Electrotechnics</i></small></a>
+		</td><td width="60%" align="CENTER"><h1>Signal Powered Linear Optocoupler</h1>
+		</td><td width="15%" align="CENTER"><a href="http://e-rokodelnica.si/index.html" target="_top"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/home_w_arrow.gif" border="0"></a><br><a href="http://e-rokodelnica.si/index.html" target="_top"><small><i>www.e-rokodelnica.si</i></small></a>
+		</td><td>
+	</td></tr></tbody></table>
+
+	
+
+	<p>In this article, a circuit is presented, that enables us to control a device with a DC voltage over an insulation barrier. Often, the barrier is a must because of safety issues. Sometimes, we must connect electrical circuits that are referenced to different potential or the barrier only breaks a current loop. The control signal is a DC voltage in a range from 0V up to 10V. The low part from 0V to approximately 2V of the range means, that the controlled device is off. This way, we prevent the device to be switched-on by noise. When the input voltage reaches an on-threshold at 2V, the device switches on. Above the on-threshold, the transfer characteristics must as linear as possible.</p>
+	<p>The circuit is built around a linear optocoupler. Beside optocoupler, it comprises three bipolar transistors, a capacitor and some resistors. A necessary power for circuit to operate is taken from input signal. Because of low count of parts, the circuit is cheap and also reliable.</p>
+
+
+	</a><ul><a name="Naslov_NaZacetek"><b>TOC:</b>
+		</a><li><a name="Naslov_NaZacetek"></a><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Opis">Description of Circuit</a></li>
+		<li><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Primer">Example</a></li>
+		<li><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">References</a></li>
+	</ul>
+
+
+<!--== Banner ===========================================================================================-->
+	<table width="100%" bgcolor="SILVER" border="1"><tbody><tr>
+		<td width="5%">
+		</td><td width="30%" align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/B1-EN.gif" border="0">
+		</td><td width="30%" align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/B2-EN.gif" border="0">
+		</td><td width="30%" align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/B3-EN.gif" border="0">
+		</td><td>
+	</td></tr></tbody></table>
+
+
+<!--== Jedro ============================================================================================-->
+
+
+	
+
+	<!-- Pogavlje: Opis vezja --------------------------------------------------------------------->
+	<a name="Naslov_Opis"></a>
+	<h2 align="CENTER">Description of Circuit</h2>
+
+	<p>The goals in the introduction of article can be achieved by a linear optocoupler. By now, I have met two such devices. One is IL300 <a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">[2]</a> and second are HCNR200 or HCNR201 <a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">[3]</a>. These optocouplers comprise a LED and photodiode in an emitting side. An identical photodiode is in a receiving side of the optocoupler. Because of such construction, light emitted from LED should cause the same current in both photodiodes. The current through the photodiode in the receiving side (IC1, pins 6-5) is the output current, which must be set in proportion to the input <i>V</i><sub>1</sub>. This current equals the current through the photodiode in the transmitting side (IC1 pins 3-4). Around the emitting side of the optocoupler we build a feedback loop that keeps the current through the photodiode in the transmitting side in the proportion to the signal <i>V</i><sub>1</sub>. While currents through both photodiodes are equal, we have the output current proportional to the signal <i>V</i><sub>1</sub>.</p>
+	<p>There are many examples of such circuits in <a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">[2]</a> and <a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">[3]</a>. But in these examples, the hidden cost is a power supply. We must provide some power to both sides of the signal path. In datasheets and application notes, there are schematics with opAmps with power pins hidden! The exception is a loop powered insulation of 4-20mA current loop [3]. The essence of this design idea is to use power from signal voltage <i>V</i><sub>1</sub> to supply feedback loop in the transmitting side.</p>
+
+	<p align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/A004-F01w.gif" alt="Figure 1: Schematics"><br><i>Figure 1: Schematics</i>
+
+	</p><p>In the transmitting side, there is a feedback loop consisted out of the LED, transistors T1, T2 and photodiode. First, there is no light emitted and there is no current through photodiode. The voltage <i>V</i><sub>1</sub> causes current through R1. The entire current flows into T1 which opens. The T1 opens T2 and LED starts to emit light. Because of that, part of current into the base of T1 is redirected through the photodiode which now conducts. Both the T1 and T2 close a bit. When the components were selected properly, the feedback loop would stabilize. The current through R1 equals current through R3 and both currents a proportional to <i>V</i><sub>1</sub>.</p>
+	<p>The detailed description can be found in <a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_Reference">[1]</a>.</p>
+
+
+
+	<table width="90%" align="CENTER" border="0">
+		<tbody><tr><td align="RIGHT"><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_NaZacetek"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/arrow_up.gif" border="0"></a></td></tr>
+	</tbody></table>
+
+
+
+	<!-- Pogavlje: Meritev --------------------------------------------------------------------->
+	<a name="Naslov_Primer"></a>
+	<h2 align="CENTER">Measurement on a Test Circuit</h2>
+
+	<p>The schematics on Figure 1 has been built. Here are two snapshots that prove the reasoning above. A triangle voltage is connected to the input <i>V</i><sub>1</sub>. This voltage is the lower trace on Figure 2. An offset is set so that voltage changes between zero and 10V. Frequency is 100Hz.</p>
+	<p align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/A004-F02w.gif" alt="Figure 2: Oscillogram"><br><i>Figure 2: <b>Oscilogram: V<sub>1</sub> – trace 1, V<sub>2</sub> – trace 2</b></i></p>
+	<p>In Figure 2, the upper trace is output voltage <i>V</i><sub>2</sub>. We can see that some voltage <i>V</i><sub>1</sub> is needed for circuit to start operating and that the output voltage starts to follow the input.
+	</p><p align="CENTER"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/A004-F03w.gif" alt="Figure 3: Oscillogram"><br><i>Figure 3: <b>Oscilogram: V<sub>1</sub> – x-axis, V<sub>2</sub> – y-axis</b></i></p>
+	<p>The traces from the Figure 2 are presented in xy format in the Figure 3. The characteristics above the on-threshold is quite linear.</p>
+
+
+
+	<table width="90%" align="CENTER" border="0">
+		<tbody><tr><td align="RIGHT"><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_NaZacetek"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/arrow_up.gif" border="0"></a></td></tr>
+	</tbody></table>
+
+
+	<!-- Pogavlje: Reference --------------------------------------------------------------------->
+	<a name="Naslov_Reference"></a>
+	<h2 align="CENTER">References</h2>
+
+	<table width="100%" align="CENTER" border="0">
+	<tbody><tr>
+		<td width="5%"></td>
+		<td align="LEFT" width="15%">[1]</td>
+		<td align="LEFT" width="75%"><p><b>Signal-powered linear optocoupler provides isolated control signal</b>, Design Ideas, EDN Magazine, <a href="http://www.edn.com/" target="_blank">www.edn.com</a>, July 23, 2009.</p></td>
+		<td></td>	
+	</tr>
+	<tr>
+		<td width="5%"></td>
+		<td align="LEFT">[2]</td>
+		<td align="LEFT"><p>Vishay Semiconductor, <b>IL300 Linear Optocoupler, High Gain Stability, Wide Bandwidth</b>, Datasheets, <a href="http://www.vishay.com/" target="_blank">www.vishay.com</a>.</p></td>
+		<td></td>	
+	</tr>
+	<tr>
+		<td></td>	
+		<td align="LEFT">[3]</td>
+		<td align="LEFT"><p>Avago Technologies, <b>HCNR200 and HCNR201, High-Linearity Analog Optocouplers</b>, Datasheets, <a href="http://www.avagotech.com/" target="_blank">www.avagotech.com</a>.</p></td>
+		<td></td>	
+	</tr>
+	</tbody></table>
+
+
+
+	<table width="90%" align="CENTER" border="0">
+		<tbody><tr><td align="RIGHT"><a href="http://e-rokodelnica.si/A004/A004_EN.html#Naslov_NaZacetek"><img src="./Optocoupler_loop_powered_without_hiden_cost_of_power_supply_files/arrow_up.gif" border="0"></a></td></tr>
+	</tbody></table>
+
+
+
+<!--== Zaključek ========================================================================================-->
+	<hr>
+	<p align="CENTER"><a href="http://e-rokodelnica.si/index.html" target="_top"><i>e-rokodelnica.si</i></a>
+
+
+
+
+
+
+
+</p></body></html>

@@ -1,0 +1,104 @@
+var createCORSRequest = function(method, url) {
+var xhr = new XMLHttpRequest();
+if ("withCredentials" in xhr) {
+    // Most browsers.
+    xhr.open(method, url, true);
+} else if (typeof XDomainRequest != "undefined") {
+    // IE8 & IE9
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+} else {
+    // CORS not supported.
+    xhr = null;
+}
+return xhr;
+};
+
+
+var url = 'https://www.eetimes.com/wp-json/wp/v2/podcasts/?per_page=1&_embed';
+var method = 'GET';
+var xhr = createCORSRequest(method, url);
+
+xhr.onload = function() {
+let source = document.referrer.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1").replace("https://","");
+let medium = "podcast-syndication";
+let data = JSON.parse(xhr.response)[0];
+//console.log(data.title.rendered);
+data.link += (data.link.includes('?') ? '&' : '?') + `utm_source=${source}&utm_medium=${medium}`;
+let image = data._embedded['wp:featuredmedia'][0];
+//console.log(image.source_url);
+
+let duration = data.meta.duration;
+//console.log(meta);
+//let designLine = data.PrimaryDesignLine.replace(/ Designline/g, "");
+document.getElementById('pcw-widget').innerHTML = `
+<section class="pcw-widget">
+    <style>@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700');.pcw-widget{--colorWhite:#fff;--colorLightGray:#d9d9d9;--colorGray:#a8a8a8;--colorDarkGray:#565656;--colorBlack:#000;--colorRed:#e90111;--colorDarkRed:#af030f;font-size:16px;color:var(--colorBlack);border:1px solid var(--colorGray);padding:.75em 1.5em 1.5em;min-width:200px}.pcw-widget_container{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.pcw-header,.pcw-widget_container{display:-webkit-box;display:-ms-flexbox;display:flex}.pcw-header{-webkit-box-align:center;-ms-flex-align:center;align-items:center;min-height:5em}.pcw-header_image{background-image:url(onairlogo.png);height:5em;-ms-flex:0 0 4.5em;flex:0 0 4.5em;background-size:contain;background-repeat:no-repeat}.pcw-header_image,.pcw-header_title{margin-right:.75em;-webkit-box-flex:0}.pcw-header_title{color:var(--colorBlack);text-transform:uppercase;font-family:Work Sans,sans-serif;font-weight:700;-ms-flex:0 0 auto;flex:0 0 auto;letter-spacing:.025em}.pcw-header_rule{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;height:2px;width:100%;background:var(--colorLightGray)}.pcw-image{width:100%;height:8.75em;margin-top:.5em;margin-bottom:.5em;background-size:cover;background-position:50%;background-repeat:no-repeat}.pcw-meta{font-family:Work Sans,sans-serif;height:2em;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-bottom:.5em}.pcw-meta_title{color:var(--colorGray);font-size:1em;font-weight:700;text-transform:uppercase}.pcw-meta_title:after{content:"/";font-weight:400;margin-left:.5em;margin-right:.5em}.pcw-meta_data{color:var(--colorRed);font-weight:700}.pcw-meta_dataIcon{fill:var(--colorRed);width:1em;height:1em;display:inline-block;margin-left:.5em;position:relative;top:2.5px}.pcw-title{margin-top:0}.pcw-body{font-family:Work Sans,sans-serif;margin-bottom:1.5em;overflow:hidden;height:3.5em}.pcw-actions{margin-top:auto}.pcw-actions,.pcw-actions_button{display:-webkit-box;display:-ms-flexbox;display:flex}.pcw-actions_button{-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.pcw-button{font-family:Work Sans,sans-serif;text-transform:uppercase;height:3em;padding-left:1.5em;padding-right:1.5em;border:1px solid;-webkit-box-shadow:0 0 0 transparent;box-shadow:0 0 0 transparent;-webkit-transition:all .2s ease-out;-o-transition:all .2s ease-out;transition:all .2s ease-out}.pcw-button:hover{-webkit-box-shadow:0 2px 1em rgba(0,0,0,.2),0 6px 2em rgba(0,0,0,.14);box-shadow:0 2px 1em rgba(0,0,0,.2),0 6px 2em rgba(0,0,0,.14);-webkit-filter:brightness(1.1);filter:brightness(1.1)}.pcw-button_listen{background:var(--colorLightGray);border-color:var(--colorGray);color:var(--colorDarkGray);font-weight:700}.pcw-button_listenIcon{display:inline-block;width:0;height:0;border-left:.35em solid var(--colorDarkGray);border-bottom:.35em solid transparent;border-right:0 solid transparent;border-top:.35em solid transparent;margin-left:.5em}.pcw-button_episode{color:var(--colorWhite);background:var(--colorRed);border-color:var(--colorDarkRed);margin-left:auto}.large .pcw-widget_container{display:-ms-grid;display:grid;grid-gap:1em;-ms-grid-columns:minmax(100px,450px) 1em 1fr;grid-template-columns:minmax(100px,450px) 1fr;-ms-grid-rows:5em 1em auto 1em 3em;grid-template-rows:5em auto 3em;grid-template-areas:"image header" "image body" "image action"}.large .pcw-header{-ms-grid-row:1;-ms-grid-column:3;grid-area:header}.large .pcw-image{-ms-grid-row:1;-ms-grid-row-span:5;-ms-grid-column:1;grid-area:image;margin-top:0;margin-bottom:0;background-size:cover}.large .pcw-block{-ms-grid-row:3;-ms-grid-column:3;grid-area:body}.large .pcw-actions{-ms-grid-row:5;-ms-grid-column:3;grid-area:action}.small:not(.med) .pcw-actions{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.small:not(.med) .pcw-button{width:100%;margin-top:.25em}</style>
+    <div class="pcw-widget_container">
+        <div class="pcw-header">
+            <div class="pcw-header_image"></div>
+            <div class="pcw-header_title">Podcast</div>
+            <div class="pcw-header_rule"></div>
+        </div>
+        <a class="pcw-image" href="${data.link}" target="_blank" style="background-image: url('${image.source_url}')"></a>
+        <div class="pcw-block">
+            <div class="pcw-meta">
+                <!--<span class="pcw-meta_title"> {$designLine}</span>-->
+                <span class="pcw-meta_data">
+                    <svg class="pcw-meta_dataIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M11.99 2A10 10 0 1 0 12 21.99 10 10 0 0 0 11.99 2zM12 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" clip-rule="evenodd"/></svg>
+                    <span class="pcw-meta_dataDuration">${duration}</span>
+                </span>
+            </div>
+            <h2 class="pcw-title">${data.title.rendered}</h2>
+            <div class="pcw-body">${data.excerpt.rendered}</div>
+        </div>
+        <div class="pcw-actions">
+            <button class="pcw-button pcw-button_listen" onClick="window.open('${data.link}','_blank')">Listen <span class="pcw-button_listenIcon"></span></button>
+            <button class="pcw-button pcw-button_episode" onClick="window.open('https://www.eetimes.com/podcasts/?utm_source=${source}&utm_medium=${medium}','_blank')">View All Episodes</button>
+        </div>
+    </div>
+</section>
+`;
+
+// Only run if ResizeObserver is supported.
+if ('ResizeObserver' in self) {
+    // Create a single ResizeObserver instance to handle all
+    // container elements. The instance is created with a callback,
+    // which is invoked as soon as an element is observed as well
+    // as any time that element's size changes.
+    var ro = new ResizeObserver(function(entries) {
+      // Default breakpoints that should apply to all observed
+      // elements that don't define their own custom breakpoints.
+      var defaultBreakpoints = {small: 0, med: 348, large: 720, };
+
+      entries.forEach(function(entry) {
+        // If breakpoints are defined on the observed element,
+        // use them. Otherwise use the defaults.
+        var breakpoints = entry.target.dataset.breakpoints ?
+            JSON.parse(entry.target.dataset.breakpoints) :
+            defaultBreakpoints;
+
+        // Update the matching breakpoints on the observed element.
+        Object.keys(breakpoints).forEach(function(breakpoint) {
+          var minWidth = breakpoints[breakpoint];
+          if (entry.contentRect.width >= minWidth) {
+            entry.target.classList.add(breakpoint);
+          } else {
+            entry.target.classList.remove(breakpoint);
+          }
+        });
+      });
+    });
+
+    // Start observing the widget.
+    var element = document.getElementById('pcw-widget');
+    ro.observe(element);
+
+  }
+};
+
+xhr.onerror = function() {
+// Error code goes here.
+};
+
+xhr.send();

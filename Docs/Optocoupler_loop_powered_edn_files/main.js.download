@@ -1,0 +1,123 @@
+var createCORSRequest = function(method, url) {
+var xhr = new XMLHttpRequest();
+if ("withCredentials" in xhr) {
+    // Most browsers.
+    xhr.open(method, url, true);
+} else if (typeof XDomainRequest != "undefined") {
+    // IE8 & IE9
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+} else {
+    // CORS not supported.
+    xhr = null;
+}
+return xhr;
+};
+
+var normalizeDateNumbers = function(number) {
+    return number < 10 ? "0" + number : number;
+};
+
+var url = 'https://www.eetimes.com/wp-json/wp/v2/posts/?per_page=3&categories[]=665&_embed';
+var method = 'GET';
+var xhr = createCORSRequest(method, url);
+
+xhr.onload = function() {
+
+let source = document.referrer.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1").replace("https://","");
+let medium = "partnered-content";
+let data = JSON.parse(xhr.response);
+//console.dir(data);
+
+let blocks = '';
+
+for (let i in data) {
+    let entry = data[i];
+    //console.log(entry);
+    let publishDate = new Date(entry.date_gmt);
+    let formattedDate = '';
+    if(isNaN(publishDate.getDate())){
+      formattedDate = ''; 
+    } else {
+      formattedDate = normalizeDateNumbers(publishDate.getDate())
+     + '.' + normalizeDateNumbers(publishDate.getMonth()+1) 
+     + '.' + normalizeDateNumbers(publishDate.getFullYear());
+    }
+        
+    entry.link += (entry.link.includes('?') ? '&' : '?') + `utm_source=${source}&utm_medium=${medium}`;
+
+    let image = entry._embedded['wp:featuredmedia'][0];
+    console.log(image.source_url);
+
+    blocks += `
+    <div class="block -partner">
+        <div class="headline">
+            <div class="headline-title">
+                <figure class="headline-img">
+                <a class="article-links" href="${entry.link}" title="${entry.title.rendered}" target="_blank"><img src="${image.source_url}" alt="${entry.title.rendered}"></a>
+                </figure>
+                <div class="lineClamp-three" style=""><a class="article-links" href="${entry.link}" title="${entry.title.rendered}" target="_blank">${entry.title.rendered}</a></div>
+            </div>
+            <div class="headline-info">
+                <span class="headline-author"><span class="headline-date">${formattedDate}</span>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+document.getElementById('pcw-widget').innerHTML = `
+<section class="pcw-widget">
+    <div class="block">
+        <div class="sectionHeader">
+            <div class="sectionHeader-title">Partner Content</div>
+        </div>
+    </div>
+    ${blocks}
+    
+</section>
+`;
+
+// Only run if ResizeObserver is supported.
+if ('ResizeObserver' in self) {
+    // Create a single ResizeObserver instance to handle all
+    // container elements. The instance is created with a callback,
+    // which is invoked as soon as an element is observed as well
+    // as any time that element's size changes.
+    var ro = new ResizeObserver(function(entries) {
+      // Default breakpoints that should apply to all observed
+      // elements that don't define their own custom breakpoints.
+      var defaultBreakpoints = {small: 0, med: 348, large: 720, };
+  
+      entries.forEach(function(entry) {
+        // If breakpoints are defined on the observed element,
+        // use them. Otherwise use the defaults.
+        var breakpoints = entry.target.dataset.breakpoints ?
+            JSON.parse(entry.target.dataset.breakpoints) :
+            defaultBreakpoints;
+  
+        // Update the matching breakpoints on the observed element.
+        Object.keys(breakpoints).forEach(function(breakpoint) {
+          var minWidth = breakpoints[breakpoint];
+          if (entry.contentRect.width >= minWidth) {
+            entry.target.classList.add(breakpoint);
+          } else {
+            entry.target.classList.remove(breakpoint);
+          }
+        });
+      });
+    });
+  
+    // Start observing the widget.
+    var element = document.getElementById('pcw-widget');
+    ro.observe(element);
+
+  }
+};
+
+xhr.onerror = function() {
+// Error code goes here.
+};
+
+xhr.send();
+
