@@ -93,6 +93,7 @@ LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 1
 		(VERY high precision resistors for pv-voltage-divider + relay/bjt - NOPE, Opto intead)
 		
 		big resistor for high loads (testing)
+		PV voltage detection side board should be able to handle 5W (5mA*120V)
 		
 		Current sensor should be for up to 800W/30A !
 		Get Zener/fuses for safety anyway 
