@@ -32,6 +32,7 @@
 
 //Digital Pins
 #define PIN_SHUTDOWN 5						//Triggers the timer to reset to switch off SYS_PWR
+#define PIN_PV_SSR_SWITCH 6					//Switch to signal to the SSR to turn on/off the isolated optocoupled circuit
 #define PIN_LED_BOTTOM_RED 8
 #define PIN_LED_BOTTOM_GREEN 9
 #define PIN_LED_TOP_RED 10
