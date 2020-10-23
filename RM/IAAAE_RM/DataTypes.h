@@ -28,20 +28,23 @@
 //Fona Pins
 #define FONA_RX 2
 #define FONA_TX 3
+
 #define FONA_RST 4
 
 //Digital Pins
 #define PIN_SHUTDOWN 5						//Triggers the timer to reset to switch off SYS_PWR
 #define PIN_PV_SSR_SWITCH 6					//Switch to signal to the SSR to turn on/off the isolated optocoupled circuit
+#define PIN_FONA_PWR 7						//LDO shutdown pin to switch off FONA module
 #define PIN_LED_BOTTOM_RED 8
 #define PIN_LED_BOTTOM_GREEN 9
 #define PIN_LED_TOP_RED 10
 #define PIN_LED_TOP_GREEN 11
-#define PIN_FONA_PWR 12						//LDO shutdown pin to switch off FONA module
+
+//KEEP DIGITAL PINS 8-13 (INCLUSIVE) FREE FOR SWITCHING SOFTWARE FROM EEPROM TO THE SD-CARD-MODULE ON THE HARDWARE (IN FUTURE)
 
 //Analog Pins
-#define PIN_BATT_VOLTAGE A1
 #define PIN_PV_VOLTAGE A0
+#define PIN_BATT_VOLTAGE A1
 #define PIN_TEMP A2
 #define PIN_CURRENT A3
 

@@ -1,24 +1,42 @@
-*** measurements ***
-with usb attached + battery & with transmit -> current battery ~ 300ma, never higher than 400ma
-with no usb attached + battery -> current battery fluctuates a lot but 13-47ma is consumed WHEN ARDUINO IS OFF.
-* (with linear regulator?) *
-arduino power consumption with shield power on -> constantly 500mA.
-arduino power consumption with shield power off -> 90-140mA as shield LEDs light on&off.
-* with ldo *
-arduino power consumption with shield power off -> ~50mA, roughly constant
-arduino power consumption with shield power on -> start quick peak @ 600mA, 70-140mA (even while transmitting)
-* with ldo, but shutdown pin=1 *
-arduino power consumption with shield power connected (jst-pin) -> ~54mA constant
-arduino power consumption with shield power disconnected (jst-pin) -> ~53mA constant
-arduino power consumption with ldo disconnected -> ~52mA constant
+*** TaskList ***
 
-
-when on, default analog-gnd=3 MOhm, analog-5v=0 Ohm
-		input_pullup, analog-gnd=0, analog-5v=1 MOhm,
-when off, analog-5v=3.7 MOhm, analog-gnd=3.7 MOhm
-when off, 5V coming to A0 ping, 60mA constant use 
-
-
+	** Phase 3 **
+	
+	> (For PV-Voltage) 1) Order specifically the IL300-E for accurate gain, 2) test with this version 3) set correct IL300 bin number on Order Sheet/DipTrace etc.
+	> (For PV-Voltage) Order 120V(and +/- 10V spare) capacitors at input for stability when Optocoupler reading voltage
+	> (For Pwr-Sys) Ensure main buck converter from battery allows up to 48V(+10V) battery (for village project) and is optimised for timer's minimal current
+	> (For Pwr-Sys) For the main 2A buck converter, check minimum current for step down not required as timer takes very little current
+	> (For Storage) Add wiring & an SD-Card-Writer but put jumper on pwr so software can be implemented later instead of an EEPROM(in rMonV4?). Keep digital pins 8-13 free for this future use.
+	> (For Storage) Add rolling logic test + get the max # of readings that can be loaded&sent + update for the larger EEPROM we now use.
+	> (For Timer) Add adjustable/jumper-wire-based timing caps/resistors for AEC vs village-project so can change frequency of readings
+	> (For Current) Wire in the passive current detector and verify accuracy. Should be able to detect up to 800W/30A DC.
+	> (Testing) Get step-up a/c to 120V d/c to verify pv voltage detection can handle 
+	> (Testing) Use wirewound resistors for testing DC current of >1A
+	> (For Status) Add 2 tri-state LEDs, wire them, write the software to show status. Add LEDs/output-print etc. logic for jumpers, directing SIM808's LED to surface of box - rssi check etc.
+	> (PCB) Ensure PV voltage-detection-side of the pcb board can handle 5W (5mA*120V) and is wide enough 
+	> (PCB) Ensure SYS_PWR->LDO->SIM808 connection can handle 1A@4V
+	> (SIM808) Increase the 33PF and 10PF capacitors can effectively eliminate the high frequency interference. A 5.1V/500mW Zener diode is strongly recommended, the diode can prevent chip from damaging by the voltage surge. These capacitors and Zener diode should be placed as close as possible to SIM808 VBAT pins.
+	> (PCB) Ensure small distance @Caps on LDO sides as per their docs and generally for IC Caps & others, <1cm.
+	> (Safety) Add fuses at main buck converter and pv-detection sites and in places where cap failure could short-circuit
+	> (Safety) Analyse all the places for Zener diode insertion. Ensure reverse voltage protection in place at entry points.
+	> (Safety) Ensure PWR_SYS mosfet doesn't float - https://arduino.stackexchange.com/a/46303
+	> (Safety) Check ADC corrections - http://www.skillbank.co.uk/arduino/adc.htm
+	> (Safety) Derate the voltage rating by a factor of 3-4 if you want the full capacitance. Ensure voltages on all caps sufficient.
+	> (Safety) Have a jumper to turn entire network off
+	> (PCB) Replace generic parts in schematic with actual components 
+	
+	** Potential rMonV4 Changes **
+		
+		Replace EEPROM with SD-Card software
+		Voltage-divider not enough to ensure minimal current (required for timer) if arduino is off...? bjt?
+		Headphone jack as current input to get easy setup and ensure no mixup with PV-input? But can be easily disconnected...
+		Potentially have 2 buck converters - 1 mini one that runs the timer and 1 for when Arduino & PWR_SYS comes on
+		Have an easy-to-put-on LED maintenance set/or have secret button for it somewhere with lid? So maintainers can just put this module on and see full status.
+	
+	
+		
+		
+*** Interesting Notes Taken From Places ***
 Analog pins are INPUT only. There is no need to set the mode of analog pins. With this code, you are setting the mode of the digital pin that shares space with the analog pin. Not a good idea, generally.
 
 When dealing with high voltages try and make the circuit robust against component faliure - for instance the high-voltage arm of a voltage-divider should have 2 or more resistors in series (if any one shorts out the others protect you).  The low-voltage side of a resistive divider should have a zener diode to limit voltage.  You might think a resistor can't just short out like this, but it takes just one insect to crawl over it, or one drop of water to fall on it (for instance).
@@ -32,16 +50,33 @@ One such test I used to perform involved rapid switching of a sewing machine mot
 
 So, the TLDR; is that you use BJTs for building robust interfaces since they usually don't need ESD protection, you use MOSFETs for low-medium current switches, and for really high-current switches you use IGBTs. The distinction between MOSFETs and IGBTs is basically on the basis of efficiency - the heat generated in a MOSFET increases as I^2 since it behaves like a resistor, whereas in a IGBT it increases more like Log[I]. Mosfet is Extremely fragile to destruction by static discharge.
 
-HCPL-7510: The design of the printed circuit board (PCB) should follow good layout practices, such as keeping bypass capacitors close to the supply pins...
+For battery v/divider reading - ""The successful advice is to take two readings and ignore the first one. This allows the capacitor to charge.""
 
 
 
+*** Done Tasks ***
 
+	//Need a way to be able to adjust the input/output voltages or switch hardware tracks for opto-isolator incoming+receiving signal (using software) for village vs PV
+	//	Or ideally system that just works for both
+	//NO LONGER NECESSARY AS REPLACED REQUIREMENT OF OP-AMP ON INPUT SIDE WITH SELF-REGULATING VOLTAGE
+	//		xx Switch off the external power to FONA on start-up until fona needed (so get base voltage steady for good sensor reading)
+	//		xx Update Schematic with above switch 
+	//		xx Test transmission with 12 readings worth of data and 1kuF cap still ok? yep - same data came out x3
+	//		xx Turn off FONA when done 
+	//Add sensor-logic with pins, shunt, current check, temperature etc. + update schematic + add anything to purchase-list. 
+	//		(VERY high precision resistors for pv-voltage-divider + relay/bjt - NOPE, Opto intead)
+	//	EEPROM - Do 1-day quick prototype of having SD card there instead of EEEPROM and add to purchase-list if possible (DIP-sd-card-reader for testing if existing one not working) 
+	//	Run whole board (with timer circuit) test with linear 30V->5V regulator
+	//  Get a solid-state-relay to potentially switch off Arduino-circuit (check how muh current MOSFET uses now) and/or FONA module (?)
+	//	Add any components from above testing to existing purchase-list
+	//	Get mosfet etc. to simulate inverter-input current use by battery - https://hackaday.com/2020/02/11/build-your-own-active-load/ - OR some big resistors 
+	//	Lots of reading on safety around circuit, fuses etc. and add anything extra to purchase-list
+	//	Make purchase from purchase-list
+	//	[When Components Come] Full test with Tant. Caps instead of Alum. Cap. @LDO-Output + @LDO-Circuit
+	//	[When Components Come] EEPROM: Run tests for the bigger memory size	
+	// no lipo batt - connected to sim808 chip!!
+	// bigger eeprom? slide-out eeprom? + slide-out serial connector to d/l data - nope, SD card potential added
 	
-https://www.newark.com/wcsstore/ExtendedSitesCatalogAssetStore/cms/asset/pdf/americas/common/storefront/recom-power/isolated-dcdc-converters.pdf - page 4, creepage insulation required for 100V PV
-^ disconnected converter by default
-> have a jumper to turn entire network off
-
 
 Current Sensor
 40W Load implies .16A current
@@ -55,139 +90,37 @@ Pre-switching-regulator power usage of timer (no LEDs)
 LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 100pF on output (not 68pF)
 
 
-@LDO Output: 
-	330uF Alum cap + 3*100uF caps = 3/3 successess
-	330uF Alum cap + 2*100uF caps = 3/3 successess
-	330uF Alum cap + 1*100uF caps = 3/3 successess
-	330uF Alum cap + 0*100uF caps = 3/3 successess
-*WAIT FOR 20 MINS*
-	1000uF Alum cap = 1/1 success
-	330uF Alum cap + 0*100uF caps = 0/2 successess
-	330uF Alum cap + 3*100uF caps = 0/3 successess
 	
-	
-	
-	* Current Sensor *
+	* Current Sensor Options *
 	HCT-0010 - clamp on, $70, 0-4V output	 50A D/C though
 	WCS2200  - no board, 17mm diagonal width, +/- 20A (on AliExpress)
 	WCM1800	 - has board (less noise then), better accuracy than below but thinner 9mm hole, not clamp on , [[ ideal ]]
 	WCM6800  - has board (less noise then), clamp on, +/-25A, clamp on (can easily disappear?), 5V,		 Not available anywhere
 	Tamura L31S050S05FS - 5V, 50A, 
 	Tamura L03S050D15 - 15V supply voltage
-
+	
 	order hunt backup for current measurement (?)
-	solar pv-voltage 100V input caps
-	get step-up-to-80V transformer to simulate pv panels voltage
-	set correct IL300 bin number on Order Sheet/DipTrace etc. etc. (Use 'E' as it's possible to order only-E ?)
-	need a way to be able to adjust the input/output voltages or switch hardware tracks for opto-isolator incoming+receiving signal (using software) for village vs PV
-		//Or ideally system that just works for both
-		
-	Also need something that can step down both 24V and 48V village-project systems to 5V
-	
-	//Next tasks
-	//		xx Switch off the external power to FONA on start-up until fona needed (so get base voltage steady for good sensor reading)
-	//		xx Update Schematic with above switch 
-	//		xx Test transmission with 12 readings worth of data and 1kuF cap still ok? yep - same data came out x3
-	//		xx Turn off FONA when done 
-	//Add sensor-logic with pins, shunt, current check, temperature etc. + update schematic + add anything to purchase-list. 
-		(VERY high precision resistors for pv-voltage-divider + relay/bjt - NOPE, Opto intead)
-		
-		big resistor for high loads (testing)
-		PV voltage detection side board should be able to handle 5W (5mA*120V)
-		
-		Current sensor should be for up to 800W/30A !
-		Get Zener/fuses for safety anyway 
-		Voltage-divider not enough to ensure minimal current if arduino is off...? bjt?
-		Headphone jack as current input?
-		ADC corrections - http://www.skillbank.co.uk/arduino/adc.htm
-		Ensure PWR_SYS mosfet doesn't float - https://arduino.stackexchange.com/a/46303
-	//	EEPROM - Do 1-day quick prototype of having SD card there instead of EEEPROM and add to purchase-list if possible (DIP-sd-card-reader for testing if existing one not working) 
-				 Else Add rolling logic test + get the max # of readings that can be loaded&sent + any other software updates/TODOs
-	//	Add LEDs/output-print etc. logic for jumpers, directing SIM808's LED to surface of box - rssi check etc.
-	//	Run whole board (with timer circuit) test with linear 30V->5V regulator
-	//  Get a solid-state-relay to potentially switch off Arduino-circuit (check how muh current MOSFET uses now) and/or FONA module (?)
-	//	Add any components from above testing to existing purchase-list
-	//	Add a/c to high-voltage dc to simulate pv panels
-	//	Keyed connections from pv-voltage-sensor and dc-current-sensor
-	//	Get mosfet etc. to simulate inverter-input current use by battery - https://hackaday.com/2020/02/11/build-your-own-active-load/ - OR some big resistors 
-	//	Lots of reading on safety around circuit, fuses etc. and add anything extra to purchase-list
-	//	Make purchase from purchase-list
-	//	[When Components Come] Full test with Tant. Caps instead of Alum. Cap. @LDO-Output + @LDO-Circuit
-	//	[When Components Come] EEPROM: Run tests for the bigger memory size
-	//	
-	
-	//Design/PCB
-	//	Make sure connections wide enough
-	
-	
-	//Phase 2
-		Get bjt instead of mosfet(?)
-		Big power test
-		Fuses
-		external connectors
 
-
-cap failure should never short circuit; need fuse incase short-circuit
-derate the voltage rating by a factor of 3-4 if you want the full capacitance.
-we need - switching optimal main regulator **optimised for timer's current** but up to 2A max
-	- tantalum caps (or other robust ones at 1k Farads?) and several varieties to be deployed in parallel
-	- update tantalum cap on LDO
-	- several reverse voltage protection
-	- another cheap step-down (several quantity)
-	- ldo suitable tantalum caps
 	- rigid breadboard circuit cables (?)
-	- fuses
-Increase the 33PF and 10PF capacitors can effectively eliminate the high frequency interference. A 5.1V/500mW
-Zener diode is strongly recommended, the diode can prevent chip from damaging by the voltage surge. These
-capacitors and Zener diode should be placed as close as possible to SIM808 VBAT pins.
+	
+	
 
 
-! Main input regulator switching !
 
-
-The ERROR pin must be connected to ground if this function is not used
-If the sense option pin is not required, the sense pin must be connected to the VOUT pin.
 reverse current flow protection from LDO
-
-In designs, caps need to be near devices - <1cm
 
 ESD protection for LDO - https://www.design-reuse.com/articles/42191/low-dropout-ldo-linear-voltage-regulators.html
 
 https://resources.altium.com/p/what-is-esd-and-how-does-it-affect-my-pcb-design
 
-no lipo batt connected to sim808 chip!!
-
-bigger eeprom? slide-out eeprom? + slide-out serial connector to d/l data
-
 learn APNs
 
 add shocky to step-down? 12m@ https://training.ti.com/comparing-synchronous-and-non-synchronous-dcdc-converters (but mainly for heavy loads so no-op?) but shotty makes it much cooler
 
-jumper/switch for timer pin A to reduce time
-
 expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
-+ easy put on LED maintenance set/or have secret button for it somewhere with lid?
 
-NB: 1h39 time between cycles, 3m3 between small cycles
+add test line/board/header to connect for test-LEDs etc (e.g. temporarily for whilst deploying)
 
-circuit capacitors voltage check
-
-resistors check
-
-power unit increase voltage/ensure output is 5V, not less
-
-farnell power adaptor increase in power
-
-1 cap per IC
-
-replace generic connectors in digram with actuals
-
-change timing interval connectors
-
-add test line/board/header
-
-wire sizes check
- 
 use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
 
 check what happens if all sms full
