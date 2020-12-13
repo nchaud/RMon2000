@@ -1,14 +1,14 @@
 # RMonV3
 Remote-Systems Monitoring Module (V3)
 
-# Folder Structure
+## Folder Structure
 - Docs contains Technical Specs of components
 - Docs/_Calcs houses spreadsheets with detail the calculations used by rMonV3
 - RM is the software, which is developed using the Atmel Studio 7.0 IDE
 - 3DPrintedCaseFile contains exactly that
 - Sketch_PCB_Files has the design of the system from a PCB_printing perspective, using DipTrace as the IDE 
 
-# Software
+## Software
 For testing, note the following flags :-
 - IS_GSM_MOCK					true	//Set to true to mock GSM module interactivity
 - IS_GPS_MOCK					true	//Set to true to mock GPS module interactivity
