@@ -2,11 +2,10 @@
 
 	** Phase 3 **
 	
-	> (For PV-Voltage) 1) Order specifically the IL300-E for accurate gain, 2) test with this version 3) set correct IL300 bin number on Order Sheet/DipTrace etc.
+	> (For PV-Voltage) 1) Order specifically the IL300-E for accurate gain, 2) test with this version instead 3) set correct IL300 bin number on Order Sheet/DipTrace etc.
 	> (For PV-Voltage) Order 120V(and +/- 10V spare) capacitors at input for stability when Optocoupler reading voltage
 	> (For Pwr-Sys) Ensure main buck converter from battery allows up to 48V(+10V) battery (for village project) and is optimised for timer's minimal current
 	> (For Pwr-Sys) For the main 2A buck converter, check minimum current for step down not required as timer takes very little current
-	> (For Storage) Add wiring & an SD-Card-Writer but put jumper on pwr so software can be implemented later instead of an EEPROM(in rMonV4?). Keep digital pins 8-13 free for this future use.
 	> (For Storage) Add rolling logic test + get the max # of readings that can be loaded&sent + update for the larger EEPROM we now use.
 	> (For Timer) Add adjustable/jumper-wire-based timing caps/resistors for AEC vs village-project so can change frequency of readings
 	> (For Current) Wire in the passive current detector and verify accuracy. Should be able to detect up to 800W/30A DC.
@@ -23,15 +22,21 @@
 	> (Safety) Check ADC corrections - http://www.skillbank.co.uk/arduino/adc.htm
 	> (Safety) Derate the voltage rating by a factor of 3-4 if you want the full capacitance. Ensure voltages on all caps sufficient.
 	> (Safety) Have a jumper to turn entire network off
+	> (Safety) Reverse current flow protection from LDO
 	> (PCB) Replace generic parts in schematic with actual components 
 	
 	** Potential rMonV4 Changes **
 		
-		Replace EEPROM with SD-Card software
-		Voltage-divider not enough to ensure minimal current (required for timer) if arduino is off...? bjt?
-		Headphone jack as current input to get easy setup and ensure no mixup with PV-input? But can be easily disconnected...
-		Potentially have 2 buck converters - 1 mini one that runs the timer and 1 for when Arduino & PWR_SYS comes on
-		Have an easy-to-put-on LED maintenance set/or have secret button for it somewhere with lid? So maintainers can just put this module on and see full status.
+		> (For Storage) SD-Part I. Add wiring & an SD-Card-Writer but put jumper on pwr so software can be implemented later instead of an EEPROM(in rMonV4?). Keep digital pins 8-13 free for this future use.
+		> (For Storage) SD-Part II. Append/Replace EEPROM software with SD-Card software.
+		> Voltage-divider not enough to ensure minimal current (required for timer) if arduino is off...? bjt?
+		> Headphone jack as current input to get easy setup and ensure no mixup with PV-input? But can be easily disconnected...
+		> Potentially have 2 buck converters - 1 mini one that runs the timer and 1 for when Arduino & PWR_SYS comes on
+		> Expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
+		> Have an easy-to-put-on LED maintenance set/or have secret button for it somewhere with lid? So maintainers can just put this module on and see full status.
+		> Add test line/board/header to connect for test-LEDs etc (e.g. temporarily for whilst deploying)
+		> Use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
+		> Check what happens if all sms full
 	
 	
 		
@@ -51,6 +56,19 @@ One such test I used to perform involved rapid switching of a sewing machine mot
 So, the TLDR; is that you use BJTs for building robust interfaces since they usually don't need ESD protection, you use MOSFETs for low-medium current switches, and for really high-current switches you use IGBTs. The distinction between MOSFETs and IGBTs is basically on the basis of efficiency - the heat generated in a MOSFET increases as I^2 since it behaves like a resistor, whereas in a IGBT it increases more like Log[I]. Mosfet is Extremely fragile to destruction by static discharge.
 
 For battery v/divider reading - ""The successful advice is to take two readings and ignore the first one. This allows the capacitor to charge.""
+
+ESD protection for LDO - https://www.design-reuse.com/articles/42191/low-dropout-ldo-linear-voltage-regulators.html
+https://resources.altium.com/p/what-is-esd-and-how-does-it-affect-my-pcb-design
+
+learn APNs
+
+add shocky to step-down? 12m@ https://training.ti.com/comparing-synchronous-and-non-synchronous-dcdc-converters (but mainly for heavy loads so no-op?) but shotty makes it much cooler
+
+Order hunt backup for current measurement (?)
+
+Rigid breadboard circuit cables (?) (in some places - e.g. for timer - so can be disconnected and other caps be applied with vary timings)
+
+
 
 
 
@@ -76,21 +94,20 @@ For battery v/divider reading - ""The successful advice is to take two readings 
 	//	[When Components Come] EEPROM: Run tests for the bigger memory size	
 	// no lipo batt - connected to sim808 chip!!
 	// bigger eeprom? slide-out eeprom? + slide-out serial connector to d/l data - nope, SD card potential added
+	// LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 100pF on output (not 68pF)
 	
 
+	
+	
+*** Measurements (most are in _Calcs folder) ***
 Current Sensor
 40W Load implies .16A current
 *A/C* Sensor gave 20mV => .3A current use (= 15A*(20mV/1000mV))
-
 
 Pre-switching-regulator power usage of timer (no LEDs)
 @12v - 0.9mA (1.0 with LED) 
 @6V - 1.5mA
 
-LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 100pF on output (not 68pF)
-
-
-	
 	* Current Sensor Options *
 	HCT-0010 - clamp on, $70, 0-4V output	 50A D/C though
 	WCS2200  - no board, 17mm diagonal width, +/- 20A (on AliExpress)
@@ -98,32 +115,6 @@ LP3966: R2=22.8kOhms, 100uF Tantalum has gone on C_IN (still not good enough), 1
 	WCM6800  - has board (less noise then), clamp on, +/-25A, clamp on (can easily disappear?), 5V,		 Not available anywhere
 	Tamura L31S050S05FS - 5V, 50A, 
 	Tamura L03S050D15 - 15V supply voltage
-	
-	order hunt backup for current measurement (?)
-
-	- rigid breadboard circuit cables (?)
-	
-	
-
-
-
-reverse current flow protection from LDO
-
-ESD protection for LDO - https://www.design-reuse.com/articles/42191/low-dropout-ldo-linear-voltage-regulators.html
-
-https://resources.altium.com/p/what-is-esd-and-how-does-it-affect-my-pcb-design
-
-learn APNs
-
-add shocky to step-down? 12m@ https://training.ti.com/comparing-synchronous-and-non-synchronous-dcdc-converters (but mainly for heavy loads so no-op?) but shotty makes it much cooler
-
-expose all eeprom pins through header so can connect from externally? Or could have a switch to dump all via serial/ethernet
-
-add test line/board/header to connect for test-LEDs etc (e.g. temporarily for whilst deploying)
-
-use ferrite beads etc. after fully reading https://simcom.ee/documents/SIM800A/SIM800A_Hardware%20Design_V1.02.pdf
-
-check what happens if all sms full
 
 Zener Test with 2.2kOhm series resistor
 5v: diode fwd: across resistor - 3mA 4.3V ; across diode - .7V
