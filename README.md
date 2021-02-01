@@ -16,7 +16,7 @@ For testing, note the following flags :-
 - INITIALISE_MODULE_ID		0			//0 implies don't initialise it - modules start with id 1
 - IS_BASIC_MEM_TEST			false   	//Smoke test new module's EEPROM is physically present and working basics
 
-//All Extended* tests define conditional code only compiled in when set - i.e. only run on the PC
+//All Extended* tests define conditional code only compiled in when flag is set (to reduce memory space taken up by the test files when compiled for PROD)
 - IS_EXTENDED_SHOW_100_BYTES	false	//Prints first 100 bytes
 - IS_EXTENDED_SHOW_MEM			false		//Prints everything on this module nicely for review - TODO: A Basic?
 - IS_EXTENDED_MEM_TEST			false		//Test reading signals and reading/writing to memory
